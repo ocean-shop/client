@@ -1,0 +1,42 @@
+"use client";
+
+import { useState } from "react";
+import { BOTTOM_TAB_BAR_ITEMS } from "./constants/bottom-tab-bar.constants";
+import { MobileCatalogPanel } from "./mobile-catalog-panel/mobile-catalog-panel";
+
+export function BottomTabBar() {
+  const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+
+  return (
+    <>
+      <div className="fixed inset-x-0 bottom-0 z-30 flex border-t border-border-soft bg-background px-2 pb-[18px] pt-2.5 lg:hidden">
+        {BOTTOM_TAB_BAR_ITEMS.map((item) => {
+          const isCatalog = item.id === "catalog";
+
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={isCatalog ? () => setIsCatalogOpen(true) : undefined}
+              className={`flex flex-1 flex-col items-center gap-0.5 text-center text-[10.5px] ${
+                item.active || (isCatalog && isCatalogOpen) ? "text-accent" : "text-muted-light"
+              }`}
+            >
+              <span className="relative flex">
+                <span className="font-symbols text-[22px]">{item.icon}</span>
+                {!!item.badge && (
+                  <span className="absolute -right-2.5 -top-1 flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-accent px-1 text-[10.5px] font-bold text-white">
+                    {item.badge}
+                  </span>
+                )}
+              </span>
+              {item.label}
+            </button>
+          );
+        })}
+      </div>
+
+      <MobileCatalogPanel isOpen={isCatalogOpen} onClose={() => setIsCatalogOpen(false)} />
+    </>
+  );
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Unbounded } from "next/font/google";
 import localFont from "next/font/local";
+import { BottomTabBar } from "./layouts/bottom-tab-bar/bottom-tab-bar";
 import { Footer } from "./layouts/footer/footer";
 import { Header } from "./layouts/header/header";
 import "./globals.css";
@@ -47,10 +48,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <title>Ocean Shop</title>
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col pb-[78px] lg:pb-0">
         <Header />
         {children}
         <Footer />
+        <BottomTabBar />
       </body>
     </html>
   );
