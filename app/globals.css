@@ -11,6 +11,7 @@
   --accent-dark: #00473f;
   --accent-soft: #e0efea;
   --surface: #edf5f2;
+  --surface-soft: #f4f9f7;
   --border-soft: #dcebe7;
   --page-width: 1600px;
 }
@@ -26,6 +27,7 @@
   --color-accent-dark: var(--accent-dark);
   --color-accent-soft: var(--accent-soft);
   --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
   --color-border-soft: var(--border-soft);
   --container-page: var(--page-width);
   --font-sans: var(--font-inter);
