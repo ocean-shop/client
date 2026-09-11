@@ -6,6 +6,13 @@
   --footer: #e6f0ec;
   --footer-border: #cfe0da;
   --muted: #3d4947;
+  --muted-light: #6d7a77;
+  --accent: #00685f;
+  --accent-dark: #00473f;
+  --accent-soft: #e0efea;
+  --surface: #edf5f2;
+  --border-soft: #dcebe7;
+  --page-width: 1600px;
 }
 
 @theme inline {
@@ -14,9 +21,17 @@
   --color-footer: var(--footer);
   --color-footer-border: var(--footer-border);
   --color-muted: var(--muted);
+  --color-muted-light: var(--muted-light);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-soft: var(--accent-soft);
+  --color-surface: var(--surface);
+  --color-border-soft: var(--border-soft);
+  --container-page: var(--page-width);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-unbounded);
+  --font-symbols: var(--font-material-symbols);
 }
 
 @media (prefers-color-scheme: dark) {

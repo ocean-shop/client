@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Unbounded } from "next/font/google";
+import localFont from "next/font/local";
 import { Footer } from "./layouts/footer/footer";
+import { Header } from "./layouts/header/header";
 import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const materialSymbolsOutlined = localFont({
+  src: "./fonts/material-symbols-outlined.woff2",
+  variable: "--font-material-symbols",
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -34,16 +42,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${unbounded.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${unbounded.variable} ${materialSymbolsOutlined.variable} h-full antialiased`}
     >
       <head>
         <title>Ocean Shop</title>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body className="min-h-full flex flex-col">
+        <Header />
         {children}
         <Footer />
       </body>

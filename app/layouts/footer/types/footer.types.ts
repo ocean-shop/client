@@ -1,16 +1,16 @@
-export interface FooterLink {
+export type FooterLink = {
   label: string;
   href: string;
-}
+};
 
-export interface FooterLinkColumn {
+export type FooterLinkColumn = {
   title: string;
   links: FooterLink[];
-}
+};
 
-export interface FooterSupportInfo {
+export type FooterSupportInfo = {
   title: string;
   phone: string;
   email: string;
   hours: string;
-}
+};
