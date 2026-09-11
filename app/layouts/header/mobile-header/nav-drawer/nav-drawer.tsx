@@ -44,7 +44,7 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
 
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-3.5 py-3.5 [scrollbar-width:none]">
           <div className="flex flex-col overflow-hidden rounded-[14px] bg-background">
-            <div className="flex items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground">
+            <div className="flex cursor-pointer items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground hover:bg-surface">
               <span className="font-symbols text-[21px] text-accent">shopping_bag</span>
               {NAV_DRAWER_CART_LABEL}
               {HEADER_CART_COUNT > 0 && (
@@ -54,7 +54,7 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
               )}
             </div>
             <div className="h-px bg-border-soft" />
-            <div className="flex items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground">
+            <div className="flex cursor-pointer items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground hover:bg-surface">
               <span className="font-symbols text-[21px] text-accent">favorite</span>
               {NAV_DRAWER_FAVORITES_LABEL}
             </div>
@@ -67,7 +67,10 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
             >
               <div className="pb-2 text-sm font-semibold text-foreground">{group.title}</div>
               {group.items.map((item) => (
-                <div key={item} className="py-[7px] text-sm text-muted">
+                <div
+                  key={item}
+                  className="cursor-pointer py-[7px] text-sm text-muted hover:text-accent"
+                >
                   {item}
                 </div>
               ))}

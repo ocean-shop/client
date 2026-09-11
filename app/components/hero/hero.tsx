@@ -11,61 +11,66 @@ import {
   HERO_PROMO_CODE,
   HERO_SECONDARY_CTA_LABEL,
 } from "./constants/hero.constants";
+import { MobileHero } from "./mobile-hero/mobile-hero";
 
 export function Hero() {
   return (
-    <section className="hidden lg:block bg-background">
-      <div className="mx-auto grid max-w-page grid-cols-2 items-center gap-12 px-10 pb-16 pt-[72px]">
-        <div className="flex flex-col gap-[22px]">
-          <span className="text-[12.5px] font-semibold uppercase tracking-[.14em] text-accent">
-            {HERO_EYEBROW_LABEL} · {HERO_COUNTDOWN}
-          </span>
+    <>
+      <MobileHero />
 
-          <h1 className="text-pretty font-heading text-[54px] font-semibold leading-[1.03] tracking-[-.035em] text-foreground">
-            {HERO_HEADING_LINES.map((line, index) => (
-              <span key={line}>
-                {line}
-                {index < HERO_HEADING_LINES.length - 1 && <br />}
-              </span>
-            ))}
-          </h1>
+      <section className="hidden lg:block bg-background">
+        <div className="mx-auto grid max-w-page grid-cols-2 items-center gap-12 px-10 pb-16 pt-[72px]">
+          <div className="flex flex-col gap-[22px]">
+            <span className="text-[12.5px] font-semibold uppercase tracking-[.14em] text-accent">
+              {HERO_EYEBROW_LABEL} · {HERO_COUNTDOWN}
+            </span>
 
-          <p className="max-w-[420px] text-pretty text-base leading-[1.6] text-muted">
-            {HERO_DESCRIPTION} <b className="text-foreground">{HERO_PROMO_CODE}</b>
-          </p>
+            <h1 className="text-pretty font-heading text-[54px] font-semibold leading-[1.03] tracking-[-.035em] text-foreground">
+              {HERO_HEADING_LINES.map((line, index) => (
+                <span key={line}>
+                  {line}
+                  {index < HERO_HEADING_LINES.length - 1 && <br />}
+                </span>
+              ))}
+            </h1>
 
-          <div className="flex gap-3 pt-2">
-            <button
-              type="button"
-              className="flex h-[50px] items-center gap-2 rounded-[10px] bg-accent px-[26px] text-[15px] font-semibold text-white hover:bg-accent-dark"
-            >
-              {HERO_PRIMARY_CTA_LABEL}
-              <span className="font-symbols text-[19px]">arrow_forward</span>
-            </button>
-            <button
-              type="button"
-              className="h-[50px] rounded-[10px] border border-border-soft bg-background px-[26px] text-[15px] font-semibold text-foreground hover:border-accent"
-            >
-              {HERO_SECONDARY_CTA_LABEL}
-            </button>
+            <p className="max-w-[420px] text-pretty text-base leading-[1.6] text-muted">
+              {HERO_DESCRIPTION} <b className="text-foreground">{HERO_PROMO_CODE}</b>
+            </p>
+
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                className="flex h-[50px] items-center gap-2 rounded-[10px] bg-accent px-[26px] text-[15px] font-semibold text-white hover:bg-accent-dark"
+              >
+                {HERO_PRIMARY_CTA_LABEL}
+                <span className="font-symbols text-[19px]">arrow_forward</span>
+              </button>
+              <button
+                type="button"
+                className="h-[50px] rounded-[10px] border border-border-soft bg-background px-[26px] text-[15px] font-semibold text-foreground hover:border-accent"
+              >
+                {HERO_SECONDARY_CTA_LABEL}
+              </button>
+            </div>
+          </div>
+
+          <div className="relative h-[400px] overflow-hidden rounded-[14px] border-[10px] border-border-soft bg-border-soft">
+            <Image src={HERO_IMAGE_URL} alt={HERO_IMAGE_ALT} fill className="object-cover" />
           </div>
         </div>
 
-        <div className="relative h-[400px] overflow-hidden rounded-[14px] border-[10px] border-border-soft bg-border-soft">
-          <Image src={HERO_IMAGE_URL} alt={HERO_IMAGE_ALT} fill className="object-cover" />
+        <div className="bg-accent">
+          <div className="mx-auto flex max-w-page gap-11 px-10 py-5 text-[13.5px] text-accent-soft">
+            {HERO_BENEFITS.map((benefit) => (
+              <span key={benefit.title} className="flex items-center gap-2">
+                <span className="font-symbols text-[19px] text-accent-soft">{benefit.icon}</span>
+                {benefit.title}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
-
-      <div className="bg-accent">
-        <div className="mx-auto flex max-w-page gap-11 px-10 py-5 text-[13.5px] text-accent-soft">
-          {HERO_BENEFITS.map((benefit) => (
-            <span key={benefit.title} className="flex items-center gap-2">
-              <span className="font-symbols text-[19px] text-accent-soft">{benefit.icon}</span>
-              {benefit.title}
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

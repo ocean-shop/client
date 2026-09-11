@@ -1,10 +1,21 @@
-import { CATALOG_PANEL_CATEGORIES } from "../../../catalog-panel/constants/catalog-panel.constants";
 import type { NavDrawerGroup } from "../types/nav-drawer.types";
 
-export const NAV_DRAWER_GROUPS: NavDrawerGroup[] = CATALOG_PANEL_CATEGORIES.map((category) => ({
-  title: category.label,
-  items: category.subs.map((sub) => sub.name),
-}));
+export const NAV_DRAWER_GROUPS: NavDrawerGroup[] = [
+  {
+    title: "Покупцям",
+    items: [
+      "Доставка та оплата",
+      "Повернення товару",
+      "Програма лояльності",
+      "Часті запитання (FAQ)",
+      "Відстеження замовлення",
+    ],
+  },
+  {
+    title: "Про компанію",
+    items: ["Про Ocean", "Контакти", "Вакансії", "Публічна оферта", "Політика конфіденційності"],
+  },
+];
 
 export const NAV_DRAWER_CART_LABEL = "Кошик";
 

@@ -13,7 +13,7 @@ export function Header() {
     <>
       <MobileHeader />
 
-      <header className="hidden lg:block bg-background">
+      <header className="sticky top-0 z-30 hidden lg:block bg-background">
         <div className="mx-auto flex max-w-page items-center gap-7 px-10 py-5">
           <div className="flex items-center gap-2">
             <span className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-accent font-symbols text-[17px] text-white">
