@@ -1,8 +1,8 @@
 import Link from "next/link";
+import { CatalogPanel } from "./catalog-panel/catalog-panel";
 import {
   HEADER_BRAND_NAME,
   HEADER_CART_COUNT,
-  HEADER_CATALOG_LABEL,
   HEADER_NAV_ITEMS,
   HEADER_SEARCH_PLACEHOLDER,
 } from "./constants/header.constants";
@@ -20,13 +20,7 @@ export function Header() {
           </span>
         </div>
 
-        <button
-          type="button"
-          className="flex h-[42px] items-center gap-2 rounded-[10px] bg-accent-soft px-5 text-[14.5px] font-semibold text-accent-dark"
-        >
-          <span className="font-symbols text-[20px]">apps</span>
-          {HEADER_CATALOG_LABEL}
-        </button>
+        <CatalogPanel />
 
         <div className="flex h-[42px] flex-1 items-center gap-2.5 rounded-[10px] border border-border-soft bg-surface px-4">
           <span className="font-symbols text-[19px] text-muted">search</span>
