@@ -13,6 +13,9 @@
   --surface: #edf5f2;
   --surface-soft: #f4f9f7;
   --border-soft: #dcebe7;
+  --error: #e5484d;
+  --error-dark: #b42318;
+  --error-border: #f6d0ce;
   --page-width: 1600px;
 }
 
@@ -29,6 +32,9 @@
   --color-surface: var(--surface);
   --color-surface-soft: var(--surface-soft);
   --color-border-soft: var(--border-soft);
+  --color-error: var(--error);
+  --color-error-dark: var(--error-dark);
+  --color-error-border: var(--error-border);
   --container-page: var(--page-width);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
