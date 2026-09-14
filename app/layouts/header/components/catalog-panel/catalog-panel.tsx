@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { HEADER_CATALOG_LABEL } from "../constants/header.constants";
+import { HEADER_CATALOG_LABEL } from "../../constants/header.constants";
 import { CATALOG_PANEL_CATEGORIES, CATALOG_PANEL_PROMO } from "./constants/catalog-panel.constants";
 
 export function CatalogPanel() {

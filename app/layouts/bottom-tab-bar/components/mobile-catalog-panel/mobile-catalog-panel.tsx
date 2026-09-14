@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { CATALOG_PANEL_CATEGORIES } from "../../header/catalog-panel/constants/catalog-panel.constants";
-import { HEADER_CATALOG_LABEL } from "../../header/constants/header.constants";
+import { CATALOG_PANEL_CATEGORIES } from "../../../header/components/catalog-panel/constants/catalog-panel.constants";
+import { HEADER_CATALOG_LABEL } from "../../../header/constants/header.constants";
 import type { MobileCatalogPanelProps } from "./types/mobile-catalog-panel.types";
 
 export function MobileCatalogPanel({ isOpen, onClose }: MobileCatalogPanelProps) {

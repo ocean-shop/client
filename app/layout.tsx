@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { BottomTabBar } from "./layouts/bottom-tab-bar/bottom-tab-bar";
 import { Footer } from "./layouts/footer/footer";
 import { Header } from "./layouts/header/header";
+import { QueryProvider } from "./core/providers/query-provider/query-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,7 +13,7 @@ const geistSans = Geist({
 });
 
 const materialSymbolsOutlined = localFont({
-  src: "./fonts/material-symbols-outlined.woff2",
+  src: "./core/fonts/material-symbols-outlined.woff2",
   variable: "--font-material-symbols",
   display: "swap",
 });
@@ -49,10 +50,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <title>Ocean Shop</title>
       </head>
       <body className="min-h-full flex flex-col pb-[78px] lg:pb-0">
-        <Header />
-        {children}
-        <Footer />
-        <BottomTabBar />
+        <QueryProvider>
+          <Header />
+          {children}
+          <Footer />
+          <BottomTabBar />
+        </QueryProvider>
       </body>
     </html>
   );

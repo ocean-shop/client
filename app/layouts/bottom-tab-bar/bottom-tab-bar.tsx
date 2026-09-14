@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { BOTTOM_TAB_BAR_ITEMS } from "./constants/bottom-tab-bar.constants";
-import { MobileCatalogPanel } from "./mobile-catalog-panel/mobile-catalog-panel";
+import { MobileCatalogPanel } from "./components/mobile-catalog-panel/mobile-catalog-panel";
 
 export function BottomTabBar() {
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);

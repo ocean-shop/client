@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { HEADER_BRAND_NAME, HEADER_SEARCH_PLACEHOLDER } from "../constants/header.constants";
+import { HEADER_BRAND_NAME, HEADER_SEARCH_PLACEHOLDER } from "../../constants/header.constants";
 import { MOBILE_HEADER_CHIP_CATEGORIES } from "./constants/mobile-header.constants";
-import { NavDrawer } from "./nav-drawer/nav-drawer";
+import { NavDrawer } from "./components/nav-drawer/nav-drawer";
 
 export function MobileHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

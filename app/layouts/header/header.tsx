@@ -1,14 +1,24 @@
 import Link from "next/link";
-import { CatalogPanel } from "./catalog-panel/catalog-panel";
+import { CatalogPanel } from "./components/catalog-panel/catalog-panel";
 import {
   HEADER_BRAND_NAME,
   HEADER_CART_COUNT,
-  HEADER_NAV_ITEMS,
+  HEADER_NAV_CATALOG_ITEM,
+  HEADER_NAV_SALES_ITEM,
   HEADER_SEARCH_PLACEHOLDER,
 } from "./constants/header.constants";
-import { MobileHeader } from "./mobile-header/mobile-header";
+import { MobileHeader } from "./components/mobile-header/mobile-header";
+import { getCatalogCategories } from "@/app/shared/catalog-categories/get-catalog-categories";
+import type { HeaderNavItem } from "./types/header.types";
 
-export function Header() {
+export async function Header() {
+  const categories = await getCatalogCategories();
+  const categoryNavItems: HeaderNavItem[] = categories.map((category) => ({
+    label: category.name,
+    href: `/catalog/${category.slug}`,
+  }));
+  const navItems = [HEADER_NAV_CATALOG_ITEM, ...categoryNavItems, HEADER_NAV_SALES_ITEM];
+
   return (
     <>
       <MobileHeader />
@@ -46,7 +56,7 @@ export function Header() {
 
         <div className="border-b border-border-soft">
           <div className="mx-auto flex max-w-page gap-[26px] px-10 pb-4 text-sm text-muted">
-            {HEADER_NAV_ITEMS.map((item) => (
+            {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

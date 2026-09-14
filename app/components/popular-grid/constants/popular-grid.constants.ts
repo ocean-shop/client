@@ -1,15 +1,6 @@
 import type { ProductCardData } from "../../../ui/product-card/types/product-card.types";
-import type { PopularGridTab } from "../types/popular-grid.types";
 
 export const POPULAR_GRID_TITLE = "Популярні товари";
-
-export const POPULAR_GRID_TABS: PopularGridTab[] = [
-  { id: "all", label: "Усі", isActive: true },
-  { id: "electronics", label: "Електроніка" },
-  { id: "clothing", label: "Одяг & Взуття" },
-  { id: "home", label: "Дім & Затишок" },
-  { id: "beauty", label: "Краса" },
-];
 
 export const POPULAR_GRID_PRODUCTS: ProductCardData[] = [
   {

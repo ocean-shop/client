@@ -33,3 +33,15 @@ This version has breaking changes - APIs, conventions, and file structure may al
   - `component-name/component-name.tsx`
   - `component-name/types/component-name.types.ts`
   - `component-name/constants/component-name.constants.ts`
+
+## Nested Component Architecture ("Infinity Components")
+
+- Any component that renders other components local to it (not shared via `ui/`) must nest them under its own `components/` folder.
+- This pattern recurses to any depth: `component-name/components/child-name/components/grandchild-name/...`.
+- Each nested component keeps its own `component-name.tsx`, `types/`, and `constants/` per the structure above.
+- Example:
+  - `header/header.tsx`
+  - `header/components/catalog-panel/catalog-panel.tsx`
+  - `header/components/mobile-header/mobile-header.tsx`
+  - `header/components/mobile-header/components/nav-drawer/nav-drawer.tsx`
+- Only introduce a `components/` folder when there is at least one inner component to place in it.

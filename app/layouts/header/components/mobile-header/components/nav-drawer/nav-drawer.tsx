@@ -1,4 +1,4 @@
-import { HEADER_BRAND_NAME, HEADER_CART_COUNT } from "../../constants/header.constants";
+import { HEADER_BRAND_NAME, HEADER_CART_COUNT } from "../../../../constants/header.constants";
 import {
   NAV_DRAWER_CART_LABEL,
   NAV_DRAWER_FAVORITES_LABEL,

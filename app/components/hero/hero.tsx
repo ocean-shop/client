@@ -11,7 +11,7 @@ import {
   HERO_PROMO_CODE,
   HERO_SECONDARY_CTA_LABEL,
 } from "./constants/hero.constants";
-import { MobileHero } from "./mobile-hero/mobile-hero";
+import { MobileHero } from "./components/mobile-hero/mobile-hero";
 
 export function Hero() {
   return (
