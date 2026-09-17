@@ -39,15 +39,17 @@ export function ProductCard({ product }: ProductCardProps) {
         </button>
       </div>
 
-      <div className="flex items-center gap-[5px] text-[12.5px] text-muted-light">
-        <span
-          className="font-symbols text-sm text-accent"
-          style={{ fontVariationSettings: "'FILL' 1" }}
-        >
-          star
-        </span>
-        <b className="font-semibold text-foreground">{product.rating}</b>({product.reviews})
-      </div>
+      {product.rating !== undefined && product.reviews !== undefined && (
+        <div className="flex items-center gap-[5px] text-[12.5px] text-muted-light">
+          <span
+            className="font-symbols text-sm text-accent"
+            style={{ fontVariationSettings: "'FILL' 1" }}
+          >
+            star
+          </span>
+          <b className="font-semibold text-foreground">{product.rating}</b>({product.reviews})
+        </div>
+      )}
 
       <div className="text-pretty text-[15px] font-medium leading-[1.4] text-foreground">
         {product.name}

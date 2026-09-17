@@ -3,14 +3,19 @@ import { ProductCard } from "../../ui/product-card/product-card";
 import { getCatalogCategories } from "../../shared/catalog-categories/api/get-catalog-categories";
 import { filterParentCategoriesHelper } from "../../shared/catalog-categories/helpers/filter-parent-categories";
 import { CATALOG_CATEGORIES_POPULAR_LIMIT } from "../../shared/catalog-categories/constants/catalog-categories.constants";
-import { POPULAR_GRID_PRODUCTS, POPULAR_GRID_TITLE } from "./constants/popular-grid.constants";
+import { getPopularProducts } from "../../shared/products/api/get-popular-products";
+import { mapProductToCardDataHelper } from "../../shared/products/helpers/map-product-to-card-data";
+import { POPULAR_GRID_TITLE } from "./constants/popular-grid.constants";
 
 export async function PopularGrid() {
-  const categories = await getCatalogCategories();
+  const [categories, products] = await Promise.all([getCatalogCategories(), getPopularProducts()]);
   const popularCategories = filterParentCategoriesHelper(
     categories,
     CATALOG_CATEGORIES_POPULAR_LIMIT
   );
+  const popularProducts = products
+    .filter((product) => product.images.length > 0)
+    .map(mapProductToCardDataHelper);
 
   return (
     <section className="bg-surface-soft">
@@ -34,7 +39,7 @@ export async function PopularGrid() {
         </div>
 
         <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-4">
-          {POPULAR_GRID_PRODUCTS.map((product) => (
+          {popularProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

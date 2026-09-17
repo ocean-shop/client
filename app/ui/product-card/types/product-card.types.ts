@@ -8,8 +8,8 @@ export type ProductCardData = {
     label: string;
     tone: ProductBadgeTone;
   };
-  rating: number;
-  reviews: number;
+  rating?: number;
+  reviews?: number;
   name: string;
   price: string;
   oldPrice?: string;
