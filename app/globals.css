@@ -10,6 +10,7 @@
   --accent: #00685f;
   --accent-dark: #00473f;
   --accent-soft: #e0efea;
+  --accent-light: #37b79f;
   --surface: #edf5f2;
   --surface-soft: #f4f9f7;
   --border-soft: #dcebe7;
@@ -29,6 +30,7 @@
   --color-accent: var(--accent);
   --color-accent-dark: var(--accent-dark);
   --color-accent-soft: var(--accent-soft);
+  --color-accent-light: var(--accent-light);
   --color-surface: var(--surface);
   --color-surface-soft: var(--surface-soft);
   --color-border-soft: var(--border-soft);
@@ -40,6 +42,16 @@
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-unbounded);
   --font-symbols: var(--font-material-symbols);
+  --animate-ocean-loader: ocean-loader 1.6s cubic-bezier(0.5, 0, 0.35, 1) infinite;
+}
+
+@keyframes ocean-loader {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
