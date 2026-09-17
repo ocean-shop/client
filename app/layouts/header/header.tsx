@@ -8,12 +8,12 @@ import {
   HEADER_SEARCH_PLACEHOLDER,
 } from "./constants/header.constants";
 import { MobileHeader } from "./components/mobile-header/mobile-header";
-import { getCatalogCategories } from "@/app/shared/catalog-categories/get-catalog-categories";
+import { getCatalogCategoryTreeHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-tree";
 import type { HeaderNavItem } from "./types/header.types";
 
 export async function Header() {
-  const categories = await getCatalogCategories();
-  const categoryNavItems: HeaderNavItem[] = categories.map((category) => ({
+  const categoryTree = await getCatalogCategoryTreeHelper();
+  const categoryNavItems: HeaderNavItem[] = categoryTree.map((category) => ({
     label: category.name,
     href: `/catalog/${category.slug}`,
   }));
@@ -21,7 +21,7 @@ export async function Header() {
 
   return (
     <>
-      <MobileHeader />
+      <MobileHeader categories={categoryTree} />
 
       <header className="sticky top-0 z-30 hidden lg:block bg-background">
         <div className="mx-auto flex max-w-page items-center gap-7 px-10 py-5">
@@ -34,7 +34,7 @@ export async function Header() {
             </span>
           </div>
 
-          <CatalogPanel />
+          <CatalogPanel categories={categoryTree} />
 
           <div className="flex h-[42px] flex-1 items-center gap-2.5 rounded-[10px] border border-border-soft bg-surface px-4">
             <span className="font-symbols text-[19px] text-muted">search</span>

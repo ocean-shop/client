@@ -1,16 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { CATALOG_PANEL_CATEGORIES } from "../../../header/components/catalog-panel/constants/catalog-panel.constants";
+import {
+  CATALOG_CATEGORY_DEFAULT_ICON,
+  CATALOG_CATEGORY_ICONS,
+} from "@/app/shared/catalog-categories/constants/catalog-categories.constants";
 import { HEADER_CATALOG_LABEL } from "../../../header/constants/header.constants";
 import type { MobileCatalogPanelProps } from "./types/mobile-catalog-panel.types";
 
-export function MobileCatalogPanel({ isOpen, onClose }: MobileCatalogPanelProps) {
-  const [activeCategoryId, setActiveCategoryId] = useState(CATALOG_PANEL_CATEGORIES[0].id);
+export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalogPanelProps) {
+  const [activeCategoryId, setActiveCategoryId] = useState(categories[0]?.id);
 
   const activeCategory =
-    CATALOG_PANEL_CATEGORIES.find((category) => category.id === activeCategoryId) ??
-    CATALOG_PANEL_CATEGORIES[0];
+    categories.find((category) => category.id === activeCategoryId) ?? categories[0];
+
+  if (!activeCategory) return null;
 
   return (
     <div
@@ -37,8 +41,9 @@ export function MobileCatalogPanel({ isOpen, onClose }: MobileCatalogPanelProps)
 
       <div className="grid min-h-0 flex-1 grid-cols-[150px_1fr] gap-3 p-3.5 pb-[100px]">
         <div className="flex flex-col gap-2 overflow-y-auto [scrollbar-width:none]">
-          {CATALOG_PANEL_CATEGORIES.map((category) => {
+          {categories.map((category) => {
             const isActive = category.id === activeCategoryId;
+            const icon = CATALOG_CATEGORY_ICONS[category.slug] ?? CATALOG_CATEGORY_DEFAULT_ICON;
 
             return (
               <div
@@ -53,18 +58,20 @@ export function MobileCatalogPanel({ isOpen, onClose }: MobileCatalogPanelProps)
                 <span
                   className={`font-symbols text-[20px] ${isActive ? "text-accent" : "text-muted"}`}
                 >
-                  {category.icon}
+                  {icon}
                 </span>
                 <span
                   className={`flex-1 text-[13px] leading-[1.25] ${isActive ? "font-semibold" : "font-medium"}`}
                 >
-                  {category.label}
+                  {category.name}
                 </span>
-                <span
-                  className={`font-symbols text-[17px] ${isActive ? "text-accent" : "text-muted-light"}`}
-                >
-                  chevron_right
-                </span>
+                {category.subs.length > 0 && (
+                  <span
+                    className={`font-symbols text-[17px] ${isActive ? "text-accent" : "text-muted-light"}`}
+                  >
+                    chevron_right
+                  </span>
+                )}
               </div>
             );
           })}
@@ -72,15 +79,14 @@ export function MobileCatalogPanel({ isOpen, onClose }: MobileCatalogPanelProps)
 
         <div className="flex flex-col gap-0.5 overflow-y-auto rounded-[14px] bg-background p-4 [scrollbar-width:none]">
           <div className="pb-2.5 text-[14.5px] font-semibold text-foreground">
-            {activeCategory.label}
+            {activeCategory.name}
           </div>
           {activeCategory.subs.map((sub) => (
             <div
-              key={sub.name}
-              className="flex cursor-pointer items-center justify-between gap-2.5 py-[9px] text-[13.5px] text-muted hover:text-accent"
+              key={sub.id}
+              className="cursor-pointer py-[9px] text-[13.5px] text-muted hover:text-accent"
             >
-              <span>{sub.name}</span>
-              <span className="text-[12.5px] text-muted-light">{sub.count}</span>
+              {sub.name}
             </div>
           ))}
         </div>

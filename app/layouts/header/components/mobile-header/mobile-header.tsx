@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { HEADER_BRAND_NAME, HEADER_SEARCH_PLACEHOLDER } from "../../constants/header.constants";
-import { MOBILE_HEADER_CHIP_CATEGORIES } from "./constants/mobile-header.constants";
 import { NavDrawer } from "./components/nav-drawer/nav-drawer";
+import type { MobileHeaderProps } from "./types/mobile-header.types";
 
-export function MobileHeader() {
+export function MobileHeader({ categories }: MobileHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -32,9 +32,9 @@ export function MobileHeader() {
       </div>
 
       <div className="flex gap-4.5 overflow-x-auto px-4.5 pb-3 text-[13.5px] text-foreground [scrollbar-width:none]">
-        {MOBILE_HEADER_CHIP_CATEGORIES.map((chip) => (
-          <span key={chip.id} className="flex-none">
-            {chip.label}
+        {categories.map((category) => (
+          <span key={category.id} className="flex-none">
+            {category.name}
           </span>
         ))}
       </div>

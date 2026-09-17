@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { BOTTOM_TAB_BAR_ITEMS } from "./constants/bottom-tab-bar.constants";
 import { MobileCatalogPanel } from "./components/mobile-catalog-panel/mobile-catalog-panel";
+import type { BottomTabBarProps } from "./types/bottom-tab-bar.types";
 
-export function BottomTabBar() {
+export function BottomTabBar({ categories }: BottomTabBarProps) {
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
 
   return (
@@ -36,7 +37,11 @@ export function BottomTabBar() {
         })}
       </div>
 
-      <MobileCatalogPanel isOpen={isCatalogOpen} onClose={() => setIsCatalogOpen(false)} />
+      <MobileCatalogPanel
+        categories={categories}
+        isOpen={isCatalogOpen}
+        onClose={() => setIsCatalogOpen(false)}
+      />
     </>
   );
 }

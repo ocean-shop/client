@@ -1,17 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import {
+  CATALOG_CATEGORY_DEFAULT_ICON,
+  CATALOG_CATEGORY_ICONS,
+} from "@/app/shared/catalog-categories/constants/catalog-categories.constants";
 import { HEADER_CATALOG_LABEL } from "../../constants/header.constants";
-import { CATALOG_PANEL_CATEGORIES, CATALOG_PANEL_PROMO } from "./constants/catalog-panel.constants";
+import { CATALOG_PANEL_PROMO } from "./constants/catalog-panel.constants";
+import type { CatalogPanelProps } from "./types/catalog-panel.types";
 
-export function CatalogPanel() {
+export function CatalogPanel({ categories }: CatalogPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeCategoryId, setActiveCategoryId] = useState(CATALOG_PANEL_CATEGORIES[0].id);
+  const [activeCategoryId, setActiveCategoryId] = useState(categories[0]?.id);
   const panelRef = useRef<HTMLDivElement>(null);
 
   const activeCategory =
-    CATALOG_PANEL_CATEGORIES.find((category) => category.id === activeCategoryId) ??
-    CATALOG_PANEL_CATEGORIES[0];
+    categories.find((category) => category.id === activeCategoryId) ?? categories[0];
 
   useEffect(() => {
     if (!isOpen) return;
@@ -25,6 +29,8 @@ export function CatalogPanel() {
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, [isOpen]);
+
+  if (!activeCategory) return null;
 
   return (
     <div ref={panelRef} className="relative hidden lg:block">
@@ -40,8 +46,9 @@ export function CatalogPanel() {
       {isOpen && (
         <div className="absolute left-0 top-[calc(100%+12px)] z-20 grid w-[1100px] grid-cols-[262px_1fr_268px] overflow-hidden rounded-[14px] border border-border-soft bg-background shadow-[0_30px_60px_-30px_rgba(17,28,45,0.45)]">
           <div className="flex flex-col gap-1.5 border-r border-border-soft bg-surface-soft p-3.5">
-            {CATALOG_PANEL_CATEGORIES.map((category) => {
+            {categories.map((category) => {
               const isActive = category.id === activeCategoryId;
+              const icon = CATALOG_CATEGORY_ICONS[category.slug] ?? CATALOG_CATEGORY_DEFAULT_ICON;
 
               return (
                 <div
@@ -56,31 +63,32 @@ export function CatalogPanel() {
                   <span
                     className={`font-symbols text-[20px] ${isActive ? "text-accent" : "text-muted"}`}
                   >
-                    {category.icon}
+                    {icon}
                   </span>
                   <span className={`flex-1 text-sm ${isActive ? "font-semibold" : "font-medium"}`}>
-                    {category.label}
+                    {category.name}
                   </span>
-                  <span
-                    className={`font-symbols text-[18px] ${isActive ? "text-accent" : "text-muted-light"}`}
-                  >
-                    chevron_right
-                  </span>
+                  {category.subs.length > 0 && (
+                    <span
+                      className={`font-symbols text-[18px] ${isActive ? "text-accent" : "text-muted-light"}`}
+                    >
+                      chevron_right
+                    </span>
+                  )}
                 </div>
               );
             })}
           </div>
 
           <div className="flex flex-col gap-3.5 px-6.5 py-5.5">
-            <div className="text-base font-semibold text-foreground">{activeCategory.label}</div>
+            <div className="text-base font-semibold text-foreground">{activeCategory.name}</div>
             <div className="columns-2 gap-9">
               {activeCategory.subs.map((sub) => (
                 <div
-                  key={sub.name}
-                  className="flex cursor-pointer items-baseline justify-between gap-3.5 break-inside-avoid py-[7px] text-sm text-muted hover:text-accent"
+                  key={sub.id}
+                  className="cursor-pointer break-inside-avoid py-[7px] text-sm text-muted hover:text-accent"
                 >
-                  <span>{sub.name}</span>
-                  <span className="text-[13px] text-muted-light">{sub.count}</span>
+                  {sub.name}
                 </div>
               ))}
             </div>

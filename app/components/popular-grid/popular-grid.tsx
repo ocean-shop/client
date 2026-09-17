@@ -1,10 +1,16 @@
 import Link from "next/link";
 import { ProductCard } from "../../ui/product-card/product-card";
-import { getCatalogCategories } from "../../shared/catalog-categories/get-catalog-categories";
+import { getCatalogCategories } from "../../shared/catalog-categories/api/get-catalog-categories";
+import { filterParentCategoriesHelper } from "../../shared/catalog-categories/helpers/filter-parent-categories";
+import { CATALOG_CATEGORIES_POPULAR_LIMIT } from "../../shared/catalog-categories/constants/catalog-categories.constants";
 import { POPULAR_GRID_PRODUCTS, POPULAR_GRID_TITLE } from "./constants/popular-grid.constants";
 
 export async function PopularGrid() {
   const categories = await getCatalogCategories();
+  const popularCategories = filterParentCategoriesHelper(
+    categories,
+    CATALOG_CATEGORIES_POPULAR_LIMIT
+  );
 
   return (
     <section className="bg-surface-soft">
@@ -15,7 +21,7 @@ export async function PopularGrid() {
           </h2>
 
           <div className="flex flex-wrap items-center gap-5 text-sm">
-            {categories.map((category) => (
+            {popularCategories.map((category) => (
               <Link
                 key={category.id}
                 href={`/catalog/${category.slug}`}

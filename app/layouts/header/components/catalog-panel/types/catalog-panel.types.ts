@@ -1,13 +1,7 @@
-export type CatalogPanelSubcategory = {
-  name: string;
-  count: string;
-};
+import type { CatalogCategoryTree } from "@/app/shared/catalog-categories/types/catalog-categories.types";
 
-export type CatalogPanelCategory = {
-  id: string;
-  label: string;
-  icon: string;
-  subs: CatalogPanelSubcategory[];
+export type CatalogPanelProps = {
+  categories: CatalogCategoryTree[];
 };
 
 export type CatalogPanelPromo = {
