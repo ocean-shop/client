@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "@/app/ui/button/button";
 import {
   HERO_BENEFITS,
   HERO_COUNTDOWN,
@@ -39,19 +40,17 @@ export function Hero() {
             </p>
 
             <div className="flex gap-3 pt-2">
-              <button
-                type="button"
-                className="flex h-[50px] items-center gap-2 rounded-[10px] bg-accent px-[26px] text-[15px] font-semibold text-white hover:bg-accent-dark"
-              >
+              <Button size="lg">
                 {HERO_PRIMARY_CTA_LABEL}
                 <span className="font-symbols text-[19px]">arrow_forward</span>
-              </button>
-              <button
-                type="button"
-                className="h-[50px] rounded-[10px] border border-border-soft bg-background px-[26px] text-[15px] font-semibold text-foreground hover:border-accent"
+              </Button>
+              <Button
+                variant="unstyled"
+                size="lg"
+                className="border border-border-soft bg-background font-semibold text-foreground hover:border-accent"
               >
                 {HERO_SECONDARY_CTA_LABEL}
-              </button>
+              </Button>
             </div>
           </div>
 

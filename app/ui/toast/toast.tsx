@@ -1,3 +1,4 @@
+import { Button } from "@/app/ui/button/button";
 import { TOAST_VARIANT_STYLES } from "./constants/toast.constants";
 import type { ToastProps } from "./types/toast.types";
 
@@ -29,13 +30,14 @@ export function Toast({ variant, title, message, action, onClose }: ToastProps) 
         )}
       </div>
 
-      <button
-        type="button"
+      <Button
+        variant="ghost"
+        size="auto"
         onClick={onClose}
-        className="flex h-[30px] w-[30px] flex-none items-center justify-center rounded-[9px] text-muted-light hover:bg-black/[.06]"
+        className="h-[30px] w-[30px] flex-none rounded-[9px] hover:bg-black/[.06]"
       >
         <span className="font-symbols text-[19px]">close</span>
-      </button>
+      </Button>
     </div>
   );
 }

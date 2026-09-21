@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/app/ui/button/button";
+import { Checkbox } from "@/app/ui/checkbox/checkbox";
+import { Input } from "@/app/ui/input/input";
 import {
   CATALOG_FILTERS_APPLY_LABEL,
   CATALOG_FILTERS_MORE_LABEL,
@@ -47,26 +50,19 @@ export function CatalogFilters() {
           {CATALOG_FILTERS_PRICE_LABEL}
         </div>
         <div className="flex items-center gap-2.5">
-          <input
+          <Input
             value={priceFrom}
             onChange={(event) => setPriceFrom(event.target.value)}
             placeholder={CATALOG_FILTERS_PRICE_FROM_PLACEHOLDER}
-            className="h-[42px] w-full min-w-0 rounded-[10px] border border-footer-border bg-surface-soft px-3 text-sm text-foreground placeholder:text-muted-light"
           />
           <span className="text-muted-light">—</span>
-          <input
+          <Input
             value={priceTo}
             onChange={(event) => setPriceTo(event.target.value)}
             placeholder={CATALOG_FILTERS_PRICE_TO_PLACEHOLDER}
-            className="h-[42px] w-full min-w-0 rounded-[10px] border border-footer-border bg-surface-soft px-3 text-sm text-foreground placeholder:text-muted-light"
           />
         </div>
-        <button
-          type="button"
-          className="h-[42px] rounded-[10px] bg-accent text-sm font-semibold text-white hover:bg-accent-dark"
-        >
-          {CATALOG_FILTERS_APPLY_LABEL}
-        </button>
+        <Button>{CATALOG_FILTERS_APPLY_LABEL}</Button>
       </div>
 
       {CATALOG_FILTER_GROUPS.map((group) => {
@@ -81,52 +77,40 @@ export function CatalogFilters() {
           <div key={group.id} className="flex flex-col gap-3 rounded-2xl bg-background p-5">
             <div className="flex items-center justify-between">
               <span className="text-[15px] font-semibold text-foreground">{group.title}</span>
-              <button
-                type="button"
+              <Button
+                variant="ghost"
+                size="auto"
                 onClick={() => toggleGroupCollapsed(group.id)}
                 aria-label={group.title}
-                className="font-symbols text-[20px] text-muted-light"
+                className="font-symbols text-[20px]"
               >
                 {isCollapsed ? "expand_more" : "expand_less"}
-              </button>
+              </Button>
             </div>
 
             {!isCollapsed && (
               <>
                 <div className="flex flex-col gap-3">
-                  {visibleOptions.map((option) => {
-                    const isSelected = selectedOptionIds.has(option.id);
-
-                    return (
-                      <div
-                        key={option.id}
-                        onClick={() => toggleOption(option.id)}
-                        className="flex cursor-pointer items-center gap-2.5"
-                      >
-                        <span
-                          className={`flex h-[19px] w-[19px] flex-none items-center justify-center rounded-[5px] border-[1.5px] font-symbols text-[15px] text-white ${
-                            isSelected
-                              ? "border-accent bg-accent"
-                              : "border-footer-border bg-background"
-                          }`}
-                        >
-                          {isSelected && "check"}
-                        </span>
-                        <span className="flex-1 text-sm text-foreground">{option.label}</span>
-                        <span className="text-[12.5px] text-muted-light">{option.count}</span>
-                      </div>
-                    );
-                  })}
+                  {visibleOptions.map((option) => (
+                    <Checkbox
+                      key={option.id}
+                      checked={selectedOptionIds.has(option.id)}
+                      onChange={() => toggleOption(option.id)}
+                      label={option.label}
+                      count={option.count}
+                    />
+                  ))}
                 </div>
 
                 {hasMore && (
-                  <button
-                    type="button"
+                  <Button
+                    variant="text"
+                    size="auto"
                     onClick={() => expandGroup(group.id)}
-                    className="self-start text-[13.5px] font-semibold text-accent"
+                    className="self-start text-[13.5px]"
                   >
                     {CATALOG_FILTERS_MORE_LABEL}
-                  </button>
+                  </Button>
                 )}
               </>
             )}

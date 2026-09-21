@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Button } from "@/app/ui/button/button";
 import {
   CATALOG_CATEGORY_DEFAULT_ICON,
   CATALOG_CATEGORY_ICONS,
@@ -30,14 +31,15 @@ export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalo
         <span className="font-heading text-[19px] font-semibold tracking-[-.02em] text-foreground">
           {HEADER_CATALOG_LABEL}
         </span>
-        <button
-          type="button"
+        <Button
+          variant="unstyled"
+          size="auto"
           onClick={onClose}
           aria-label="Закрити каталог"
           className="font-symbols text-2xl text-muted"
         >
           close
-        </button>
+        </Button>
       </div>
 
       <div className="grid min-h-0 flex-1 grid-cols-[150px_1fr] gap-3 p-3.5 pb-[100px]">

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { Button } from "@/app/ui/button/button";
 import {
   CATALOG_CATEGORY_DEFAULT_ICON,
   CATALOG_CATEGORY_ICONS,
@@ -35,14 +36,15 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
 
   return (
     <div ref={panelRef} className="relative hidden lg:block">
-      <button
-        type="button"
+      <Button
+        variant="soft"
+        size="auto"
         onClick={() => setIsOpen((open) => !open)}
-        className="flex h-[42px] items-center gap-2 rounded-[10px] bg-accent-soft px-5 text-[14.5px] font-semibold text-accent-dark"
+        className="h-[42px] gap-2 rounded-[10px] px-5 text-[14.5px]"
       >
         <span className="font-symbols text-[20px]">apps</span>
         {HEADER_CATALOG_LABEL}
-      </button>
+      </Button>
 
       {isOpen && (
         <div className="absolute left-0 top-[calc(100%+12px)] z-20 grid w-[1100px] grid-cols-[262px_1fr_268px] overflow-hidden rounded-[14px] border border-border-soft bg-background shadow-[0_30px_60px_-30px_rgba(17,28,45,0.45)]">
@@ -115,12 +117,9 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
                 {CATALOG_PANEL_PROMO.oldPrice}
               </span>
             </div>
-            <button
-              type="button"
-              className="h-11 rounded-[10px] bg-white text-sm font-semibold text-accent hover:bg-accent-soft"
-            >
+            <Button variant="primary-inverse" size="auto" className="h-11 rounded-[10px] text-sm">
               {CATALOG_PANEL_PROMO.ctaLabel}
-            </button>
+            </Button>
           </div>
         </div>
       )}

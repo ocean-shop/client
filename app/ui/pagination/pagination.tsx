@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/app/ui/button/button";
 import { PAGINATION_VISIBLE_PAGES_COUNT } from "./constants/pagination.constants";
 import type { PaginationProps } from "./types/pagination.types";
 
@@ -27,14 +28,15 @@ export function Pagination({ totalPages, defaultPage = 1, onPageChange }: Pagina
 
   return (
     <div className="flex items-center justify-center gap-2 pt-9">
-      <button
-        type="button"
+      <Button
+        variant="unstyled"
+        size="icon"
         onClick={() => goToPage(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-footer-border bg-background text-muted-light disabled:opacity-50"
+        className="border border-footer-border bg-background text-muted-light"
       >
         <span className="font-symbols text-xl">chevron_left</span>
-      </button>
+      </Button>
 
       {pages.map((page) => {
         const isActive = page === currentPage;
@@ -54,14 +56,15 @@ export function Pagination({ totalPages, defaultPage = 1, onPageChange }: Pagina
         );
       })}
 
-      <button
-        type="button"
+      <Button
+        variant="unstyled"
+        size="icon"
         onClick={() => goToPage(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-footer-border bg-background text-foreground disabled:opacity-50"
+        className="border border-footer-border bg-background text-foreground"
       >
         <span className="font-symbols text-xl">chevron_right</span>
-      </button>
+      </Button>
     </div>
   );
 }

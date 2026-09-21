@@ -1,3 +1,4 @@
+import { Button } from "@/app/ui/button/button";
 import { HEADER_BRAND_NAME, HEADER_CART_COUNT } from "../../../../constants/header.constants";
 import {
   NAV_DRAWER_CART_LABEL,
@@ -32,14 +33,15 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
       >
         <div className="flex items-center justify-between bg-accent px-4.5 py-5 text-white">
           <span className="font-heading text-lg font-semibold">{HEADER_BRAND_NAME}</span>
-          <button
-            type="button"
+          <Button
+            variant="unstyled"
+            size="auto"
             onClick={onClose}
             aria-label="Закрити меню"
             className="font-symbols text-2xl"
           >
             close
-          </button>
+          </Button>
         </div>
 
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-3.5 py-3.5 [scrollbar-width:none]">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@/app/ui/button/button";
 import type { SelectProps } from "./types/select.types";
 
 export function Select({ options, label, defaultSelectedId, onChange }: SelectProps) {
@@ -36,14 +37,15 @@ export function Select({ options, label, defaultSelectedId, onChange }: SelectPr
       {label && <span className="text-[13.5px] text-muted-light">{label}</span>}
 
       <div ref={selectRef} className="relative">
-        <button
-          type="button"
+        <Button
+          variant="unstyled"
+          size="auto"
           onClick={() => setIsOpen((open) => !open)}
-          className="flex h-[42px] items-center gap-2.5 rounded-[10px] border border-footer-border bg-background px-3.5 text-sm font-medium text-foreground"
+          className="h-[42px] gap-2.5 rounded-[10px] border border-footer-border bg-background px-3.5 text-sm font-medium text-foreground"
         >
           {selectedOption.label}
           <span className="font-symbols text-xl text-muted-light">expand_more</span>
-        </button>
+        </Button>
 
         {isOpen && (
           <div className="absolute right-0 top-[calc(100%+6px)] z-10 w-[252px] rounded-xl border border-border-soft bg-background p-1.5 shadow-[0_18px_40px_-22px_rgba(17,28,45,.45)]">

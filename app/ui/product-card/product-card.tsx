@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "@/app/ui/button/button";
 import {
   PRODUCT_BADGE_TONE_STYLES,
   PRODUCT_CTA_STYLES,
@@ -32,8 +33,9 @@ export function ProductCard({ product }: ProductCardProps) {
           </span>
         )}
 
-        <button
-          type="button"
+        <Button
+          variant="unstyled"
+          size="auto"
           className="absolute right-2.5 top-2.5 flex h-[34px] w-[34px] items-center justify-center rounded-[10px] bg-white/90"
         >
           <span
@@ -42,7 +44,7 @@ export function ProductCard({ product }: ProductCardProps) {
           >
             favorite
           </span>
-        </button>
+        </Button>
       </div>
 
       {product.rating !== undefined && product.reviews !== undefined && (
@@ -70,9 +72,13 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
 
-      <button type="button" className={`h-11 rounded-[10px] text-sm font-semibold ${ctaStyle}`}>
+      <Button
+        variant="unstyled"
+        size="auto"
+        className={`h-11 rounded-[10px] text-sm font-semibold ${ctaStyle}`}
+      >
         {product.ctaLabel}
-      </button>
+      </Button>
     </div>
   );
 }

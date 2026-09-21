@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/app/ui/button/button";
 import { BOTTOM_TAB_BAR_ITEMS } from "./constants/bottom-tab-bar.constants";
 import { MobileCatalogPanel } from "./components/mobile-catalog-panel/mobile-catalog-panel";
 import type { BottomTabBarProps } from "./types/bottom-tab-bar.types";
@@ -15,11 +16,12 @@ export function BottomTabBar({ categories }: BottomTabBarProps) {
           const isCatalog = item.id === "catalog";
 
           return (
-            <button
+            <Button
               key={item.id}
-              type="button"
+              variant="unstyled"
+              size="auto"
               onClick={isCatalog ? () => setIsCatalogOpen(true) : undefined}
-              className={`flex flex-1 flex-col items-center gap-0.5 text-center text-[10.5px] ${
+              className={`flex-1 flex-col justify-start gap-0.5 text-center text-[10.5px] ${
                 item.active || (isCatalog && isCatalogOpen) ? "text-accent" : "text-muted-light"
               }`}
             >
@@ -32,7 +34,7 @@ export function BottomTabBar({ categories }: BottomTabBarProps) {
                 )}
               </span>
               {item.label}
-            </button>
+            </Button>
           );
         })}
       </div>
