@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   CATALOG_CATEGORY_DEFAULT_ICON,
   CATALOG_CATEGORY_ICONS,
@@ -82,12 +83,14 @@ export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalo
             {activeCategory.name}
           </div>
           {activeCategory.subs.map((sub) => (
-            <div
+            <Link
               key={sub.id}
-              className="cursor-pointer py-[9px] text-[13.5px] text-muted hover:text-accent"
+              href={`/catalog/${sub.slug}`}
+              onClick={onClose}
+              className="block py-[9px] text-[13.5px] text-muted hover:text-accent"
             >
               {sub.name}
-            </div>
+            </Link>
           ))}
         </div>
       </div>

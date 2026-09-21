@@ -11,3 +11,11 @@ export type Product = {
   oldPrice: string | null;
   images: ProductImage[];
 };
+
+export type ProductsByCategoryResponse = {
+  items: Product[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+};

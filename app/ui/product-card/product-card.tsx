@@ -16,7 +16,13 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="flex flex-col gap-3 rounded-2xl bg-background p-3.5">
       <div className="relative h-[240px] overflow-hidden rounded-xl bg-footer">
-        <Image src={product.image} alt={product.imageAlt} fill className="object-cover" />
+        <Image
+          src={product.image}
+          alt={product.imageAlt}
+          sizes="100"
+          fill
+          className="object-cover"
+        />
 
         {product.badge && (
           <span

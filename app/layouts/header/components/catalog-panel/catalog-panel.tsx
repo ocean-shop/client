@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import {
   CATALOG_CATEGORY_DEFAULT_ICON,
   CATALOG_CATEGORY_ICONS,
@@ -84,12 +85,14 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
             <div className="text-base font-semibold text-foreground">{activeCategory.name}</div>
             <div className="columns-2 gap-9">
               {activeCategory.subs.map((sub) => (
-                <div
+                <Link
                   key={sub.id}
-                  className="cursor-pointer break-inside-avoid py-[7px] text-sm text-muted hover:text-accent"
+                  href={`/catalog/${sub.slug}`}
+                  onClick={() => setIsOpen(false)}
+                  className="block break-inside-avoid py-[7px] text-sm text-muted hover:text-accent"
                 >
                   {sub.name}
-                </div>
+                </Link>
               ))}
             </div>
           </div>
