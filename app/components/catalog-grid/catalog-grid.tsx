@@ -10,21 +10,15 @@ export async function CatalogGrid({ category }: CatalogGridProps) {
     .filter((product) => product.images.length > 0)
     .map(mapProductToCardDataHelper);
 
-  return (
-    <div>
-      <h1 className="pb-7 font-heading text-[28px] font-semibold tracking-[-.025em] text-foreground">
-        {category.name}
-      </h1>
+  if (catalogProducts.length === 0) {
+    return <p className="text-muted-light">{CATALOG_GRID_EMPTY_MESSAGE}</p>;
+  }
 
-      {catalogProducts.length === 0 ? (
-        <p className="text-muted-light">{CATALOG_GRID_EMPTY_MESSAGE}</p>
-      ) : (
-        <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {catalogProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      )}
+  return (
+    <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {catalogProducts.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
     </div>
   );
 }
