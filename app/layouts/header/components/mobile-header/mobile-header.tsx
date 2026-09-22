@@ -10,7 +10,7 @@ export function MobileHeader({ categories }: MobileHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 lg:hidden bg-background">
+    <header className="sticky top-0 z-40 h-[var(--mobile-header-height)] lg:hidden bg-background">
       <div className="flex items-center justify-between px-4.5 pb-2.5 pt-4">
         <Button
           variant="unstyled"

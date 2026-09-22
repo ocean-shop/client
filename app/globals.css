@@ -19,6 +19,7 @@
   --error-dark: #b42318;
   --error-border: #f6d0ce;
   --page-width: 1600px;
+  --mobile-header-height: 144px;
 }
 
 @theme inline {

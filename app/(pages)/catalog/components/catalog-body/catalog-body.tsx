@@ -5,6 +5,7 @@ import { Pagination } from "@/app/ui/pagination/pagination";
 import { getCatalogCategories } from "@/app/shared/catalog-categories/api/get-catalog-categories";
 import { getCatalogCategoryAncestorsHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-ancestors";
 import { getProductsByCategory } from "@/app/shared/products/api/get-products-by-category";
+import { countVisibleProductsHelper } from "@/app/shared/products/helpers/count-visible-products";
 import {
   CATALOG_BODY_HOME_BREADCRUMB_ITEM,
   CATALOG_BODY_PRODUCTS_PER_PAGE,
@@ -26,7 +27,7 @@ export async function CatalogBody({ category }: CatalogBodyProps) {
     { label: category.name },
   ];
 
-  const productsCount = products.filter((product) => product.images.length > 0).length;
+  const productsCount = countVisibleProductsHelper(products);
   const totalPages = Math.max(1, Math.ceil(productsCount / CATALOG_BODY_PRODUCTS_PER_PAGE));
 
   return (
@@ -45,7 +46,9 @@ export async function CatalogBody({ category }: CatalogBodyProps) {
           </div>
         </div>
 
-        <Select label={CATALOG_BODY_SORT_LABEL} options={CATALOG_BODY_SORT_OPTIONS} />
+        <div className="hidden lg:block">
+          <Select label={CATALOG_BODY_SORT_LABEL} options={CATALOG_BODY_SORT_OPTIONS} />
+        </div>
       </div>
 
       <CatalogGrid category={category} />
