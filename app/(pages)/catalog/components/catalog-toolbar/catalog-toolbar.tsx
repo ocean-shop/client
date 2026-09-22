@@ -15,6 +15,7 @@ export function CatalogToolbar({
   defaultSortId,
   onSortChange,
   resultsCount,
+  filterGroups,
 }: CatalogToolbarProps) {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -55,6 +56,7 @@ export function CatalogToolbar({
         onClose={() => setIsFiltersOpen(false)}
         onSelectedCountChange={setFilterCount}
         resultsCount={resultsCount}
+        groups={filterGroups}
       />
 
       <CatalogSortSheet

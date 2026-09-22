@@ -11,10 +11,10 @@ import {
   CATALOG_FILTERS_PRICE_LABEL,
   CATALOG_FILTERS_PRICE_TO_PLACEHOLDER,
   CATALOG_FILTERS_VISIBLE_OPTIONS_COUNT,
-  CATALOG_FILTER_GROUPS,
 } from "./constants/catalog-filters.constants";
+import type { CatalogFiltersProps } from "./types/catalog-filters.types";
 
-export function CatalogFilters() {
+export function CatalogFilters({ groups }: CatalogFiltersProps) {
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
   const [selectedOptionIds, setSelectedOptionIds] = useState<Set<string>>(new Set());
@@ -65,7 +65,7 @@ export function CatalogFilters() {
         <Button>{CATALOG_FILTERS_APPLY_LABEL}</Button>
       </div>
 
-      {CATALOG_FILTER_GROUPS.map((group) => {
+      {groups.map((group) => {
         const isCollapsed = collapsedGroupIds.has(group.id);
         const isExpanded = expandedGroupIds.has(group.id);
         const visibleOptions = isExpanded

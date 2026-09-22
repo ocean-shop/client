@@ -10,7 +10,6 @@ import {
   CATALOG_FILTERS_PRICE_LABEL,
   CATALOG_FILTERS_PRICE_TO_PLACEHOLDER,
   CATALOG_FILTERS_VISIBLE_OPTIONS_COUNT,
-  CATALOG_FILTER_GROUPS,
 } from "../../../catalog-filters/constants/catalog-filters.constants";
 import {
   CATALOG_FILTERS_SHEET_CLOSE_LABEL,
@@ -25,6 +24,7 @@ export function CatalogFiltersSheet({
   onClose,
   onSelectedCountChange,
   resultsCount,
+  groups,
 }: CatalogFiltersSheetProps) {
   const [priceFrom, setPriceFrom] = useState("");
   const [priceTo, setPriceTo] = useState("");
@@ -113,7 +113,7 @@ export function CatalogFiltersSheet({
           </div>
         </div>
 
-        {CATALOG_FILTER_GROUPS.map((group) => {
+        {groups.map((group) => {
           const isCollapsed = collapsedGroupIds.has(group.id);
           const isExpanded = expandedGroupIds.has(group.id);
           const visibleOptions = isExpanded

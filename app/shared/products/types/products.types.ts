@@ -12,6 +12,11 @@ export type Product = {
   images: ProductImage[];
 };
 
+export type CatalogFilter = {
+  name: string;
+  values: string[];
+};
+
 export type ProductsByCategoryResponse = {
   items: Product[];
   total: number;
