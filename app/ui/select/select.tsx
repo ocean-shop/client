@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/app/ui/button/button";
 import type { SelectProps } from "./types/select.types";
 
-export function Select({ options, label, defaultSelectedId, onChange }: SelectProps) {
+export function Select({ options, label, selectedId, defaultSelectedId, onChange }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState(defaultSelectedId ?? options[0]?.id);
+  const [internalSelectedId, setInternalSelectedId] = useState(defaultSelectedId ?? options[0]?.id);
   const selectRef = useRef<HTMLDivElement>(null);
 
-  const selectedOption = options.find((option) => option.id === selectedId) ?? options[0];
+  const activeId = selectedId ?? internalSelectedId;
+  const selectedOption = options.find((option) => option.id === activeId) ?? options[0];
 
   useEffect(() => {
     if (!isOpen) return;
@@ -25,7 +26,7 @@ export function Select({ options, label, defaultSelectedId, onChange }: SelectPr
   }, [isOpen]);
 
   function handleSelect(id: string) {
-    setSelectedId(id);
+    setInternalSelectedId(id);
     setIsOpen(false);
     onChange?.(id);
   }
@@ -50,7 +51,7 @@ export function Select({ options, label, defaultSelectedId, onChange }: SelectPr
         {isOpen && (
           <div className="absolute right-0 top-[calc(100%+6px)] z-10 w-[252px] rounded-xl border border-border-soft bg-background p-1.5 shadow-[0_18px_40px_-22px_rgba(17,28,45,.45)]">
             {options.map((option) => {
-              const isSelected = option.id === selectedId;
+              const isSelected = option.id === activeId;
 
               return (
                 <div

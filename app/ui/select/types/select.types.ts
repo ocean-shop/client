@@ -6,6 +6,8 @@ export type SelectOption = {
 export type SelectProps = {
   options: SelectOption[];
   label?: string;
+  /** Controls the selection from outside; falls back to internal state when omitted. */
+  selectedId?: string;
   defaultSelectedId?: string;
   onChange?: (id: string) => void;
 };

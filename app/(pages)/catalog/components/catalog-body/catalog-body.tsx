@@ -1,24 +1,19 @@
 import { CatalogGrid } from "@/app/components/catalog-grid/catalog-grid";
 import { Breadcrumb } from "@/app/ui/breadcrumb/breadcrumb";
-import { Select } from "@/app/ui/select/select";
-import { Pagination } from "@/app/ui/pagination/pagination";
 import { getCatalogCategories } from "@/app/shared/catalog-categories/api/get-catalog-categories";
 import { getCatalogCategoryAncestorsHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-ancestors";
-import { getProductsByCategory } from "@/app/shared/products/api/get-products-by-category";
-import { countVisibleProductsHelper } from "@/app/shared/products/helpers/count-visible-products";
+import { countCatalogActiveFiltersHelper } from "@/app/shared/products/helpers/count-catalog-active-filters";
+import { CatalogPagination } from "./components/catalog-pagination/catalog-pagination";
+import { CatalogSortSelect } from "./components/catalog-sort-select/catalog-sort-select";
 import {
   CATALOG_BODY_HOME_BREADCRUMB_ITEM,
-  CATALOG_BODY_PRODUCTS_PER_PAGE,
-  CATALOG_BODY_SORT_LABEL,
-  CATALOG_BODY_SORT_OPTIONS,
+  CATALOG_BODY_NO_MATCHES_MESSAGE,
+  CATALOG_BODY_PRODUCTS_LABEL,
 } from "./constants/catalog-body.constants";
 import type { CatalogBodyProps } from "./types/catalog-body.types";
 
-export async function CatalogBody({ category }: CatalogBodyProps) {
-  const [categories, products] = await Promise.all([
-    getCatalogCategories(),
-    getProductsByCategory(category.id),
-  ]);
+export async function CatalogBody({ category, query, productList }: CatalogBodyProps) {
+  const categories = await getCatalogCategories();
 
   const ancestors = getCatalogCategoryAncestorsHelper(categories, category);
   const breadcrumbItems = [
@@ -27,8 +22,7 @@ export async function CatalogBody({ category }: CatalogBodyProps) {
     { label: category.name },
   ];
 
-  const productsCount = countVisibleProductsHelper(products);
-  const totalPages = Math.max(1, Math.ceil(productsCount / CATALOG_BODY_PRODUCTS_PER_PAGE));
+  const hasActiveFilters = countCatalogActiveFiltersHelper(query) > 0;
 
   return (
     <div className="flex flex-col">
@@ -41,19 +35,22 @@ export async function CatalogBody({ category }: CatalogBodyProps) {
               {category.name}
             </h1>
             <span className="text-sm text-muted-light">
-              {productsCount.toLocaleString("uk-UA")} товарів
+              {productList.total.toLocaleString("uk-UA")} {CATALOG_BODY_PRODUCTS_LABEL}
             </span>
           </div>
         </div>
 
         <div className="hidden lg:block">
-          <Select label={CATALOG_BODY_SORT_LABEL} options={CATALOG_BODY_SORT_OPTIONS} />
+          <CatalogSortSelect query={query} />
         </div>
       </div>
 
-      <CatalogGrid category={category} />
+      <CatalogGrid
+        products={productList.items}
+        emptyMessage={hasActiveFilters ? CATALOG_BODY_NO_MATCHES_MESSAGE : undefined}
+      />
 
-      <Pagination totalPages={totalPages} />
+      <CatalogPagination query={query} totalPages={productList.totalPages} />
     </div>
   );
 }

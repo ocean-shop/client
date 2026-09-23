@@ -1,10 +1,9 @@
-import type { SelectOption } from "@/app/ui/select/types/select.types";
+import type { CatalogProductsQuery } from "@/app/shared/products/types/products.types";
 import type { CatalogFilterGroup } from "../../catalog-filters/types/catalog-filters.types";
 
 export type CatalogToolbarProps = {
-  sortOptions: SelectOption[];
-  defaultSortId?: string;
-  onSortChange?: (sortId: string) => void;
+  query: CatalogProductsQuery;
+  /** Total matching products for the currently applied query. */
   resultsCount: number;
   filterGroups: CatalogFilterGroup[];
 };

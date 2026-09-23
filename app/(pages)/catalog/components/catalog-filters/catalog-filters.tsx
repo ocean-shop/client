@@ -3,31 +3,31 @@
 import { useState } from "react";
 import { Button } from "@/app/ui/button/button";
 import { Checkbox } from "@/app/ui/checkbox/checkbox";
-import { Input } from "@/app/ui/input/input";
+import { countCatalogActiveFiltersHelper } from "@/app/shared/products/helpers/count-catalog-active-filters";
+import { hasCatalogAttributeValueHelper } from "@/app/shared/products/helpers/has-catalog-attribute-value";
+import { toggleCatalogAttributeValueHelper } from "@/app/shared/products/helpers/toggle-catalog-attribute-value";
+import { useCatalogQuery } from "../../hooks/use-catalog-query";
+import { CatalogPriceFilter } from "./components/catalog-price-filter/catalog-price-filter";
 import {
-  CATALOG_FILTERS_APPLY_LABEL,
+  CATALOG_FILTERS_AVAILABILITY_LABEL,
+  CATALOG_FILTERS_AVAILABLE_ONLY_LABEL,
   CATALOG_FILTERS_MORE_LABEL,
-  CATALOG_FILTERS_PRICE_FROM_PLACEHOLDER,
-  CATALOG_FILTERS_PRICE_LABEL,
-  CATALOG_FILTERS_PRICE_TO_PLACEHOLDER,
+  CATALOG_FILTERS_RESET_LABEL,
   CATALOG_FILTERS_VISIBLE_OPTIONS_COUNT,
 } from "./constants/catalog-filters.constants";
 import type { CatalogFiltersProps } from "./types/catalog-filters.types";
 
-export function CatalogFilters({ groups }: CatalogFiltersProps) {
-  const [priceFrom, setPriceFrom] = useState("");
-  const [priceTo, setPriceTo] = useState("");
-  const [selectedOptionIds, setSelectedOptionIds] = useState<Set<string>>(new Set());
+export function CatalogFilters({ groups, query }: CatalogFiltersProps) {
+  const { applyQuery, isPending } = useCatalogQuery(query);
   const [collapsedGroupIds, setCollapsedGroupIds] = useState<Set<string>>(new Set());
   const [expandedGroupIds, setExpandedGroupIds] = useState<Set<string>>(new Set());
 
-  function toggleOption(optionId: string) {
-    setSelectedOptionIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(optionId)) next.delete(optionId);
-      else next.add(optionId);
-      return next;
-    });
+  function toggleOption(name: string, value: string) {
+    applyQuery({ attributes: toggleCatalogAttributeValueHelper(query.attributes, name, value) });
+  }
+
+  function resetFilters() {
+    applyQuery({ attributes: [], priceFrom: undefined, priceTo: undefined, available: undefined });
   }
 
   function toggleGroupCollapsed(groupId: string) {
@@ -44,25 +44,23 @@ export function CatalogFilters({ groups }: CatalogFiltersProps) {
   }
 
   return (
-    <div className="flex flex-col gap-3.5">
-      <div className="flex flex-col gap-3.5 rounded-2xl bg-background p-5">
-        <div className="text-[15px] font-semibold text-foreground">
-          {CATALOG_FILTERS_PRICE_LABEL}
-        </div>
-        <div className="flex items-center gap-2.5">
-          <Input
-            value={priceFrom}
-            onChange={(event) => setPriceFrom(event.target.value)}
-            placeholder={CATALOG_FILTERS_PRICE_FROM_PLACEHOLDER}
-          />
-          <span className="text-muted-light">—</span>
-          <Input
-            value={priceTo}
-            onChange={(event) => setPriceTo(event.target.value)}
-            placeholder={CATALOG_FILTERS_PRICE_TO_PLACEHOLDER}
-          />
-        </div>
-        <Button>{CATALOG_FILTERS_APPLY_LABEL}</Button>
+    <div className={`flex flex-col gap-3.5 ${isPending ? "pointer-events-none opacity-60" : ""}`}>
+      <CatalogPriceFilter
+        key={`${query.priceFrom ?? ""}:${query.priceTo ?? ""}`}
+        priceFrom={query.priceFrom}
+        priceTo={query.priceTo}
+        onApply={applyQuery}
+      />
+
+      <div className="flex flex-col gap-3 rounded-2xl bg-background p-5">
+        <span className="text-[15px] font-semibold text-foreground">
+          {CATALOG_FILTERS_AVAILABILITY_LABEL}
+        </span>
+        <Checkbox
+          checked={query.available === true}
+          onChange={(checked) => applyQuery({ available: checked || undefined })}
+          label={CATALOG_FILTERS_AVAILABLE_ONLY_LABEL}
+        />
       </div>
 
       {groups.map((group) => {
@@ -94,8 +92,12 @@ export function CatalogFilters({ groups }: CatalogFiltersProps) {
                   {visibleOptions.map((option) => (
                     <Checkbox
                       key={option.id}
-                      checked={selectedOptionIds.has(option.id)}
-                      onChange={() => toggleOption(option.id)}
+                      checked={hasCatalogAttributeValueHelper(
+                        query.attributes,
+                        group.name,
+                        option.value
+                      )}
+                      onChange={() => toggleOption(group.name, option.value)}
                       label={option.label}
                       count={option.count}
                     />
@@ -117,6 +119,12 @@ export function CatalogFilters({ groups }: CatalogFiltersProps) {
           </div>
         );
       })}
+
+      {countCatalogActiveFiltersHelper(query) > 0 && (
+        <Button variant="outline" onClick={resetFilters}>
+          {CATALOG_FILTERS_RESET_LABEL}
+        </Button>
+      )}
     </div>
   );
 }

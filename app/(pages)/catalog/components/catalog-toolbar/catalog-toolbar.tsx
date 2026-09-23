@@ -2,6 +2,13 @@
 
 import { useState } from "react";
 import { Button } from "@/app/ui/button/button";
+import { countCatalogActiveFiltersHelper } from "@/app/shared/products/helpers/count-catalog-active-filters";
+import {
+  CATALOG_PRODUCTS_DEFAULT_SORT,
+  CATALOG_PRODUCT_SORT_OPTIONS,
+} from "@/app/shared/products/constants/products.constants";
+import type { CatalogProductSort } from "@/app/shared/products/types/products.types";
+import { useCatalogQuery } from "../../hooks/use-catalog-query";
 import { CatalogFiltersSheet } from "./components/catalog-filters-sheet/catalog-filters-sheet";
 import { CatalogSortSheet } from "./components/catalog-sort-sheet/catalog-sort-sheet";
 import {
@@ -10,22 +17,16 @@ import {
 } from "./constants/catalog-toolbar.constants";
 import type { CatalogToolbarProps } from "./types/catalog-toolbar.types";
 
-export function CatalogToolbar({
-  sortOptions,
-  defaultSortId,
-  onSortChange,
-  resultsCount,
-  filterGroups,
-}: CatalogToolbarProps) {
+export function CatalogToolbar({ query, resultsCount, filterGroups }: CatalogToolbarProps) {
+  const { applyQuery } = useCatalogQuery(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [filterCount, setFilterCount] = useState(0);
-  const [selectedSortId, setSelectedSortId] = useState(defaultSortId ?? sortOptions[0]?.id);
+
+  const filterCount = countCatalogActiveFiltersHelper(query);
 
   function handleSortSelect(sortId: string) {
-    setSelectedSortId(sortId);
     setIsSortOpen(false);
-    onSortChange?.(sortId);
+    applyQuery({ sort: sortId as CatalogProductSort });
   }
 
   return (
@@ -54,16 +55,16 @@ export function CatalogToolbar({
       <CatalogFiltersSheet
         isOpen={isFiltersOpen}
         onClose={() => setIsFiltersOpen(false)}
-        onSelectedCountChange={setFilterCount}
         resultsCount={resultsCount}
         groups={filterGroups}
+        query={query}
       />
 
       <CatalogSortSheet
         isOpen={isSortOpen}
         onClose={() => setIsSortOpen(false)}
-        options={sortOptions}
-        selectedId={selectedSortId}
+        options={CATALOG_PRODUCT_SORT_OPTIONS}
+        selectedId={query.sort ?? CATALOG_PRODUCTS_DEFAULT_SORT}
         onSelect={handleSortSelect}
       />
     </>

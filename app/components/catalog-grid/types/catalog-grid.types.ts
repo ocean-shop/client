@@ -1,5 +1,6 @@
-import type { CatalogCategory } from "@/app/shared/catalog-categories/types/catalog-categories.types";
+import type { Product } from "@/app/shared/products/types/products.types";
 
 export type CatalogGridProps = {
-  category: CatalogCategory;
+  products: Product[];
+  emptyMessage?: string;
 };

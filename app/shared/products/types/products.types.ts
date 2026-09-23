@@ -17,10 +17,23 @@ export type CatalogFilter = {
   values: string[];
 };
 
-export type ProductsByCategoryResponse = {
+export type CatalogProductSort = "popular" | "cheaper" | "expensive" | "new";
+
+export type CatalogProductsQuery = {
+  page: number;
+  attributes: CatalogFilter[];
+  sort?: CatalogProductSort;
+  priceFrom?: number;
+  priceTo?: number;
+  available?: boolean;
+};
+
+export type ProductListResponse = {
   items: Product[];
   total: number;
   page: number;
   limit: number;
   totalPages: number;
 };
+
+export type CatalogProductsSearchParams = Record<string, string | string[] | undefined>;
