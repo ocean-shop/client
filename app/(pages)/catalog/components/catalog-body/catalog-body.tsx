@@ -4,6 +4,7 @@ import { getCatalogCategories } from "@/app/shared/catalog-categories/api/get-ca
 import { getCatalogCategoryAncestorsHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-ancestors";
 import { countCatalogActiveFiltersHelper } from "@/app/shared/products/helpers/count-catalog-active-filters";
 import { CatalogPagination } from "./components/catalog-pagination/catalog-pagination";
+import { CatalogResults } from "./components/catalog-results/catalog-results";
 import { CatalogSortSelect } from "./components/catalog-sort-select/catalog-sort-select";
 import {
   CATALOG_BODY_HOME_BREADCRUMB_ITEM,
@@ -45,10 +46,12 @@ export async function CatalogBody({ category, query, productList }: CatalogBodyP
         </div>
       </div>
 
-      <CatalogGrid
-        products={productList.items}
-        emptyMessage={hasActiveFilters ? CATALOG_BODY_NO_MATCHES_MESSAGE : undefined}
-      />
+      <CatalogResults productCount={productList.items.length}>
+        <CatalogGrid
+          products={productList.items}
+          emptyMessage={hasActiveFilters ? CATALOG_BODY_NO_MATCHES_MESSAGE : undefined}
+        />
+      </CatalogResults>
 
       <CatalogPagination query={query} totalPages={productList.totalPages} />
     </div>

@@ -8,6 +8,10 @@ import { CatalogFilters } from "../components/catalog-filters/catalog-filters";
 import { mapCatalogFiltersToGroupsHelper } from "../components/catalog-filters/helpers/map-catalog-filters-to-groups";
 import { CatalogBody } from "../components/catalog-body/catalog-body";
 import { CatalogToolbar } from "../components/catalog-toolbar/catalog-toolbar";
+import {
+  CATALOG_CONTENT_CLASS_NAME,
+  CATALOG_PAGE_CLASS_NAME,
+} from "../constants/catalog.constants";
 
 export default async function CatalogPage({
   params,
@@ -29,10 +33,15 @@ export default async function CatalogPage({
   const filterGroups = mapCatalogFiltersToGroupsHelper(filters);
 
   return (
-    <div className="bg-surface-soft">
-      <CatalogToolbar query={query} resultsCount={productList.total} filterGroups={filterGroups} />
+    <div className={CATALOG_PAGE_CLASS_NAME}>
+      <CatalogToolbar
+        categoryId={category.id}
+        query={query}
+        resultsCount={productList.total}
+        filterGroups={filterGroups}
+      />
 
-      <div className="mx-auto grid max-w-page items-start gap-8 px-4.5 pb-14 pt-4 lg:grid-cols-[284px_1fr] lg:px-10 lg:pt-6.5">
+      <div className={CATALOG_CONTENT_CLASS_NAME}>
         <div className="hidden lg:block">
           <CatalogFilters groups={filterGroups} query={query} />
         </div>

@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { useReportNavigationPending } from "@/app/core/navigation-progress/hooks/use-report-navigation-pending";
 import { buildCatalogProductsSearchParamsHelper } from "@/app/shared/products/helpers/build-catalog-products-search-params";
 import type { CatalogProductsQuery } from "@/app/shared/products/types/products.types";
 
@@ -13,6 +14,8 @@ export function useCatalogQuery(query: CatalogProductsQuery) {
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
+
+  useReportNavigationPending(isPending);
 
   /** Merges changes into the current query, resetting to page 1 unless a page is given. */
   function applyQuery(changes: Partial<CatalogProductsQuery>) {

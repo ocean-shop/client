@@ -4,6 +4,9 @@ import type { CatalogFiltersSheetProps } from "./types/catalog-filters-sheet.typ
 export function CatalogFiltersSheet({
   isOpen,
   onClose,
+  onApply,
+  isApplying,
+  categoryId,
   resultsCount,
   groups,
   query,
@@ -20,7 +23,11 @@ export function CatalogFiltersSheet({
       {/* Remounting on every open reseeds the draft selections from the applied query. */}
       <CatalogFiltersSheetContent
         key={String(isOpen)}
+        isOpen={isOpen}
         onClose={onClose}
+        onApply={onApply}
+        isApplying={isApplying}
+        categoryId={categoryId}
         resultsCount={resultsCount}
         groups={groups}
         query={query}

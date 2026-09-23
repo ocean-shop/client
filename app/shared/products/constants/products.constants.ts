@@ -13,6 +13,19 @@ export const PRODUCT_CARD_DEFAULT_CTA_LABEL = "Додати в кошик";
 
 export const CATALOG_PRODUCTS_PAGE_SIZE = 20;
 
+export const CATALOG_PRODUCTS_LOCALE = "uk-UA";
+
+/** Counting only reads `total`, so the smallest page keeps the response tiny. */
+export const CATALOG_PRODUCTS_COUNT_LIMIT = 1;
+
+/** Ukrainian needs three forms: 1 товар, 3 товари, 9 товарів. */
+export const CATALOG_PRODUCTS_WORD_FORMS: Partial<Record<Intl.LDMLPluralRule, string>> = {
+  one: "товар",
+  few: "товари",
+  many: "товарів",
+  other: "товарів",
+};
+
 /** Query string keys shared by the page URL and the catalog products endpoint. */
 export const CATALOG_PRODUCTS_QUERY_PARAM = {
   page: "page",

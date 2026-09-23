@@ -4,6 +4,10 @@ import type { CatalogFilterGroup } from "../../../../catalog-filters/types/catal
 export type CatalogFiltersSheetProps = {
   isOpen: boolean;
   onClose: () => void;
+  /** Owned by the toolbar so the transition outlives the sheet being closed. */
+  onApply: (query: CatalogProductsQuery) => void;
+  isApplying: boolean;
+  categoryId: string;
   /** Total matching products for the currently applied query. */
   resultsCount: number;
   groups: CatalogFilterGroup[];

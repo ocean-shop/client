@@ -1,6 +1,9 @@
 import { ProductCard } from "../../ui/product-card/product-card";
 import { mapProductToCardDataHelper } from "../../shared/products/helpers/map-product-to-card-data";
-import { CATALOG_GRID_EMPTY_MESSAGE } from "./constants/catalog-grid.constants";
+import {
+  CATALOG_GRID_CLASS_NAME,
+  CATALOG_GRID_EMPTY_MESSAGE,
+} from "./constants/catalog-grid.constants";
 import type { CatalogGridProps } from "./types/catalog-grid.types";
 
 export function CatalogGrid({ products, emptyMessage }: CatalogGridProps) {
@@ -14,7 +17,7 @@ export function CatalogGrid({ products, emptyMessage }: CatalogGridProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-7 xl:grid-cols-4">
+    <div className={CATALOG_GRID_CLASS_NAME}>
       {catalogProducts.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}

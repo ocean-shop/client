@@ -1,8 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/app/ui/button/button";
-import { HEADER_BRAND_NAME, HEADER_SEARCH_PLACEHOLDER } from "../../constants/header.constants";
+import {
+  HEADER_BRAND_NAME,
+  HEADER_HOME_HREF,
+  HEADER_SEARCH_PLACEHOLDER,
+} from "../../constants/header.constants";
 import { NavDrawer } from "./components/nav-drawer/nav-drawer";
 import type { MobileHeaderProps } from "./types/mobile-header.types";
 
@@ -21,9 +26,12 @@ export function MobileHeader({ categories }: MobileHeaderProps) {
         >
           menu
         </Button>
-        <span className="font-heading text-lg font-semibold text-foreground">
+        <Link
+          href={HEADER_HOME_HREF}
+          className="font-heading text-lg font-semibold text-foreground"
+        >
           {HEADER_BRAND_NAME}
-        </span>
+        </Link>
       </div>
 
       <div className="px-4.5 pb-3">

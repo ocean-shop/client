@@ -4,10 +4,14 @@ import { useState } from "react";
 import { Button } from "@/app/ui/button/button";
 import { Checkbox } from "@/app/ui/checkbox/checkbox";
 import { Input } from "@/app/ui/input/input";
+import { formatProductsCountHelper } from "@/app/shared/products/helpers/format-products-count";
 import { hasCatalogAttributeValueHelper } from "@/app/shared/products/helpers/has-catalog-attribute-value";
 import { toggleCatalogAttributeValueHelper } from "@/app/shared/products/helpers/toggle-catalog-attribute-value";
-import type { CatalogFilter } from "@/app/shared/products/types/products.types";
-import { useCatalogQuery } from "../../../../../../hooks/use-catalog-query";
+import type {
+  CatalogFilter,
+  CatalogProductsQuery,
+} from "@/app/shared/products/types/products.types";
+import { useCatalogProductsCount } from "../../../../../../hooks/use-catalog-products-count";
 import { parsePriceInputHelper } from "../../../../../catalog-filters/helpers/parse-price-input";
 import {
   CATALOG_FILTERS_AVAILABILITY_LABEL,
@@ -28,18 +32,32 @@ import type { CatalogFiltersSheetContentProps } from "./types/catalog-filters-sh
 
 /** Selections stay local until "show results" applies them to the URL. */
 export function CatalogFiltersSheetContent({
+  isOpen,
   onClose,
+  onApply,
+  isApplying,
+  categoryId,
   resultsCount,
   groups,
   query,
 }: CatalogFiltersSheetContentProps) {
-  const { applyQuery, isPending } = useCatalogQuery(query);
   const [priceFrom, setPriceFrom] = useState(query.priceFrom?.toString() ?? "");
   const [priceTo, setPriceTo] = useState(query.priceTo?.toString() ?? "");
   const [attributes, setAttributes] = useState<CatalogFilter[]>(query.attributes);
   const [isAvailableOnly, setIsAvailableOnly] = useState(query.available === true);
   const [collapsedGroupIds, setCollapsedGroupIds] = useState<Set<string>>(new Set());
   const [expandedGroupIds, setExpandedGroupIds] = useState<Set<string>>(new Set());
+
+  const draftQuery: CatalogProductsQuery = {
+    ...query,
+    page: 1,
+    attributes,
+    priceFrom: parsePriceInputHelper(priceFrom),
+    priceTo: parsePriceInputHelper(priceTo),
+    available: isAvailableOnly || undefined,
+  };
+
+  const { count, isCounting } = useCatalogProductsCount(categoryId, draftQuery, isOpen);
 
   function toggleOption(name: string, value: string) {
     setAttributes((prev) => toggleCatalogAttributeValueHelper(prev, name, value));
@@ -66,13 +84,7 @@ export function CatalogFiltersSheetContent({
   }
 
   function showResults() {
-    applyQuery({
-      attributes,
-      priceFrom: parsePriceInputHelper(priceFrom),
-      priceTo: parsePriceInputHelper(priceTo),
-      available: isAvailableOnly || undefined,
-    });
-    onClose();
+    onApply(draftQuery);
   }
 
   return (
@@ -208,10 +220,14 @@ export function CatalogFiltersSheetContent({
         <Button
           size="auto"
           onClick={showResults}
-          disabled={isPending}
+          disabled={isApplying}
           className="h-[50px] flex-1 rounded-xl text-[14.5px] font-semibold"
         >
-          {CATALOG_FILTERS_SHEET_SHOW_RESULTS_LABEL} {resultsCount.toLocaleString("uk-UA")} товарів
+          {/* Falls back to the applied total until the first draft count arrives. */}
+          <span className={isCounting ? "opacity-60" : ""}>
+            {CATALOG_FILTERS_SHEET_SHOW_RESULTS_LABEL}{" "}
+            {formatProductsCountHelper(count ?? resultsCount)}
+          </span>
         </Button>
       </div>
     </>

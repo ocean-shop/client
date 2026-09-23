@@ -57,7 +57,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <ToastProvider>
           <QueryProvider>
             <Header />
-            {children}
+            {/* Grows to fill short pages so the footer stays at the bottom of the viewport. */}
+            <main className="flex flex-1 flex-col">{children}</main>
             <Footer />
             <BottomTabBar categories={categoryTree} />
           </QueryProvider>

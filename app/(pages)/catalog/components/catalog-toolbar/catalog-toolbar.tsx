@@ -7,7 +7,10 @@ import {
   CATALOG_PRODUCTS_DEFAULT_SORT,
   CATALOG_PRODUCT_SORT_OPTIONS,
 } from "@/app/shared/products/constants/products.constants";
-import type { CatalogProductSort } from "@/app/shared/products/types/products.types";
+import type {
+  CatalogProductSort,
+  CatalogProductsQuery,
+} from "@/app/shared/products/types/products.types";
 import { useCatalogQuery } from "../../hooks/use-catalog-query";
 import { CatalogFiltersSheet } from "./components/catalog-filters-sheet/catalog-filters-sheet";
 import { CatalogSortSheet } from "./components/catalog-sort-sheet/catalog-sort-sheet";
@@ -17,8 +20,13 @@ import {
 } from "./constants/catalog-toolbar.constants";
 import type { CatalogToolbarProps } from "./types/catalog-toolbar.types";
 
-export function CatalogToolbar({ query, resultsCount, filterGroups }: CatalogToolbarProps) {
-  const { applyQuery } = useCatalogQuery(query);
+export function CatalogToolbar({
+  categoryId,
+  query,
+  resultsCount,
+  filterGroups,
+}: CatalogToolbarProps) {
+  const { applyQuery, isPending } = useCatalogQuery(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
 
@@ -27,6 +35,15 @@ export function CatalogToolbar({ query, resultsCount, filterGroups }: CatalogToo
   function handleSortSelect(sortId: string) {
     setIsSortOpen(false);
     applyQuery({ sort: sortId as CatalogProductSort });
+  }
+
+  /**
+   * Applying from the toolbar rather than from inside the sheet: closing the sheet unmounts
+   * its content, which would end the transition before the new products arrive.
+   */
+  function handleFiltersApply(nextQuery: CatalogProductsQuery) {
+    setIsFiltersOpen(false);
+    applyQuery(nextQuery);
   }
 
   return (
@@ -55,6 +72,9 @@ export function CatalogToolbar({ query, resultsCount, filterGroups }: CatalogToo
       <CatalogFiltersSheet
         isOpen={isFiltersOpen}
         onClose={() => setIsFiltersOpen(false)}
+        onApply={handleFiltersApply}
+        isApplying={isPending}
+        categoryId={categoryId}
         resultsCount={resultsCount}
         groups={filterGroups}
         query={query}

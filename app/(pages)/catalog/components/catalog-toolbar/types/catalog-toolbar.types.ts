@@ -2,6 +2,7 @@ import type { CatalogProductsQuery } from "@/app/shared/products/types/products.
 import type { CatalogFilterGroup } from "../../catalog-filters/types/catalog-filters.types";
 
 export type CatalogToolbarProps = {
+  categoryId: string;
   query: CatalogProductsQuery;
   /** Total matching products for the currently applied query. */
   resultsCount: number;
