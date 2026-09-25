@@ -6,6 +6,7 @@ import { countCatalogActiveFiltersHelper } from "@/app/shared/products/helpers/c
 import { CatalogPagination } from "./components/catalog-pagination/catalog-pagination";
 import { CatalogResults } from "./components/catalog-results/catalog-results";
 import { CatalogSortSelect } from "./components/catalog-sort-select/catalog-sort-select";
+import { CatalogSubCategories } from "./components/catalog-sub-categories/catalog-sub-categories";
 import {
   CATALOG_BODY_HOME_BREADCRUMB_ITEM,
   CATALOG_BODY_NO_MATCHES_MESSAGE,
@@ -45,6 +46,8 @@ export async function CatalogBody({ category, query, productList }: CatalogBodyP
           <CatalogSortSelect query={query} />
         </div>
       </div>
+
+      <CatalogSubCategories parentId={category.id} />
 
       <CatalogResults productCount={productList.items.length}>
         <CatalogGrid
