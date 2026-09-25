@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/app/ui/button/button";
 import {
   CATALOG_CATEGORY_DEFAULT_ICON,
   CATALOG_CATEGORY_ICONS,
@@ -29,14 +31,15 @@ export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalo
         <span className="font-heading text-[19px] font-semibold tracking-[-.02em] text-foreground">
           {HEADER_CATALOG_LABEL}
         </span>
-        <button
-          type="button"
+        <Button
+          variant="unstyled"
+          size="auto"
           onClick={onClose}
           aria-label="Закрити каталог"
           className="font-symbols text-2xl text-muted"
         >
           close
-        </button>
+        </Button>
       </div>
 
       <div className="grid min-h-0 flex-1 grid-cols-[150px_1fr] gap-3 p-3.5 pb-[100px]">
@@ -44,17 +47,16 @@ export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalo
           {categories.map((category) => {
             const isActive = category.id === activeCategoryId;
             const icon = CATALOG_CATEGORY_ICONS[category.slug] ?? CATALOG_CATEGORY_DEFAULT_ICON;
+            const hasSubs = category.subs.length > 0;
 
-            return (
-              <div
-                key={category.id}
-                onClick={() => setActiveCategoryId(category.id)}
-                className={`flex cursor-pointer items-center gap-2.5 rounded-xl border px-2.5 py-3 ${
-                  isActive
-                    ? "border-accent-soft bg-accent-soft text-accent-dark"
-                    : "border-transparent text-foreground"
-                }`}
-              >
+            const itemClassName = `flex cursor-pointer items-center gap-2.5 rounded-xl border px-2.5 py-3 ${
+              isActive
+                ? "border-accent-soft bg-accent-soft text-accent-dark"
+                : "border-transparent text-foreground"
+            }`;
+
+            const content = (
+              <>
                 <span
                   className={`font-symbols text-[20px] ${isActive ? "text-accent" : "text-muted"}`}
                 >
@@ -65,13 +67,36 @@ export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalo
                 >
                   {category.name}
                 </span>
-                {category.subs.length > 0 && (
+                {hasSubs && (
                   <span
                     className={`font-symbols text-[17px] ${isActive ? "text-accent" : "text-muted-light"}`}
                   >
                     chevron_right
                   </span>
                 )}
+              </>
+            );
+
+            if (!hasSubs) {
+              return (
+                <Link
+                  key={category.id}
+                  href={`/catalog/${category.slug}`}
+                  onClick={onClose}
+                  className={itemClassName}
+                >
+                  {content}
+                </Link>
+              );
+            }
+
+            return (
+              <div
+                key={category.id}
+                onClick={() => setActiveCategoryId(category.id)}
+                className={itemClassName}
+              >
+                {content}
               </div>
             );
           })}
@@ -82,12 +107,14 @@ export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalo
             {activeCategory.name}
           </div>
           {activeCategory.subs.map((sub) => (
-            <div
+            <Link
               key={sub.id}
-              className="cursor-pointer py-[9px] text-[13.5px] text-muted hover:text-accent"
+              href={`/catalog/${sub.slug}`}
+              onClick={onClose}
+              className="block py-[9px] text-[13.5px] text-muted hover:text-accent"
             >
               {sub.name}
-            </div>
+            </Link>
           ))}
         </div>
       </div>

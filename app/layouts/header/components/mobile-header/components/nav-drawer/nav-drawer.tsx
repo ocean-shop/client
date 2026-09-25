@@ -1,3 +1,4 @@
+import { Button } from "@/app/ui/button/button";
 import { HEADER_BRAND_NAME, HEADER_CART_COUNT } from "../../../../constants/header.constants";
 import {
   NAV_DRAWER_CART_LABEL,
@@ -32,18 +33,19 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
       >
         <div className="flex items-center justify-between bg-accent px-4.5 py-5 text-white">
           <span className="font-heading text-lg font-semibold">{HEADER_BRAND_NAME}</span>
-          <button
-            type="button"
+          <Button
+            variant="unstyled"
+            size="auto"
             onClick={onClose}
             aria-label="Закрити меню"
             className="font-symbols text-2xl"
           >
             close
-          </button>
+          </Button>
         </div>
 
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-3.5 py-3.5 [scrollbar-width:none]">
-          <div className="flex flex-col overflow-hidden rounded-[14px] bg-background">
+          <div className="flex shrink-0 flex-col overflow-hidden rounded-[14px] bg-background">
             <div className="flex cursor-pointer items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground hover:bg-surface">
               <span className="font-symbols text-[21px] text-accent">shopping_bag</span>
               {NAV_DRAWER_CART_LABEL}
@@ -63,7 +65,7 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
           {NAV_DRAWER_GROUPS.map((group) => (
             <div
               key={group.title}
-              className="flex flex-col gap-0.5 rounded-[14px] bg-background p-4"
+              className="flex shrink-0 flex-col gap-0.5 rounded-[14px] bg-background p-4"
             >
               <div className="pb-2 text-sm font-semibold text-foreground">{group.title}</div>
               {group.items.map((item) => (
@@ -77,7 +79,7 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
             </div>
           ))}
 
-          <div className="flex flex-col gap-1.5 rounded-[14px] bg-accent-soft p-4">
+          <div className="flex shrink-0 flex-col gap-1.5 rounded-[14px] bg-accent-soft p-4">
             <div className="text-xs font-semibold uppercase tracking-[.1em] text-accent">
               {NAV_DRAWER_SUPPORT_LABEL}
             </div>

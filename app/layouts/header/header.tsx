@@ -3,7 +3,7 @@ import { CatalogPanel } from "./components/catalog-panel/catalog-panel";
 import {
   HEADER_BRAND_NAME,
   HEADER_CART_COUNT,
-  HEADER_NAV_CATALOG_ITEM,
+  HEADER_HOME_HREF,
   HEADER_NAV_SALES_ITEM,
   HEADER_SEARCH_PLACEHOLDER,
 } from "./constants/header.constants";
@@ -17,7 +17,7 @@ export async function Header() {
     label: category.name,
     href: `/catalog/${category.slug}`,
   }));
-  const navItems = [HEADER_NAV_CATALOG_ITEM, ...categoryNavItems, HEADER_NAV_SALES_ITEM];
+  const navItems = [...categoryNavItems, HEADER_NAV_SALES_ITEM];
 
   return (
     <>
@@ -25,14 +25,17 @@ export async function Header() {
 
       <header className="sticky top-0 z-30 hidden lg:block bg-background">
         <div className="mx-auto flex max-w-page items-center gap-7 px-10 py-5">
-          <div className="flex items-center gap-2">
-            <span className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-accent font-symbols text-[17px] text-white">
+          <Link href={HEADER_HOME_HREF} className="flex items-center gap-2">
+            <span
+              aria-hidden
+              className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-accent font-symbols text-[17px] text-white"
+            >
               waves
             </span>
             <span className="font-heading text-[19px] font-semibold tracking-tight text-foreground">
               {HEADER_BRAND_NAME}
             </span>
-          </div>
+          </Link>
 
           <CatalogPanel categories={categoryTree} />
 

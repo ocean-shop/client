@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { Button } from "@/app/ui/button/button";
 import {
   CATALOG_CATEGORY_DEFAULT_ICON,
   CATALOG_CATEGORY_ICONS,
@@ -34,14 +36,15 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
 
   return (
     <div ref={panelRef} className="relative hidden lg:block">
-      <button
-        type="button"
+      <Button
+        variant="soft"
+        size="auto"
         onClick={() => setIsOpen((open) => !open)}
-        className="flex h-[42px] items-center gap-2 rounded-[10px] bg-accent-soft px-5 text-[14.5px] font-semibold text-accent-dark"
+        className="h-[42px] gap-2 rounded-[10px] px-5 text-[14.5px]"
       >
         <span className="font-symbols text-[20px]">apps</span>
         {HEADER_CATALOG_LABEL}
-      </button>
+      </Button>
 
       {isOpen && (
         <div className="absolute left-0 top-[calc(100%+12px)] z-20 grid w-[1100px] grid-cols-[262px_1fr_268px] overflow-hidden rounded-[14px] border border-border-soft bg-background shadow-[0_30px_60px_-30px_rgba(17,28,45,0.45)]">
@@ -49,17 +52,16 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
             {categories.map((category) => {
               const isActive = category.id === activeCategoryId;
               const icon = CATALOG_CATEGORY_ICONS[category.slug] ?? CATALOG_CATEGORY_DEFAULT_ICON;
+              const hasSubs = category.subs.length > 0;
 
-              return (
-                <div
-                  key={category.id}
-                  onClick={() => setActiveCategoryId(category.id)}
-                  className={`flex cursor-pointer items-center gap-2.5 rounded-[10px] border px-3 py-[11px] ${
-                    isActive
-                      ? "border-accent-soft bg-accent-soft text-accent-dark"
-                      : "border-transparent text-foreground"
-                  }`}
-                >
+              const itemClassName = `flex cursor-pointer items-center gap-2.5 rounded-[10px] border px-3 py-[11px] ${
+                isActive
+                  ? "border-accent-soft bg-accent-soft text-accent-dark"
+                  : "border-transparent text-foreground"
+              }`;
+
+              const content = (
+                <>
                   <span
                     className={`font-symbols text-[20px] ${isActive ? "text-accent" : "text-muted"}`}
                   >
@@ -68,13 +70,36 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
                   <span className={`flex-1 text-sm ${isActive ? "font-semibold" : "font-medium"}`}>
                     {category.name}
                   </span>
-                  {category.subs.length > 0 && (
+                  {hasSubs && (
                     <span
                       className={`font-symbols text-[18px] ${isActive ? "text-accent" : "text-muted-light"}`}
                     >
                       chevron_right
                     </span>
                   )}
+                </>
+              );
+
+              if (!hasSubs) {
+                return (
+                  <Link
+                    key={category.id}
+                    href={`/catalog/${category.slug}`}
+                    onClick={() => setIsOpen(false)}
+                    className={itemClassName}
+                  >
+                    {content}
+                  </Link>
+                );
+              }
+
+              return (
+                <div
+                  key={category.id}
+                  onClick={() => setActiveCategoryId(category.id)}
+                  className={itemClassName}
+                >
+                  {content}
                 </div>
               );
             })}
@@ -84,12 +109,14 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
             <div className="text-base font-semibold text-foreground">{activeCategory.name}</div>
             <div className="columns-2 gap-9">
               {activeCategory.subs.map((sub) => (
-                <div
+                <Link
                   key={sub.id}
-                  className="cursor-pointer break-inside-avoid py-[7px] text-sm text-muted hover:text-accent"
+                  href={`/catalog/${sub.slug}`}
+                  onClick={() => setIsOpen(false)}
+                  className="block break-inside-avoid py-[7px] text-sm text-muted hover:text-accent"
                 >
                   {sub.name}
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -112,12 +139,9 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
                 {CATALOG_PANEL_PROMO.oldPrice}
               </span>
             </div>
-            <button
-              type="button"
-              className="h-11 rounded-[10px] bg-white text-sm font-semibold text-accent hover:bg-accent-soft"
-            >
+            <Button variant="primary-inverse" size="auto" className="h-11 rounded-[10px] text-sm">
               {CATALOG_PANEL_PROMO.ctaLabel}
-            </button>
+            </Button>
           </div>
         </div>
       )}

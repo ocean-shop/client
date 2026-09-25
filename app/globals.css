@@ -13,11 +13,13 @@
   --accent-light: #37b79f;
   --surface: #edf5f2;
   --surface-soft: #f4f9f7;
+  --surface-strong: #d7e9e3;
   --border-soft: #dcebe7;
   --error: #e5484d;
   --error-dark: #b42318;
   --error-border: #f6d0ce;
   --page-width: 1600px;
+  --mobile-header-height: 144px;
 }
 
 @theme inline {
@@ -33,6 +35,7 @@
   --color-accent-light: var(--accent-light);
   --color-surface: var(--surface);
   --color-surface-soft: var(--surface-soft);
+  --color-surface-strong: var(--surface-strong);
   --color-border-soft: var(--border-soft);
   --color-error: var(--error);
   --color-error-dark: var(--error-dark);

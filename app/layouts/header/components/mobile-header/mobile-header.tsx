@@ -1,7 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
-import { HEADER_BRAND_NAME, HEADER_SEARCH_PLACEHOLDER } from "../../constants/header.constants";
+import { Button } from "@/app/ui/button/button";
+import {
+  HEADER_BRAND_NAME,
+  HEADER_HOME_HREF,
+  HEADER_SEARCH_PLACEHOLDER,
+} from "../../constants/header.constants";
 import { NavDrawer } from "./components/nav-drawer/nav-drawer";
 import type { MobileHeaderProps } from "./types/mobile-header.types";
 
@@ -9,19 +15,23 @@ export function MobileHeader({ categories }: MobileHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 lg:hidden bg-background">
+    <header className="sticky top-0 z-40 h-[var(--mobile-header-height)] lg:hidden bg-background">
       <div className="flex items-center justify-between px-4.5 pb-2.5 pt-4">
-        <button
-          type="button"
+        <Button
+          variant="unstyled"
+          size="auto"
           onClick={() => setIsMenuOpen(true)}
           aria-label="Відкрити меню"
           className="font-symbols text-2xl text-muted"
         >
           menu
-        </button>
-        <span className="font-heading text-lg font-semibold text-foreground">
+        </Button>
+        <Link
+          href={HEADER_HOME_HREF}
+          className="font-heading text-lg font-semibold text-foreground"
+        >
           {HEADER_BRAND_NAME}
-        </span>
+        </Link>
       </div>
 
       <div className="px-4.5 pb-3">
@@ -33,9 +43,9 @@ export function MobileHeader({ categories }: MobileHeaderProps) {
 
       <div className="flex gap-4.5 overflow-x-auto px-4.5 pb-3 text-[13.5px] text-foreground [scrollbar-width:none]">
         {categories.map((category) => (
-          <span key={category.id} className="flex-none">
+          <Link key={category.id} href={`/catalog/${category.slug}`} className="flex-none">
             {category.name}
-          </span>
+          </Link>
         ))}
       </div>
 

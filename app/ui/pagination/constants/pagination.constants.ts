@@ -1,0 +1,1 @@
+export const PAGINATION_VISIBLE_PAGES_COUNT = 5;
