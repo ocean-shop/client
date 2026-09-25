@@ -1,13 +1,24 @@
 import type { SelectOption } from "@/app/ui/select/types/select.types";
 import type { CatalogProductSort, ProductListResponse } from "../types/products.types";
 
-export const POPULAR_PRODUCTS_API_URL = `${process.env.API_BASE_URL}/catalog/products-client/popular?shopId=${process.env.SHOP_ID}`;
+export const SHOP_ID_QUERY_PARAM = "shopId";
+
+/** Every catalog endpoint is scoped to this storefront, so `shopId` rides along with the query. */
+const withShopId = (searchParams?: string) => {
+  const params = new URLSearchParams(searchParams);
+
+  if (process.env.SHOP_ID) params.set(SHOP_ID_QUERY_PARAM, process.env.SHOP_ID);
+
+  return params.toString();
+};
+
+export const POPULAR_PRODUCTS_API_URL = `${process.env.API_BASE_URL}/catalog/products-client/popular?${withShopId()}`;
 
 export const CATALOG_PRODUCTS_BY_CATEGORY_API_URL = (categoryId: string, searchParams: string) =>
-  `${process.env.API_BASE_URL}/catalog/products-client/by-category/${categoryId}?${searchParams}`;
+  `${process.env.API_BASE_URL}/catalog/products-client/by-category/${categoryId}?${withShopId(searchParams)}`;
 
 export const CATALOG_FILTERS_BY_CATEGORY_API_URL = (categoryId: string) =>
-  `${process.env.API_BASE_URL}/catalog/products-client/filters/by-category/${categoryId}`;
+  `${process.env.API_BASE_URL}/catalog/products-client/filters/by-category/${categoryId}?${withShopId()}`;
 
 export const PRODUCT_CARD_DEFAULT_CTA_LABEL = "Додати в кошик";
 

@@ -4,7 +4,6 @@ import {
   HEADER_BRAND_NAME,
   HEADER_CART_COUNT,
   HEADER_HOME_HREF,
-  HEADER_NAV_CATALOG_ITEM,
   HEADER_NAV_SALES_ITEM,
   HEADER_SEARCH_PLACEHOLDER,
 } from "./constants/header.constants";
@@ -18,7 +17,7 @@ export async function Header() {
     label: category.name,
     href: `/catalog/${category.slug}`,
   }));
-  const navItems = [HEADER_NAV_CATALOG_ITEM, ...categoryNavItems, HEADER_NAV_SALES_ITEM];
+  const navItems = [...categoryNavItems, HEADER_NAV_SALES_ITEM];
 
   return (
     <>

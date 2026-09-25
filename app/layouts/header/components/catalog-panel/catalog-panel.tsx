@@ -52,17 +52,16 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
             {categories.map((category) => {
               const isActive = category.id === activeCategoryId;
               const icon = CATALOG_CATEGORY_ICONS[category.slug] ?? CATALOG_CATEGORY_DEFAULT_ICON;
+              const hasSubs = category.subs.length > 0;
 
-              return (
-                <div
-                  key={category.id}
-                  onClick={() => setActiveCategoryId(category.id)}
-                  className={`flex cursor-pointer items-center gap-2.5 rounded-[10px] border px-3 py-[11px] ${
-                    isActive
-                      ? "border-accent-soft bg-accent-soft text-accent-dark"
-                      : "border-transparent text-foreground"
-                  }`}
-                >
+              const itemClassName = `flex cursor-pointer items-center gap-2.5 rounded-[10px] border px-3 py-[11px] ${
+                isActive
+                  ? "border-accent-soft bg-accent-soft text-accent-dark"
+                  : "border-transparent text-foreground"
+              }`;
+
+              const content = (
+                <>
                   <span
                     className={`font-symbols text-[20px] ${isActive ? "text-accent" : "text-muted"}`}
                   >
@@ -71,13 +70,36 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
                   <span className={`flex-1 text-sm ${isActive ? "font-semibold" : "font-medium"}`}>
                     {category.name}
                   </span>
-                  {category.subs.length > 0 && (
+                  {hasSubs && (
                     <span
                       className={`font-symbols text-[18px] ${isActive ? "text-accent" : "text-muted-light"}`}
                     >
                       chevron_right
                     </span>
                   )}
+                </>
+              );
+
+              if (!hasSubs) {
+                return (
+                  <Link
+                    key={category.id}
+                    href={`/catalog/${category.slug}`}
+                    onClick={() => setIsOpen(false)}
+                    className={itemClassName}
+                  >
+                    {content}
+                  </Link>
+                );
+              }
+
+              return (
+                <div
+                  key={category.id}
+                  onClick={() => setActiveCategoryId(category.id)}
+                  className={itemClassName}
+                >
+                  {content}
                 </div>
               );
             })}

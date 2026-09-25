@@ -47,17 +47,16 @@ export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalo
           {categories.map((category) => {
             const isActive = category.id === activeCategoryId;
             const icon = CATALOG_CATEGORY_ICONS[category.slug] ?? CATALOG_CATEGORY_DEFAULT_ICON;
+            const hasSubs = category.subs.length > 0;
 
-            return (
-              <div
-                key={category.id}
-                onClick={() => setActiveCategoryId(category.id)}
-                className={`flex cursor-pointer items-center gap-2.5 rounded-xl border px-2.5 py-3 ${
-                  isActive
-                    ? "border-accent-soft bg-accent-soft text-accent-dark"
-                    : "border-transparent text-foreground"
-                }`}
-              >
+            const itemClassName = `flex cursor-pointer items-center gap-2.5 rounded-xl border px-2.5 py-3 ${
+              isActive
+                ? "border-accent-soft bg-accent-soft text-accent-dark"
+                : "border-transparent text-foreground"
+            }`;
+
+            const content = (
+              <>
                 <span
                   className={`font-symbols text-[20px] ${isActive ? "text-accent" : "text-muted"}`}
                 >
@@ -68,13 +67,36 @@ export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalo
                 >
                   {category.name}
                 </span>
-                {category.subs.length > 0 && (
+                {hasSubs && (
                   <span
                     className={`font-symbols text-[17px] ${isActive ? "text-accent" : "text-muted-light"}`}
                   >
                     chevron_right
                   </span>
                 )}
+              </>
+            );
+
+            if (!hasSubs) {
+              return (
+                <Link
+                  key={category.id}
+                  href={`/catalog/${category.slug}`}
+                  onClick={onClose}
+                  className={itemClassName}
+                >
+                  {content}
+                </Link>
+              );
+            }
+
+            return (
+              <div
+                key={category.id}
+                onClick={() => setActiveCategoryId(category.id)}
+                className={itemClassName}
+              >
+                {content}
               </div>
             );
           })}

@@ -10,12 +10,6 @@ export const HEADER_SEARCH_PLACEHOLDER = "Пошук товарів";
 
 export const HEADER_CART_COUNT = 3;
 
-export const HEADER_NAV_CATALOG_ITEM: HeaderNavItem = {
-  label: "Каталог",
-  href: "/catalog",
-  active: true,
-};
-
 export const HEADER_NAV_SALES_ITEM: HeaderNavItem = {
   label: "Акції",
   href: "/catalog/sales",

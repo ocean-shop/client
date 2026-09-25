@@ -43,9 +43,9 @@ export function MobileHeader({ categories }: MobileHeaderProps) {
 
       <div className="flex gap-4.5 overflow-x-auto px-4.5 pb-3 text-[13.5px] text-foreground [scrollbar-width:none]">
         {categories.map((category) => (
-          <span key={category.id} className="flex-none">
+          <Link key={category.id} href={`/catalog/${category.slug}`} className="flex-none">
             {category.name}
-          </span>
+          </Link>
         ))}
       </div>
 
