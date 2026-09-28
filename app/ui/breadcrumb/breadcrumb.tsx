@@ -3,7 +3,7 @@ import type { BreadcrumbProps } from "./types/breadcrumb.types";
 
 export function Breadcrumb({ items }: BreadcrumbProps) {
   return (
-    <div className="flex items-center gap-[7px] text-[13px] text-muted-light">
+    <div className="flex flex-wrap items-center gap-[7px] text-[13px] text-muted-light">
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
 
