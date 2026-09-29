@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/app/ui/button/button";
 import {
   PRODUCT_BADGE_TONE_STYLES,
@@ -17,13 +18,15 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="flex flex-col gap-3 rounded-2xl bg-background p-3.5">
       <div className="relative h-[240px] overflow-hidden rounded-xl bg-footer">
-        <Image
-          src={product.image}
-          alt={product.imageAlt}
-          sizes="100"
-          fill
-          className="object-cover"
-        />
+        <Link href={product.href} aria-label={product.name} className="absolute inset-0">
+          <Image
+            src={product.image}
+            alt={product.imageAlt}
+            sizes="100"
+            fill
+            className="object-cover"
+          />
+        </Link>
 
         {product.badge && (
           <span
@@ -59,9 +62,12 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
       )}
 
-      <div className="text-pretty text-[15px] font-medium leading-[1.4] text-foreground">
+      <Link
+        href={product.href}
+        className="text-pretty text-[15px] font-medium leading-[1.4] text-foreground hover:text-accent"
+      >
         {product.name}
-      </div>
+      </Link>
 
       <div className="flex items-baseline gap-[9px]">
         <span className="font-heading text-[18px] font-semibold text-foreground">

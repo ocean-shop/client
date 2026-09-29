@@ -53,6 +53,7 @@ export async function CatalogBody({ category, query, productList }: CatalogBodyP
         <CatalogGrid
           products={productList.items}
           emptyMessage={hasActiveFilters ? CATALOG_BODY_NO_MATCHES_MESSAGE : undefined}
+          categorySlug={category.slug}
         />
       </CatalogResults>
 

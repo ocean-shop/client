@@ -17,10 +17,18 @@ export const POPULAR_PRODUCTS_API_URL = `${process.env.API_BASE_URL}/catalog/pro
 export const CATALOG_PRODUCTS_BY_CATEGORY_API_URL = (categoryId: string, searchParams: string) =>
   `${process.env.API_BASE_URL}/catalog/products-client/by-category/${categoryId}?${withShopId(searchParams)}`;
 
+export const PRODUCT_BY_ID_API_URL = (productId: string) =>
+  `${process.env.API_BASE_URL}/catalog/products-client/${productId}?${withShopId()}`;
+
 export const CATALOG_FILTERS_BY_CATEGORY_API_URL = (categoryId: string) =>
   `${process.env.API_BASE_URL}/catalog/products-client/filters/by-category/${categoryId}?${withShopId()}`;
 
 export const PRODUCT_CARD_DEFAULT_CTA_LABEL = "Додати в кошик";
+
+export const PRODUCT_PAGE_PATH = "/product";
+
+/** Carries the catalog category a product was opened from, purely to rebuild its breadcrumbs. */
+export const PRODUCT_CATEGORY_SEARCH_PARAM = "category";
 
 export const CATALOG_PRODUCTS_PAGE_SIZE = 20;
 

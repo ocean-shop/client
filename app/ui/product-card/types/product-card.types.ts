@@ -2,6 +2,7 @@ export type ProductBadgeTone = "sale" | "new" | "bestseller";
 
 export type ProductCardData = {
   id: string;
+  href: string;
   image: string;
   imageAlt: string;
   badge?: {
