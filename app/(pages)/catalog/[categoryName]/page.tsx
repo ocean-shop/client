@@ -35,7 +35,7 @@ export default async function CatalogPage({
   return (
     <div className={CATALOG_PAGE_CLASS_NAME}>
       <CatalogToolbar
-        categoryId={category.id}
+        source={{ kind: "category", categoryId: category.id }}
         query={query}
         resultsCount={productList.total}
         filterGroups={filterGroups}

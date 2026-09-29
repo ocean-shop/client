@@ -1,4 +1,4 @@
-import { CatalogFiltersSheetContent } from "./components/catalog-filters-sheet-content/catalog-filters-sheet-content";
+﻿import { CatalogFiltersSheetContent } from "./components/catalog-filters-sheet-content/catalog-filters-sheet-content";
 import type { CatalogFiltersSheetProps } from "./types/catalog-filters-sheet.types";
 
 export function CatalogFiltersSheet({
@@ -6,7 +6,7 @@ export function CatalogFiltersSheet({
   onClose,
   onApply,
   isApplying,
-  categoryId,
+  source,
   resultsCount,
   groups,
   query,
@@ -27,7 +27,7 @@ export function CatalogFiltersSheet({
         onClose={onClose}
         onApply={onApply}
         isApplying={isApplying}
-        categoryId={categoryId}
+        source={source}
         resultsCount={resultsCount}
         groups={groups}
         query={query}

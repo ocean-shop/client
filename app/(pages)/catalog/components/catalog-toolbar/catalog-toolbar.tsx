@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { Button } from "@/app/ui/button/button";
@@ -20,12 +20,7 @@ import {
 } from "./constants/catalog-toolbar.constants";
 import type { CatalogToolbarProps } from "./types/catalog-toolbar.types";
 
-export function CatalogToolbar({
-  categoryId,
-  query,
-  resultsCount,
-  filterGroups,
-}: CatalogToolbarProps) {
+export function CatalogToolbar({ source, query, resultsCount, filterGroups }: CatalogToolbarProps) {
   const { applyQuery, isPending } = useCatalogQuery(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -74,7 +69,7 @@ export function CatalogToolbar({
         onClose={() => setIsFiltersOpen(false)}
         onApply={handleFiltersApply}
         isApplying={isPending}
-        categoryId={categoryId}
+        source={source}
         resultsCount={resultsCount}
         groups={filterGroups}
         query={query}

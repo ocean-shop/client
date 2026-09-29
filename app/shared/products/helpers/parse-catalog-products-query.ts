@@ -4,6 +4,7 @@ import {
   CATALOG_PRODUCTS_ATTRIBUTE_VALUE_SEPARATOR,
   CATALOG_PRODUCTS_QUERY_PARAM,
   CATALOG_PRODUCT_SORTS,
+  PRODUCT_SEARCH_TERM_MAX_LENGTH,
 } from "../constants/products.constants";
 import type {
   CatalogFilter,
@@ -53,6 +54,13 @@ function parseAvailableHelper(value: SearchParamValue): boolean | undefined {
   return undefined;
 }
 
+/** Collapses whitespace and clips the term, matching what the endpoint accepts. */
+function parseSearchTermHelper(value: SearchParamValue): string | undefined {
+  const term = firstValueHelper(value)?.replace(/\s+/g, " ").trim();
+
+  return term ? term.slice(0, PRODUCT_SEARCH_TERM_MAX_LENGTH) : undefined;
+}
+
 /** Reads `attributes=name:value1,value2` entries, repeated or joined with `;`. */
 function parseAttributesHelper(value: SearchParamValue): CatalogFilter[] {
   const valuesByName = new Map<string, string[]>();
@@ -88,5 +96,6 @@ export function parseCatalogProductsQueryHelper(
     priceFrom: parsePriceHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.priceFrom]),
     priceTo: parsePriceHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.priceTo]),
     available: parseAvailableHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.available]),
+    searchTerm: parseSearchTermHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.query]),
   };
 }

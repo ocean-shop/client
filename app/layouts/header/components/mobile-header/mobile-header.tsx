@@ -3,11 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/app/ui/button/button";
-import {
-  HEADER_BRAND_NAME,
-  HEADER_HOME_HREF,
-  HEADER_SEARCH_PLACEHOLDER,
-} from "../../constants/header.constants";
+import { HEADER_BRAND_NAME, HEADER_HOME_HREF } from "../../constants/header.constants";
+import { HeaderSearch } from "../header-search/header-search";
 import { NavDrawer } from "./components/nav-drawer/nav-drawer";
 import type { MobileHeaderProps } from "./types/mobile-header.types";
 
@@ -35,10 +32,7 @@ export function MobileHeader({ categories }: MobileHeaderProps) {
       </div>
 
       <div className="px-4.5 pb-3">
-        <div className="flex h-[42px] items-center gap-2.5 rounded-[10px] border border-border-soft bg-surface px-3.5 text-sm text-muted-light">
-          <span className="font-symbols text-[19px]">search</span>
-          {HEADER_SEARCH_PLACEHOLDER}
-        </div>
+        <HeaderSearch variant="mobile" />
       </div>
 
       <div className="flex gap-4.5 overflow-x-auto px-4.5 pb-3 text-[13.5px] text-foreground [scrollbar-width:none]">

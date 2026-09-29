@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { CatalogPanel } from "./components/catalog-panel/catalog-panel";
+import { HeaderSearch } from "./components/header-search/header-search";
 import {
   HEADER_BRAND_NAME,
   HEADER_CART_COUNT,
   HEADER_HOME_HREF,
   HEADER_NAV_SALES_ITEM,
-  HEADER_SEARCH_PLACEHOLDER,
 } from "./constants/header.constants";
 import { MobileHeader } from "./components/mobile-header/mobile-header";
 import { getCatalogCategoryTreeHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-tree";
@@ -39,10 +39,7 @@ export async function Header() {
 
           <CatalogPanel categories={categoryTree} />
 
-          <div className="flex h-[42px] flex-1 items-center gap-2.5 rounded-[10px] border border-border-soft bg-surface px-4">
-            <span className="font-symbols text-[19px] text-muted">search</span>
-            <span className="text-sm text-muted-light">{HEADER_SEARCH_PLACEHOLDER}</span>
-          </div>
+          <HeaderSearch variant="desktop" />
 
           <div className="flex items-center gap-[22px] text-sm text-muted">
             <span className="cursor-pointer hover:text-accent">Обране</span>

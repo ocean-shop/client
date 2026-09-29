@@ -14,6 +14,11 @@ export function buildCatalogProductsSearchParamsHelper(
 ): URLSearchParams {
   const searchParams = new URLSearchParams();
 
+  /** The search results page keeps its term in the URL, and `by-search` requires it. */
+  if (query.searchTerm) {
+    searchParams.set(CATALOG_PRODUCTS_QUERY_PARAM.query, query.searchTerm);
+  }
+
   for (const attribute of query.attributes) {
     if (attribute.values.length === 0) continue;
 

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { Button } from "@/app/ui/button/button";
@@ -36,7 +36,7 @@ export function CatalogFiltersSheetContent({
   onClose,
   onApply,
   isApplying,
-  categoryId,
+  source,
   resultsCount,
   groups,
   query,
@@ -57,7 +57,7 @@ export function CatalogFiltersSheetContent({
     available: isAvailableOnly || undefined,
   };
 
-  const { count, isCounting } = useCatalogProductsCount(categoryId, draftQuery, isOpen);
+  const { count, isCounting } = useCatalogProductsCount(source, draftQuery, isOpen);
 
   function toggleOption(name: string, value: string) {
     setAttributes((prev) => toggleCatalogAttributeValueHelper(prev, name, value));
@@ -121,7 +121,7 @@ export function CatalogFiltersSheetContent({
               onChange={(event) => setPriceFrom(event.target.value)}
               placeholder={CATALOG_FILTERS_PRICE_FROM_PLACEHOLDER}
             />
-            <span className="text-muted-light">—</span>
+            <span className="text-muted-light">â€”</span>
             <Input
               size="lg"
               type="number"

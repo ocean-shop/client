@@ -1,3 +1,6 @@
+import type { BreadcrumbItem } from "@/app/ui/breadcrumb/types/breadcrumb.types";
+import type { CatalogFilterGroup } from "../components/catalog-filters/types/catalog-filters.types";
+
 export const CATALOG_PRODUCTS_COUNT_QUERY_KEY = "catalog-products-count";
 
 /** Keeps typing in the price inputs from firing a count request per keystroke. */
@@ -10,3 +13,23 @@ export const CATALOG_CONTENT_CLASS_NAME =
 
 /** No query has run yet on first load, so the skeleton fills a plausible first page. */
 export const CATALOG_SKELETON_PRODUCT_COUNT = 8;
+
+/** Shared by the category listing and the search results listing. */
+export const CATALOG_HOME_BREADCRUMB_ITEM: BreadcrumbItem = {
+  label: "Головна",
+  href: "/",
+};
+
+export const CATALOG_SORT_LABEL = "Сортувати";
+
+export const CATALOG_PRODUCTS_LABEL = "товарів";
+
+export const CATALOG_NO_MATCHES_MESSAGE =
+  "За обраними фільтрами товарів не знайдено. Спробуйте змінити параметри.";
+
+/**
+ * Search results keep the price and availability filters, which need no data of their own.
+ * Attribute groups stay empty until the API exposes filters for a search term the way it
+ * does for a category (`filters/by-category`).
+ */
+export const CATALOG_SEARCH_FILTER_GROUPS: CatalogFilterGroup[] = [];

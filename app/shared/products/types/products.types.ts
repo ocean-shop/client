@@ -64,7 +64,12 @@ export type CatalogProductsQuery = {
   priceFrom?: number;
   priceTo?: number;
   available?: boolean;
+  /** Set on the search results page only; travels in the URL and in the API request alike. */
+  searchTerm?: string;
 };
+
+/** Which listing a catalog query runs against: the products of a category, or a search term. */
+export type CatalogProductsSource = { kind: "category"; categoryId: string } | { kind: "search" };
 
 export type ProductListResponse = {
   items: Product[];
@@ -75,3 +80,17 @@ export type ProductListResponse = {
 };
 
 export type CatalogProductsSearchParams = Record<string, string | string[] | undefined>;
+
+/** A suggestion row in the header search panel: one image and one price, nothing else. */
+export type ProductSearchItem = {
+  id: string;
+  name: string;
+  price: string;
+  oldPrice: string | null;
+  image: string | null;
+};
+
+export type ProductSearchResponse = {
+  total: number;
+  items: ProductSearchItem[];
+};
