@@ -6,7 +6,9 @@ import { Checkbox } from "@/app/ui/checkbox/checkbox";
 import { countCatalogActiveFiltersHelper } from "@/app/shared/products/helpers/count-catalog-active-filters";
 import { hasCatalogAttributeValueHelper } from "@/app/shared/products/helpers/has-catalog-attribute-value";
 import { toggleCatalogAttributeValueHelper } from "@/app/shared/products/helpers/toggle-catalog-attribute-value";
+import { toggleCatalogCategoryIdHelper } from "@/app/shared/products/helpers/toggle-catalog-category-id";
 import { useCatalogQuery } from "../../hooks/use-catalog-query";
+import { CatalogCategoryFilter } from "./components/catalog-category-filter/catalog-category-filter";
 import { CatalogPriceFilter } from "./components/catalog-price-filter/catalog-price-filter";
 import {
   CATALOG_FILTERS_AVAILABILITY_LABEL,
@@ -17,7 +19,7 @@ import {
 } from "./constants/catalog-filters.constants";
 import type { CatalogFiltersProps } from "./types/catalog-filters.types";
 
-export function CatalogFilters({ groups, query }: CatalogFiltersProps) {
+export function CatalogFilters({ groups, categories, query }: CatalogFiltersProps) {
   const { applyQuery, isPending } = useCatalogQuery(query);
   const [collapsedGroupIds, setCollapsedGroupIds] = useState<Set<string>>(new Set());
   const [expandedGroupIds, setExpandedGroupIds] = useState<Set<string>>(new Set());
@@ -26,8 +28,18 @@ export function CatalogFilters({ groups, query }: CatalogFiltersProps) {
     applyQuery({ attributes: toggleCatalogAttributeValueHelper(query.attributes, name, value) });
   }
 
+  function toggleCategory(categoryId: string) {
+    applyQuery({ categoryIds: toggleCatalogCategoryIdHelper(query.categoryIds, categoryId) });
+  }
+
   function resetFilters() {
-    applyQuery({ attributes: [], priceFrom: undefined, priceTo: undefined, available: undefined });
+    applyQuery({
+      attributes: [],
+      categoryIds: [],
+      priceFrom: undefined,
+      priceTo: undefined,
+      available: undefined,
+    });
   }
 
   function toggleGroupCollapsed(groupId: string) {
@@ -45,6 +57,16 @@ export function CatalogFilters({ groups, query }: CatalogFiltersProps) {
 
   return (
     <div className={`flex flex-col gap-3.5 ${isPending ? "pointer-events-none opacity-60" : ""}`}>
+      {categories && (
+        <CatalogCategoryFilter
+          categories={categories}
+          selectedIds={query.categoryIds}
+          onToggle={toggleCategory}
+          className="flex flex-col gap-1.5 rounded-2xl bg-background p-5"
+          rowWrapperClassName="min-h-[30px]"
+        />
+      )}
+
       <CatalogPriceFilter
         key={`${query.priceFrom ?? ""}:${query.priceTo ?? ""}`}
         priceFrom={query.priceFrom}

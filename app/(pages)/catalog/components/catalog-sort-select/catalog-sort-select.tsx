@@ -6,8 +6,8 @@ import {
   CATALOG_PRODUCT_SORT_OPTIONS,
 } from "@/app/shared/products/constants/products.constants";
 import type { CatalogProductSort } from "@/app/shared/products/types/products.types";
-import { useCatalogQuery } from "../../../../hooks/use-catalog-query";
-import { CATALOG_BODY_SORT_LABEL } from "../../constants/catalog-body.constants";
+import { useCatalogQuery } from "../../hooks/use-catalog-query";
+import { CATALOG_SORT_LABEL } from "../../constants/catalog.constants";
 import type { CatalogSortSelectProps } from "./types/catalog-sort-select.types";
 
 export function CatalogSortSelect({ query }: CatalogSortSelectProps) {
@@ -15,7 +15,7 @@ export function CatalogSortSelect({ query }: CatalogSortSelectProps) {
 
   return (
     <Select
-      label={CATALOG_BODY_SORT_LABEL}
+      label={CATALOG_SORT_LABEL}
       options={CATALOG_PRODUCT_SORT_OPTIONS}
       selectedId={query.sort ?? CATALOG_PRODUCTS_DEFAULT_SORT}
       onChange={(sortId) => applyQuery({ sort: sortId as CatalogProductSort })}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Pagination } from "@/app/ui/pagination/pagination";
-import { useCatalogQuery } from "../../../../hooks/use-catalog-query";
+import { useCatalogQuery } from "../../hooks/use-catalog-query";
 import type { CatalogPaginationProps } from "./types/catalog-pagination.types";
 
 export function CatalogPagination({ query, totalPages }: CatalogPaginationProps) {
