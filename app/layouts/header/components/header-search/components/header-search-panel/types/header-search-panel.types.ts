@@ -10,6 +10,6 @@ export type HeaderSearchPanelProps = {
   allResultsHref: string;
   /** Clears the field: the visitor is leaving the search for a single product. */
   onProductSelect: () => void;
-  /** Closes the panel but keeps the term, which the results page quotes back. */
+  /** Clears the field too: the results page quotes the term back in its own heading. */
   onShowAllResults: () => void;
 };

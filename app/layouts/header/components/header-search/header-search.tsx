@@ -43,12 +43,20 @@ export function HeaderSearch({ variant }: HeaderSearchProps) {
     return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, [isPanelOpen]);
 
+  /**
+   * Leaving the header for a listing or a product empties the field: the destination page
+   * quotes the term back itself, and an emptied field also closes the panel.
+   */
+  function clearSearchTerm() {
+    setSearchTerm("");
+  }
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!hasSearchableTerm) return;
 
-    setIsDismissed(true);
+    clearSearchTerm();
     router.push(buildCatalogSearchHrefHelper(trimmedSearchTerm));
   }
 
@@ -91,8 +99,8 @@ export function HeaderSearch({ variant }: HeaderSearchProps) {
           result={result}
           isSearching={isSearching}
           allResultsHref={buildCatalogSearchHrefHelper(trimmedSearchTerm)}
-          onProductSelect={() => setSearchTerm("")}
-          onShowAllResults={() => setIsDismissed(true)}
+          onProductSelect={clearSearchTerm}
+          onShowAllResults={clearSearchTerm}
         />
       )}
     </form>

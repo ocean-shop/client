@@ -79,6 +79,15 @@ export type ProductListResponse = {
   totalPages: number;
 };
 
+/**
+ * A search page plus the filters the term can be narrowed by, so the results and the filter
+ * panel come from a single request. The category page gets the same filters from
+ * `filters/by-category/:categoryId`, which it asks for once per category instead of once per page.
+ */
+export type ProductSearchListResponse = ProductListResponse & {
+  filters: CatalogFilter[];
+};
+
 export type CatalogProductsSearchParams = Record<string, string | string[] | undefined>;
 
 /** A suggestion row in the header search panel: one image and one price, nothing else. */

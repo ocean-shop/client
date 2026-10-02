@@ -2,6 +2,7 @@ import type { SelectOption } from "@/app/ui/select/types/select.types";
 import type {
   CatalogProductSort,
   ProductListResponse,
+  ProductSearchListResponse,
   ProductSearchResponse,
 } from "../types/products.types";
 
@@ -106,6 +107,11 @@ export const CATALOG_PRODUCTS_EMPTY_RESPONSE: ProductListResponse = {
   page: 1,
   limit: CATALOG_PRODUCTS_PAGE_SIZE,
   totalPages: 0,
+};
+
+export const CATALOG_PRODUCTS_SEARCH_EMPTY_RESPONSE: ProductSearchListResponse = {
+  ...CATALOG_PRODUCTS_EMPTY_RESPONSE,
+  filters: [],
 };
 
 export const PRODUCT_SEARCH_EMPTY_RESPONSE: ProductSearchResponse = {

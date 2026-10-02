@@ -1,5 +1,4 @@
 import type { BreadcrumbItem } from "@/app/ui/breadcrumb/types/breadcrumb.types";
-import type { CatalogFilterGroup } from "../components/catalog-filters/types/catalog-filters.types";
 
 export const CATALOG_PRODUCTS_COUNT_QUERY_KEY = "catalog-products-count";
 
@@ -26,10 +25,3 @@ export const CATALOG_PRODUCTS_LABEL = "товарів";
 
 export const CATALOG_NO_MATCHES_MESSAGE =
   "За обраними фільтрами товарів не знайдено. Спробуйте змінити параметри.";
-
-/**
- * Search results keep the price and availability filters, which need no data of their own.
- * Attribute groups stay empty until the API exposes filters for a search term the way it
- * does for a category (`filters/by-category`).
- */
-export const CATALOG_SEARCH_FILTER_GROUPS: CatalogFilterGroup[] = [];
