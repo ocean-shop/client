@@ -2,6 +2,7 @@ import {
   CATALOG_PRODUCTS_ATTRIBUTE_GROUP_SEPARATOR,
   CATALOG_PRODUCTS_ATTRIBUTE_NAME_SEPARATOR,
   CATALOG_PRODUCTS_ATTRIBUTE_VALUE_SEPARATOR,
+  CATALOG_PRODUCTS_CATEGORY_ID_SEPARATOR,
   CATALOG_PRODUCTS_QUERY_PARAM,
   CATALOG_PRODUCT_SORTS,
   PRODUCT_SEARCH_TERM_MAX_LENGTH,
@@ -86,12 +87,23 @@ function parseAttributesHelper(value: SearchParamValue): CatalogFilter[] {
   return [...valuesByName].map(([name, values]) => ({ name, values: [...new Set(values)] }));
 }
 
+/** Reads `categoryIds=id1,id2`, repeated or joined, the way the endpoint accepts them. */
+function parseCategoryIdsHelper(value: SearchParamValue): string[] {
+  const categoryIds = toListHelper(value)
+    .flatMap((entry) => entry.split(CATALOG_PRODUCTS_CATEGORY_ID_SEPARATOR))
+    .map((categoryId) => categoryId.trim())
+    .filter(Boolean);
+
+  return [...new Set(categoryIds)];
+}
+
 export function parseCatalogProductsQueryHelper(
   searchParams: CatalogProductsSearchParams
 ): CatalogProductsQuery {
   return {
     page: parsePageHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.page]),
     attributes: parseAttributesHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.attributes]),
+    categoryIds: parseCategoryIdsHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.categoryIds]),
     sort: parseSortHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.sort]),
     priceFrom: parsePriceHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.priceFrom]),
     priceTo: parsePriceHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.priceTo]),

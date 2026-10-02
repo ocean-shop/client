@@ -1,4 +1,7 @@
-import type { CatalogProductsQuery } from "@/app/shared/products/types/products.types";
+import type {
+  CatalogCategoryOption,
+  CatalogProductsQuery,
+} from "@/app/shared/products/types/products.types";
 
 export type CatalogFilterOption = {
   id: string;
@@ -18,5 +21,7 @@ export type CatalogFilterGroup = {
 
 export type CatalogFiltersProps = {
   groups: CatalogFilterGroup[];
+  /** Search only: the category page is already one category, so it passes none. */
+  categories?: CatalogCategoryOption[];
   query: CatalogProductsQuery;
 };

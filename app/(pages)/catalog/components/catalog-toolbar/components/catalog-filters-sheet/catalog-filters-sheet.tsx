@@ -9,6 +9,7 @@ export function CatalogFiltersSheet({
   source,
   resultsCount,
   groups,
+  categories,
   query,
 }: CatalogFiltersSheetProps) {
   return (
@@ -30,6 +31,7 @@ export function CatalogFiltersSheet({
         source={source}
         resultsCount={resultsCount}
         groups={groups}
+        categories={categories}
         query={query}
       />
     </div>

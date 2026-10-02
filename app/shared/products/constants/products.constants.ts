@@ -74,6 +74,7 @@ export const CATALOG_PRODUCTS_QUERY_PARAM = {
   page: "page",
   limit: "limit",
   attributes: "attributes",
+  categoryIds: "categoryIds",
   priceFrom: "priceFrom",
   priceTo: "priceTo",
   available: "available",
@@ -84,6 +85,9 @@ export const CATALOG_PRODUCTS_QUERY_PARAM = {
 export const CATALOG_PRODUCTS_ATTRIBUTE_NAME_SEPARATOR = ":";
 export const CATALOG_PRODUCTS_ATTRIBUTE_VALUE_SEPARATOR = ",";
 export const CATALOG_PRODUCTS_ATTRIBUTE_GROUP_SEPARATOR = ";";
+
+/** The selected categories travel as one `categoryIds=id1,id2` parameter. */
+export const CATALOG_PRODUCTS_CATEGORY_ID_SEPARATOR = ",";
 
 export const CATALOG_PRODUCT_SORTS: CatalogProductSort[] = [
   "popular",
@@ -112,6 +116,7 @@ export const CATALOG_PRODUCTS_EMPTY_RESPONSE: ProductListResponse = {
 export const CATALOG_PRODUCTS_SEARCH_EMPTY_RESPONSE: ProductSearchListResponse = {
   ...CATALOG_PRODUCTS_EMPTY_RESPONSE,
   filters: [],
+  categories: [],
 };
 
 export const PRODUCT_SEARCH_EMPTY_RESPONSE: ProductSearchResponse = {

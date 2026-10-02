@@ -1,4 +1,5 @@
 import type {
+  CatalogCategoryOption,
   CatalogProductsQuery,
   CatalogProductsSource,
 } from "@/app/shared/products/types/products.types";
@@ -14,5 +15,7 @@ export type CatalogFiltersSheetProps = {
   /** Total matching products for the currently applied query. */
   resultsCount: number;
   groups: CatalogFilterGroup[];
+  /** Search only: the category page is already one category, so it passes none. */
+  categories?: CatalogCategoryOption[];
   query: CatalogProductsQuery;
 };

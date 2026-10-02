@@ -7,11 +7,13 @@ import { Input } from "@/app/ui/input/input";
 import { formatProductsCountHelper } from "@/app/shared/products/helpers/format-products-count";
 import { hasCatalogAttributeValueHelper } from "@/app/shared/products/helpers/has-catalog-attribute-value";
 import { toggleCatalogAttributeValueHelper } from "@/app/shared/products/helpers/toggle-catalog-attribute-value";
+import { toggleCatalogCategoryIdHelper } from "@/app/shared/products/helpers/toggle-catalog-category-id";
 import type {
   CatalogFilter,
   CatalogProductsQuery,
 } from "@/app/shared/products/types/products.types";
 import { useCatalogProductsCount } from "../../../../../../hooks/use-catalog-products-count";
+import { CatalogCategoryFilter } from "../../../../../catalog-filters/components/catalog-category-filter/catalog-category-filter";
 import { parsePriceInputHelper } from "../../../../../catalog-filters/helpers/parse-price-input";
 import {
   CATALOG_FILTERS_AVAILABILITY_LABEL,
@@ -39,11 +41,13 @@ export function CatalogFiltersSheetContent({
   source,
   resultsCount,
   groups,
+  categories,
   query,
 }: CatalogFiltersSheetContentProps) {
   const [priceFrom, setPriceFrom] = useState(query.priceFrom?.toString() ?? "");
   const [priceTo, setPriceTo] = useState(query.priceTo?.toString() ?? "");
   const [attributes, setAttributes] = useState<CatalogFilter[]>(query.attributes);
+  const [categoryIds, setCategoryIds] = useState<string[]>(query.categoryIds);
   const [isAvailableOnly, setIsAvailableOnly] = useState(query.available === true);
   const [collapsedGroupIds, setCollapsedGroupIds] = useState<Set<string>>(new Set());
   const [expandedGroupIds, setExpandedGroupIds] = useState<Set<string>>(new Set());
@@ -52,6 +56,7 @@ export function CatalogFiltersSheetContent({
     ...query,
     page: 1,
     attributes,
+    categoryIds,
     priceFrom: parsePriceInputHelper(priceFrom),
     priceTo: parsePriceInputHelper(priceTo),
     available: isAvailableOnly || undefined,
@@ -61,6 +66,10 @@ export function CatalogFiltersSheetContent({
 
   function toggleOption(name: string, value: string) {
     setAttributes((prev) => toggleCatalogAttributeValueHelper(prev, name, value));
+  }
+
+  function toggleCategory(categoryId: string) {
+    setCategoryIds((prev) => toggleCatalogCategoryIdHelper(prev, categoryId));
   }
 
   function toggleGroupCollapsed(groupId: string) {
@@ -80,6 +89,7 @@ export function CatalogFiltersSheetContent({
     setPriceFrom("");
     setPriceTo("");
     setAttributes([]);
+    setCategoryIds([]);
     setIsAvailableOnly(false);
   }
 
@@ -108,6 +118,16 @@ export function CatalogFiltersSheetContent({
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto bg-surface-soft pb-24 [scrollbar-width:none]">
+        {categories && (
+          <CatalogCategoryFilter
+            categories={categories}
+            selectedIds={categoryIds}
+            onToggle={toggleCategory}
+            className="flex flex-col gap-1.5 border-b border-border-soft bg-background p-4.5"
+            rowWrapperClassName="min-h-11"
+          />
+        )}
+
         <div className="flex flex-col gap-3.5 border-b border-border-soft bg-background p-4.5">
           <div className="text-[15px] font-semibold text-foreground">
             {CATALOG_FILTERS_PRICE_LABEL}

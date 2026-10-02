@@ -20,7 +20,13 @@ import {
 } from "./constants/catalog-toolbar.constants";
 import type { CatalogToolbarProps } from "./types/catalog-toolbar.types";
 
-export function CatalogToolbar({ source, query, resultsCount, filterGroups }: CatalogToolbarProps) {
+export function CatalogToolbar({
+  source,
+  query,
+  resultsCount,
+  filterGroups,
+  filterCategories,
+}: CatalogToolbarProps) {
   const { applyQuery, isPending } = useCatalogQuery(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -72,6 +78,7 @@ export function CatalogToolbar({ source, query, resultsCount, filterGroups }: Ca
         source={source}
         resultsCount={resultsCount}
         groups={filterGroups}
+        categories={filterCategories}
         query={query}
       />
 

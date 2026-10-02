@@ -18,7 +18,10 @@ export default async function CatalogSearchPage({ searchParams }: PageProps<"/ca
   // Without a term there is nothing to list, so the visitor starts over from the storefront.
   if (!query.searchTerm) redirect(HEADER_HOME_HREF);
 
-  /** The listing response carries the filters of the term, so the panel costs no second request. */
+  /**
+   * The listing response carries the filters and the categories of the term, so the panel
+   * costs no second request.
+   */
   const productList = await getCatalogProductsBySearch(query);
   const filterGroups = mapCatalogFiltersToGroupsHelper(productList.filters);
 
@@ -29,11 +32,12 @@ export default async function CatalogSearchPage({ searchParams }: PageProps<"/ca
         query={query}
         resultsCount={productList.total}
         filterGroups={filterGroups}
+        filterCategories={productList.categories}
       />
 
       <div className={CATALOG_CONTENT_CLASS_NAME}>
         <div className="hidden lg:block">
-          <CatalogFilters groups={filterGroups} query={query} />
+          <CatalogFilters groups={filterGroups} categories={productList.categories} query={query} />
         </div>
         <CatalogSearchBody query={query} searchTerm={query.searchTerm} productList={productList} />
       </div>

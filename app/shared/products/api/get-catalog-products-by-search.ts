@@ -9,8 +9,8 @@ import type { CatalogProductsQuery, ProductSearchListResponse } from "../types/p
 
 /**
  * Same filters, sorting and pagination as the category listing, matched against a term.
- * The response carries the filters the term can be narrowed by, so the filter panel needs
- * no request of its own.
+ * The response carries the filters and the categories the term can be narrowed by, so the
+ * filter panel needs no request of its own.
  */
 export async function getCatalogProductsBySearch(
   query: CatalogProductsQuery
@@ -28,8 +28,12 @@ export async function getCatalogProductsBySearch(
 
     const productList: ProductSearchListResponse = await response.json();
 
-    /** An API that does not send the filters yet leaves the panel empty rather than breaking it. */
-    return { ...productList, filters: productList.filters ?? [] };
+    /** An API that does not send them yet leaves the panel empty rather than breaking it. */
+    return {
+      ...productList,
+      filters: productList.filters ?? [],
+      categories: productList.categories ?? [],
+    };
   } catch {
     return CATALOG_PRODUCTS_SEARCH_EMPTY_RESPONSE;
   }

@@ -1,6 +1,7 @@
 import {
   CATALOG_PRODUCTS_ATTRIBUTE_NAME_SEPARATOR,
   CATALOG_PRODUCTS_ATTRIBUTE_VALUE_SEPARATOR,
+  CATALOG_PRODUCTS_CATEGORY_ID_SEPARATOR,
   CATALOG_PRODUCTS_QUERY_PARAM,
 } from "../constants/products.constants";
 import type { CatalogProductsQuery } from "../types/products.types";
@@ -25,6 +26,14 @@ export function buildCatalogProductsSearchParamsHelper(
     searchParams.append(
       CATALOG_PRODUCTS_QUERY_PARAM.attributes,
       `${attribute.name}${CATALOG_PRODUCTS_ATTRIBUTE_NAME_SEPARATOR}${attribute.values.join(CATALOG_PRODUCTS_ATTRIBUTE_VALUE_SEPARATOR)}`
+    );
+  }
+
+  /** Only a search carries them: the category page is scoped by its own category. */
+  if (query.categoryIds.length > 0) {
+    searchParams.set(
+      CATALOG_PRODUCTS_QUERY_PARAM.categoryIds,
+      query.categoryIds.join(CATALOG_PRODUCTS_CATEGORY_ID_SEPARATOR)
     );
   }
 

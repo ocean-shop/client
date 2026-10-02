@@ -10,5 +10,5 @@ export function countCatalogActiveFiltersHelper(query: CatalogProductsQuery): nu
   const priceCount = query.priceFrom !== undefined || query.priceTo !== undefined ? 1 : 0;
   const availableCount = query.available ? 1 : 0;
 
-  return attributesCount + priceCount + availableCount;
+  return attributesCount + query.categoryIds.length + priceCount + availableCount;
 }
