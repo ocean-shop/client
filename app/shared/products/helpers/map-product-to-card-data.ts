@@ -1,5 +1,4 @@
 import type { ProductCardData } from "@/app/ui/product-card/types/product-card.types";
-import { PRODUCT_CARD_DEFAULT_CTA_LABEL } from "../constants/products.constants";
 import { buildProductHrefHelper } from "./build-product-href";
 import { calculateProductDiscountPercentHelper } from "./calculate-product-discount-percent";
 import { formatProductPriceHelper } from "./format-product-price";
@@ -30,6 +29,5 @@ export function mapProductToCardDataHelper(
     price: formatProductPriceHelper(product.price),
     oldPrice: product.oldPrice ? formatProductPriceHelper(product.oldPrice) : undefined,
     badge: computeDiscountBadgeHelper(product.price, product.oldPrice),
-    ctaLabel: PRODUCT_CARD_DEFAULT_CTA_LABEL,
   };
 }

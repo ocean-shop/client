@@ -9,5 +9,4 @@ export type BottomTabBarItem = {
   icon: string;
   label: string;
   active?: boolean;
-  badge?: number;
 };

@@ -78,7 +78,7 @@ export function ProductInfo({
         />
       )}
 
-      <ProductCartActions productName={product.name} isAvailable={offer.available} />
+      <ProductCartActions product={product} offer={offer} />
 
       <ProductDelivery />
 

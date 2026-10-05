@@ -35,8 +35,6 @@ export const PRODUCT_BY_ID_API_URL = (productId: string) =>
 export const CATALOG_FILTERS_BY_CATEGORY_API_URL = (categoryId: string) =>
   `${process.env.API_BASE_URL}/catalog/products-client/filters/by-category/${categoryId}?${withShopId()}`;
 
-export const PRODUCT_CARD_DEFAULT_CTA_LABEL = "Додати в кошик";
-
 export const PRODUCT_PAGE_PATH = "/product";
 
 export const CATALOG_SEARCH_PAGE_PATH = "/catalog/search";

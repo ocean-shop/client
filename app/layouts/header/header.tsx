@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { CatalogPanel } from "./components/catalog-panel/catalog-panel";
+import { HeaderCart } from "./components/header-cart/header-cart";
 import { HeaderSearch } from "./components/header-search/header-search";
 import {
   HEADER_BRAND_NAME,
-  HEADER_CART_COUNT,
   HEADER_HOME_HREF,
   HEADER_NAV_SALES_ITEM,
 } from "./constants/header.constants";
@@ -44,13 +44,7 @@ export async function Header() {
           <div className="flex items-center gap-[22px] text-sm text-muted">
             <span className="cursor-pointer hover:text-accent">Обране</span>
             <span className="cursor-pointer hover:text-accent">Кабінет</span>
-            <div className="flex cursor-pointer items-center gap-[7px] font-semibold text-foreground">
-              <span className="font-symbols text-[21px]">shopping_bag</span>
-              Кошик
-              <span className="flex h-[19px] min-w-[19px] items-center justify-center rounded-full bg-accent px-[5px] text-[11px] font-bold text-white">
-                {HEADER_CART_COUNT}
-              </span>
-            </div>
+            <HeaderCart />
           </div>
         </div>
 

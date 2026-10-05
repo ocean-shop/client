@@ -1,5 +1,6 @@
 import { ProductCard } from "../../ui/product-card/product-card";
 import { mapProductToCardDataHelper } from "../../shared/products/helpers/map-product-to-card-data";
+import { ProductCardCartButton } from "../product-card-cart-button/product-card-cart-button";
 import {
   CATALOG_GRID_CLASS_NAME,
   CATALOG_GRID_EMPTY_MESSAGE,
@@ -19,7 +20,11 @@ export function CatalogGrid({ products, emptyMessage, categorySlug }: CatalogGri
   return (
     <div className={CATALOG_GRID_CLASS_NAME}>
       {catalogProducts.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard
+          key={product.id}
+          product={product}
+          cta={<ProductCardCartButton productId={product.id} productName={product.name} />}
+        />
       ))}
     </div>
   );
