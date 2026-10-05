@@ -13,6 +13,10 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
               <Link href={item.href} className="cursor-pointer hover:text-accent">
                 {item.label}
               </Link>
+            ) : item.onClick && !isLast ? (
+              <button type="button" onClick={item.onClick} className="hover:text-accent">
+                {item.label}
+              </button>
             ) : (
               <span className="font-medium text-foreground">{item.label}</span>
             )}
