@@ -5,6 +5,7 @@ import { filterParentCategoriesHelper } from "../../shared/catalog-categories/he
 import { CATALOG_CATEGORIES_POPULAR_LIMIT } from "../../shared/catalog-categories/constants/catalog-categories.constants";
 import { getPopularProducts } from "../../shared/products/api/get-popular-products";
 import { mapProductToCardDataHelper } from "../../shared/products/helpers/map-product-to-card-data";
+import { ProductCardCartButton } from "../product-card-cart-button/product-card-cart-button";
 import { POPULAR_GRID_TITLE } from "./constants/popular-grid.constants";
 
 export async function PopularGrid() {
@@ -40,7 +41,11 @@ export async function PopularGrid() {
 
         <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-4">
           {popularProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              cta={<ProductCardCartButton productId={product.id} productName={product.name} />}
+            />
           ))}
         </div>
       </div>

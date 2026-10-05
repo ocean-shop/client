@@ -1,5 +1,7 @@
+import { cartStore } from "@/app/shared/cart/cart-store";
+import { useCartQuantity } from "@/app/shared/cart/hooks/use-cart-quantity";
 import { Button } from "@/app/ui/button/button";
-import { HEADER_BRAND_NAME, HEADER_CART_COUNT } from "../../../../constants/header.constants";
+import { HEADER_BRAND_NAME } from "../../../../constants/header.constants";
 import {
   NAV_DRAWER_CART_LABEL,
   NAV_DRAWER_FAVORITES_LABEL,
@@ -11,6 +13,13 @@ import {
 import type { NavDrawerProps } from "./types/nav-drawer.types";
 
 export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
+  const cartQuantity = useCartQuantity();
+
+  function handleCartClick() {
+    onClose();
+    cartStore.open();
+  }
+
   return (
     <>
       <div
@@ -46,12 +55,16 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
 
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-3.5 py-3.5 [scrollbar-width:none]">
           <div className="flex shrink-0 flex-col overflow-hidden rounded-[14px] bg-background">
-            <div className="flex cursor-pointer items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground hover:bg-surface">
+            <div
+              role="button"
+              onClick={handleCartClick}
+              className="flex cursor-pointer items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground hover:bg-surface"
+            >
               <span className="font-symbols text-[21px] text-accent">shopping_bag</span>
               {NAV_DRAWER_CART_LABEL}
-              {HEADER_CART_COUNT > 0 && (
+              {cartQuantity > 0 && (
                 <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-white">
-                  {HEADER_CART_COUNT}
+                  {cartQuantity}
                 </span>
               )}
             </div>

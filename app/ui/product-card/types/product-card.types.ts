@@ -15,10 +15,10 @@ export type ProductCardData = {
   price: string;
   oldPrice?: string;
   isFavorite?: boolean;
-  isInCart?: boolean;
-  ctaLabel: string;
 };
 
 export type ProductCardProps = {
   product: ProductCardData;
+  /** The action under the price; the card stays presentational, so the caller wires it up. */
+  cta?: React.ReactNode;
 };

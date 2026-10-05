@@ -3,17 +3,14 @@ import Link from "next/link";
 import { Button } from "@/app/ui/button/button";
 import {
   PRODUCT_BADGE_TONE_STYLES,
-  PRODUCT_CTA_STYLES,
   PRODUCT_FAVORITE_ICON_STYLES,
 } from "./constants/product-card.constants";
 import type { ProductCardProps } from "./types/product-card.types";
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, cta }: ProductCardProps) {
   const favoriteStyle = product.isFavorite
     ? PRODUCT_FAVORITE_ICON_STYLES.active
     : PRODUCT_FAVORITE_ICON_STYLES.inactive;
-
-  const ctaStyle = product.isInCart ? PRODUCT_CTA_STYLES.inCart : PRODUCT_CTA_STYLES.default;
 
   return (
     <div className="flex flex-col gap-3 rounded-2xl bg-background p-3.5">
@@ -78,13 +75,7 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
 
-      <Button
-        variant="unstyled"
-        size="auto"
-        className={`h-11 rounded-[10px] text-sm font-semibold ${ctaStyle}`}
-      >
-        {product.ctaLabel}
-      </Button>
+      {cta}
     </div>
   );
 }

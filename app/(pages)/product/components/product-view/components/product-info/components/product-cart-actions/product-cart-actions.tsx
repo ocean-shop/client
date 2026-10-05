@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { toastStore } from "@/app/core/providers/toast-provider/toast-store";
+import { cartStore } from "@/app/shared/cart/cart-store";
+import {
+  CART_ITEM_MAX_QUANTITY,
+  CART_ITEM_MIN_QUANTITY,
+} from "@/app/shared/cart/constants/cart.constants";
+import { buildCartItemHelper } from "@/app/shared/cart/helpers/build-cart-item";
+import { notifyCartItemAddedHelper } from "@/app/shared/cart/helpers/notify-cart-item-added";
 import { Button } from "@/app/ui/button/button";
 import {
-  PRODUCT_CART_ADDED_TOAST_MESSAGE,
-  PRODUCT_CART_ADDED_TOAST_TITLE,
   PRODUCT_CART_ADD_LABEL,
   PRODUCT_CART_DECREASE_LABEL,
   PRODUCT_CART_INCREASE_LABEL,
-  PRODUCT_CART_MAX_QUANTITY,
-  PRODUCT_CART_MIN_QUANTITY,
   PRODUCT_CART_ONE_CLICK_LABEL,
   PRODUCT_CART_ONE_CLICK_TOAST_MESSAGE,
   PRODUCT_CART_ONE_CLICK_TOAST_TITLE,
@@ -16,21 +19,19 @@ import {
 } from "./constants/product-cart-actions.constants";
 import type { ProductCartActionsProps } from "./types/product-cart-actions.types";
 
-export function ProductCartActions({ productName, isAvailable }: ProductCartActionsProps) {
-  const [quantity, setQuantity] = useState(PRODUCT_CART_MIN_QUANTITY);
+export function ProductCartActions({ product, offer }: ProductCartActionsProps) {
+  const [quantity, setQuantity] = useState(CART_ITEM_MIN_QUANTITY);
+  const isAvailable = offer.available;
 
   function changeQuantity(step: number) {
     setQuantity((current) =>
-      Math.min(PRODUCT_CART_MAX_QUANTITY, Math.max(PRODUCT_CART_MIN_QUANTITY, current + step))
+      Math.min(CART_ITEM_MAX_QUANTITY, Math.max(CART_ITEM_MIN_QUANTITY, current + step))
     );
   }
 
-  // There is no cart yet, so adding confirms through a toast until one exists.
   function handleAdd() {
-    toastStore.success(
-      PRODUCT_CART_ADDED_TOAST_TITLE,
-      PRODUCT_CART_ADDED_TOAST_MESSAGE(productName, quantity)
-    );
+    cartStore.add(buildCartItemHelper(product, offer), quantity);
+    notifyCartItemAddedHelper(product.name, quantity);
   }
 
   function handleOneClick() {
@@ -44,7 +45,7 @@ export function ProductCartActions({ productName, isAvailable }: ProductCartActi
           variant="unstyled"
           size="auto"
           onClick={() => changeQuantity(-1)}
-          disabled={quantity === PRODUCT_CART_MIN_QUANTITY}
+          disabled={quantity === CART_ITEM_MIN_QUANTITY}
           aria-label={PRODUCT_CART_DECREASE_LABEL}
           className="flex h-full w-[46px] items-center justify-center font-symbols text-xl text-muted"
         >
@@ -57,7 +58,7 @@ export function ProductCartActions({ productName, isAvailable }: ProductCartActi
           variant="unstyled"
           size="auto"
           onClick={() => changeQuantity(1)}
-          disabled={quantity === PRODUCT_CART_MAX_QUANTITY}
+          disabled={quantity === CART_ITEM_MAX_QUANTITY}
           aria-label={PRODUCT_CART_INCREASE_LABEL}
           className="flex h-full w-[46px] items-center justify-center font-symbols text-xl text-muted"
         >
