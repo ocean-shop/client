@@ -7,5 +7,6 @@ export const CHECKOUT_SUMMARY_DELIVERY_LABEL = (carrierLabel: string) =>
 export const CHECKOUT_SUMMARY_COD_LABEL = "Комісія накладеного платежу";
 export const CHECKOUT_SUMMARY_TOTAL_LABEL = "Разом";
 export const CHECKOUT_SUMMARY_PLACE_LABEL = "Підтвердити замовлення";
+export const CHECKOUT_SUMMARY_PLACING_LABEL = "Оформлюємо…";
 export const CHECKOUT_SUMMARY_TERMS_LABEL =
   "Натискаючи кнопку, ви погоджуєтесь з умовами публічної оферти та політикою конфіденційності.";

@@ -8,6 +8,7 @@ import {
   CHECKOUT_SUMMARY_EDIT_LABEL,
   CHECKOUT_SUMMARY_ITEMS_LABEL,
   CHECKOUT_SUMMARY_PLACE_LABEL,
+  CHECKOUT_SUMMARY_PLACING_LABEL,
   CHECKOUT_SUMMARY_TERMS_LABEL,
   CHECKOUT_SUMMARY_TITLE,
   CHECKOUT_SUMMARY_TOTAL_LABEL,
@@ -20,6 +21,7 @@ export function CheckoutSummary({
   totals,
   carrierLabel,
   hint,
+  isPlacing,
   onPlace,
   onEdit,
 }: CheckoutSummaryProps) {
@@ -82,9 +84,14 @@ export function CheckoutSummary({
         </span>
       )}
 
-      <Button size="auto" onClick={onPlace} className="h-[54px] rounded-xl text-[15.5px]">
-        {CHECKOUT_SUMMARY_PLACE_LABEL}
-        <span className="font-symbols text-[19px]">arrow_forward</span>
+      <Button
+        size="auto"
+        onClick={onPlace}
+        disabled={isPlacing}
+        className="h-[54px] rounded-xl text-[15.5px]"
+      >
+        {isPlacing ? CHECKOUT_SUMMARY_PLACING_LABEL : CHECKOUT_SUMMARY_PLACE_LABEL}
+        {!isPlacing && <span className="font-symbols text-[19px]">arrow_forward</span>}
       </Button>
 
       <span className="text-center text-[12.5px] leading-normal text-muted-light">

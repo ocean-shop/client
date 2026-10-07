@@ -73,6 +73,10 @@ function remove(id: string) {
   commit(getItems().filter((item) => item.id !== id));
 }
 
+function clear() {
+  commit(CART_EMPTY_ITEMS);
+}
+
 function open() {
   isOpen = true;
   emit();
@@ -124,6 +128,7 @@ export const cartStore = {
   add,
   setQuantity,
   remove,
+  clear,
   open,
   close,
 };

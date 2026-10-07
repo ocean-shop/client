@@ -8,6 +8,7 @@ export type CheckoutSummaryProps = {
   carrierLabel: string;
   /** What still blocks the order, shown once the visitor has tried to place it. */
   hint: string | null;
+  isPlacing: boolean;
   onPlace: () => void;
   onEdit: () => void;
 };

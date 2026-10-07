@@ -12,8 +12,3 @@ export const CHECKOUT_TITLE = "Оформлення замовлення";
 export const CHECKOUT_BREADCRUMB_HOME_ITEM = { label: "Головна", href: "/" };
 export const CHECKOUT_BREADCRUMB_CART_LABEL = "Кошик";
 export const CHECKOUT_BREADCRUMB_CURRENT_ITEM = { label: "Оформлення" };
-
-/** Orders and payments are not wired up yet, so a valid form ends here instead of faking an order. */
-export const CHECKOUT_PLACE_TOAST_TITLE = "Скоро";
-export const CHECKOUT_PLACE_TOAST_MESSAGE =
-  "Оформлення та оплата замовлень стануть доступними найближчим часом.";

@@ -1,4 +1,5 @@
 import { DELIVERY_POPULAR_CITIES } from "@/app/shared/delivery/constants/delivery.constants";
+import type { OrderPaymentMethod } from "@/app/shared/orders/types/orders.types";
 import type {
   CheckoutCarrierOption,
   CheckoutContact,
@@ -37,6 +38,7 @@ export const CHECKOUT_CARRIERS: CheckoutCarrierOption[] = [
       { id: "courier", label: "Кур’єр", icon: "local_shipping", price: 120 },
     ],
     codFee: { fixed: 20, percent: 2 },
+    deliveryDays: { min: 1, max: 2 },
   },
   {
     id: "ukr",
@@ -47,6 +49,7 @@ export const CHECKOUT_CARRIERS: CheckoutCarrierOption[] = [
       { id: "courier", label: "Кур’єр", icon: "local_shipping", price: 90 },
     ],
     codFee: { fixed: 15, percent: 1 },
+    deliveryDays: { min: 2, max: 5 },
   },
 ];
 
@@ -105,3 +108,33 @@ export const CHECKOUT_EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const CHECKOUT_PHONE_PATTERN = /^(?:\+?38)?0\d{9}$/;
 export const CHECKOUT_PHONE_SEPARATORS_PATTERN = /[\s()-]/g;
 export const CHECKOUT_NAME_MIN_WORDS = 2;
+
+export const CHECKOUT_SUCCESS_PAGE_PATH = "/checkout/success";
+export const CHECKOUT_PLACED_ORDER_STORAGE_KEY = "ocean-shop:placed-order";
+
+/** The backend takes cards and cash on delivery only; every other way to pay is settled online. */
+export const CHECKOUT_ORDER_PAYMENT_METHODS: Record<CheckoutPaymentMethod, OrderPaymentMethod> = {
+  card: "card",
+  wallet: "card",
+  installments: "card",
+  invoice: "card",
+  cod: "cod",
+};
+
+/** The backend wants `+380XXXXXXXXX`; the form accepts the same number with or without `+38`. */
+export const CHECKOUT_ORDER_PHONE_PREFIX = "+380";
+export const CHECKOUT_ORDER_PHONE_DIGITS = 9;
+export const CHECKOUT_ORDER_NAME_MAX_LENGTH = 100;
+export const CHECKOUT_ORDER_EMAIL_MAX_LENGTH = 255;
+export const CHECKOUT_ORDER_SHIPPING_MAX_LENGTH = 255;
+export const CHECKOUT_ORDER_SHIPPING_SEPARATOR = ": ";
+export const CHECKOUT_DELIVERY_TITLE_SEPARATOR = " · ";
+export const CHECKOUT_DELIVERY_DATE_FORMATTER = new Intl.DateTimeFormat("uk-UA", {
+  day: "numeric",
+  month: "long",
+});
+
+/** Orders without a number of their own are shown by the start of their id. */
+export const CHECKOUT_ORDER_SHORT_ID_LENGTH = 8;
+
+export const CHECKOUT_ORDER_ERROR_TOAST_TITLE = "Не вдалося оформити замовлення";
