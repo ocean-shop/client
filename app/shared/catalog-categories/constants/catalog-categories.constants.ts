@@ -1,5 +1,4 @@
-export const CATALOG_CATEGORIES_API_URL =
-  "https://api-production-1765.up.railway.app/catalog/categories-client?limit=20";
+export const CATALOG_CATEGORIES_API_URL = `${process.env.API_BASE_URL}/catalog/categories-client?limit=20`;
 
 const SHOP_ID_QUERY_PARAM = "shopId";
 
