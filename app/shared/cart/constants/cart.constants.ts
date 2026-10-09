@@ -2,6 +2,8 @@ import type { CartItem } from "../types/cart.types";
 
 export const CART_STORAGE_KEY = "ocean-shop:cart";
 
+export const CHECKOUT_PAGE_PATH = "/checkout";
+
 export const CART_ITEM_MIN_QUANTITY = 1;
 export const CART_ITEM_MAX_QUANTITY = 99;
 

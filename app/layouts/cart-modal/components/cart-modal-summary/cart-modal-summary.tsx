@@ -1,10 +1,9 @@
-import { toastStore } from "@/app/core/providers/toast-provider/toast-store";
+import { useRouter } from "next/navigation";
+import { CHECKOUT_PAGE_PATH } from "@/app/shared/cart/constants/cart.constants";
 import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-product-price";
 import { Button } from "@/app/ui/button/button";
 import {
   CART_MODAL_SUMMARY_CHECKOUT_LABEL,
-  CART_MODAL_SUMMARY_CHECKOUT_TOAST_MESSAGE,
-  CART_MODAL_SUMMARY_CHECKOUT_TOAST_TITLE,
   CART_MODAL_SUMMARY_CONTINUE_LABEL,
   CART_MODAL_SUMMARY_DELIVERY_LABEL,
   CART_MODAL_SUMMARY_DELIVERY_VALUE,
@@ -15,11 +14,11 @@ import {
 import type { CartModalSummaryProps } from "./types/cart-modal-summary.types";
 
 export function CartModalSummary({ totals, onClose }: CartModalSummaryProps) {
+  const router = useRouter();
+
   function handleCheckout() {
-    toastStore.success(
-      CART_MODAL_SUMMARY_CHECKOUT_TOAST_TITLE,
-      CART_MODAL_SUMMARY_CHECKOUT_TOAST_MESSAGE
-    );
+    onClose();
+    router.push(CHECKOUT_PAGE_PATH);
   }
 
   return (
