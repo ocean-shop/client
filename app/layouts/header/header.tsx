@@ -8,6 +8,7 @@ import {
   HEADER_NAV_SALES_ITEM,
 } from "./constants/header.constants";
 import { MobileHeader } from "./components/mobile-header/mobile-header";
+import { AUTH_LOGIN_PAGE_PATH } from "@/app/shared/auth/constants/auth.constants";
 import { getCatalogCategoryTreeHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-tree";
 import type { HeaderNavItem } from "./types/header.types";
 
@@ -43,7 +44,9 @@ export async function Header() {
 
           <div className="flex items-center gap-[22px] text-sm text-muted">
             <span className="cursor-pointer hover:text-accent">Обране</span>
-            <span className="cursor-pointer hover:text-accent">Кабінет</span>
+            <Link href={AUTH_LOGIN_PAGE_PATH} className="hover:text-accent">
+              Кабінет
+            </Link>
             <HeaderCart />
           </div>
         </div>
