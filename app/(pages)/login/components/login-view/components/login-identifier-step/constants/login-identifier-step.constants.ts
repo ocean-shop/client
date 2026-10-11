@@ -6,6 +6,7 @@ export const LOGIN_IDENTIFIER_STEP_DESCRIPTION =
 export const LOGIN_IDENTIFIER_STEP_LABEL = "Email або телефон";
 export const LOGIN_IDENTIFIER_STEP_PLACEHOLDER = "name@example.com або +380…";
 export const LOGIN_IDENTIFIER_STEP_SUBMIT_LABEL = "Отримати код";
+export const LOGIN_IDENTIFIER_STEP_SUBMITTING_LABEL = "Надсилаємо код…";
 export const LOGIN_IDENTIFIER_STEP_TERMS =
   "Продовжуючи, ви погоджуєтесь з умовами використання та політикою конфіденційності.";
 export const LOGIN_IDENTIFIER_STEP_ERROR =

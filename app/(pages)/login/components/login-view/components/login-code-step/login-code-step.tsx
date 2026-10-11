@@ -11,12 +11,14 @@ import {
   LOGIN_CODE_STEP_INVALID_DESCRIPTION,
   LOGIN_CODE_STEP_INVALID_TITLE,
   LOGIN_CODE_STEP_RESEND_LABEL,
+  LOGIN_CODE_STEP_RESENDING_LABEL,
   LOGIN_CODE_STEP_RESEND_WAIT_LABEL,
   LOGIN_CODE_STEP_SENT_LABEL,
   LOGIN_CODE_STEP_SUBMIT_LABEL,
   LOGIN_CODE_STEP_TITLE,
   LOGIN_CODE_STEP_VALIDITY,
   LOGIN_CODE_STEP_VERIFIED_LABEL,
+  LOGIN_CODE_STEP_VERIFYING_LABEL,
 } from "./constants/login-code-step.constants";
 import type { LoginCodeStepProps } from "./types/login-code-step.types";
 
@@ -27,6 +29,8 @@ export function LoginCodeStep({
   status,
   attemptsLeft,
   secondsLeft,
+  isResending,
+  isVerifying,
   onCodeChange,
   onConfirm,
   onResend,
@@ -101,10 +105,10 @@ export function LoginCodeStep({
       <Button
         type="submit"
         size="auto"
-        disabled={code.length < LOGIN_CODE_LENGTH || status !== "idle"}
+        disabled={code.length < LOGIN_CODE_LENGTH || status !== "idle" || isVerifying}
         className="h-[52px] rounded-xl text-[15px]"
       >
-        {LOGIN_CODE_STEP_SUBMIT_LABEL}
+        {isVerifying ? LOGIN_CODE_STEP_VERIFYING_LABEL : LOGIN_CODE_STEP_SUBMIT_LABEL}
       </Button>
 
       <div className="flex justify-center text-[13.5px] text-muted">
@@ -118,9 +122,10 @@ export function LoginCodeStep({
             variant="text"
             size="auto"
             onClick={onResend}
+            disabled={isResending}
             className="text-[13.5px] hover:text-accent-dark"
           >
-            {LOGIN_CODE_STEP_RESEND_LABEL}
+            {isResending ? LOGIN_CODE_STEP_RESENDING_LABEL : LOGIN_CODE_STEP_RESEND_LABEL}
           </Button>
         )}
       </div>

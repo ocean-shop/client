@@ -7,6 +7,8 @@ export type LoginCodeStepProps = {
   status: LoginCodeStatus;
   attemptsLeft: number;
   secondsLeft: number;
+  isResending: boolean;
+  isVerifying: boolean;
   onCodeChange: (value: string) => void;
   onConfirm: () => void;
   onResend: () => void;

@@ -10,6 +10,7 @@ import {
   LOGIN_IDENTIFIER_STEP_LABEL,
   LOGIN_IDENTIFIER_STEP_PLACEHOLDER,
   LOGIN_IDENTIFIER_STEP_SUBMIT_LABEL,
+  LOGIN_IDENTIFIER_STEP_SUBMITTING_LABEL,
   LOGIN_IDENTIFIER_STEP_TERMS,
   LOGIN_IDENTIFIER_STEP_TITLE,
 } from "./constants/login-identifier-step.constants";
@@ -18,6 +19,7 @@ import type { LoginIdentifierStepProps } from "./types/login-identifier-step.typ
 export function LoginIdentifierStep({
   value,
   error,
+  isRequesting,
   onChange,
   onSubmit,
 }: LoginIdentifierStepProps) {
@@ -67,11 +69,18 @@ export function LoginIdentifierStep({
         {error && <span className="text-[13px] text-error-dark">{error}</span>}
       </label>
 
-      <Button type="submit" size="auto" className="h-[52px] rounded-xl text-[15px]">
-        {LOGIN_IDENTIFIER_STEP_SUBMIT_LABEL}
-        <span aria-hidden className="font-symbols text-[19px] font-normal">
-          arrow_forward
-        </span>
+      <Button
+        type="submit"
+        size="auto"
+        disabled={isRequesting}
+        className="h-[52px] rounded-xl text-[15px]"
+      >
+        {isRequesting ? LOGIN_IDENTIFIER_STEP_SUBMITTING_LABEL : LOGIN_IDENTIFIER_STEP_SUBMIT_LABEL}
+        {!isRequesting && (
+          <span aria-hidden className="font-symbols text-[19px] font-normal">
+            arrow_forward
+          </span>
+        )}
       </Button>
 
       <p className="text-center text-[12.5px] leading-normal text-muted-light">
