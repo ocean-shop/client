@@ -17,6 +17,14 @@ export type AuthUser = {
   role: string | null;
 };
 
+/** Claims the backend signs into both tokens; `sub` is the user's id. */
+export type AuthTokenPayload = {
+  sub: string;
+  email: string | null;
+  mobileNumber: string | null;
+  role?: string | null;
+};
+
 export type AuthTokens = {
   accessToken: string;
   refreshToken: string;

@@ -3,6 +3,9 @@ import type { DeliveryCarrier } from "@/app/shared/delivery/types/delivery.types
 /** Mirrors the backend's `paymentMethod` enum. */
 export type OrderPaymentMethod = "card" | "cod";
 
+/** Mirrors the backend's order `status` enum. */
+export type OrderStatus = "pending" | "processing" | "shipped" | "cancelled";
+
 export type CreateOrderItemRequest = {
   productId: string;
   unitPrice: number;

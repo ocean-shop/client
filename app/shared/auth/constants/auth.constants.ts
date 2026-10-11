@@ -1,9 +1,10 @@
 export const AUTH_LOGIN_PAGE_PATH = "/login";
 export const AUTH_HOME_PAGE_PATH = "/";
+export const AUTH_CABINET_PAGE_PATH = "/cabinet";
 /** Query param the proxy puts on `/login` so the user lands back where they were sent from. */
 export const AUTH_REDIRECT_PARAM = "redirect";
 /** Path prefixes that need a signed-in user; the proxy sends everyone else to `/login`. */
-export const AUTH_PROTECTED_PATHS = ["/cabinet"];
+export const AUTH_PROTECTED_PATHS = [AUTH_CABINET_PAGE_PATH];
 
 export const AUTH_API_URL = `${process.env.API_BASE_URL}/user/auth`;
 export const AUTH_CLIENT_API_URL = `${AUTH_API_URL}/client`;

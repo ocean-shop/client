@@ -2,7 +2,10 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { AUTH_LOGIN_PAGE_PATH } from "@/app/shared/auth/constants/auth.constants";
+import {
+  AUTH_CABINET_PAGE_PATH,
+  AUTH_LOGIN_PAGE_PATH,
+} from "@/app/shared/auth/constants/auth.constants";
 import { cartStore } from "@/app/shared/cart/cart-store";
 import { useCartOpen } from "@/app/shared/cart/hooks/use-cart-open";
 import { useCartQuantity } from "@/app/shared/cart/hooks/use-cart-quantity";
@@ -17,12 +20,15 @@ export function BottomTabBar({ categories }: BottomTabBarProps) {
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const isCartOpen = useCartOpen();
   const cartQuantity = useCartQuantity();
-  const isAccountPage = pathname === AUTH_LOGIN_PAGE_PATH;
+  const isAccountPage =
+    pathname === AUTH_LOGIN_PAGE_PATH ||
+    pathname === AUTH_CABINET_PAGE_PATH ||
+    pathname.startsWith(`${AUTH_CABINET_PAGE_PATH}/`);
 
   function getItemClickHandler(id: string) {
     if (id === "catalog") return () => setIsCatalogOpen(true);
     if (id === "cart") return cartStore.open;
-    if (id === "account") return () => router.push(AUTH_LOGIN_PAGE_PATH);
+    if (id === "account") return () => router.push(AUTH_CABINET_PAGE_PATH);
 
     return undefined;
   }
