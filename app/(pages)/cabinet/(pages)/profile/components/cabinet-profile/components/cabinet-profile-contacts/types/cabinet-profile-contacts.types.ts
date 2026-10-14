@@ -10,14 +10,19 @@ export type CabinetProfileForm = {
   firstName: string;
   middleName: string;
   phone: string;
+  /** `YYYY-MM-DD`, or `null` while not picked. */
+  birthday: string | null;
 };
 
 export type CabinetProfileFormField = keyof CabinetProfileForm;
 
+export type CabinetProfileTextField = Exclude<CabinetProfileFormField, "birthday">;
+
 export type CabinetProfileFormErrors = Partial<Record<CabinetProfileFormField, string | null>>;
 
 export type CabinetProfileFieldConfig = {
-  name: CabinetProfileFormField;
+  /** The birthday is picked from a calendar, not typed. */
+  name: CabinetProfileTextField;
   label: string;
   placeholder: string;
   autoComplete: string;

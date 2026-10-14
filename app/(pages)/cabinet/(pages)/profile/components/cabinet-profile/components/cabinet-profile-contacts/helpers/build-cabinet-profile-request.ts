@@ -21,5 +21,6 @@ export function buildCabinetProfileRequestHelper(
     phoneNumber: phoneDigits
       ? `${CABINET_PROFILE_CONTACTS_PHONE_PREFIX}${phoneDigits.slice(-CABINET_PROFILE_CONTACTS_PHONE_DIGITS)}`
       : null,
+    birthday: form.birthday,
   };
 }

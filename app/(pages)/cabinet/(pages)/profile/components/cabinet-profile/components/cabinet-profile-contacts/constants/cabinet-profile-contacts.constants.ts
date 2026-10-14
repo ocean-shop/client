@@ -14,6 +14,7 @@ export const CABINET_PROFILE_CONTACTS_SAVE_ERROR_TOAST_TITLE = "Не вдало�
 export const CABINET_PROFILE_CONTACTS_INFO_LABELS = {
   fullName: "ПІБ",
   phone: "Мобільний",
+  birthday: "Дата народження",
   email: "Email",
 };
 
@@ -36,6 +37,12 @@ export const CABINET_PROFILE_CONTACTS_FIELDS: CabinetProfileFieldConfig[] = [
   },
 ];
 
+export const CABINET_PROFILE_CONTACTS_BIRTHDAY_FIELD = {
+  label: "Дата народження",
+  /** Earliest pickable birthday; the latest is today. */
+  min: "1900-01-01",
+};
+
 /** The email is the login, and the profile endpoint has no way to change it. */
 export const CABINET_PROFILE_CONTACTS_EMAIL_FIELD = {
   label: "Email",
@@ -47,6 +54,7 @@ export const CABINET_PROFILE_CONTACTS_EMPTY_FORM: CabinetProfileForm = {
   firstName: "",
   middleName: "",
   phone: "",
+  birthday: null,
 };
 
 export const CABINET_PROFILE_CONTACTS_VALIDATION_MESSAGES = {

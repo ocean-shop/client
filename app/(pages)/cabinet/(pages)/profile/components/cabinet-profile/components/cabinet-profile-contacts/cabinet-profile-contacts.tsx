@@ -9,8 +9,10 @@ import { toastStore } from "@/app/core/providers/toast-provider/toast-store";
 import { useAuthUser } from "@/app/shared/auth/hooks/use-auth-user";
 import { Button } from "@/app/ui/button/button";
 import { updateUserProfileAction } from "../../../../actions/update-user-profile";
+import { CabinetProfileBirthdayField } from "./components/cabinet-profile-birthday-field/cabinet-profile-birthday-field";
 import { CabinetProfileField } from "./components/cabinet-profile-field/cabinet-profile-field";
 import {
+  CABINET_PROFILE_CONTACTS_BIRTHDAY_FIELD,
   CABINET_PROFILE_CONTACTS_CANCEL_LABEL,
   CABINET_PROFILE_CONTACTS_EDIT_LABEL,
   CABINET_PROFILE_CONTACTS_EMAIL_FIELD,
@@ -34,7 +36,7 @@ import type {
 } from "./types/cabinet-profile-contacts.types";
 
 /**
- * The user's name and phone, read-only until "Редагувати" is pressed. Users who signed in with a
+ * The user's name, phone and birthday, read-only until "Редагувати" is pressed. Users who signed in with a
  * phone and never saved another one see their login number, so checkout has it from the start.
  */
 export function CabinetProfileContacts({ profile }: CabinetProfileContactsProps) {
@@ -46,16 +48,16 @@ export function CabinetProfileContacts({ profile }: CabinetProfileContactsProps)
   const [errors, setErrors] = useState<CabinetProfileFormErrors>({});
 
   const phone = profile.phoneNumber ?? user.mobileNumber;
-  const info = buildCabinetProfileInfoHelper(profile.fullName, phone, user.email);
+  const info = buildCabinetProfileInfoHelper(profile.fullName, phone, profile.birthday, user.email);
 
   function handleEdit() {
-    setForm(buildCabinetProfileFormHelper(profile.fullName, phone));
+    setForm(buildCabinetProfileFormHelper(profile.fullName, phone, profile.birthday));
     setErrors({});
     setIsSaved(false);
     setIsEditing(true);
   }
 
-  function handleChange(field: CabinetProfileFormField, value: string) {
+  function handleChange(field: CabinetProfileFormField, value: string | null) {
     setForm((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: null }));
   }
@@ -128,6 +130,13 @@ export function CabinetProfileContacts({ profile }: CabinetProfileContactsProps)
                 onChange={(event) => handleChange(name, event.target.value)}
               />
             ))}
+            <CabinetProfileBirthdayField
+              label={CABINET_PROFILE_CONTACTS_BIRTHDAY_FIELD.label}
+              value={form.birthday}
+              min={CABINET_PROFILE_CONTACTS_BIRTHDAY_FIELD.min}
+              disabled={isSaving}
+              onChange={(value) => handleChange("birthday", value)}
+            />
             {user.email && (
               <CabinetProfileField
                 label={CABINET_PROFILE_CONTACTS_EMAIL_FIELD.label}

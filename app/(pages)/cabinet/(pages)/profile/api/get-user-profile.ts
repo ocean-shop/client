@@ -1,6 +1,7 @@
 import { ApiError } from "@/app/core/api/api-fetch";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
 import { getProfileClientApiUrl } from "../constants/profile.constants";
+import { normalizeProfileBirthdayHelper } from "../helpers/normalize-profile-birthday";
 import type { UserProfile } from "../types/profile.types";
 
 /**
@@ -12,7 +13,7 @@ export async function getUserProfile(userId: string): Promise<UserProfile> {
 
   if (!response.ok) throw new ApiError(response.status);
 
-  const { fullName, phoneNumber }: UserProfile = await response.json();
+  const { fullName, phoneNumber, birthday }: UserProfile = await response.json();
 
-  return { userId, fullName, phoneNumber };
+  return { userId, fullName, phoneNumber, birthday: normalizeProfileBirthdayHelper(birthday) };
 }

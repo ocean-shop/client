@@ -1,8 +1,8 @@
 import { formatProductsCountHelper } from "@/app/shared/products/helpers/format-products-count";
 import {
+  CABINET_ADDRESSES_PATH,
   CABINET_FAVORITES_PATH,
   CABINET_ORDERS_PATH,
-  CABINET_PROFILE_PATH,
 } from "../../../constants/cabinet.constants";
 import type { CabinetOverview } from "../../../types/cabinet.types";
 import {
@@ -48,7 +48,7 @@ export function buildCabinetOverviewStatsHelper(overview: CabinetOverview): Cabi
     },
     {
       id: "address",
-      href: CABINET_PROFILE_PATH,
+      href: CABINET_ADDRESSES_PATH,
       icon: address.icon,
       label: address.label,
       value: mainAddress?.title ?? address.emptyValue,

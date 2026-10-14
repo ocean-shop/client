@@ -5,6 +5,7 @@ import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
 import { getApiErrorMessage } from "@/app/shared/auth/helpers/get-api-error-message";
 import { getAuthUser } from "@/app/shared/auth/helpers/get-auth-user";
 import { getProfileClientApiUrl, PROFILE_REQUEST_HEADERS } from "../constants/profile.constants";
+import { normalizeProfileBirthdayHelper } from "../helpers/normalize-profile-birthday";
 import type {
   UpdateUserProfileRequest,
   UpdateUserProfileResult,
@@ -32,9 +33,17 @@ export async function updateUserProfileAction(
     return { ok: false, status: response.status, message: await getApiErrorMessage(response) };
   }
 
-  const { fullName, phoneNumber }: UserProfile = await response.json();
+  const { fullName, phoneNumber, birthday }: UserProfile = await response.json();
 
   refresh();
 
-  return { ok: true, profile: { userId: user.id, fullName, phoneNumber } };
+  return {
+    ok: true,
+    profile: {
+      userId: user.id,
+      fullName,
+      phoneNumber,
+      birthday: normalizeProfileBirthdayHelper(birthday),
+    },
+  };
 }

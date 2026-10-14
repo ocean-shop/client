@@ -1,3 +1,4 @@
+import { formatDatePickerLabelHelper } from "@/app/ui/date-picker/helpers/format-date-picker-label";
 import { formatCabinetPhoneHelper } from "../../../../../../../helpers/format-cabinet-phone";
 import {
   CABINET_PROFILE_CONTACTS_EMPTY_VALUE,
@@ -8,6 +9,7 @@ import type { CabinetProfileInfoItem } from "../types/cabinet-profile-contacts.t
 export function buildCabinetProfileInfoHelper(
   fullName: string | null,
   phone: string | null,
+  birthday: string | null,
   email: string | null
 ): CabinetProfileInfoItem[] {
   return [
@@ -18,6 +20,10 @@ export function buildCabinetProfileInfoHelper(
     {
       label: CABINET_PROFILE_CONTACTS_INFO_LABELS.phone,
       value: phone ? formatCabinetPhoneHelper(phone) : CABINET_PROFILE_CONTACTS_EMPTY_VALUE,
+    },
+    {
+      label: CABINET_PROFILE_CONTACTS_INFO_LABELS.birthday,
+      value: formatDatePickerLabelHelper(birthday) ?? CABINET_PROFILE_CONTACTS_EMPTY_VALUE,
     },
     {
       label: CABINET_PROFILE_CONTACTS_INFO_LABELS.email,
