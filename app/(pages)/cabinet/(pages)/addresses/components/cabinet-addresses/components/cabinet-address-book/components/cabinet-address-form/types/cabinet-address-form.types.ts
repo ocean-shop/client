@@ -1,6 +1,8 @@
 import type { DeliveryCarrier, DeliveryMethod } from "@/app/shared/delivery/types/delivery.types";
 
 export type CabinetAddressFormProps = {
+  /** False while the user has no addresses: the first one is always main. */
+  canChooseMain: boolean;
   onCancel: () => void;
   onSaved: () => void;
 };

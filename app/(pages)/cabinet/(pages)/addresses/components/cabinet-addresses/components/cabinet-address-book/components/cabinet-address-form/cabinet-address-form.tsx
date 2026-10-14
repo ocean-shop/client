@@ -5,19 +5,19 @@ import { DeliveryCitySelect } from "@/app/(pages)/checkout/components/checkout-v
 import { DeliveryPoints } from "@/app/(pages)/checkout/components/checkout-view/components/checkout-delivery/components/delivery-points/delivery-points";
 import { CHECKOUT_DEFAULT_DELIVERY } from "@/app/(pages)/checkout/constants/checkout.constants";
 import type { CheckoutDelivery } from "@/app/(pages)/checkout/types/checkout.types";
-import {
-  API_ERROR_MESSAGES,
-  DEFAULT_API_ERROR_MESSAGE,
-} from "@/app/core/api/constants/api.constants";
+import { DEFAULT_API_ERROR_MESSAGE } from "@/app/core/api/constants/api.constants";
 import { toastStore } from "@/app/core/providers/toast-provider/toast-store";
 import type { DeliveryCity, DeliveryPoint } from "@/app/shared/delivery/types/delivery.types";
 import { Button } from "@/app/ui/button/button";
+import { Checkbox } from "@/app/ui/checkbox/checkbox";
 import { createUserShippingAction } from "../../../../../../actions/create-user-shipping";
+import { getCabinetAddressErrorMessageHelper } from "../../helpers/get-cabinet-address-error-message";
 import { CabinetAddressField } from "./components/cabinet-address-field/cabinet-address-field";
 import { CabinetAddressTypeOption } from "./components/cabinet-address-type-option/cabinet-address-type-option";
 import {
   CABINET_ADDRESS_FORM_CANCEL_LABEL,
   CABINET_ADDRESS_FORM_COURIER_FIELDS,
+  CABINET_ADDRESS_FORM_MAIN_LABEL,
   CABINET_ADDRESS_FORM_SAVE_ERROR_TOAST_TITLE,
   CABINET_ADDRESS_FORM_SAVE_LABEL,
   CABINET_ADDRESS_FORM_STREET_MAX_LENGTH,
@@ -34,10 +34,12 @@ import type {
 
 /**
  * A new delivery address, picked the same way as at checkout: the city and the branch or parcel
- * locker come straight from the carrier, a courier address is typed in.
+ * locker come straight from the carrier, a courier address is typed in. The very first address is
+ * always main, so the checkbox only shows once there is another one to replace.
  */
-export function CabinetAddressForm({ onCancel, onSaved }: CabinetAddressFormProps) {
+export function CabinetAddressForm({ canChooseMain, onCancel, onSaved }: CabinetAddressFormProps) {
   const [delivery, setDelivery] = useState<CheckoutDelivery>(CHECKOUT_DEFAULT_DELIVERY);
+  const [isMain, setIsMain] = useState(false);
   const [errors, setErrors] = useState<CabinetAddressFormErrors>({});
   const [isSaving, setIsSaving] = useState(false);
 
@@ -78,13 +80,14 @@ export function CabinetAddressForm({ onCancel, onSaved }: CabinetAddressFormProp
     setIsSaving(true);
 
     try {
-      const result = await createUserShippingAction(buildCabinetAddressRequestHelper(delivery));
+      const result = await createUserShippingAction(
+        buildCabinetAddressRequestHelper(delivery, isMain)
+      );
 
       if (!result.ok) {
         toastStore.error(
           CABINET_ADDRESS_FORM_SAVE_ERROR_TOAST_TITLE,
-          (result.status < 500 && result.message) ||
-            (API_ERROR_MESSAGES[result.status] ?? DEFAULT_API_ERROR_MESSAGE)
+          getCabinetAddressErrorMessageHelper(result)
         );
         return;
       }
@@ -159,6 +162,15 @@ export function CabinetAddressForm({ onCancel, onSaved }: CabinetAddressFormProp
           </div>
         )}
       </div>
+
+      {canChooseMain && (
+        <Checkbox
+          checked={isMain}
+          onChange={setIsMain}
+          disabled={isSaving}
+          label={CABINET_ADDRESS_FORM_MAIN_LABEL}
+        />
+      )}
 
       <div className="flex flex-col-reverse gap-2.5 lg:flex-row lg:justify-end">
         <Button

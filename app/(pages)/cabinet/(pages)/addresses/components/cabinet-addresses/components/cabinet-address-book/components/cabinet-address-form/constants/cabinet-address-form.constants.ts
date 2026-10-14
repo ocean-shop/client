@@ -1,6 +1,7 @@
 import type { CabinetAddressType } from "../types/cabinet-address-form.types";
 
 export const CABINET_ADDRESS_FORM_TYPES_LABEL = "Спосіб доставки";
+export const CABINET_ADDRESS_FORM_MAIN_LABEL = "Зробити основною адресою";
 export const CABINET_ADDRESS_FORM_CANCEL_LABEL = "Скасувати";
 export const CABINET_ADDRESS_FORM_SAVE_LABEL = "Зберегти адресу";
 export const CABINET_ADDRESS_FORM_SAVE_ERROR_TOAST_TITLE = "Не вдалося зберегти адресу";
