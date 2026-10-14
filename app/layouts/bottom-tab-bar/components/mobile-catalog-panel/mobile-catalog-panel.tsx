@@ -23,6 +23,7 @@ export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalo
       role="dialog"
       aria-modal="true"
       aria-hidden={!isOpen}
+      inert={!isOpen}
       className={`fixed inset-0 z-50 flex flex-col bg-surface-soft transition-transform duration-300 ease-out lg:hidden ${
         isOpen ? "translate-y-0" : "translate-y-full"
       }`}

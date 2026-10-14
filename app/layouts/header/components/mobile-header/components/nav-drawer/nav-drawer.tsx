@@ -34,6 +34,7 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
         role="dialog"
         aria-modal="true"
         aria-hidden={!isOpen}
+        inert={!isOpen}
         className={`fixed inset-y-0 left-0 z-50 flex w-[306px] max-w-[85vw] flex-col bg-surface-soft transition-transform duration-300 ease-out ${
           isOpen
             ? "translate-x-0 shadow-[14px_0_40px_-20px_rgba(17,28,45,0.5)]"

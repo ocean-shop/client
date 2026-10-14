@@ -1,4 +1,5 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
+import { HERO_BLANK_IMAGE_SRC } from "../../constants/hero.constants";
 import {
   MOBILE_HERO_COUNTDOWN,
   MOBILE_HERO_DESCRIPTION_PREFIX,
@@ -6,23 +7,32 @@ import {
   MOBILE_HERO_EYEBROW_LABEL,
   MOBILE_HERO_HEADING,
   MOBILE_HERO_IMAGE_ALT,
+  MOBILE_HERO_IMAGE_HIDDEN_MEDIA,
   MOBILE_HERO_IMAGE_SIZES,
   MOBILE_HERO_IMAGE_URL,
   MOBILE_HERO_PROMO_CODE,
 } from "./constants/mobile-hero.constants";
 
 export function MobileHero() {
+  const { props: imageProps } = getImageProps({
+    src: MOBILE_HERO_IMAGE_URL,
+    alt: MOBILE_HERO_IMAGE_ALT,
+    fill: true,
+    sizes: MOBILE_HERO_IMAGE_SIZES,
+    loading: "eager",
+    fetchPriority: "high",
+    className: "object-cover",
+  });
+
   return (
     <section className="flex flex-col gap-3.5 bg-background px-4.5 pb-5 pt-3.5 lg:hidden">
       <div className="relative h-[190px] overflow-hidden rounded-xl border-8 border-border-soft bg-border-soft">
-        <Image
-          src={MOBILE_HERO_IMAGE_URL}
-          alt={MOBILE_HERO_IMAGE_ALT}
-          fill
-          sizes={MOBILE_HERO_IMAGE_SIZES}
-          fetchPriority="high"
-          className="object-cover"
-        />
+        {/* LCP image on mobile: eager + high priority, while the <source> keeps desktop from fetching it. */}
+        <picture>
+          <source media={MOBILE_HERO_IMAGE_HIDDEN_MEDIA} srcSet={HERO_BLANK_IMAGE_SRC} />
+          {/* eslint-disable-next-line jsx-a11y/alt-text -- props come from getImageProps */}
+          <img {...imageProps} />
+        </picture>
       </div>
 
       <div className="flex flex-col gap-2">

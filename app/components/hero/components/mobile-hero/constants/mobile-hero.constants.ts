@@ -15,4 +15,7 @@ export const MOBILE_HERO_IMAGE_URL =
 
 export const MOBILE_HERO_IMAGE_SIZES = "100vw";
 
+/** From `lg` the mobile hero is hidden, so its <picture> swaps to a blank image there. */
+export const MOBILE_HERO_IMAGE_HIDDEN_MEDIA = "(min-width: 1024px)";
+
 export const MOBILE_HERO_IMAGE_ALT = "Сезонна колекція Ocean";

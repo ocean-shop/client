@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter, Unbounded } from "next/font/google";
 import localFont from "next/font/local";
 import { BottomTabBar } from "./layouts/bottom-tab-bar/bottom-tab-bar";
 import { CartModal } from "./layouts/cart-modal/cart-modal";
@@ -18,20 +17,25 @@ const materialSymbolsOutlined = localFont({
   display: "block",
 });
 
-const inter = Inter({
+// Self-hosted single-file subsets (Latin + Cyrillic + "₴") — regenerate with `npm run fonts:subset`.
+const inter = localFont({
+  src: "./core/fonts/inter.woff2",
   variable: "--font-inter",
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
+  weight: "400 700",
+  display: "swap",
 });
 
-const unbounded = Unbounded({
+const unbounded = localFont({
+  src: "./core/fonts/unbounded.woff2",
   variable: "--font-unbounded",
-  subsets: ["latin", "cyrillic"],
-  weight: ["500", "600"],
+  weight: "500 600",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Ocean Shop",
+  description:
+    "Ocean Shop — інтернет-магазин смартфонів, планшетів, ноутбуків та аксесуарів з доставкою по Україні.",
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {

@@ -26,6 +26,7 @@ export function CatalogSortSheet({
         role="dialog"
         aria-modal="true"
         aria-hidden={!isOpen}
+        inert={!isOpen}
         className={`fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-2xl bg-background transition-transform duration-300 ease-out lg:hidden ${
           isOpen ? "translate-y-0" : "translate-y-full"
         }`}
