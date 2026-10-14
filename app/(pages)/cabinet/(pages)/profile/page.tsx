@@ -1,6 +1,6 @@
 import { requireAuthUser } from "@/app/shared/auth/helpers/require-auth-user";
-import { getUserProfile } from "@/app/shared/profile/api/get-user-profile";
-import { CABINET_PROFILE_PATH } from "../constants/cabinet.constants";
+import { CABINET_PROFILE_PATH } from "../../constants/cabinet.constants";
+import { getUserProfile } from "./api/get-user-profile";
 import { CabinetProfile } from "./components/cabinet-profile/cabinet-profile";
 
 export default async function CabinetProfilePage() {

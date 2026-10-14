@@ -1,4 +1,4 @@
-import { formatCabinetPhoneHelper } from "../../../../../../helpers/format-cabinet-phone";
+import { formatCabinetPhoneHelper } from "../../../../../../../helpers/format-cabinet-phone";
 import {
   CABINET_PROFILE_CONTACTS_EMPTY_VALUE,
   CABINET_PROFILE_CONTACTS_INFO_LABELS,

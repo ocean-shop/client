@@ -1,4 +1,4 @@
-import type { UserProfile } from "@/app/shared/profile/types/profile.types";
+import type { UserProfile } from "../../../../../types/profile.types";
 
 export type CabinetProfileContactsProps = {
   profile: UserProfile;

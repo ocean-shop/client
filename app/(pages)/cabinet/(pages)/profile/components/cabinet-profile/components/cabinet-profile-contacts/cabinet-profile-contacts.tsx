@@ -7,8 +7,8 @@ import {
 } from "@/app/core/api/constants/api.constants";
 import { toastStore } from "@/app/core/providers/toast-provider/toast-store";
 import { useAuthUser } from "@/app/shared/auth/hooks/use-auth-user";
-import { updateUserProfileAction } from "@/app/shared/profile/actions/update-user-profile";
 import { Button } from "@/app/ui/button/button";
+import { updateUserProfileAction } from "../../../../actions/update-user-profile";
 import { CabinetProfileField } from "./components/cabinet-profile-field/cabinet-profile-field";
 import {
   CABINET_PROFILE_CONTACTS_CANCEL_LABEL,

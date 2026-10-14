@@ -1,4 +1,4 @@
-import type { UpdateUserProfileRequest } from "@/app/shared/profile/types/profile.types";
+import type { UpdateUserProfileRequest } from "../../../../../types/profile.types";
 import {
   CABINET_PROFILE_CONTACTS_PHONE_DIGITS,
   CABINET_PROFILE_CONTACTS_PHONE_PREFIX,

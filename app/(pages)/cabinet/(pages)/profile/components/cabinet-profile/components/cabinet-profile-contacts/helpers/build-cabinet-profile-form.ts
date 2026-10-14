@@ -1,4 +1,4 @@
-import { formatCabinetPhoneHelper } from "../../../../../../helpers/format-cabinet-phone";
+import { formatCabinetPhoneHelper } from "../../../../../../../helpers/format-cabinet-phone";
 import type { CabinetProfileForm } from "../types/cabinet-profile-contacts.types";
 
 /** "Коваль Олена Петрівна" → last, first and middle name; anything past the second word is kept as the middle name. */
