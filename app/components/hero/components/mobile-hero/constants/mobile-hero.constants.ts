@@ -13,4 +13,6 @@ export const MOBILE_HERO_DESCRIPTION_SUFFIX = "— мінус 200 ₴ на пе�
 export const MOBILE_HERO_IMAGE_URL =
   "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80";
 
+export const MOBILE_HERO_IMAGE_SIZES = "100vw";
+
 export const MOBILE_HERO_IMAGE_ALT = "Сезонна колекція Ocean";

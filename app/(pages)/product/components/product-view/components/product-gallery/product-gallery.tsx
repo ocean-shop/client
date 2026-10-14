@@ -83,7 +83,7 @@ export function ProductGallery({ images, name, discountPercent }: ProductGallery
               alt={name}
               fill
               sizes={PRODUCT_GALLERY_MAIN_SIZES}
-              priority
+              preload
               className={PRODUCT_GALLERY_MAIN_IMAGE_CLASS_NAME}
             />
           </Button>

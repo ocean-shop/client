@@ -17,6 +17,9 @@ export const HERO_SECONDARY_CTA_LABEL = "Каталог товарів";
 export const HERO_IMAGE_URL =
   "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80";
 
+/** Right half of the two-column hero, capped by the 1600px page width. */
+export const HERO_IMAGE_SIZES = "(min-width: 1600px) 736px, 50vw";
+
 export const HERO_IMAGE_ALT = "Сезонна колекція Ocean";
 
 export const HERO_BENEFITS: HeroBenefit[] = [

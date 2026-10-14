@@ -6,6 +6,7 @@ import {
   MOBILE_HERO_EYEBROW_LABEL,
   MOBILE_HERO_HEADING,
   MOBILE_HERO_IMAGE_ALT,
+  MOBILE_HERO_IMAGE_SIZES,
   MOBILE_HERO_IMAGE_URL,
   MOBILE_HERO_PROMO_CODE,
 } from "./constants/mobile-hero.constants";
@@ -18,6 +19,8 @@ export function MobileHero() {
           src={MOBILE_HERO_IMAGE_URL}
           alt={MOBILE_HERO_IMAGE_ALT}
           fill
+          sizes={MOBILE_HERO_IMAGE_SIZES}
+          fetchPriority="high"
           className="object-cover"
         />
       </div>

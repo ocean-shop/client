@@ -89,7 +89,7 @@ export function ProductLightbox({
           alt={name}
           fill
           sizes="100vw"
-          priority
+          preload
           className="object-contain p-4 lg:p-8"
         />
       </div>

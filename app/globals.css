@@ -42,7 +42,6 @@
   --color-error-border: var(--error-border);
   --container-page: var(--page-width);
   --font-sans: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-unbounded);
   --font-symbols: var(--font-material-symbols);
   --animate-ocean-loader: ocean-loader 1.6s cubic-bezier(0.5, 0, 0.35, 1) infinite;

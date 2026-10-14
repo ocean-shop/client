@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/app/ui/button/button";
 import {
   PRODUCT_BADGE_TONE_STYLES,
+  PRODUCT_CARD_IMAGE_SIZES,
   PRODUCT_FAVORITE_ICON_STYLES,
 } from "./constants/product-card.constants";
 import type { ProductCardProps } from "./types/product-card.types";
@@ -19,7 +20,7 @@ export function ProductCard({ product, cta }: ProductCardProps) {
           <Image
             src={product.image}
             alt={product.imageAlt}
-            sizes="100"
+            sizes={PRODUCT_CARD_IMAGE_SIZES}
             fill
             className="object-cover"
           />

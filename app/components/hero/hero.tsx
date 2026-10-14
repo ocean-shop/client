@@ -7,6 +7,7 @@ import {
   HERO_EYEBROW_LABEL,
   HERO_HEADING_LINES,
   HERO_IMAGE_ALT,
+  HERO_IMAGE_SIZES,
   HERO_IMAGE_URL,
   HERO_PRIMARY_CTA_LABEL,
   HERO_PROMO_CODE,
@@ -55,7 +56,15 @@ export function Hero() {
           </div>
 
           <div className="relative h-[400px] overflow-hidden rounded-[14px] border-[10px] border-border-soft bg-border-soft">
-            <Image src={HERO_IMAGE_URL} alt={HERO_IMAGE_ALT} fill className="object-cover" />
+            {/* fetchPriority rather than preload: preload/eager would also fetch this on mobile, where it is hidden. */}
+            <Image
+              src={HERO_IMAGE_URL}
+              alt={HERO_IMAGE_ALT}
+              fill
+              sizes={HERO_IMAGE_SIZES}
+              fetchPriority="high"
+              className="object-cover"
+            />
           </div>
         </div>
 
