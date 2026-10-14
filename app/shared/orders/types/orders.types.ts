@@ -15,6 +15,8 @@ export type CreateOrderItemRequest = {
 /** Amounts are plain numbers with at most two decimals, which the backend enforces. */
 export type CreateOrderRequest = {
   shopId: string;
+  /** Set for signed-in buyers only; guests place orders without an account. */
+  userId?: string;
   /** Free-form delivery destination: carrier, branch or street, and city. */
   shippingNumber: string;
   firstName?: string;
@@ -30,8 +32,8 @@ export type CreateOrderRequest = {
   items: CreateOrderItemRequest[];
 };
 
-/** `shopId` is server-only configuration, so the action fills it in. */
-export type CreateOrderInput = Omit<CreateOrderRequest, "shopId">;
+/** `shopId` is server-only configuration and `userId` comes from the session, so the action fills both in. */
+export type CreateOrderInput = Omit<CreateOrderRequest, "shopId" | "userId">;
 
 export type Order = {
   id: string;
