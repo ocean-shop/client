@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import {
@@ -11,8 +12,16 @@ import { useCartOpen } from "@/app/shared/cart/hooks/use-cart-open";
 import { useCartQuantity } from "@/app/shared/cart/hooks/use-cart-quantity";
 import { Button } from "@/app/ui/button/button";
 import { BOTTOM_TAB_BAR_ITEMS } from "./constants/bottom-tab-bar.constants";
-import { MobileCatalogPanel } from "./components/mobile-catalog-panel/mobile-catalog-panel";
 import type { BottomTabBarProps } from "./types/bottom-tab-bar.types";
+
+// Starts closed, so it skips the server HTML and loads in its own chunk after hydration.
+const MobileCatalogPanel = dynamic(
+  () =>
+    import("./components/mobile-catalog-panel/mobile-catalog-panel").then(
+      (module) => module.MobileCatalogPanel
+    ),
+  { ssr: false }
+);
 
 export function BottomTabBar({ categories }: BottomTabBarProps) {
   const router = useRouter();

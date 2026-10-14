@@ -1,12 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/app/ui/button/button";
 import { HEADER_BRAND_NAME, HEADER_HOME_HREF } from "../../constants/header.constants";
 import { HeaderSearch } from "../header-search/header-search";
-import { NavDrawer } from "./components/nav-drawer/nav-drawer";
 import type { MobileHeaderProps } from "./types/mobile-header.types";
+
+// Starts closed, so it skips the server HTML and loads in its own chunk after hydration.
+const NavDrawer = dynamic(
+  () => import("./components/nav-drawer/nav-drawer").then((module) => module.NavDrawer),
+  { ssr: false }
+);
 
 export function MobileHeader({ categories }: MobileHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

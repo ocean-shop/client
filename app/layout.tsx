@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { BottomTabBar } from "./layouts/bottom-tab-bar/bottom-tab-bar";
-import { CartModal } from "./layouts/cart-modal/cart-modal";
 import { Footer } from "./layouts/footer/footer";
 import { Header } from "./layouts/header/header";
+import { LazyCartModal } from "./layouts/lazy-cart-modal/lazy-cart-modal";
 import { QueryProvider } from "./core/providers/query-provider/query-provider";
 import { ToastProvider } from "./core/providers/toast-provider/toast-provider";
 import { getCatalogCategoryTreeHelper } from "./shared/catalog-categories/helpers/get-catalog-category-tree";
@@ -54,7 +54,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             <main className="flex flex-1 flex-col">{children}</main>
             <Footer />
             <BottomTabBar categories={categoryTree} />
-            <CartModal />
+            <LazyCartModal />
           </QueryProvider>
         </ToastProvider>
       </body>

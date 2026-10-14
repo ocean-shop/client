@@ -6,9 +6,13 @@ export const PRODUCT_BADGE_TONE_STYLES: Record<ProductBadgeTone, string> = {
   bestseller: "text-accent",
 };
 
-/** Matches the widest grid the card sits in: 1 column on mobile, 2 from md, 3–4 from lg (page caps at 1600px). */
+/**
+ * Matches the widest grid the card sits in: 1 column on mobile, 2 from md, 3–4 from lg (page caps at 1600px).
+ * Below lg, the page padding (18px+ per side) and card padding (14px per side) are subtracted so phones
+ * don't download a full-viewport image.
+ */
 export const PRODUCT_CARD_IMAGE_SIZES =
-  "(min-width: 1600px) 400px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
+  "(min-width: 1600px) 400px, (min-width: 1024px) 33vw, (min-width: 768px) calc(50vw - 40px), calc(100vw - 64px)";
 
 /** For the button a caller passes as the card's `cta`, so every card action looks the same. */
 export const PRODUCT_CTA_CLASS_NAME = "h-11 rounded-[10px] text-sm font-semibold";
