@@ -1,5 +1,4 @@
 export const PRODUCT_GALLERY_ZOOM_LABEL = "Збільшити фото";
-export const PRODUCT_GALLERY_FAVORITE_LABEL = "Додати в обране";
 export const PRODUCT_GALLERY_NO_IMAGES_ICON = "image_not_supported";
 
 export const PRODUCT_GALLERY_LAYOUT_CLASS_NAME = "flex flex-col-reverse gap-3 lg:grid lg:gap-3.5";

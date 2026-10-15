@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
-    "check": "npm run lint && npm run format:check && npm run build"
+    "check": "npm run lint && npm run format:check && npm run build",
+    "icons:subset": "node scripts/subset-icon-font.mjs",
+    "fonts:subset": "node scripts/subset-text-fonts.mjs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.102.8",

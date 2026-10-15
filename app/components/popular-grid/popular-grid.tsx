@@ -6,6 +6,7 @@ import { CATALOG_CATEGORIES_POPULAR_LIMIT } from "../../shared/catalog-categorie
 import { getPopularProducts } from "../../shared/products/api/get-popular-products";
 import { mapProductToCardDataHelper } from "../../shared/products/helpers/map-product-to-card-data";
 import { ProductCardCartButton } from "../product-card-cart-button/product-card-cart-button";
+import { ProductFavoriteButton } from "../product-favorite-button/product-favorite-button";
 import { POPULAR_GRID_TITLE } from "./constants/popular-grid.constants";
 
 export async function PopularGrid() {
@@ -45,6 +46,13 @@ export async function PopularGrid() {
               key={product.id}
               product={product}
               cta={<ProductCardCartButton productId={product.id} productName={product.name} />}
+              favorite={
+                <ProductFavoriteButton
+                  productId={product.id}
+                  productName={product.name}
+                  variant="card"
+                />
+              }
             />
           ))}
         </div>

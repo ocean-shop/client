@@ -1,6 +1,7 @@
 import { ProductCard } from "../../ui/product-card/product-card";
 import { mapProductToCardDataHelper } from "../../shared/products/helpers/map-product-to-card-data";
 import { ProductCardCartButton } from "../product-card-cart-button/product-card-cart-button";
+import { ProductFavoriteButton } from "../product-favorite-button/product-favorite-button";
 import {
   CATALOG_GRID_CLASS_NAME,
   CATALOG_GRID_EMPTY_MESSAGE,
@@ -24,6 +25,13 @@ export function CatalogGrid({ products, emptyMessage, categorySlug }: CatalogGri
           key={product.id}
           product={product}
           cta={<ProductCardCartButton productId={product.id} productName={product.name} />}
+          favorite={
+            <ProductFavoriteButton
+              productId={product.id}
+              productName={product.name}
+              variant="card"
+            />
+          }
         />
       ))}
     </div>

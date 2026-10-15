@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { useState } from "react";
+import { ProductFavoriteButton } from "@/app/components/product-favorite-button/product-favorite-button";
 import { Button } from "@/app/ui/button/button";
 import { ProductLightbox } from "./components/product-lightbox/product-lightbox";
 import {
   PRODUCT_GALLERY_COLUMNS_CLASS_NAME,
-  PRODUCT_GALLERY_FAVORITE_LABEL,
   PRODUCT_GALLERY_LAYOUT_CLASS_NAME,
   PRODUCT_GALLERY_MAIN_CLASS_NAME,
   PRODUCT_GALLERY_MAIN_IMAGE_CLASS_NAME,
@@ -16,10 +16,9 @@ import {
 } from "./constants/product-gallery.constants";
 import type { ProductGalleryProps } from "./types/product-gallery.types";
 
-export function ProductGallery({ images, name, discountPercent }: ProductGalleryProps) {
+export function ProductGallery({ productId, images, name, discountPercent }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   const activeImage = images[activeIndex];
   const hasThumbs = images.length > 1;
@@ -83,7 +82,7 @@ export function ProductGallery({ images, name, discountPercent }: ProductGallery
               alt={name}
               fill
               sizes={PRODUCT_GALLERY_MAIN_SIZES}
-              priority
+              preload
               className={PRODUCT_GALLERY_MAIN_IMAGE_CLASS_NAME}
             />
           </Button>
@@ -94,21 +93,9 @@ export function ProductGallery({ images, name, discountPercent }: ProductGallery
             </span>
           )}
 
-          <Button
-            variant="unstyled"
-            size="auto"
-            onClick={() => setIsFavorite((favorite) => !favorite)}
-            aria-label={PRODUCT_GALLERY_FAVORITE_LABEL}
-            aria-pressed={isFavorite}
-            className="absolute right-3.5 top-3.5 flex h-[42px] w-[42px] items-center justify-center rounded-xl bg-white/95 hover:bg-white"
-          >
-            <span
-              className={`font-symbols text-[22px] ${isFavorite ? "text-error" : "text-muted"}`}
-              style={{ fontVariationSettings: isFavorite ? "'FILL' 1" : "'FILL' 0" }}
-            >
-              favorite
-            </span>
-          </Button>
+          <div className="absolute right-3.5 top-3.5">
+            <ProductFavoriteButton productId={productId} productName={name} variant="gallery" />
+          </div>
 
           <span className="pointer-events-none absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-xl bg-white/85 font-symbols text-xl text-muted">
             zoom_in

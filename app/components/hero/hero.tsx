@@ -1,12 +1,15 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { Button } from "@/app/ui/button/button";
 import {
   HERO_BENEFITS,
+  HERO_BLANK_IMAGE_SRC,
   HERO_COUNTDOWN,
   HERO_DESCRIPTION,
   HERO_EYEBROW_LABEL,
   HERO_HEADING_LINES,
   HERO_IMAGE_ALT,
+  HERO_IMAGE_HIDDEN_MEDIA,
+  HERO_IMAGE_SIZES,
   HERO_IMAGE_URL,
   HERO_PRIMARY_CTA_LABEL,
   HERO_PROMO_CODE,
@@ -15,6 +18,16 @@ import {
 import { MobileHero } from "./components/mobile-hero/mobile-hero";
 
 export function Hero() {
+  const { props: imageProps } = getImageProps({
+    src: HERO_IMAGE_URL,
+    alt: HERO_IMAGE_ALT,
+    fill: true,
+    sizes: HERO_IMAGE_SIZES,
+    loading: "eager",
+    fetchPriority: "high",
+    className: "object-cover",
+  });
+
   return (
     <>
       <MobileHero />
@@ -55,7 +68,12 @@ export function Hero() {
           </div>
 
           <div className="relative h-[400px] overflow-hidden rounded-[14px] border-[10px] border-border-soft bg-border-soft">
-            <Image src={HERO_IMAGE_URL} alt={HERO_IMAGE_ALT} fill className="object-cover" />
+            {/* LCP image on desktop: eager + high priority, while the <source> keeps mobile from fetching it. */}
+            <picture>
+              <source media={HERO_IMAGE_HIDDEN_MEDIA} srcSet={HERO_BLANK_IMAGE_SRC} />
+              {/* eslint-disable-next-line jsx-a11y/alt-text -- props come from getImageProps */}
+              <img {...imageProps} />
+            </picture>
           </div>
         </div>
 
