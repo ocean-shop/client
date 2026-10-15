@@ -1,4 +1,5 @@
 export const CABINET_OVERVIEW_TITLE = "Вітаємо!";
+export const CABINET_OVERVIEW_NAMED_TITLE_PREFIX = "Вітаємо,";
 export const CABINET_OVERVIEW_TEXT = "Тут ваші активні замовлення, обране та дані для доставки.";
 
 export const CABINET_OVERVIEW_LOCALE = "uk-UA";
@@ -17,6 +18,7 @@ export const CABINET_OVERVIEW_ORDERS_STAT = {
   emptyValue: "Замовлень ще немає",
   emptyNote: "Тут з’являться ваші покупки та їхні статуси",
   note: "Історія покупок і статуси доставки",
+  activeNoteSuffix: "в роботі",
 };
 
 export const CABINET_OVERVIEW_FAVORITES_STAT = {

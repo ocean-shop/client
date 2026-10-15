@@ -5,6 +5,7 @@ import { useTransition } from "react";
 import { DEFAULT_API_ERROR_MESSAGE } from "@/app/core/api/constants/api.constants";
 import { toastStore } from "@/app/core/providers/toast-provider/toast-store";
 import { logoutAction } from "@/app/shared/auth/actions/logout";
+import { favoritesStore } from "@/app/shared/favorites/favorites-store";
 import {
   CABINET_LOGOUT_ERROR_TOAST_TITLE,
   CABINET_LOGOUT_REDIRECT_PATH,
@@ -19,6 +20,7 @@ export function useCabinetLogout() {
     startTransition(async () => {
       try {
         await logoutAction();
+        favoritesStore.reset();
         router.replace(CABINET_LOGOUT_REDIRECT_PATH);
       } catch {
         toastStore.error(CABINET_LOGOUT_ERROR_TOAST_TITLE, DEFAULT_API_ERROR_MESSAGE);

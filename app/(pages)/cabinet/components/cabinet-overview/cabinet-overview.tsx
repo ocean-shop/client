@@ -2,6 +2,7 @@ import { CabinetActiveOrder } from "./components/cabinet-active-order/cabinet-ac
 import { CabinetRecentFavorites } from "./components/cabinet-recent-favorites/cabinet-recent-favorites";
 import { CabinetStatCard } from "./components/cabinet-stat-card/cabinet-stat-card";
 import {
+  CABINET_OVERVIEW_NAMED_TITLE_PREFIX,
   CABINET_OVERVIEW_TEXT,
   CABINET_OVERVIEW_TITLE,
 } from "./constants/cabinet-overview.constants";
@@ -16,7 +17,9 @@ export function CabinetOverview({ overview }: CabinetOverviewProps) {
     <div className="flex flex-col gap-3.5 lg:gap-[18px]">
       <div className="flex flex-col gap-1.5">
         <h1 className="font-heading text-xl font-semibold tracking-[-.025em] text-foreground lg:text-[26px]">
-          {CABINET_OVERVIEW_TITLE}
+          {overview.greetingName
+            ? `${CABINET_OVERVIEW_NAMED_TITLE_PREFIX} ${overview.greetingName}`
+            : CABINET_OVERVIEW_TITLE}
         </h1>
         <p className="text-sm text-muted">{CABINET_OVERVIEW_TEXT}</p>
       </div>

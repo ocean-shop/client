@@ -1,4 +1,7 @@
 import type { OrderStatus } from "@/app/shared/orders/types/orders.types";
+import type { Product } from "@/app/shared/products/types/products.types";
+import type { UserShipping } from "../(pages)/addresses/types/addresses.types";
+import type { UserOrder } from "../(pages)/orders/types/orders.types";
 
 export type CabinetMenuItem = {
   href: string;
@@ -48,9 +51,22 @@ export type CabinetAddress = {
   address: string;
 };
 
+/** What `user/client/dashboard` returns: up to 3 active orders and the 4 latest favourites. */
+export type UserDashboardResponse = {
+  lastActiveOrders: UserOrder[];
+  ordersCount: number;
+  activeOrdersCount: number;
+  favoriteProductsCount: number;
+  mainShipping: UserShipping | null;
+  lastFavoriteProducts: Product[];
+};
+
 export type CabinetOverview = {
+  /** First name from the profile, `null` until the user fills it in. */
+  greetingName: string | null;
   activeOrder: CabinetActiveOrder | null;
   ordersCount: number;
+  activeOrdersCount: number;
   favorites: CabinetFavoriteProduct[];
   favoritesCount: number;
   mainAddress: CabinetAddress | null;

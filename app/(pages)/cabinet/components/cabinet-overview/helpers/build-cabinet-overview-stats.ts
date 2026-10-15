@@ -24,7 +24,7 @@ function formatOrdersCount(count: number) {
 
 /** The three shortcut cards under the active order, each with its own empty wording. */
 export function buildCabinetOverviewStatsHelper(overview: CabinetOverview): CabinetOverviewStat[] {
-  const { ordersCount, favoritesCount, mainAddress } = overview;
+  const { ordersCount, activeOrdersCount, favoritesCount, mainAddress } = overview;
   const orders = CABINET_OVERVIEW_ORDERS_STAT;
   const favorites = CABINET_OVERVIEW_FAVORITES_STAT;
   const address = CABINET_OVERVIEW_ADDRESS_STAT;
@@ -36,7 +36,11 @@ export function buildCabinetOverviewStatsHelper(overview: CabinetOverview): Cabi
       icon: orders.icon,
       label: orders.label,
       value: ordersCount ? formatOrdersCount(ordersCount) : orders.emptyValue,
-      note: ordersCount ? orders.note : orders.emptyNote,
+      note: !ordersCount
+        ? orders.emptyNote
+        : activeOrdersCount
+          ? `${activeOrdersCount.toLocaleString(CABINET_OVERVIEW_LOCALE)} ${orders.activeNoteSuffix}`
+          : orders.note,
     },
     {
       id: "favorites",

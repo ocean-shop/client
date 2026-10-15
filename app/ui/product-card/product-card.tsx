@@ -1,26 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/app/ui/button/button";
 import {
   PRODUCT_BADGE_TONE_STYLES,
-  PRODUCT_CARD_IMAGE_SIZES,
-  PRODUCT_FAVORITE_ICON_STYLES,
+  PRODUCT_CARD_SIZE_STYLES,
 } from "./constants/product-card.constants";
 import type { ProductCardProps } from "./types/product-card.types";
 
-export function ProductCard({ product, cta }: ProductCardProps) {
-  const favoriteStyle = product.isFavorite
-    ? PRODUCT_FAVORITE_ICON_STYLES.active
-    : PRODUCT_FAVORITE_ICON_STYLES.inactive;
+export function ProductCard({ product, size = "default", cta, favorite }: ProductCardProps) {
+  const styles = PRODUCT_CARD_SIZE_STYLES[size];
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl bg-background p-3.5">
-      <div className="relative h-[240px] overflow-hidden rounded-xl bg-footer">
+    <div className={`flex flex-col bg-background ${styles.root}`}>
+      <div className={`relative overflow-hidden bg-footer ${styles.image}`}>
         <Link href={product.href} aria-label={product.name} className="absolute inset-0">
           <Image
             src={product.image}
             alt={product.imageAlt}
-            sizes={PRODUCT_CARD_IMAGE_SIZES}
+            sizes={styles.imageSizes}
             fill
             className="object-cover"
           />
@@ -34,18 +30,7 @@ export function ProductCard({ product, cta }: ProductCardProps) {
           </span>
         )}
 
-        <Button
-          variant="unstyled"
-          size="auto"
-          className="absolute right-2.5 top-2.5 flex h-[34px] w-[34px] items-center justify-center rounded-[10px] bg-white/90"
-        >
-          <span
-            className={`font-symbols text-[19px] ${favoriteStyle}`}
-            style={{ fontVariationSettings: product.isFavorite ? "'FILL' 1" : "'FILL' 0" }}
-          >
-            favorite
-          </span>
-        </Button>
+        {favorite && <div className={`absolute ${styles.favorite}`}>{favorite}</div>}
       </div>
 
       {product.rating !== undefined && product.reviews !== undefined && (
@@ -62,17 +47,19 @@ export function ProductCard({ product, cta }: ProductCardProps) {
 
       <Link
         href={product.href}
-        className="text-pretty text-[15px] font-medium leading-[1.4] text-foreground hover:text-accent"
+        className={`text-pretty font-medium text-foreground hover:text-accent ${styles.name}`}
       >
         {product.name}
       </Link>
 
       <div className="flex items-baseline gap-[9px]">
-        <span className="font-heading text-[18px] font-semibold text-foreground">
+        <span className={`font-heading font-semibold text-foreground ${styles.price}`}>
           {product.price}
         </span>
         {product.oldPrice && (
-          <span className="text-[13px] text-muted-light line-through">{product.oldPrice}</span>
+          <span className={`text-muted-light line-through ${styles.oldPrice}`}>
+            {product.oldPrice}
+          </span>
         )}
       </div>
 

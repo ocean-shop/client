@@ -9,6 +9,7 @@ import {
 import { toastStore } from "@/app/core/providers/toast-provider/toast-store";
 import { requestClientOtpAction } from "@/app/shared/auth/actions/request-client-otp";
 import { verifyClientOtpAction } from "@/app/shared/auth/actions/verify-client-otp";
+import { favoritesStore } from "@/app/shared/favorites/favorites-store";
 import {
   LOGIN_CODE_LENGTH,
   LOGIN_CODE_MAX_ATTEMPTS,
@@ -125,6 +126,7 @@ export function LoginView({ redirectTo }: LoginViewProps) {
 
       if (result.ok) {
         setCodeStatus("verified");
+        favoritesStore.reset();
         router.replace(redirectTo);
         return;
       }

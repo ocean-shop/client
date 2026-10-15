@@ -23,6 +23,7 @@ export function ProductView({ product, breadcrumbItems }: ProductViewProps) {
       {/* Remounting on a variation switch reopens the gallery on the first photo of the new set. */}
       <ProductGallery
         key={offer.id}
+        productId={product.id}
         images={offer.images}
         name={product.name}
         discountPercent={discountPercent}

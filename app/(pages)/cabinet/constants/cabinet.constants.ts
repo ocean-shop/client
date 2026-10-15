@@ -1,5 +1,5 @@
 import { AUTH_CABINET_PAGE_PATH } from "@/app/shared/auth/constants/auth.constants";
-import type { CabinetMenuItem, CabinetOverview } from "../types/cabinet.types";
+import type { CabinetMenuItem } from "../types/cabinet.types";
 
 export const CABINET_PAGE_CLASS_NAME = "flex flex-1 flex-col bg-surface-soft";
 
@@ -27,13 +27,16 @@ export const CABINET_LOGOUT_ICON = "logout";
 export const CABINET_LOGOUT_ERROR_TOAST_TITLE = "Не вдалося вийти";
 export const CABINET_LOGOUT_REDIRECT_PATH = "/";
 
-export const CABINET_EMPTY_OVERVIEW: CabinetOverview = {
-  activeOrder: null,
-  ordersCount: 0,
-  favorites: [],
-  favoritesCount: 0,
-  mainAddress: null,
+export const DASHBOARD_CLIENT_API_URL = `${process.env.API_BASE_URL}/user/client/dashboard`;
+
+export const getDashboardClientApiUrl = (userId: string) => {
+  const params = new URLSearchParams({ shopId: process.env.SHOP_ID ?? "" });
+
+  return `${DASHBOARD_CLIENT_API_URL}/${userId}?${params.toString()}`;
 };
+
+/** Profiles keep the name as "Прізвище Ім’я По батькові", so the first name is the second word. */
+export const CABINET_GREETING_NAME_INDEX = 1;
 
 export const CABINET_USER_FALLBACK_ICON = "person";
 export const CABINET_UA_PHONE_PATTERN = /^\+380(\d{2})(\d{3})(\d{2})(\d{2})$/;

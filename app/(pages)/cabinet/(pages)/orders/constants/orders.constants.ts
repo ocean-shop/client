@@ -15,6 +15,11 @@ export const getUserOrdersApiUrl = (userId: string, page: number) => {
   return `${ORDERS_CLIENT_API_URL}/by-user/${userId}?${params.toString()}`;
 };
 
+export const getUserOrderApiUrl = (orderId: string) => `${ORDERS_CLIENT_API_URL}/${orderId}`;
+
+/** A non-uuid id, someone else's order and a missing one all end up as the same 404 page. */
+export const ORDER_NOT_FOUND_STATUSES = [400, 403, 404];
+
 /** Orders without a number of their own are shown by the start of their id, as checkout does. */
 export const ORDER_SHORT_ID_LENGTH = 8;
 export const ORDER_NUMBER_PREFIX = "#";
