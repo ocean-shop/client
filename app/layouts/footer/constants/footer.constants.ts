@@ -18,7 +18,6 @@ export const FOOTER_LINK_COLUMNS: FooterLinkColumn[] = [
     links: [
       { label: "Про Ocean", href: "/about" },
       { label: "Контакти", href: "/contacts" },
-      { label: "Вакансії", href: "/careers" },
       { label: "Публічна оферта", href: "/terms" },
     ],
   },

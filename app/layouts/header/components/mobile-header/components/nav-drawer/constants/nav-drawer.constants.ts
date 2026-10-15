@@ -4,16 +4,22 @@ export const NAV_DRAWER_GROUPS: NavDrawerGroup[] = [
   {
     title: "Покупцям",
     items: [
-      "Доставка та оплата",
-      "Повернення товару",
-      "Програма лояльності",
-      "Часті запитання (FAQ)",
-      "Відстеження замовлення",
+      { label: "Доставка та оплата", href: "/delivery" },
+      { label: "Повернення товару", href: "/returns" },
+      { label: "Програма лояльності", href: "/loyalty" },
+      { label: "Часті запитання (FAQ)", href: "/faq" },
+      { label: "Відстеження замовлення", href: "/cabinet/orders" },
     ],
   },
   {
     title: "Про компанію",
-    items: ["Про Ocean", "Контакти", "Вакансії", "Публічна оферта", "Політика конфіденційності"],
+    items: [
+      { label: "Про Ocean", href: "/about" },
+      { label: "Контакти", href: "/contacts" },
+      { label: "Публічна оферта", href: "/terms" },
+      // No standalone policy yet; the offer's personal-data section covers it.
+      { label: "Політика конфіденційності", href: "/terms#personal-data" },
+    ],
   },
 ];
 
