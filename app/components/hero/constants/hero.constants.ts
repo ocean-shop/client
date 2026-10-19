@@ -10,9 +10,7 @@ export const HERO_DESCRIPTION = "Мінус 200 ₴ на перше онлайн
 
 export const HERO_PROMO_CODE = "OCEAN2025";
 
-export const HERO_PRIMARY_CTA_LABEL = "Переглянути акції";
-
-export const HERO_SECONDARY_CTA_LABEL = "Каталог товарів";
+export const HERO_CTA_LABEL = "Переглянути товар";
 
 export const HERO_IMAGE_URL =
   "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80";

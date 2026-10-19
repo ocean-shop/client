@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cartStore } from "@/app/shared/cart/cart-store";
 import { useCartQuantity } from "@/app/shared/cart/hooks/use-cart-quantity";
 import { Button } from "@/app/ui/button/button";
@@ -83,12 +84,14 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
             >
               <div className="pb-2 text-sm font-semibold text-foreground">{group.title}</div>
               {group.items.map((item) => (
-                <div
-                  key={item}
-                  className="cursor-pointer py-[7px] text-sm text-muted hover:text-accent"
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={onClose}
+                  className="py-[7px] text-sm text-muted hover:text-accent"
                 >
-                  {item}
-                </div>
+                  {item.label}
+                </Link>
               ))}
             </div>
           ))}

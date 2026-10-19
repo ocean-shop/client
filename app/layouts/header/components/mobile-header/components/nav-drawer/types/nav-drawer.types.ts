@@ -1,6 +1,11 @@
+export type NavDrawerLink = {
+  label: string;
+  href: string;
+};
+
 export type NavDrawerGroup = {
   title: string;
-  items: string[];
+  items: NavDrawerLink[];
 };
 
 export type NavDrawerProps = {
