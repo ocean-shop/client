@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
+import { SEO_DEFAULT_OPEN_GRAPH } from "./shared/seo/constants/seo.constants";
 import { Hero } from "./components/hero/hero";
 import { HomeAbout } from "./components/home-about/home-about";
 import { HomeLoyalty } from "./components/home-loyalty/home-loyalty";
 import { PopularGrid } from "./components/popular-grid/popular-grid";
+
+// Title and description stay the root layout defaults; only the address needs pinning here.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: { ...SEO_DEFAULT_OPEN_GRAPH, url: "/" },
+};
 
 export default function Home() {
   return (

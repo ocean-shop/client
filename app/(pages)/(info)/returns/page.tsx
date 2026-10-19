@@ -2,6 +2,7 @@ import { InfoCard } from "../components/info-card/info-card";
 import { InfoCheckList } from "../components/info-check-list/info-check-list";
 import { InfoPageHeader } from "../components/info-page-header/info-page-header";
 import { buildInfoMetadataHelper } from "../helpers/build-info-metadata";
+import { INFO_RETURNS_PATH } from "../constants/info.constants";
 import { ReturnsSteps } from "./components/returns-steps/returns-steps";
 import {
   RETURNS_ALLOWED,
@@ -16,7 +17,7 @@ import {
   RETURNS_TITLE,
 } from "./constants/returns.constants";
 
-export const metadata = buildInfoMetadataHelper(RETURNS_TITLE, RETURNS_LEAD);
+export const metadata = buildInfoMetadataHelper(INFO_RETURNS_PATH, RETURNS_TITLE, RETURNS_LEAD);
 
 export default function ReturnsPage() {
   return (

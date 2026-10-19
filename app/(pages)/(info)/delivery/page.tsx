@@ -3,6 +3,7 @@ import { InfoFeatureList } from "../components/info-feature-list/info-feature-li
 import { InfoNote } from "../components/info-note/info-note";
 import { InfoPageHeader } from "../components/info-page-header/info-page-header";
 import { buildInfoMetadataHelper } from "../helpers/build-info-metadata";
+import { INFO_DELIVERY_PATH } from "../constants/info.constants";
 import { DeliveryPayments } from "./components/delivery-payments/delivery-payments";
 import {
   DELIVERY_LEAD,
@@ -14,7 +15,7 @@ import {
   DELIVERY_TITLE,
 } from "./constants/delivery.constants";
 
-export const metadata = buildInfoMetadataHelper(DELIVERY_TITLE, DELIVERY_LEAD);
+export const metadata = buildInfoMetadataHelper(INFO_DELIVERY_PATH, DELIVERY_TITLE, DELIVERY_LEAD);
 
 export default function DeliveryPage() {
   return (

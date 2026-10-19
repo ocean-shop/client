@@ -5,6 +5,8 @@ export const CATALOG_PRODUCTS_COUNT_QUERY_KEY = "catalog-products-count";
 /** Keeps typing in the price inputs from firing a count request per keystroke. */
 export const CATALOG_PRODUCTS_COUNT_DEBOUNCE_MS = 350;
 
+export const CATALOG_SEARCH_METADATA_TITLE = "Пошук";
+
 /** Shared by the catalog page and its loading skeleton so the two occupy the same layout. */
 export const CATALOG_PAGE_CLASS_NAME = "flex-1 bg-surface-soft";
 export const CATALOG_CONTENT_CLASS_NAME =

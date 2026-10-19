@@ -10,6 +10,9 @@ import type {
 
 export const CHECKOUT_PAGE_CLASS_NAME = "flex-1 bg-surface-soft";
 
+export const CHECKOUT_METADATA_TITLE = "Оформлення замовлення";
+export const CHECKOUT_SUCCESS_METADATA_TITLE = "Замовлення прийнято";
+
 export const CHECKOUT_EMPTY_CONTACT: CheckoutContact = { name: "", email: "", phone: "" };
 
 export const CHECKOUT_DEFAULT_DELIVERY: CheckoutDelivery = {

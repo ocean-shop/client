@@ -21,3 +21,6 @@ export type SeoMetadataInput = Partial<SeoFields> & {
   path: string;
   images?: SeoImage[];
 };
+
+/** A schema.org node serialized into a `<script type="application/ld+json">` tag. */
+export type JsonLdData = { "@context": string } & Record<string, unknown>;

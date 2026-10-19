@@ -37,6 +37,8 @@ export const PRODUCT_BY_ID_API_URL = (productId: string) =>
 export const PRODUCT_BY_SLUG_API_URL = (slug: string) =>
   `${process.env.API_BASE_URL}/catalog/products-client/by-slug/${encodeURIComponent(slug)}?${withShopId()}`;
 
+export const PRODUCT_SITEMAP_API_URL = `${process.env.API_BASE_URL}/catalog/products-client/sitemap?${withShopId()}`;
+
 /** Links from before slugs carried the product id; the product page redirects those. */
 export const PRODUCT_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 

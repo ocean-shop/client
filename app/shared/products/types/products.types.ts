@@ -116,6 +116,12 @@ export type ProductSearchListResponse = ProductListResponse & {
 
 export type CatalogProductsSearchParams = Record<string, string | string[] | undefined>;
 
+/** One product URL of the sitemap; `updatedAt` arrives as an ISO string. */
+export type ProductSitemapEntry = {
+  slug: string;
+  updatedAt: string;
+};
+
 /** A suggestion row in the header search panel: one image and one price, nothing else. */
 export type ProductSearchItem = {
   id: string;

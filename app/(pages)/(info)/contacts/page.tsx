@@ -1,6 +1,7 @@
 import { InfoCard } from "../components/info-card/info-card";
 import { InfoPageHeader } from "../components/info-page-header/info-page-header";
 import { buildInfoMetadataHelper } from "../helpers/build-info-metadata";
+import { INFO_CONTACTS_PATH } from "../constants/info.constants";
 import { ContactsChannels } from "./components/contacts-channels/contacts-channels";
 import { ContactsForm } from "./components/contacts-form/contacts-form";
 import { ContactsMap } from "./components/contacts-map/contacts-map";
@@ -16,7 +17,7 @@ import {
   CONTACTS_TITLE,
 } from "./constants/contacts.constants";
 
-export const metadata = buildInfoMetadataHelper(CONTACTS_TITLE, CONTACTS_LEAD);
+export const metadata = buildInfoMetadataHelper(INFO_CONTACTS_PATH, CONTACTS_TITLE, CONTACTS_LEAD);
 
 export default function ContactsPage() {
   return (

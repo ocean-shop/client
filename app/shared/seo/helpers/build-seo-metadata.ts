@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { SEO_LOCALE, SEO_TITLE_SUFFIX, SITE_NAME } from "../constants/seo.constants";
+import {
+  SEO_LOCALE,
+  SEO_NO_INDEX_METADATA,
+  SEO_TITLE_SUFFIX,
+  SITE_NAME,
+} from "../constants/seo.constants";
 import type { SeoMetadataInput } from "../types/seo.types";
 import { truncateSeoDescriptionHelper } from "./truncate-seo-description";
 
@@ -23,10 +28,11 @@ export function buildSeoMetadataHelper({
   const canonical = canonicalUrl || path;
 
   return {
-    title: resolvedTitle,
+    // Absolute, so the root layout's title template does not append the site name a second time.
+    title: { absolute: resolvedTitle },
     description: resolvedDescription,
     alternates: { canonical },
-    robots: noIndex ? { index: false, follow: true } : undefined,
+    robots: noIndex ? SEO_NO_INDEX_METADATA.robots : undefined,
     openGraph: {
       type: "website",
       siteName: SITE_NAME,
@@ -35,6 +41,12 @@ export function buildSeoMetadataHelper({
       description: resolvedDescription,
       url: canonical,
       images,
+    },
+    twitter: {
+      card: images?.length ? "summary_large_image" : "summary",
+      title: resolvedTitle,
+      description: resolvedDescription,
+      images: images?.map((image) => image.url),
     },
   };
 }
