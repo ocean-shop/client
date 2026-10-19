@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import { Hero } from "./components/hero/hero";
+import { HomeAbout } from "./components/home-about/home-about";
+import { HomeLoyalty } from "./components/home-loyalty/home-loyalty";
 import { PopularGrid } from "./components/popular-grid/popular-grid";
 
 export default function Home() {
@@ -10,6 +12,8 @@ export default function Home() {
       <Suspense>
         <PopularGrid />
       </Suspense>
+      <HomeAbout />
+      <HomeLoyalty />
     </div>
   );
 }
