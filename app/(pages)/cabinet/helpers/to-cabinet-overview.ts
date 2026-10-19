@@ -51,7 +51,7 @@ export function toCabinetOverviewHelper(
       name: product.name,
       price: Number(product.price),
       image: product.images[0]?.url ?? null,
-      href: buildProductHrefHelper(product.id),
+      href: buildProductHrefHelper(product.slug),
     })),
     favoritesCount: dashboard.favoriteProductsCount,
     mainAddress: mainAddress && { title: mainAddress.title, address: mainAddress.address },

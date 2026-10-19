@@ -59,7 +59,7 @@ export function HeaderSearchPanel({
         {items.map((item) => (
           <Link
             key={item.id}
-            href={buildProductHrefHelper(item.id)}
+            href={buildProductHrefHelper(item.slug)}
             onClick={onProductSelect}
             className={`flex items-center gap-3 rounded-xl p-2 hover:bg-surface ${
               isSearching ? "opacity-60" : ""

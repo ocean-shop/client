@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCatalogCategories } from "@/app/shared/catalog-categories/api/get-catalog-categories";
 import { findCatalogCategoryBySlugHelper } from "@/app/shared/catalog-categories/helpers/find-catalog-category-by-slug";
@@ -8,10 +9,20 @@ import { CatalogFilters } from "../components/catalog-filters/catalog-filters";
 import { mapCatalogFiltersToGroupsHelper } from "../components/catalog-filters/helpers/map-catalog-filters-to-groups";
 import { CatalogBody } from "../components/catalog-body/catalog-body";
 import { CatalogToolbar } from "../components/catalog-toolbar/catalog-toolbar";
+import { buildCatalogCategoryMetadataHelper } from "../helpers/build-catalog-category-metadata";
 import {
   CATALOG_CONTENT_CLASS_NAME,
   CATALOG_PAGE_CLASS_NAME,
 } from "../constants/catalog.constants";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/catalog/[categoryName]">): Promise<Metadata> {
+  const { categoryName } = await params;
+  const category = findCatalogCategoryBySlugHelper(await getCatalogCategories(), categoryName);
+
+  return category ? buildCatalogCategoryMetadataHelper(category) : {};
+}
 
 export default async function CatalogPage({
   params,

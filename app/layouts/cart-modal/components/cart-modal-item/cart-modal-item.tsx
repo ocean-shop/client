@@ -19,7 +19,7 @@ import {
 import type { CartModalItemProps } from "./types/cart-modal-item.types";
 
 export function CartModalItem({ item, onNavigate }: CartModalItemProps) {
-  const href = buildProductHrefHelper(item.productId);
+  const href = buildProductHrefHelper(item.productSlug ?? item.productId);
   const discountPercent = calculateProductDiscountPercentHelper(item.price, item.oldPrice);
   const meta =
     item.variationLabel ?? (item.sku ? `${CART_MODAL_ITEM_SKU_LABEL}: ${item.sku}` : null);

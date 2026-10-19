@@ -22,9 +22,9 @@ export function mapProductToCardDataHelper(
 ): ProductCardData {
   return {
     id: product.id,
-    href: buildProductHrefHelper(product.id, categorySlug),
+    href: buildProductHrefHelper(product.slug, categorySlug),
     image: product.images[0]?.url ?? "",
-    imageAlt: product.name,
+    imageAlt: product.images[0]?.alt || product.name,
     name: product.name,
     price: formatProductPriceHelper(product.price),
     oldPrice: product.oldPrice ? formatProductPriceHelper(product.oldPrice) : undefined,

@@ -79,7 +79,7 @@ export function ProductGallery({ productId, images, name, discountPercent }: Pro
           >
             <Image
               src={activeImage.url}
-              alt={name}
+              alt={activeImage.alt || name}
               fill
               sizes={PRODUCT_GALLERY_MAIN_SIZES}
               preload

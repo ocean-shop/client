@@ -7,6 +7,7 @@ import { LazyCartModal } from "./layouts/lazy-cart-modal/lazy-cart-modal";
 import { QueryProvider } from "./core/providers/query-provider/query-provider";
 import { ToastProvider } from "./core/providers/toast-provider/toast-provider";
 import { getCatalogCategoryTreeHelper } from "./shared/catalog-categories/helpers/get-catalog-category-tree";
+import { SITE_NAME, SITE_URL } from "./shared/seo/constants/seo.constants";
 import "./globals.css";
 
 // Subset to the icons used in the app — regenerate with `npm run icons:subset` after adding one.
@@ -33,7 +34,8 @@ const unbounded = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Ocean Shop",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
   description:
     "Ocean Shop — інтернет-магазин смартфонів, планшетів, ноутбуків та аксесуарів з доставкою по Україні.",
 };

@@ -8,6 +8,7 @@ export function buildCartItemHelper(product: ProductDetails, offer: ProductOffer
   return {
     id: offer.id,
     productId: product.id,
+    productSlug: product.slug,
     name: product.name,
     variationLabel: variation ? (variation.title ?? variation.name) : null,
     sku: offer.sku,
