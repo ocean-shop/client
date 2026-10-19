@@ -19,6 +19,8 @@ const withShopId = (searchParams?: string) => {
 
 export const POPULAR_PRODUCTS_API_URL = `${process.env.API_BASE_URL}/catalog/products-client/popular?${withShopId()}`;
 
+export const MAIN_BANNER_PRODUCT_API_URL = `${process.env.API_BASE_URL}/catalog/products-client/main-banner?${withShopId()}`;
+
 export const CATALOG_PRODUCTS_BY_CATEGORY_API_URL = (categoryId: string, searchParams: string) =>
   `${process.env.API_BASE_URL}/catalog/products-client/by-category/${categoryId}?${withShopId(searchParams)}`;
 

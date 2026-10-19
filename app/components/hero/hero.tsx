@@ -1,9 +1,12 @@
 import { getImageProps } from "next/image";
-import { Button } from "@/app/ui/button/button";
+import Link from "next/link";
+import { getMainBannerProduct } from "@/app/shared/products/api/get-main-banner-product";
+import { buildProductHrefHelper } from "@/app/shared/products/helpers/build-product-href";
 import {
   HERO_BENEFITS,
   HERO_BLANK_IMAGE_SRC,
   HERO_COUNTDOWN,
+  HERO_CTA_LABEL,
   HERO_DESCRIPTION,
   HERO_EYEBROW_LABEL,
   HERO_HEADING_LINES,
@@ -11,13 +14,13 @@ import {
   HERO_IMAGE_HIDDEN_MEDIA,
   HERO_IMAGE_SIZES,
   HERO_IMAGE_URL,
-  HERO_PRIMARY_CTA_LABEL,
   HERO_PROMO_CODE,
-  HERO_SECONDARY_CTA_LABEL,
 } from "./constants/hero.constants";
 import { MobileHero } from "./components/mobile-hero/mobile-hero";
 
-export function Hero() {
+export async function Hero() {
+  const mainBannerProduct = await getMainBannerProduct();
+
   const { props: imageProps } = getImageProps({
     src: HERO_IMAGE_URL,
     alt: HERO_IMAGE_ALT,
@@ -52,19 +55,17 @@ export function Hero() {
               {HERO_DESCRIPTION} <b className="text-foreground">{HERO_PROMO_CODE}</b>
             </p>
 
-            <div className="flex gap-3 pt-2">
-              <Button size="lg">
-                {HERO_PRIMARY_CTA_LABEL}
-                <span className="font-symbols text-[19px]">arrow_forward</span>
-              </Button>
-              <Button
-                variant="unstyled"
-                size="lg"
-                className="border border-border-soft bg-background font-semibold text-foreground hover:border-accent"
-              >
-                {HERO_SECONDARY_CTA_LABEL}
-              </Button>
-            </div>
+            {mainBannerProduct && (
+              <div className="flex pt-2">
+                <Link
+                  href={buildProductHrefHelper(mainBannerProduct.id)}
+                  className="inline-flex h-[50px] items-center justify-center gap-2 rounded-[10px] bg-accent px-[26px] text-[15px] font-semibold text-white transition-colors hover:bg-accent-dark"
+                >
+                  {HERO_CTA_LABEL}
+                  <span className="font-symbols text-[19px]">arrow_forward</span>
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="relative h-[400px] overflow-hidden rounded-[14px] border-[10px] border-border-soft bg-border-soft">
