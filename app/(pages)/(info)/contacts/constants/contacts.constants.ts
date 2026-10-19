@@ -37,13 +37,15 @@ export const CONTACTS_CHANNELS: ContactsChannel[] = [
 ];
 
 export const CONTACTS_SHOWROOM_TITLE = "Шоурум у Києві";
-export const CONTACTS_MAP_CAPTION = "Мапа";
 export const CONTACTS_SHOWROOM_LINES = [
   "вул. Велика Васильківська, 100, Київ, 03150",
   "Пн–Нд 10:00–21:00 · 5 хв від м. Палац «Україна»",
 ];
 
 export const CONTACTS_FORM_TITLE = "Напишіть нам";
+
+export const CONTACTS_CLIENT_API_URL = `${process.env.API_BASE_URL}/user/client/contacts`;
+export const CONTACTS_REQUEST_HEADERS = { "Content-Type": "application/json" };
 
 export const CONTACTS_REQUISITES_TITLE = "Реквізити";
 

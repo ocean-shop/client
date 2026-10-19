@@ -3,3 +3,5 @@ export type ContactsFormValues = {
   contact: string;
   message: string;
 };
+
+export type ContactsFormErrors = Partial<Record<keyof ContactsFormValues, string | null>>;
