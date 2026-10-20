@@ -22,7 +22,7 @@ export type CheckoutDelivery = {
   apartment: string;
 };
 
-export type CheckoutPaymentMethod = "card" | "wallet" | "installments" | "cod" | "invoice";
+export type CheckoutPaymentMethod = "wallet" | "cod";
 
 export type CheckoutDeliveryMethodOption = {
   id: DeliveryMethod;

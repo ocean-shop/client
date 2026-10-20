@@ -18,10 +18,7 @@ export const CHECKOUT_SUCCESS_PAYMENT = { icon: "credit_card", label: "Опла�
 
 /** Payments are not processed online yet, so nothing is reported as paid. */
 export const CHECKOUT_SUCCESS_PAYMENT_STATUS: Record<CheckoutPaymentMethod, string> = {
-  card: "Очікує оплати",
   wallet: "Очікує оплати",
-  installments: "Очікує оплати",
-  invoice: "Рахунок надішлемо на email",
   cod: "Оплата при отриманні",
 };
 

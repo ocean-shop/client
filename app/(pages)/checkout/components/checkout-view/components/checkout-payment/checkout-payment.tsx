@@ -1,12 +1,7 @@
-import {
-  CHECKOUT_CARD_PAYMENT,
-  CHECKOUT_PAYMENTS,
-} from "@/app/(pages)/checkout/constants/checkout.constants";
-import { CheckoutField } from "../checkout-field/checkout-field";
+import { CHECKOUT_PAYMENTS } from "@/app/(pages)/checkout/constants/checkout.constants";
 import { CheckoutOption } from "../checkout-option/checkout-option";
 import { CheckoutSection } from "../checkout-section/checkout-section";
 import {
-  CHECKOUT_PAYMENT_CARD_FIELDS,
   CHECKOUT_PAYMENT_STEP,
   CHECKOUT_PAYMENT_TITLE,
 } from "./constants/checkout-payment.constants";
@@ -38,17 +33,6 @@ export function CheckoutPayment({ payment, onChange }: CheckoutPaymentProps) {
           </CheckoutOption>
         ))}
       </div>
-
-      {payment === CHECKOUT_CARD_PAYMENT && (
-        <div className="grid grid-cols-2 gap-3.5 rounded-xl bg-surface-soft p-4 lg:grid-cols-[2fr_1fr_1fr]">
-          <CheckoutField
-            {...CHECKOUT_PAYMENT_CARD_FIELDS.number}
-            className="col-span-2 lg:col-span-1"
-          />
-          <CheckoutField {...CHECKOUT_PAYMENT_CARD_FIELDS.expiry} />
-          <CheckoutField {...CHECKOUT_PAYMENT_CARD_FIELDS.cvv} />
-        </div>
-      )}
     </CheckoutSection>
   );
 }
