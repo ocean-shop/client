@@ -15,19 +15,16 @@ import {
   CATALOG_PAGE_CLASS_NAME,
 } from "../constants/catalog.constants";
 
-export async function generateMetadata({
+export const generateMetadata = async ({
   params,
-}: PageProps<"/catalog/[categoryName]">): Promise<Metadata> {
+}: PageProps<"/catalog/[categoryName]">): Promise<Metadata> => {
   const { categoryName } = await params;
   const category = findCatalogCategoryBySlugHelper(await getCatalogCategories(), categoryName);
 
   return category ? buildCatalogCategoryMetadataHelper(category) : {};
-}
+};
 
-export default async function CatalogPage({
-  params,
-  searchParams,
-}: PageProps<"/catalog/[categoryName]">) {
+const CatalogPage = async ({ params, searchParams }: PageProps<"/catalog/[categoryName]">) => {
   const [{ categoryName }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const categories = await getCatalogCategories();
   const category = findCatalogCategoryBySlugHelper(categories, categoryName);
@@ -60,4 +57,6 @@ export default async function CatalogPage({
       </div>
     </div>
   );
-}
+};
+
+export default CatalogPage;

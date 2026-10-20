@@ -16,7 +16,7 @@ import {
 import type { CabinetActiveOrderProps } from "./types/cabinet-active-order.types";
 
 /** The latest order that has not reached the user yet, with its delivery progress. */
-export function CabinetActiveOrder({ order }: CabinetActiveOrderProps) {
+export const CabinetActiveOrder = ({ order }: CabinetActiveOrderProps) => {
   const status = CABINET_ACTIVE_ORDER_STATUSES[order.status];
   const items = order.items.slice(0, CABINET_ACTIVE_ORDER_THUMBNAILS_LIMIT);
 
@@ -96,4 +96,4 @@ export function CabinetActiveOrder({ order }: CabinetActiveOrderProps) {
       </div>
     </section>
   );
-}
+};

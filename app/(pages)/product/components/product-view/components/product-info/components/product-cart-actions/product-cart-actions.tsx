@@ -19,24 +19,24 @@ import {
 } from "./constants/product-cart-actions.constants";
 import type { ProductCartActionsProps } from "./types/product-cart-actions.types";
 
-export function ProductCartActions({ product, offer }: ProductCartActionsProps) {
+export const ProductCartActions = ({ product, offer }: ProductCartActionsProps) => {
   const [quantity, setQuantity] = useState(CART_ITEM_MIN_QUANTITY);
   const isAvailable = offer.available;
 
-  function changeQuantity(step: number) {
+  const changeQuantity = (step: number) => {
     setQuantity((current) =>
       Math.min(CART_ITEM_MAX_QUANTITY, Math.max(CART_ITEM_MIN_QUANTITY, current + step))
     );
-  }
+  };
 
-  function handleAdd() {
+  const handleAdd = () => {
     cartStore.add(buildCartItemHelper(product, offer), quantity);
     notifyCartItemAddedHelper(product.name, quantity);
-  }
+  };
 
-  function handleOneClick() {
+  const handleOneClick = () => {
     toastStore.success(PRODUCT_CART_ONE_CLICK_TOAST_TITLE, PRODUCT_CART_ONE_CLICK_TOAST_MESSAGE);
-  }
+  };
 
   return (
     <div className="flex flex-wrap gap-3">
@@ -85,4 +85,4 @@ export function ProductCartActions({ product, offer }: ProductCartActionsProps) 
       </Button>
     </div>
   );
-}
+};

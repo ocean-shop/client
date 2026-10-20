@@ -33,15 +33,15 @@ import { validateContactsFormHelper } from "./helpers/validate-contacts-form";
 import type { ContactsFormErrors, ContactsFormValues } from "./types/contacts-form.types";
 
 /** Sends the message to the support inbox and clears the form once it is delivered. */
-export function ContactsForm() {
+export const ContactsForm = () => {
   const [errors, setErrors] = useState<ContactsFormErrors>({});
   const [isSending, setIsSending] = useState(false);
 
-  function clearError(field: keyof ContactsFormValues) {
+  const clearError = (field: keyof ContactsFormValues) => {
     setErrors((current) => ({ ...current, [field]: null }));
-  }
+  };
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isSending) return;
@@ -80,7 +80,7 @@ export function ContactsForm() {
     } finally {
       setIsSending(false);
     }
-  }
+  };
 
   return (
     <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -149,4 +149,4 @@ export function ContactsForm() {
       </Button>
     </form>
   );
-}
+};

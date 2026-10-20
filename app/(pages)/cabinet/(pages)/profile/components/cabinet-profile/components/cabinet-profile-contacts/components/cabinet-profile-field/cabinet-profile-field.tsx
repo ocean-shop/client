@@ -1,7 +1,7 @@
 import { Input } from "@/app/ui/input/input";
 import type { CabinetProfileFieldProps } from "./types/cabinet-profile-field.types";
 
-export function CabinetProfileField({ label, error, ...props }: CabinetProfileFieldProps) {
+export const CabinetProfileField = ({ label, error, ...props }: CabinetProfileFieldProps) => {
   return (
     <label className="flex min-w-0 flex-col gap-1.5">
       <span className="text-[13px] font-medium text-muted">{label}</span>
@@ -17,4 +17,4 @@ export function CabinetProfileField({ label, error, ...props }: CabinetProfileFi
       {error && <span className="text-[12.5px] text-error-dark">{error}</span>}
     </label>
   );
-}
+};

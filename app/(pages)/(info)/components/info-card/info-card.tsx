@@ -1,7 +1,7 @@
 import type { InfoCardProps } from "./types/info-card.types";
 
 /** White section of an info page with its own heading. */
-export function InfoCard({ title, subtitle, children }: InfoCardProps) {
+export const InfoCard = ({ title, subtitle, children }: InfoCardProps) => {
   return (
     <section className="flex flex-col gap-4 rounded-2xl bg-background p-[18px] lg:p-6">
       <h2 className="text-base font-semibold text-foreground lg:text-[17px]">{title}</h2>
@@ -9,4 +9,4 @@ export function InfoCard({ title, subtitle, children }: InfoCardProps) {
       {children}
     </section>
   );
-}
+};

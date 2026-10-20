@@ -12,14 +12,14 @@ import type { LoginCodeCellState, LoginCodeCellsProps } from "./types/login-code
 
 const CELL_INDEXES = Array.from({ length: LOGIN_CODE_LENGTH }, (_, index) => index);
 
-export function LoginCodeCells({ code, status, onChange }: LoginCodeCellsProps) {
-  function getCellState(index: number): LoginCodeCellState {
+export const LoginCodeCells = ({ code, status, onChange }: LoginCodeCellsProps) => {
+  const getCellState = (index: number): LoginCodeCellState => {
     if (status === "verified") return "verified";
     if (status === "invalid") return "invalid";
     if (index < code.length) return "filled";
 
     return index === code.length ? "active" : "empty";
-  }
+  };
 
   return (
     <div className="relative">
@@ -54,4 +54,4 @@ export function LoginCodeCells({ code, status, onChange }: LoginCodeCellsProps) 
       />
     </div>
   );
-}
+};

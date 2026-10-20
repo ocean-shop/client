@@ -19,20 +19,20 @@ import {
 } from "./constants/catalog-filters.constants";
 import type { CatalogFiltersProps } from "./types/catalog-filters.types";
 
-export function CatalogFilters({ groups, categories, query }: CatalogFiltersProps) {
+export const CatalogFilters = ({ groups, categories, query }: CatalogFiltersProps) => {
   const { applyQuery, isPending } = useCatalogQuery(query);
   const [collapsedGroupIds, setCollapsedGroupIds] = useState<Set<string>>(new Set());
   const [expandedGroupIds, setExpandedGroupIds] = useState<Set<string>>(new Set());
 
-  function toggleOption(name: string, value: string) {
+  const toggleOption = (name: string, value: string) => {
     applyQuery({ attributes: toggleCatalogAttributeValueHelper(query.attributes, name, value) });
-  }
+  };
 
-  function toggleCategory(categoryId: string) {
+  const toggleCategory = (categoryId: string) => {
     applyQuery({ categoryIds: toggleCatalogCategoryIdHelper(query.categoryIds, categoryId) });
-  }
+  };
 
-  function resetFilters() {
+  const resetFilters = () => {
     applyQuery({
       attributes: [],
       categoryIds: [],
@@ -40,20 +40,20 @@ export function CatalogFilters({ groups, categories, query }: CatalogFiltersProp
       priceTo: undefined,
       available: undefined,
     });
-  }
+  };
 
-  function toggleGroupCollapsed(groupId: string) {
+  const toggleGroupCollapsed = (groupId: string) => {
     setCollapsedGroupIds((prev) => {
       const next = new Set(prev);
       if (next.has(groupId)) next.delete(groupId);
       else next.add(groupId);
       return next;
     });
-  }
+  };
 
-  function expandGroup(groupId: string) {
+  const expandGroup = (groupId: string) => {
     setExpandedGroupIds((prev) => new Set(prev).add(groupId));
-  }
+  };
 
   return (
     <div className={`flex flex-col gap-3.5 ${isPending ? "pointer-events-none opacity-60" : ""}`}>
@@ -149,4 +149,4 @@ export function CatalogFilters({ groups, categories, query }: CatalogFiltersProp
       )}
     </div>
   );
-}
+};

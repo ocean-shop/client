@@ -9,7 +9,7 @@ import { FAVORITES_IDS_PAGE_LIMIT } from "../constants/favorites.constants";
  * filled in; `null` for guests. Runs as an action because the catalog pages are rendered without
  * the session, and the token cookie is httpOnly.
  */
-export async function getFavoriteProductIdsAction(): Promise<string[] | null> {
+export const getFavoriteProductIdsAction = async (): Promise<string[] | null> => {
   const user = await getAuthUser();
 
   if (!user) return null;
@@ -22,4 +22,4 @@ export async function getFavoriteProductIdsAction(): Promise<string[] | null> {
   );
 
   return [firstPage, ...restPages].flatMap((page) => page.items.map((product) => product.id));
-}
+};

@@ -15,7 +15,7 @@ import {
 } from "./constants/cabinet-order-card.constants";
 import type { CabinetOrderCardProps } from "./types/cabinet-order-card.types";
 
-export function CabinetOrderCard({ order, onOpen, onRepeat }: CabinetOrderCardProps) {
+export const CabinetOrderCard = ({ order, onOpen, onRepeat }: CabinetOrderCardProps) => {
   const thumbnails = order.items.slice(0, CABINET_ORDER_CARD_THUMBNAILS_LIMIT);
   const hiddenCount = order.items.length - thumbnails.length;
 
@@ -83,4 +83,4 @@ export function CabinetOrderCard({ order, onOpen, onRepeat }: CabinetOrderCardPr
       </div>
     </article>
   );
-}
+};

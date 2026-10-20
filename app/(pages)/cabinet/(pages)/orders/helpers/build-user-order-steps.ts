@@ -9,11 +9,11 @@ import type { UserOrder, UserOrderStepView } from "../types/orders.types";
  * The backend only remembers when an order was placed and when it last changed, so those two
  * dates go to the first step and the current one; steps in between are left undated.
  */
-export function buildUserOrderStepsHelper({
+export const buildUserOrderStepsHelper = ({
   status,
   createdAt,
   updatedAt,
-}: UserOrder): UserOrderStepView[] {
+}: UserOrder): UserOrderStepView[] => {
   const placedAt = ORDER_STEP_DATE_FORMATTER.format(new Date(createdAt));
   const changedAt = ORDER_STEP_DATE_FORMATTER.format(new Date(updatedAt));
 
@@ -31,4 +31,4 @@ export function buildUserOrderStepsHelper({
     state: index < currentIndex ? "done" : index === currentIndex ? "current" : "upcoming",
     date: index === 0 ? placedAt : index === currentIndex ? changedAt : null,
   }));
-}
+};

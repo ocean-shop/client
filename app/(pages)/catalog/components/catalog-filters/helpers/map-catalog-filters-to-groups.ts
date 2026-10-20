@@ -1,7 +1,7 @@
 import type { CatalogFilter } from "@/app/shared/products/types/products.types";
 import type { CatalogFilterGroup } from "../types/catalog-filters.types";
 
-export function mapCatalogFiltersToGroupsHelper(filters: CatalogFilter[]): CatalogFilterGroup[] {
+export const mapCatalogFiltersToGroupsHelper = (filters: CatalogFilter[]): CatalogFilterGroup[] => {
   return filters.map((filter) => ({
     id: filter.name,
     name: filter.name,
@@ -12,4 +12,4 @@ export function mapCatalogFiltersToGroupsHelper(filters: CatalogFilter[]): Catal
       label: value,
     })),
   }));
-}
+};

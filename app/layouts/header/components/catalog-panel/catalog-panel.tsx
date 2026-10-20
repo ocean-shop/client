@@ -11,7 +11,7 @@ import { HEADER_CATALOG_LABEL } from "../../constants/header.constants";
 import { CATALOG_PANEL_PROMO } from "./constants/catalog-panel.constants";
 import type { CatalogPanelProps } from "./types/catalog-panel.types";
 
-export function CatalogPanel({ categories }: CatalogPanelProps) {
+export const CatalogPanel = ({ categories }: CatalogPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeCategoryId, setActiveCategoryId] = useState(categories[0]?.id);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -22,11 +22,11 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
   useEffect(() => {
     if (!isOpen) return;
 
-    function handlePointerDown(event: PointerEvent) {
+    const handlePointerDown = (event: PointerEvent) => {
       if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
-    }
+    };
 
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
@@ -147,4 +147,4 @@ export function CatalogPanel({ categories }: CatalogPanelProps) {
       )}
     </div>
   );
-}
+};

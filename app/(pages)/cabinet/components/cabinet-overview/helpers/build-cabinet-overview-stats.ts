@@ -16,14 +16,16 @@ import type { CabinetOverviewStat } from "../types/cabinet-overview.types";
 
 const pluralRules = new Intl.PluralRules(CABINET_OVERVIEW_LOCALE);
 
-function formatOrdersCount(count: number) {
+const formatOrdersCount = (count: number) => {
   const word = CABINET_OVERVIEW_ORDER_WORD_FORMS[pluralRules.select(count)];
 
   return `${count.toLocaleString(CABINET_OVERVIEW_LOCALE)} ${word ?? CABINET_OVERVIEW_ORDER_WORD_FORMS.other}`;
-}
+};
 
 /** The three shortcut cards under the active order, each with its own empty wording. */
-export function buildCabinetOverviewStatsHelper(overview: CabinetOverview): CabinetOverviewStat[] {
+export const buildCabinetOverviewStatsHelper = (
+  overview: CabinetOverview
+): CabinetOverviewStat[] => {
   const { ordersCount, activeOrdersCount, favoritesCount, mainAddress } = overview;
   const orders = CABINET_OVERVIEW_ORDERS_STAT;
   const favorites = CABINET_OVERVIEW_FAVORITES_STAT;
@@ -59,4 +61,4 @@ export function buildCabinetOverviewStatsHelper(overview: CabinetOverview): Cabi
       note: mainAddress?.address ?? address.emptyNote,
     },
   ];
-}
+};

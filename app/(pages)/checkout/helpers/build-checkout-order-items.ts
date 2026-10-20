@@ -6,7 +6,7 @@ import { roundCheckoutAmountHelper } from "./round-checkout-amount";
  * The backend keys order lines by product and knows nothing of variations, so two variations of
  * one product merge into a single line priced at their average.
  */
-export function buildCheckoutOrderItemsHelper(items: CartItem[]): CreateOrderItemRequest[] {
+export const buildCheckoutOrderItemsHelper = (items: CartItem[]): CreateOrderItemRequest[] => {
   const lines = new Map<string, { quantity: number; amount: number }>();
 
   items.forEach((item) => {
@@ -23,4 +23,4 @@ export function buildCheckoutOrderItemsHelper(items: CartItem[]): CreateOrderIte
     unitPrice: roundCheckoutAmountHelper(amount / quantity),
     quantity,
   }));
-}
+};

@@ -7,7 +7,7 @@ import { LOGIN_METADATA_TITLE, LOGIN_PAGE_CLASS_NAME } from "./constants/login.c
 
 export const metadata: Metadata = { ...SEO_NO_INDEX_METADATA, title: LOGIN_METADATA_TITLE };
 
-export default async function LoginPage({ searchParams }: PageProps<"/login">) {
+const LoginPage = async ({ searchParams }: PageProps<"/login">) => {
   const redirectTo = resolveAuthRedirect((await searchParams)[AUTH_REDIRECT_PARAM]);
 
   return (
@@ -15,4 +15,6 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
       <LoginView redirectTo={redirectTo} />
     </div>
   );
-}
+};
+
+export default LoginPage;

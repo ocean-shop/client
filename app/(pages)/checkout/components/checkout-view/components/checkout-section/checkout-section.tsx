@@ -1,7 +1,7 @@
 import type { CheckoutSectionProps } from "./types/checkout-section.types";
 
 /** One numbered step of the checkout form. */
-export function CheckoutSection({ step, title, children }: CheckoutSectionProps) {
+export const CheckoutSection = ({ step, title, children }: CheckoutSectionProps) => {
   return (
     <section className="flex flex-col gap-[18px] rounded-2xl bg-background p-[18px] lg:p-6">
       <div className="flex items-center gap-3">
@@ -16,4 +16,4 @@ export function CheckoutSection({ step, title, children }: CheckoutSectionProps)
       {children}
     </section>
   );
-}
+};

@@ -5,7 +5,7 @@ import { useCartQuantity } from "@/app/shared/cart/hooks/use-cart-quantity";
 import { Button } from "@/app/ui/button/button";
 import { HEADER_CART_LABEL } from "./constants/header-cart.constants";
 
-export function HeaderCart() {
+export const HeaderCart = () => {
   const quantity = useCartQuantity();
 
   return (
@@ -24,4 +24,4 @@ export function HeaderCart() {
       )}
     </Button>
   );
-}
+};

@@ -15,12 +15,12 @@ import {
 } from "./constants/product-info.constants";
 import type { ProductInfoProps } from "./types/product-info.types";
 
-export function ProductInfo({
+export const ProductInfo = ({
   product,
   offer,
   breadcrumbItems,
   onSelectVariation,
-}: ProductInfoProps) {
+}: ProductInfoProps) => {
   const discountPercent = calculateProductDiscountPercentHelper(offer.price, offer.oldPrice);
 
   return (
@@ -87,4 +87,4 @@ export function ProductInfo({
       {product.tags.length > 0 && <ProductTags tags={product.tags} />}
     </div>
   );
-}
+};

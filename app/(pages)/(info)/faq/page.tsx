@@ -6,11 +6,13 @@ import { FAQ_ITEMS, FAQ_LEAD, FAQ_TITLE } from "./constants/faq.constants";
 
 export const metadata = buildInfoMetadataHelper(INFO_FAQ_PATH, FAQ_TITLE, FAQ_LEAD);
 
-export default function FaqPage() {
+const FaqPage = () => {
   return (
     <>
       <InfoPageHeader title={FAQ_TITLE} lead={FAQ_LEAD} />
       <FaqList items={FAQ_ITEMS} />
     </>
   );
-}
+};
+
+export default FaqPage;

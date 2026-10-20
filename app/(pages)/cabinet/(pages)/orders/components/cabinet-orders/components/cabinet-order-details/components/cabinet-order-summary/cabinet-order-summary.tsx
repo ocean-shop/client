@@ -10,7 +10,7 @@ import {
 } from "./constants/cabinet-order-summary.constants";
 import type { CabinetOrderSummaryProps } from "./types/cabinet-order-summary.types";
 
-export function CabinetOrderSummary({ order, onRepeat }: CabinetOrderSummaryProps) {
+export const CabinetOrderSummary = ({ order, onRepeat }: CabinetOrderSummaryProps) => {
   const { amounts } = order;
 
   return (
@@ -53,4 +53,4 @@ export function CabinetOrderSummary({ order, onRepeat }: CabinetOrderSummaryProp
       </div>
     </section>
   );
-}
+};

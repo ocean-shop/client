@@ -4,7 +4,7 @@ import {
 } from "./constants/cabinet-order-status-badge.constants";
 import type { CabinetOrderStatusBadgeProps } from "./types/cabinet-order-status-badge.types";
 
-export function CabinetOrderStatusBadge({ status, size = "sm" }: CabinetOrderStatusBadgeProps) {
+export const CabinetOrderStatusBadge = ({ status, size = "sm" }: CabinetOrderStatusBadgeProps) => {
   const meta = CABINET_ORDER_STATUSES[status];
   const sizeClassNames = CABINET_ORDER_STATUS_BADGE_SIZE_CLASS_NAMES[size];
 
@@ -16,4 +16,4 @@ export function CabinetOrderStatusBadge({ status, size = "sm" }: CabinetOrderSta
       {meta.label}
     </span>
   );
-}
+};

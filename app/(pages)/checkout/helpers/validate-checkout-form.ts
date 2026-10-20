@@ -8,10 +8,10 @@ import {
 import type { CheckoutContact, CheckoutDelivery } from "../types/checkout.types";
 
 /** Returns the message for the first field that still needs attention, or `null` when all is set. */
-export function validateCheckoutFormHelper(
+export const validateCheckoutFormHelper = (
   contact: CheckoutContact,
   delivery: CheckoutDelivery
-): string | null {
+): string | null => {
   if (contact.name.trim().split(/\s+/).filter(Boolean).length < CHECKOUT_NAME_MIN_WORDS) {
     return CHECKOUT_VALIDATION_MESSAGES.name;
   }
@@ -29,4 +29,4 @@ export function validateCheckoutFormHelper(
   }
 
   return delivery.point ? null : CHECKOUT_VALIDATION_MESSAGES.point;
-}
+};

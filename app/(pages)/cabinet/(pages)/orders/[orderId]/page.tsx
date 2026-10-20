@@ -6,9 +6,7 @@ import { getUserOrder } from "../api/get-user-order";
 import { toUserOrderViewHelper } from "../helpers/to-user-order-view";
 import { CabinetOrderPage } from "./components/cabinet-order-page/cabinet-order-page";
 
-export default async function CabinetOrderDetailsPage({
-  params,
-}: PageProps<"/cabinet/orders/[orderId]">) {
+const CabinetOrderDetailsPage = async ({ params }: PageProps<"/cabinet/orders/[orderId]">) => {
   const { orderId } = await params;
   await requireAuthUser(`${CABINET_ORDERS_PATH}/${orderId}`);
   const order = await getUserOrder(orderId);
@@ -18,4 +16,6 @@ export default async function CabinetOrderDetailsPage({
   const products = await getOrderProducts([order]);
 
   return <CabinetOrderPage order={toUserOrderViewHelper(order, products)} />;
-}
+};
+
+export default CabinetOrderDetailsPage;

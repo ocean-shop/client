@@ -10,7 +10,7 @@ import type { CatalogProductsQuery } from "@/app/shared/products/types/products.
  * The URL is the single source of truth for the catalog query: every change is pushed
  * as search params and the page re-renders on the server with fresh products.
  */
-export function useCatalogQuery(query: CatalogProductsQuery) {
+export const useCatalogQuery = (query: CatalogProductsQuery) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
@@ -18,7 +18,7 @@ export function useCatalogQuery(query: CatalogProductsQuery) {
   useReportNavigationPending(isPending);
 
   /** Merges changes into the current query, resetting to page 1 unless a page is given. */
-  function applyQuery(changes: Partial<CatalogProductsQuery>) {
+  const applyQuery = (changes: Partial<CatalogProductsQuery>) => {
     const searchParams = buildCatalogProductsSearchParamsHelper({
       ...query,
       page: 1,
@@ -26,7 +26,7 @@ export function useCatalogQuery(query: CatalogProductsQuery) {
     }).toString();
 
     startTransition(() => router.push(searchParams ? `${pathname}?${searchParams}` : pathname));
-  }
+  };
 
   return { applyQuery, isPending };
-}
+};

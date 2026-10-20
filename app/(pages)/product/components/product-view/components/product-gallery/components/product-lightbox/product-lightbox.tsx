@@ -18,23 +18,23 @@ import type { ProductLightboxProps } from "./types/product-lightbox.types";
  * Mounted only while open: the enlarged photo is the heaviest image on the page, so it is not
  * requested until the visitor asks for it.
  */
-export function ProductLightbox({
+export const ProductLightbox = ({
   images,
   activeIndex,
   name,
   onSelect,
   onClose,
-}: ProductLightboxProps) {
+}: ProductLightboxProps) => {
   const activeImage = images[activeIndex];
   const imageCount = images.length;
   const hasSiblings = imageCount > 1;
 
-  function selectRelative(step: number) {
+  const selectRelative = (step: number) => {
     onSelect(resolveLightboxImageIndexHelper(activeIndex, step, imageCount));
-  }
+  };
 
   useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === PRODUCT_LIGHTBOX_CLOSE_KEY) onClose();
 
       if (event.key === PRODUCT_LIGHTBOX_PREVIOUS_KEY) {
@@ -44,7 +44,7 @@ export function ProductLightbox({
       if (event.key === PRODUCT_LIGHTBOX_NEXT_KEY) {
         onSelect(resolveLightboxImageIndexHelper(activeIndex, 1, imageCount));
       }
-    }
+    };
 
     // The page behind the overlay would otherwise scroll along with the wheel over the photo.
     const previousOverflow = document.body.style.overflow;
@@ -136,4 +136,4 @@ export function ProductLightbox({
       )}
     </div>
   );
-}
+};

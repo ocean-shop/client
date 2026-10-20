@@ -24,7 +24,7 @@ import type { CabinetFavoritesProps } from "./types/cabinet-favorites.types";
  * The user's favourites. A card whose heart is cleared stays in place until the next visit, so a
  * misclick can be undone; the count already leaves it out.
  */
-export function CabinetFavorites({ products, total, page, totalPages }: CabinetFavoritesProps) {
+export const CabinetFavorites = ({ products, total, page, totalPages }: CabinetFavoritesProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { ids, status } = useFavorites();
@@ -32,11 +32,11 @@ export function CabinetFavorites({ products, total, page, totalPages }: CabinetF
   const removedCount =
     status === "ready" ? products.filter((product) => !ids.has(product.id)).length : 0;
 
-  function handlePageChange(nextPage: number) {
+  const handlePageChange = (nextPage: number) => {
     startTransition(() => {
       router.push(`${CABINET_FAVORITES_PATH}?${FAVORITES_PAGE_SEARCH_PARAM}=${nextPage}`);
     });
-  }
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -93,4 +93,4 @@ export function CabinetFavorites({ products, total, page, totalPages }: CabinetF
       )}
     </div>
   );
-}
+};

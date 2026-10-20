@@ -16,7 +16,7 @@ import {
 } from "./constants/info-sidebar.constants";
 
 /** Desktop navigation between the info pages, grouped into "for buyers" and "company". */
-export function InfoSidebar() {
+export const InfoSidebar = () => {
   const pathname = usePathname();
 
   return (
@@ -63,4 +63,4 @@ export function InfoSidebar() {
       ))}
     </nav>
   );
-}
+};

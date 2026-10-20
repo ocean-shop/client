@@ -11,7 +11,7 @@ import {
 import type { ModalProps } from "./types/modal.types";
 
 /** Stays mounted while closed so it can animate both ways; `inert` keeps it out of the tab order. */
-export function Modal({
+export const Modal = ({
   isOpen,
   onClose,
   title,
@@ -19,13 +19,13 @@ export function Modal({
   closeLabel = MODAL_DEFAULT_CLOSE_LABEL,
   footer,
   children,
-}: ModalProps) {
+}: ModalProps) => {
   useEffect(() => {
     if (!isOpen) return;
 
-    function handleKeyDown(event: KeyboardEvent) {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === MODAL_CLOSE_KEY) onClose();
-    }
+    };
 
     // The page behind the overlay would otherwise scroll along with the modal body.
     const previousOverflow = document.body.style.overflow;
@@ -89,4 +89,4 @@ export function Modal({
       </div>
     </>
   );
-}
+};

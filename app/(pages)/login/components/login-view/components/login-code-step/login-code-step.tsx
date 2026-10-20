@@ -22,7 +22,7 @@ import {
 } from "./constants/login-code-step.constants";
 import type { LoginCodeStepProps } from "./types/login-code-step.types";
 
-export function LoginCodeStep({
+export const LoginCodeStep = ({
   identifier,
   identifierKind,
   code,
@@ -35,11 +35,11 @@ export function LoginCodeStep({
   onConfirm,
   onResend,
   onBack,
-}: LoginCodeStepProps) {
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+}: LoginCodeStepProps) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onConfirm();
-  }
+  };
 
   return (
     <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5 lg:gap-6">
@@ -131,4 +131,4 @@ export function LoginCodeStep({
       </div>
     </form>
   );
-}
+};

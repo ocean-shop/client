@@ -33,7 +33,7 @@ import {
 import type { CatalogFiltersSheetContentProps } from "./types/catalog-filters-sheet-content.types";
 
 /** Selections stay local until "show results" applies them to the URL. */
-export function CatalogFiltersSheetContent({
+export const CatalogFiltersSheetContent = ({
   isOpen,
   onClose,
   onApply,
@@ -43,7 +43,7 @@ export function CatalogFiltersSheetContent({
   groups,
   categories,
   query,
-}: CatalogFiltersSheetContentProps) {
+}: CatalogFiltersSheetContentProps) => {
   const [priceFrom, setPriceFrom] = useState(query.priceFrom?.toString() ?? "");
   const [priceTo, setPriceTo] = useState(query.priceTo?.toString() ?? "");
   const [attributes, setAttributes] = useState<CatalogFilter[]>(query.attributes);
@@ -64,38 +64,38 @@ export function CatalogFiltersSheetContent({
 
   const { count, isCounting } = useCatalogProductsCount(source, draftQuery, isOpen);
 
-  function toggleOption(name: string, value: string) {
+  const toggleOption = (name: string, value: string) => {
     setAttributes((prev) => toggleCatalogAttributeValueHelper(prev, name, value));
-  }
+  };
 
-  function toggleCategory(categoryId: string) {
+  const toggleCategory = (categoryId: string) => {
     setCategoryIds((prev) => toggleCatalogCategoryIdHelper(prev, categoryId));
-  }
+  };
 
-  function toggleGroupCollapsed(groupId: string) {
+  const toggleGroupCollapsed = (groupId: string) => {
     setCollapsedGroupIds((prev) => {
       const next = new Set(prev);
       if (next.has(groupId)) next.delete(groupId);
       else next.add(groupId);
       return next;
     });
-  }
+  };
 
-  function expandGroup(groupId: string) {
+  const expandGroup = (groupId: string) => {
     setExpandedGroupIds((prev) => new Set(prev).add(groupId));
-  }
+  };
 
-  function resetFilters() {
+  const resetFilters = () => {
     setPriceFrom("");
     setPriceTo("");
     setAttributes([]);
     setCategoryIds([]);
     setIsAvailableOnly(false);
-  }
+  };
 
-  function showResults() {
+  const showResults = () => {
     onApply(draftQuery);
-  }
+  };
 
   return (
     <>
@@ -252,4 +252,4 @@ export function CatalogFiltersSheetContent({
       </div>
     </>
   );
-}
+};

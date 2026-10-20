@@ -12,7 +12,7 @@ import { truncateSeoDescriptionHelper } from "./truncate-seo-description";
  * Admin-edited SEO fields win; everything left empty is derived from the page content. Relative
  * URLs are resolved against `metadataBase`, set once in the root layout.
  */
-export function buildSeoMetadataHelper({
+export const buildSeoMetadataHelper = ({
   title,
   description,
   path,
@@ -21,7 +21,7 @@ export function buildSeoMetadataHelper({
   metaDescription,
   canonicalUrl,
   noIndex,
-}: SeoMetadataInput): Metadata {
+}: SeoMetadataInput): Metadata => {
   const resolvedTitle = `${metaTitle || title}${SEO_TITLE_SUFFIX}`;
   const resolvedDescription =
     metaDescription || (description ? truncateSeoDescriptionHelper(description) : undefined);
@@ -49,4 +49,4 @@ export function buildSeoMetadataHelper({
       images: images?.map((image) => image.url),
     },
   };
-}
+};

@@ -1,8 +1,8 @@
 import type { CatalogCategory } from "../types/catalog-categories.types";
 
-export function filterParentCategoriesHelper(
+export const filterParentCategoriesHelper = (
   categories: CatalogCategory[],
   limit: number
-): CatalogCategory[] {
+): CatalogCategory[] => {
   return categories.filter((category) => !category.parentId).slice(0, limit);
-}
+};

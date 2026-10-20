@@ -14,10 +14,10 @@ import type { CatalogProductsSource, ProductListResponse } from "../types/produc
  * Runs as an action because `API_BASE_URL` is server-only and the sheet needs the total
  * while the user is still choosing.
  */
-export async function getCatalogProductsCountAction(
+export const getCatalogProductsCountAction = async (
   source: CatalogProductsSource,
   searchParams: string
-): Promise<number> {
+): Promise<number> => {
   const params = new URLSearchParams(searchParams);
   params.set(CATALOG_PRODUCTS_QUERY_PARAM.limit, String(CATALOG_PRODUCTS_COUNT_LIMIT));
 
@@ -30,4 +30,4 @@ export async function getCatalogProductsCountAction(
   const productList = await apiFetch<ProductListResponse>(url, { next: { revalidate: 300 } });
 
   return productList.total;
-}
+};

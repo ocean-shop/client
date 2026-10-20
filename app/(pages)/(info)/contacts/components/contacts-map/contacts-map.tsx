@@ -5,7 +5,7 @@ import {
   CONTACTS_MAP_TITLE,
 } from "./constants/contacts-map.constants";
 
-export function ContactsMap() {
+export const ContactsMap = () => {
   return (
     <div className="relative h-40 overflow-hidden rounded-xl bg-surface-strong lg:h-[190px]">
       <iframe
@@ -25,4 +25,4 @@ export function ContactsMap() {
       </a>
     </div>
   );
-}
+};

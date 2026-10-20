@@ -3,7 +3,7 @@ import { buildProductHrefHelper } from "@/app/shared/products/helpers/build-prod
 import type { ProductDetails } from "@/app/shared/products/types/products.types";
 import { buildSeoMetadataHelper } from "@/app/shared/seo/helpers/build-seo-metadata";
 
-export function buildProductMetadataHelper(product: ProductDetails): Metadata {
+export const buildProductMetadataHelper = (product: ProductDetails): Metadata => {
   return buildSeoMetadataHelper({
     title: product.name,
     description: product.description,
@@ -15,4 +15,4 @@ export function buildProductMetadataHelper(product: ProductDetails): Metadata {
     canonicalUrl: product.canonicalUrl,
     noIndex: product.noIndex,
   });
-}
+};

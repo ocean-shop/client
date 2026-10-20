@@ -1,6 +1,6 @@
 import type { AboutValuesProps } from "./types/about-values.types";
 
-export function AboutValues({ values }: AboutValuesProps) {
+export const AboutValues = ({ values }: AboutValuesProps) => {
   return (
     <ul className="grid gap-3 md:grid-cols-3 lg:gap-4">
       {values.map((value) => (
@@ -14,4 +14,4 @@ export function AboutValues({ values }: AboutValuesProps) {
       ))}
     </ul>
   );
-}
+};

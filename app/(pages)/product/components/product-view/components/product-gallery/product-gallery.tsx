@@ -16,7 +16,12 @@ import {
 } from "./constants/product-gallery.constants";
 import type { ProductGalleryProps } from "./types/product-gallery.types";
 
-export function ProductGallery({ productId, images, name, discountPercent }: ProductGalleryProps) {
+export const ProductGallery = ({
+  productId,
+  images,
+  name,
+  discountPercent,
+}: ProductGalleryProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
 
@@ -131,4 +136,4 @@ export function ProductGallery({ productId, images, name, discountPercent }: Pro
       )}
     </>
   );
-}
+};

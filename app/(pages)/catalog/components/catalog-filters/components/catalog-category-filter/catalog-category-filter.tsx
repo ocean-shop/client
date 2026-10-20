@@ -19,13 +19,13 @@ import type { CatalogCategoryFilterProps } from "./types/catalog-category-filter
  * Search only: a category page is already scoped to one category, so there is nothing
  * left for it to narrow to.
  */
-export function CatalogCategoryFilter({
+export const CatalogCategoryFilter = ({
   categories,
   selectedIds,
   onToggle,
   className,
   rowWrapperClassName,
-}: CatalogCategoryFilterProps) {
+}: CatalogCategoryFilterProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const rows = buildCatalogCategoryRowsHelper(categories);
@@ -70,4 +70,4 @@ export function CatalogCategoryFilter({
       )}
     </div>
   );
-}
+};

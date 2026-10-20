@@ -6,7 +6,7 @@ import {
 } from "../../constants/product.constants";
 
 /** Stand-in for the product page while the product is still on the server. */
-export function ProductSkeleton() {
+export const ProductSkeleton = () => {
   return (
     <div className={PRODUCT_PAGE_CLASS_NAME}>
       <NavigationProgressReporter />
@@ -33,4 +33,4 @@ export function ProductSkeleton() {
       </div>
     </div>
   );
-}
+};

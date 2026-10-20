@@ -2,11 +2,11 @@ import { formatCabinetPhoneHelper } from "../../../../../../../helpers/format-ca
 import type { CabinetProfileForm } from "../types/cabinet-profile-contacts.types";
 
 /** "Коваль Олена Петрівна" → last, first and middle name; anything past the second word is kept as the middle name. */
-export function buildCabinetProfileFormHelper(
+export const buildCabinetProfileFormHelper = (
   fullName: string | null,
   phone: string | null,
   birthday: string | null
-): CabinetProfileForm {
+): CabinetProfileForm => {
   const [lastName = "", firstName = "", ...middleName] = (fullName ?? "")
     .trim()
     .split(/\s+/)
@@ -19,4 +19,4 @@ export function buildCabinetProfileFormHelper(
     phone: phone ? formatCabinetPhoneHelper(phone) : "",
     birthday,
   };
-}
+};

@@ -16,9 +16,9 @@ import type {
  * Saves the signed-in user's profile and refreshes the page, so server-rendered views of it show
  * the new details. The user id comes from the session, never from the caller.
  */
-export async function updateUserProfileAction(
+export const updateUserProfileAction = async (
   body: UpdateUserProfileRequest
-): Promise<UpdateUserProfileResult> {
+): Promise<UpdateUserProfileResult> => {
   const user = await getAuthUser();
 
   if (!user) return { ok: false, status: 401, message: null };
@@ -46,4 +46,4 @@ export async function updateUserProfileAction(
       birthday: normalizeProfileBirthdayHelper(birthday),
     },
   };
-}
+};

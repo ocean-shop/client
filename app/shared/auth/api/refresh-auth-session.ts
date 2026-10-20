@@ -7,7 +7,7 @@ import type { AuthSessionResponse, AuthTokens } from "../types/auth.types";
 
 const pendingRefreshes = new Map<string, Promise<AuthTokens | null>>();
 
-async function requestRefresh(refreshToken: string, userAgent: string | null) {
+const requestRefresh = async (refreshToken: string, userAgent: string | null) => {
   try {
     const response = await fetch(`${AUTH_API_URL}/refresh`, {
       method: "POST",
@@ -27,14 +27,14 @@ async function requestRefresh(refreshToken: string, userAgent: string | null) {
   } catch {
     return null;
   }
-}
+};
 
 /**
  * Trades the refresh token for a new pair, or `null` once it is no longer valid. The backend
  * rotates the token on every call, so concurrent requests holding the same one share a single
  * refresh instead of racing and invalidating each other.
  */
-export function refreshAuthSession(refreshToken: string, userAgent: string | null) {
+export const refreshAuthSession = (refreshToken: string, userAgent: string | null) => {
   const pending = pendingRefreshes.get(refreshToken);
 
   if (pending) return pending;
@@ -47,4 +47,4 @@ export function refreshAuthSession(refreshToken: string, userAgent: string | nul
   );
 
   return refresh;
-}
+};

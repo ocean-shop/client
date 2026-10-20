@@ -1,12 +1,12 @@
 import { CHECKOUT_OPTION_STATE_CLASS_NAMES } from "@/app/(pages)/checkout/components/checkout-view/components/checkout-option/constants/checkout-option.constants";
 import type { CabinetAddressTypeOptionProps } from "./types/cabinet-address-type-option.types";
 
-export function CabinetAddressTypeOption({
+export const CabinetAddressTypeOption = ({
   option,
   isSelected,
   onSelect,
   disabled,
-}: CabinetAddressTypeOptionProps) {
+}: CabinetAddressTypeOptionProps) => {
   return (
     <button
       type="button"
@@ -23,4 +23,4 @@ export function CabinetAddressTypeOption({
       <span className="text-xs text-muted-light">{option.note}</span>
     </button>
   );
-}
+};

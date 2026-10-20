@@ -1,7 +1,7 @@
 ﻿import { CatalogFiltersSheetContent } from "./components/catalog-filters-sheet-content/catalog-filters-sheet-content";
 import type { CatalogFiltersSheetProps } from "./types/catalog-filters-sheet.types";
 
-export function CatalogFiltersSheet({
+export const CatalogFiltersSheet = ({
   isOpen,
   onClose,
   onApply,
@@ -11,7 +11,7 @@ export function CatalogFiltersSheet({
   groups,
   categories,
   query,
-}: CatalogFiltersSheetProps) {
+}: CatalogFiltersSheetProps) => {
   return (
     <div
       role="dialog"
@@ -37,4 +37,4 @@ export function CatalogFiltersSheet({
       />
     </div>
   );
-}
+};

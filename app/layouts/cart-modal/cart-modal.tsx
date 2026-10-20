@@ -15,7 +15,7 @@ import {
   CART_MODAL_TITLE,
 } from "./constants/cart-modal.constants";
 
-export function CartModal() {
+export const CartModal = () => {
   const items = useCartItems();
   const isOpen = useCartOpen();
   const totals = calculateCartTotalsHelper(items);
@@ -41,4 +41,4 @@ export function CartModal() {
       )}
     </Modal>
   );
-}
+};

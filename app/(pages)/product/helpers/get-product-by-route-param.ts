@@ -8,6 +8,6 @@ import type { ProductDetails } from "@/app/shared/products/types/products.types"
  * the browser, order history), which carry the product id. Both resolve to the same product so
  * the page can redirect the latter to its slug URL.
  */
-export function getProductByRouteParamHelper(param: string): Promise<ProductDetails | null> {
+export const getProductByRouteParamHelper = (param: string): Promise<ProductDetails | null> => {
   return PRODUCT_ID_PATTERN.test(param) ? getProductById(param) : getProductBySlug(param);
-}
+};

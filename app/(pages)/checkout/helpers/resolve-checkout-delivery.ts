@@ -20,7 +20,7 @@ import type { CheckoutDelivery } from "../types/checkout.types";
 import { getCheckoutCarrierHelper } from "./get-checkout-carrier";
 
 /** The popular list carries the right ref for big cities; anything else is looked up by name. */
-async function findCity(name: string): Promise<DeliveryCity | null> {
+const findCity = async (name: string): Promise<DeliveryCity | null> => {
   const popularCity = DELIVERY_POPULAR_CITIES.find((city) => city.name === name);
 
   if (popularCity) return popularCity;
@@ -28,14 +28,14 @@ async function findCity(name: string): Promise<DeliveryCity | null> {
   const cities = await searchNovaPoshtaSettlements(name);
 
   return cities.find((city) => city.name === name) ?? null;
-}
+};
 
 /** Searches by the point's number, so the match does not depend on the first page of results. */
-async function findPoint(
+const findPoint = async (
   delivery: CheckoutDelivery,
   method: DeliveryPointMethod,
   title: string
-): Promise<DeliveryPoint | null> {
+): Promise<DeliveryPoint | null> => {
   const searchTerm = title.match(CHECKOUT_DELIVERY_POINT_NUMBER_PATTERN)?.[0] ?? "";
   const points =
     delivery.carrier === "ukr"
@@ -43,7 +43,7 @@ async function findPoint(
       : await getNovaPoshtaWarehouses(delivery.city.id, method, searchTerm);
 
   return points.find((point) => point.title === title) ?? null;
-}
+};
 
 /**
  * Turns the user's main address back into a filled-in delivery form. A saved address is a single
@@ -51,9 +51,9 @@ async function findPoint(
  * by name. Whatever cannot be found is left for the user to pick, as for a guest. Addresses of a
  * carrier the shop no longer ships with are skipped.
  */
-export async function resolveCheckoutDeliveryHelper(
+export const resolveCheckoutDeliveryHelper = async (
   shippings: UserShipping[]
-): Promise<CheckoutDelivery> {
+): Promise<CheckoutDelivery> => {
   const availableShippings = shippings.filter(({ method }) =>
     isDeliveryCarrierEnabledHelper(method)
   );
@@ -89,4 +89,4 @@ export async function resolveCheckoutDeliveryHelper(
   const point = await findPoint(deliveryInCity, method.id, pointTitle).catch(() => null);
 
   return { ...deliveryInCity, point };
-}
+};

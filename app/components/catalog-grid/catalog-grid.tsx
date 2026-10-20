@@ -8,7 +8,7 @@ import {
 } from "./constants/catalog-grid.constants";
 import type { CatalogGridProps } from "./types/catalog-grid.types";
 
-export function CatalogGrid({ products, emptyMessage, categorySlug }: CatalogGridProps) {
+export const CatalogGrid = ({ products, emptyMessage, categorySlug }: CatalogGridProps) => {
   // Cards render a required image, so products without one are skipped.
   const catalogProducts = products
     .filter((product) => product.images.length > 0)
@@ -36,4 +36,4 @@ export function CatalogGrid({ products, emptyMessage, categorySlug }: CatalogGri
       ))}
     </div>
   );
-}
+};

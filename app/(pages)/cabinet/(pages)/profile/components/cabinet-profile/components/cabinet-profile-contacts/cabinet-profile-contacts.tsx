@@ -39,7 +39,7 @@ import type {
  * The user's name, phone and birthday, read-only until "Редагувати" is pressed. Users who signed in with a
  * phone and never saved another one see their login number, so checkout has it from the start.
  */
-export function CabinetProfileContacts({ profile }: CabinetProfileContactsProps) {
+export const CabinetProfileContacts = ({ profile }: CabinetProfileContactsProps) => {
   const user = useAuthUser();
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -50,19 +50,19 @@ export function CabinetProfileContacts({ profile }: CabinetProfileContactsProps)
   const phone = profile.phoneNumber ?? user.mobileNumber;
   const info = buildCabinetProfileInfoHelper(profile.fullName, phone, profile.birthday, user.email);
 
-  function handleEdit() {
+  const handleEdit = () => {
     setForm(buildCabinetProfileFormHelper(profile.fullName, phone, profile.birthday));
     setErrors({});
     setIsSaved(false);
     setIsEditing(true);
-  }
+  };
 
-  function handleChange(field: CabinetProfileFormField, value: string | null) {
+  const handleChange = (field: CabinetProfileFormField, value: string | null) => {
     setForm((current) => ({ ...current, [field]: value }));
     setErrors((current) => ({ ...current, [field]: null }));
-  }
+  };
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isSaving) return;
@@ -95,7 +95,7 @@ export function CabinetProfileContacts({ profile }: CabinetProfileContactsProps)
     } finally {
       setIsSaving(false);
     }
-  }
+  };
 
   return (
     <section className="flex flex-col gap-[18px] rounded-2xl bg-background p-[18px] lg:p-6">
@@ -196,4 +196,4 @@ export function CabinetProfileContacts({ profile }: CabinetProfileContactsProps)
       )}
     </section>
   );
-}
+};

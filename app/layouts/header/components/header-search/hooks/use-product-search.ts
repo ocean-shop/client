@@ -13,7 +13,7 @@ import {
  * Suggestions for the term being typed. The debounced term is both the cache key and the
  * request, so the panel never shows results for a term the visitor has moved past.
  */
-export function useProductSearch(searchTerm: string, isEnabled: boolean) {
+export const useProductSearch = (searchTerm: string, isEnabled: boolean) => {
   const debouncedSearchTerm = useDebouncedValue(searchTerm, HEADER_SEARCH_DEBOUNCE_MS);
   const hasSearchableTerm = debouncedSearchTerm.length >= PRODUCT_SEARCH_TERM_MIN_LENGTH;
 
@@ -29,4 +29,4 @@ export function useProductSearch(searchTerm: string, isEnabled: boolean) {
     /** True while waiting out the debounce as well, so stale rows never look settled. */
     isSearching: isEnabled && (isFetching || searchTerm !== debouncedSearchTerm),
   };
-}
+};

@@ -2,10 +2,10 @@ import type { Order } from "@/app/shared/orders/types/orders.types";
 import { CHECKOUT_ORDER_SHORT_ID_LENGTH } from "../constants/checkout.constants";
 import type { CheckoutOrderDraft, CheckoutPlacedOrder } from "../types/checkout.types";
 
-export function buildCheckoutPlacedOrderHelper(
+export const buildCheckoutPlacedOrderHelper = (
   order: Order,
   { contact, delivery, payment, items, totals }: CheckoutOrderDraft
-): CheckoutPlacedOrder {
+): CheckoutPlacedOrder => {
   return {
     id: order.id,
     number: order.orderNumber ?? order.id.slice(0, CHECKOUT_ORDER_SHORT_ID_LENGTH).toUpperCase(),
@@ -16,4 +16,4 @@ export function buildCheckoutPlacedOrderHelper(
     total: totals.total,
     placedAt: order.createdAt,
   };
-}
+};

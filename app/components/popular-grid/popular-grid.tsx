@@ -9,7 +9,7 @@ import { ProductCardCartButton } from "../product-card-cart-button/product-card-
 import { ProductFavoriteButton } from "../product-favorite-button/product-favorite-button";
 import { POPULAR_GRID_TITLE } from "./constants/popular-grid.constants";
 
-export async function PopularGrid() {
+export const PopularGrid = async () => {
   const [categories, products] = await Promise.all([getCatalogCategories(), getPopularProducts()]);
   const popularCategories = filterParentCategoriesHelper(
     categories,
@@ -59,4 +59,4 @@ export async function PopularGrid() {
       </div>
     </section>
   );
-}
+};

@@ -52,7 +52,11 @@ const BREADCRUMB_ITEMS: BreadcrumbItem[] = [
   CHECKOUT_BREADCRUMB_CURRENT_ITEM,
 ];
 
-export function CheckoutView({ initialContact, initialDelivery, isSignedIn }: CheckoutViewProps) {
+export const CheckoutView = ({
+  initialContact,
+  initialDelivery,
+  isSignedIn,
+}: CheckoutViewProps) => {
   const router = useRouter();
   const isHydrated = useIsHydrated();
   const items = useCartItems();
@@ -67,7 +71,7 @@ export function CheckoutView({ initialContact, initialDelivery, isSignedIn }: Ch
   const totals = calculateCheckoutTotalsHelper(cartTotals, delivery, payment);
   const error = validateCheckoutFormHelper(contact, delivery);
 
-  async function placeOrder(draft: CheckoutOrderDraft) {
+  const placeOrder = async (draft: CheckoutOrderDraft) => {
     setIsPlacing(true);
 
     try {
@@ -94,17 +98,17 @@ export function CheckoutView({ initialContact, initialDelivery, isSignedIn }: Ch
       toastStore.error(CHECKOUT_ORDER_ERROR_TOAST_TITLE, DEFAULT_API_ERROR_MESSAGE);
       setIsPlacing(false);
     }
-  }
+  };
 
-  function handlePlace() {
+  const handlePlace = () => {
     setIsSubmitted(true);
 
     if (error || isPlacing) return;
 
     placeOrder({ contact, delivery, payment, items, cartTotals, totals });
-  }
+  };
 
-  function renderContent() {
+  const renderContent = () => {
     // The cart lives in browser storage, which the server render cannot see.
     if (!isHydrated || isPlaced) return <CheckoutSkeleton />;
     if (items.length === 0) return <CheckoutEmpty />;
@@ -131,7 +135,7 @@ export function CheckoutView({ initialContact, initialDelivery, isSignedIn }: Ch
         </div>
       </div>
     );
-  }
+  };
 
   return (
     <div className={CHECKOUT_CONTENT_CLASS_NAME}>
@@ -145,4 +149,4 @@ export function CheckoutView({ initialContact, initialDelivery, isSignedIn }: Ch
       {renderContent()}
     </div>
   );
-}
+};

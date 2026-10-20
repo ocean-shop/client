@@ -6,9 +6,7 @@ import { parseCabinetPageHelper } from "../../helpers/parse-cabinet-page";
 import { CabinetFavorites } from "./components/cabinet-favorites/cabinet-favorites";
 import { FAVORITES_PAGE_SEARCH_PARAM, FAVORITES_PAGE_SIZE } from "./constants/favorites.constants";
 
-export default async function CabinetFavoritesPage({
-  searchParams,
-}: PageProps<"/cabinet/favorites">) {
+const CabinetFavoritesPage = async ({ searchParams }: PageProps<"/cabinet/favorites">) => {
   const user = await requireAuthUser(CABINET_FAVORITES_PATH);
   const page = parseCabinetPageHelper((await searchParams)[FAVORITES_PAGE_SEARCH_PARAM]);
   const response = await getFavoriteProducts(user.id, page, FAVORITES_PAGE_SIZE);
@@ -25,4 +23,6 @@ export default async function CabinetFavoritesPage({
       totalPages={response.totalPages}
     />
   );
-}
+};
+
+export default CabinetFavoritesPage;

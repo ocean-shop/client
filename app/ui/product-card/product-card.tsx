@@ -6,7 +6,7 @@ import {
 } from "./constants/product-card.constants";
 import type { ProductCardProps } from "./types/product-card.types";
 
-export function ProductCard({ product, size = "default", cta, favorite }: ProductCardProps) {
+export const ProductCard = ({ product, size = "default", cta, favorite }: ProductCardProps) => {
   const styles = PRODUCT_CARD_SIZE_STYLES[size];
 
   return (
@@ -66,4 +66,4 @@ export function ProductCard({ product, size = "default", cta, favorite }: Produc
       {cta}
     </div>
   );
-}
+};

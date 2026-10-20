@@ -7,7 +7,10 @@ import { unwrapUkrposhtaEntriesHelper } from "../helpers/unwrap-ukrposhta-entrie
 import type { UkrposhtaEntries } from "../types/delivery.types";
 
 /** The address classifier only answers with the bearer token Ukrposhta issues to the shop. */
-export async function ukrposhtaFetch<T>(path: string, searchParams: URLSearchParams): Promise<T[]> {
+export const ukrposhtaFetch = async <T>(
+  path: string,
+  searchParams: URLSearchParams
+): Promise<T[]> => {
   const token = process.env.UKRPOSHTA_API_TOKEN;
 
   if (!token) throw new ApiError(503);
@@ -22,4 +25,4 @@ export async function ukrposhtaFetch<T>(path: string, searchParams: URLSearchPar
   );
 
   return unwrapUkrposhtaEntriesHelper(response);
-}
+};

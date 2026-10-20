@@ -20,10 +20,10 @@ import { ukrposhtaFetch } from "./ukrposhta-fetch";
  * The classifier has no free-text search over post offices, so the whole city is fetched (and
  * cached) and narrowed down here by index or address.
  */
-export async function getUkrposhtaPostOffices(
+export const getUkrposhtaPostOffices = async (
   city: DeliveryCity,
   searchTerm: string
-): Promise<DeliveryPoint[]> {
+): Promise<DeliveryPoint[]> => {
   const cities = await ukrposhtaFetch<UkrposhtaCity>(
     UKRPOSHTA_CITY_PATH,
     new URLSearchParams({ city_ua: city.name })
@@ -52,4 +52,4 @@ export async function getUkrposhtaPostOffices(
     .sort((first, second) => first.POSTINDEX.localeCompare(second.POSTINDEX))
     .slice(0, DELIVERY_POINTS_LIMIT)
     .map(mapUkrposhtaPostOfficeHelper);
-}
+};

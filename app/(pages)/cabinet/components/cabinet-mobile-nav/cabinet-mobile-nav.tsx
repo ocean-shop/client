@@ -20,7 +20,7 @@ import {
 } from "./constants/cabinet-mobile-nav.constants";
 
 /** Mobile and tablet navigation of the cabinet: the user, a logout button and section tabs. */
-export function CabinetMobileNav() {
+export const CabinetMobileNav = () => {
   const pathname = usePathname();
   const user = getCabinetUserDisplayHelper(useAuthUser());
   const { logout, isPending } = useCabinetLogout();
@@ -69,4 +69,4 @@ export function CabinetMobileNav() {
       </nav>
     </div>
   );
-}
+};

@@ -6,7 +6,7 @@ import { FAQ_LIST_INITIAL_OPEN_INDEX } from "./constants/faq-list.constants";
 import type { FaqListProps } from "./types/faq-list.types";
 
 /** Accordion of questions where one answer is open at a time. */
-export function FaqList({ items }: FaqListProps) {
+export const FaqList = ({ items }: FaqListProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(FAQ_LIST_INITIAL_OPEN_INDEX);
 
   return (
@@ -21,4 +21,4 @@ export function FaqList({ items }: FaqListProps) {
       ))}
     </div>
   );
-}
+};

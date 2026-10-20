@@ -16,7 +16,7 @@ import { formatDatePickerLabelHelper } from "./helpers/format-date-picker-label"
 import type { DatePickerProps } from "./types/date-picker.types";
 
 /** A field-styled button that opens a calendar; the value goes in and out as `YYYY-MM-DD`. */
-export function DatePicker({
+export const DatePicker = ({
   value,
   onChange,
   min,
@@ -28,7 +28,7 @@ export function DatePicker({
   invalid,
   clearable,
   ...ariaProps
-}: DatePickerProps) {
+}: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -44,18 +44,18 @@ export function DatePicker({
   useEffect(() => {
     if (!isOpen) return;
 
-    function handlePointerDown(event: PointerEvent) {
+    const handlePointerDown = (event: PointerEvent) => {
       if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
-    }
+    };
 
-    function handleKeyDown(event: KeyboardEvent) {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== DATE_PICKER_CLOSE_KEY) return;
 
       setIsOpen(false);
       triggerRef.current?.focus();
-    }
+    };
 
     document.addEventListener("pointerdown", handlePointerDown);
     document.addEventListener("keydown", handleKeyDown);
@@ -66,11 +66,11 @@ export function DatePicker({
     };
   }, [isOpen]);
 
-  function handleSelect(nextValue: string | null) {
+  const handleSelect = (nextValue: string | null) => {
     onChange(nextValue);
     setIsOpen(false);
     triggerRef.current?.focus();
-  }
+  };
 
   return (
     <div ref={rootRef} className="relative min-w-0">
@@ -118,4 +118,4 @@ export function DatePicker({
       )}
     </div>
   );
-}
+};

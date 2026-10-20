@@ -1,6 +1,6 @@
 import type { CabinetOrderInfoCardProps } from "./types/cabinet-order-info-card.types";
 
-export function CabinetOrderInfoCard({ icon, label, title, lines }: CabinetOrderInfoCardProps) {
+export const CabinetOrderInfoCard = ({ icon, label, title, lines }: CabinetOrderInfoCardProps) => {
   return (
     <section className="flex min-w-0 flex-col gap-2 rounded-2xl bg-background p-[18px] lg:p-6">
       <h2 className="flex items-center gap-2 text-[12.5px] font-semibold text-accent">
@@ -16,4 +16,4 @@ export function CabinetOrderInfoCard({ icon, label, title, lines }: CabinetOrder
       ))}
     </section>
   );
-}
+};

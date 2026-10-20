@@ -14,13 +14,13 @@ import {
 } from "./constants/nav-drawer.constants";
 import type { NavDrawerProps } from "./types/nav-drawer.types";
 
-export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
+export const NavDrawer = ({ isOpen, onClose }: NavDrawerProps) => {
   const cartQuantity = useCartQuantity();
 
-  function handleCartClick() {
+  const handleCartClick = () => {
     onClose();
     cartStore.open();
-  }
+  };
 
   return (
     <>
@@ -114,4 +114,4 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
       </div>
     </>
   );
-}
+};

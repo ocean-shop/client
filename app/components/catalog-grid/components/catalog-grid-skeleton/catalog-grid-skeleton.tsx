@@ -3,7 +3,7 @@ import { CATALOG_GRID_CLASS_NAME } from "../../constants/catalog-grid.constants"
 import { CATALOG_GRID_SKELETON_LOADING_LABEL } from "./constants/catalog-grid-skeleton.constants";
 import type { CatalogGridSkeletonProps } from "./types/catalog-grid-skeleton.types";
 
-export function CatalogGridSkeleton({ count }: CatalogGridSkeletonProps) {
+export const CatalogGridSkeleton = ({ count }: CatalogGridSkeletonProps) => {
   return (
     <div
       role="status"
@@ -16,4 +16,4 @@ export function CatalogGridSkeleton({ count }: CatalogGridSkeletonProps) {
       ))}
     </div>
   );
-}
+};

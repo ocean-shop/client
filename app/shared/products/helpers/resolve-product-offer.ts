@@ -4,10 +4,10 @@ import type { ProductDetails, ProductOffer } from "../types/products.types";
  * Picks the variation to show — the requested one, otherwise the default, otherwise the first —
  * and falls back to the product itself for products that carry no variations at all.
  */
-export function resolveProductOfferHelper(
+export const resolveProductOfferHelper = (
   product: ProductDetails,
   variationId?: string
-): ProductOffer {
+): ProductOffer => {
   const variation =
     product.variations.find((item) => item.id === variationId) ??
     product.variations.find((item) => item.isDefault) ??
@@ -33,4 +33,4 @@ export function resolveProductOfferHelper(
     // A variation without its own shots reuses the product gallery instead of showing nothing.
     images: variation.images.length > 0 ? variation.images : product.images,
   };
-}
+};

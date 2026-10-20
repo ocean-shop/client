@@ -19,7 +19,7 @@ import {
 
 export const metadata = buildInfoMetadataHelper(INFO_RETURNS_PATH, RETURNS_TITLE, RETURNS_LEAD);
 
-export default function ReturnsPage() {
+const ReturnsPage = () => {
   return (
     <>
       <InfoPageHeader title={RETURNS_TITLE} lead={RETURNS_LEAD} />
@@ -41,4 +41,6 @@ export default function ReturnsPage() {
       </InfoCard>
     </>
   );
-}
+};
+
+export default ReturnsPage;

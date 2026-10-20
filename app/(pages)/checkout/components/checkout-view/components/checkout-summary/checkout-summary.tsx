@@ -15,7 +15,7 @@ import {
 } from "./constants/checkout-summary.constants";
 import type { CheckoutSummaryProps } from "./types/checkout-summary.types";
 
-export function CheckoutSummary({
+export const CheckoutSummary = ({
   items,
   cartTotals,
   totals,
@@ -24,7 +24,7 @@ export function CheckoutSummary({
   isPlacing,
   onPlace,
   onEdit,
-}: CheckoutSummaryProps) {
+}: CheckoutSummaryProps) => {
   return (
     <div className="flex flex-col gap-4 rounded-2xl bg-background p-[18px] lg:p-6">
       <div className="flex items-baseline justify-between">
@@ -99,4 +99,4 @@ export function CheckoutSummary({
       </span>
     </div>
   );
-}
+};

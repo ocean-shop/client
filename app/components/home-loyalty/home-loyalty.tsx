@@ -11,7 +11,7 @@ import {
   HOME_LOYALTY_TITLE,
 } from "./constants/home-loyalty.constants";
 
-export function HomeLoyalty() {
+export const HomeLoyalty = () => {
   return (
     <section className="bg-surface-soft lg:bg-background">
       <div className="mx-auto max-w-page px-4.5 pb-8 pt-6 lg:px-10 lg:pb-[72px] lg:pt-0">
@@ -83,4 +83,4 @@ export function HomeLoyalty() {
       </div>
     </section>
   );
-}
+};

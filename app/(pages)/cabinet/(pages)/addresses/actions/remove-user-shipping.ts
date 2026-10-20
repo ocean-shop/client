@@ -11,9 +11,9 @@ import type { UserShippingActionResult } from "../types/addresses.types";
  * Removes one of the signed-in user's addresses. If it was main, the backend makes the most
  * recent remaining one main, so the refreshed list shows the new badge.
  */
-export async function removeUserShippingAction(
+export const removeUserShippingAction = async (
   shippingId: string
-): Promise<UserShippingActionResult> {
+): Promise<UserShippingActionResult> => {
   const user = await getAuthUser();
 
   if (!user) return { ok: false, status: 401, message: null };
@@ -29,4 +29,4 @@ export async function removeUserShippingAction(
   refresh();
 
   return { ok: true };
-}
+};

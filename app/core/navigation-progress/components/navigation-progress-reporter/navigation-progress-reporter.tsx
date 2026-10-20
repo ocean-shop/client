@@ -6,8 +6,8 @@ import { useReportNavigationPending } from "../../hooks/use-report-navigation-pe
  * Keeps the global progress bar active for as long as it stays mounted. Drop it into a
  * `loading.tsx` so a route waiting on its server data drives the bar like any other transition.
  */
-export function NavigationProgressReporter() {
+export const NavigationProgressReporter = () => {
   useReportNavigationPending(true);
 
   return null;
-}
+};

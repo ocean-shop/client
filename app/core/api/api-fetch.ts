@@ -10,10 +10,10 @@ export class ApiError extends Error {
   }
 }
 
-export async function apiFetch<T>(input: RequestInfo | URL, init?: RequestInit): Promise<T> {
+export const apiFetch = async <T>(input: RequestInfo | URL, init?: RequestInit): Promise<T> => {
   const response = await fetch(input, init);
 
   if (!response.ok) throw new ApiError(response.status);
 
   return response.json() as Promise<T>;
-}
+};

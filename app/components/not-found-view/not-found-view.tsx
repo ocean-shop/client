@@ -7,7 +7,7 @@ import {
   NOT_FOUND_TITLE,
 } from "./constants/not-found-view.constants";
 
-export function NotFoundView() {
+export const NotFoundView = () => {
   return (
     <div className="flex flex-1 items-center justify-center bg-surface-soft px-4 py-14">
       <div className="flex max-w-[480px] flex-col items-center gap-3 rounded-2xl bg-background px-6 py-14 text-center">
@@ -28,4 +28,4 @@ export function NotFoundView() {
       </div>
     </div>
   );
-}
+};

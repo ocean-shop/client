@@ -19,25 +19,25 @@ let state: FavoritesState = FAVORITES_INITIAL_STATE;
 let listeners: FavoritesListener[] = [];
 let loadRequest: Promise<void> | null = null;
 
-function emit() {
+const emit = () => {
   listeners.forEach((listener) => listener());
-}
+};
 
-function setState(nextState: FavoritesState) {
+const setState = (nextState: FavoritesState) => {
   state = nextState;
   emit();
-}
+};
 
-function setFavorite(productId: string, isFavorite: boolean) {
+const setFavorite = (productId: string, isFavorite: boolean) => {
   const ids = new Set(state.ids);
 
   if (isFavorite) ids.add(productId);
   else ids.delete(productId);
 
   setState({ ...state, ids });
-}
+};
 
-function load() {
+const load = () => {
   if (state.status !== "idle") return loadRequest;
 
   setState({ ...state, status: "loading" });
@@ -55,10 +55,10 @@ function load() {
     });
 
   return loadRequest;
-}
+};
 
 /** Flips the heart at once and puts it back if the backend refuses. */
-async function toggle(productId: string): Promise<FavoriteToggleResult> {
+const toggle = async (productId: string): Promise<FavoriteToggleResult> => {
   // A toggle racing the first load would be overwritten by it, so it waits.
   await load();
 
@@ -83,32 +83,32 @@ async function toggle(productId: string): Promise<FavoriteToggleResult> {
     setFavorite(productId, wasFavorite);
     throw error;
   }
-}
+};
 
 /** Forgets the ids after signing in or out, so they are asked for again for the new session. */
-function reset() {
+const reset = () => {
   setState(FAVORITES_INITIAL_STATE);
 
   if (listeners.length > 0) load();
-}
+};
 
-function subscribe(listener: FavoritesListener) {
+const subscribe = (listener: FavoritesListener) => {
   listeners = [...listeners, listener];
   load();
 
   return () => {
     listeners = listeners.filter((existing) => existing !== listener);
   };
-}
+};
 
-function getState() {
+const getState = () => {
   return state;
-}
+};
 
 /** The server never knows the favourites, so every heart starts out empty there. */
-function getServerState() {
+const getServerState = () => {
   return FAVORITES_INITIAL_STATE;
-}
+};
 
 export const favoritesStore = {
   subscribe,

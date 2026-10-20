@@ -16,7 +16,7 @@ import {
 
 export const metadata = buildInfoMetadataHelper(INFO_LOYALTY_PATH, LOYALTY_TITLE, LOYALTY_LEAD);
 
-export default function LoyaltyPage() {
+const LoyaltyPage = () => {
   return (
     <>
       <InfoPageHeader title={LOYALTY_TITLE} lead={LOYALTY_LEAD} />
@@ -30,4 +30,6 @@ export default function LoyaltyPage() {
       <InfoNote text={LOYALTY_NOTE} />
     </>
   );
-}
+};
+
+export default LoyaltyPage;

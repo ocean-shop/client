@@ -1,6 +1,6 @@
 import type { DeliveryPaymentsProps } from "./types/delivery-payments.types";
 
-export function DeliveryPayments({ methods }: DeliveryPaymentsProps) {
+export const DeliveryPayments = ({ methods }: DeliveryPaymentsProps) => {
   return (
     <ul className="grid gap-3 md:grid-cols-2 lg:gap-4">
       {methods.map((method) => (
@@ -16,4 +16,4 @@ export function DeliveryPayments({ methods }: DeliveryPaymentsProps) {
       ))}
     </ul>
   );
-}
+};

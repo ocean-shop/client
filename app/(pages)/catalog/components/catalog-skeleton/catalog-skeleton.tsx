@@ -7,7 +7,7 @@ import {
 } from "../../constants/catalog.constants";
 
 /** Stand-in for the whole catalog page while its products and filters are still on the server. */
-export function CatalogSkeleton() {
+export const CatalogSkeleton = () => {
   return (
     <div className={CATALOG_PAGE_CLASS_NAME}>
       <NavigationProgressReporter />
@@ -35,4 +35,4 @@ export function CatalogSkeleton() {
       </div>
     </div>
   );
-}
+};

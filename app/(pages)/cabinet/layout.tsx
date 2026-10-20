@@ -7,7 +7,7 @@ import { CABINET_PAGE_CLASS_NAME } from "./constants/cabinet.constants";
 
 export const metadata = SEO_NO_INDEX_METADATA;
 
-export default async function CabinetLayout({ children }: LayoutProps<"/cabinet">) {
+const CabinetLayout = async ({ children }: LayoutProps<"/cabinet">) => {
   const user = await requireAuthUser();
 
   return (
@@ -22,4 +22,6 @@ export default async function CabinetLayout({ children }: LayoutProps<"/cabinet"
       </div>
     </AuthUserProvider>
   );
-}
+};
+
+export default CabinetLayout;

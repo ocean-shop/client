@@ -17,11 +17,11 @@ import {
  * Live total for filters the user is still editing. The serialized query is what gets
  * debounced, so the cache key and the request always describe the same selection.
  */
-export function useCatalogProductsCount(
+export const useCatalogProductsCount = (
   source: CatalogProductsSource,
   draftQuery: CatalogProductsQuery,
   isEnabled: boolean
-) {
+) => {
   const searchParams = buildCatalogProductsSearchParamsHelper(draftQuery).toString();
   const debouncedSearchParams = useDebouncedValue(searchParams, CATALOG_PRODUCTS_COUNT_DEBOUNCE_MS);
   const sourceKey = source.kind === "category" ? source.categoryId : source.kind;
@@ -38,4 +38,4 @@ export function useCatalogProductsCount(
     /** True while waiting out the debounce as well, so the number never looks settled early. */
     isCounting: isEnabled && (isFetching || searchParams !== debouncedSearchParams),
   };
-}
+};

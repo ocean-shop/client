@@ -4,22 +4,22 @@ import { Button } from "@/app/ui/button/button";
 import { PAGINATION_VISIBLE_PAGES_COUNT } from "./constants/pagination.constants";
 import type { PaginationProps } from "./types/pagination.types";
 
-export function Pagination({
+export const Pagination = ({
   totalPages,
   currentPage,
   onPageChange,
   isDisabled = false,
-}: PaginationProps) {
+}: PaginationProps) => {
   if (totalPages <= 1) return null;
 
   const activePage = Math.min(Math.max(currentPage, 1), totalPages);
 
-  function goToPage(page: number) {
+  const goToPage = (page: number) => {
     const nextPage = Math.min(Math.max(page, 1), totalPages);
     if (nextPage === activePage) return;
 
     onPageChange(nextPage);
-  }
+  };
 
   const halfWindow = Math.floor(PAGINATION_VISIBLE_PAGES_COUNT / 2);
   const windowStart = Math.min(
@@ -74,4 +74,4 @@ export function Pagination({
       </Button>
     </div>
   );
-}
+};

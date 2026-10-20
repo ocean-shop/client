@@ -14,7 +14,7 @@ import type { ProductSearchResponse } from "../types/products.types";
  * Suggestions for the header search panel. Runs as an action because `API_BASE_URL` is
  * server-only and the panel queries while the visitor is still typing.
  */
-export async function searchProductsAction(searchTerm: string): Promise<ProductSearchResponse> {
+export const searchProductsAction = async (searchTerm: string): Promise<ProductSearchResponse> => {
   const term = searchTerm.trim().slice(0, PRODUCT_SEARCH_TERM_MAX_LENGTH);
 
   if (term.length < PRODUCT_SEARCH_TERM_MIN_LENGTH) return PRODUCT_SEARCH_EMPTY_RESPONSE;
@@ -24,4 +24,4 @@ export async function searchProductsAction(searchTerm: string): Promise<ProductS
   return apiFetch<ProductSearchResponse>(PRODUCT_SEARCH_API_URL(searchParams.toString()), {
     next: { revalidate: 60 },
   });
-}
+};

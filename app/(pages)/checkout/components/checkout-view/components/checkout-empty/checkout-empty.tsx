@@ -7,7 +7,7 @@ import {
   CHECKOUT_EMPTY_TITLE,
 } from "./constants/checkout-empty.constants";
 
-export function CheckoutEmpty() {
+export const CheckoutEmpty = () => {
   return (
     <div className="flex flex-col items-center gap-3 rounded-2xl bg-background px-6 py-14 text-center">
       <span className="font-symbols text-[40px] text-muted-light">{CHECKOUT_EMPTY_ICON}</span>
@@ -24,4 +24,4 @@ export function CheckoutEmpty() {
       </Link>
     </div>
   );
-}
+};

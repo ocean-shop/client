@@ -1,6 +1,6 @@
 import type { InfoPageHeaderProps } from "./types/info-page-header.types";
 
-export function InfoPageHeader({ title, lead, meta }: InfoPageHeaderProps) {
+export const InfoPageHeader = ({ title, lead, meta }: InfoPageHeaderProps) => {
   return (
     <div className="flex flex-col gap-2">
       <h1 className="text-pretty font-heading text-[21px] font-semibold leading-[1.2] tracking-[-.025em] text-foreground lg:text-[28px]">
@@ -14,4 +14,4 @@ export function InfoPageHeader({ title, lead, meta }: InfoPageHeaderProps) {
       {meta && <div className="text-[13.5px] text-muted-light">{meta}</div>}
     </div>
   );
-}
+};

@@ -15,7 +15,7 @@ import {
 import { useDeliveryCities } from "./hooks/use-delivery-cities";
 import type { DeliveryCitySelectProps } from "./types/delivery-city-select.types";
 
-export function DeliveryCitySelect({ city, onChange }: DeliveryCitySelectProps) {
+export const DeliveryCitySelect = ({ city, onChange }: DeliveryCitySelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const selectRef = useRef<HTMLDivElement>(null);
@@ -33,15 +33,15 @@ export function DeliveryCitySelect({ city, onChange }: DeliveryCitySelectProps) 
   useEffect(() => {
     if (!isOpen) return;
 
-    function handlePointerDown(event: PointerEvent) {
+    const handlePointerDown = (event: PointerEvent) => {
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
-    }
+    };
 
-    function handleKeyDown(event: KeyboardEvent) {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === DELIVERY_CITY_SELECT_CLOSE_KEY) setIsOpen(false);
-    }
+    };
 
     document.addEventListener("pointerdown", handlePointerDown);
     document.addEventListener("keydown", handleKeyDown);
@@ -52,11 +52,11 @@ export function DeliveryCitySelect({ city, onChange }: DeliveryCitySelectProps) 
     };
   }, [isOpen]);
 
-  function handleSelect(nextCity: DeliveryCity) {
+  const handleSelect = (nextCity: DeliveryCity) => {
     setIsOpen(false);
     setSearchTerm("");
     if (nextCity.id !== city.id) onChange(nextCity);
-  }
+  };
 
   return (
     <div className="flex flex-col gap-1.5">
@@ -118,4 +118,4 @@ export function DeliveryCitySelect({ city, onChange }: DeliveryCitySelectProps) 
       </div>
     </div>
   );
-}
+};

@@ -5,7 +5,7 @@ import {
   SITE_URL,
 } from "./shared/seo/constants/seo.constants";
 
-export default function robots(): MetadataRoute.Robots {
+const robots = (): MetadataRoute.Robots => {
   return {
     rules: {
       userAgent: "*",
@@ -14,4 +14,6 @@ export default function robots(): MetadataRoute.Robots {
     },
     sitemap: new URL(SEO_SITEMAP_PATH, SITE_URL).toString(),
   };
-}
+};
+
+export default robots;

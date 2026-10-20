@@ -10,7 +10,7 @@ import { buildCabinetOverviewStatsHelper } from "./helpers/build-cabinet-overvie
 import type { CabinetOverviewProps } from "./types/cabinet-overview.types";
 
 /** The cabinet's landing page: the order on its way, shortcuts to each section, recent favourites. */
-export function CabinetOverview({ overview }: CabinetOverviewProps) {
+export const CabinetOverview = ({ overview }: CabinetOverviewProps) => {
   const stats = buildCabinetOverviewStatsHelper(overview);
 
   return (
@@ -35,4 +35,4 @@ export function CabinetOverview({ overview }: CabinetOverviewProps) {
       {overview.favorites.length > 0 && <CabinetRecentFavorites products={overview.favorites} />}
     </div>
   );
-}
+};

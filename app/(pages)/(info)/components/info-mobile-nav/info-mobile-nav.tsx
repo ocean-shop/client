@@ -13,7 +13,7 @@ import {
 const menuItems = INFO_MENU_GROUPS.flatMap((group) => group.items);
 
 /** Mobile and tablet navigation between the info pages: a sticky row of chips. */
-export function InfoMobileNav() {
+export const InfoMobileNav = () => {
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
 
@@ -52,4 +52,4 @@ export function InfoMobileNav() {
       })}
     </nav>
   );
-}
+};

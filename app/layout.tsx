@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary", title: SITE_NAME, description: SITE_DESCRIPTION },
 };
 
-export default async function RootLayout({ children }: LayoutProps<"/">) {
+const RootLayout = async ({ children }: LayoutProps<"/">) => {
   const categoryTree = await getCatalogCategoryTreeHelper();
 
   return (
@@ -73,4 +73,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

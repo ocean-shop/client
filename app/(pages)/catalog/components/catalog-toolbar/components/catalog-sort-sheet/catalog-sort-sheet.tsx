@@ -5,13 +5,13 @@ import {
 } from "./constants/catalog-sort-sheet.constants";
 import type { CatalogSortSheetProps } from "./types/catalog-sort-sheet.types";
 
-export function CatalogSortSheet({
+export const CatalogSortSheet = ({
   isOpen,
   onClose,
   options,
   selectedId,
   onSelect,
-}: CatalogSortSheetProps) {
+}: CatalogSortSheetProps) => {
   return (
     <>
       <div
@@ -69,4 +69,4 @@ export function CatalogSortSheet({
       </div>
     </>
   );
-}
+};

@@ -12,9 +12,9 @@ import type { CatalogProductsQuery, ProductSearchListResponse } from "../types/p
  * The response carries the filters and the categories the term can be narrowed by, so the
  * filter panel needs no request of its own.
  */
-export async function getCatalogProductsBySearch(
+export const getCatalogProductsBySearch = async (
   query: CatalogProductsQuery
-): Promise<ProductSearchListResponse> {
+): Promise<ProductSearchListResponse> => {
   const searchParams = buildCatalogProductsSearchParamsHelper(query);
   searchParams.set(CATALOG_PRODUCTS_QUERY_PARAM.page, String(query.page));
   searchParams.set(CATALOG_PRODUCTS_QUERY_PARAM.limit, String(CATALOG_PRODUCTS_PAGE_SIZE));
@@ -37,4 +37,4 @@ export async function getCatalogProductsBySearch(
   } catch {
     return CATALOG_PRODUCTS_SEARCH_EMPTY_RESPONSE;
   }
-}
+};

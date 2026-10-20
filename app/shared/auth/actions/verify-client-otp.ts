@@ -15,9 +15,9 @@ import type {
  * The backend's own `refresh_token` cookie is ignored: it is set on the API's domain and would
  * never reach the browser through this server-to-server call.
  */
-export async function verifyClientOtpAction(
+export const verifyClientOtpAction = async (
   body: VerifyClientOtpRequest
-): Promise<VerifyClientOtpResult> {
+): Promise<VerifyClientOtpResult> => {
   const userAgent = (await headers()).get("user-agent");
 
   const response = await fetch(`${AUTH_CLIENT_API_URL}/verify-otp`, {
@@ -36,4 +36,4 @@ export async function verifyClientOtpAction(
   setAuthSessionCookies(await cookies(), tokens);
 
   return { ok: true, user };
-}
+};

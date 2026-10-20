@@ -9,9 +9,9 @@ import type {
 } from "../types/cabinet-profile-contacts.types";
 
 /** Every field that still needs attention, or `null` when the form can be saved. The phone is optional. */
-export function validateCabinetProfileFormHelper(
+export const validateCabinetProfileFormHelper = (
   form: CabinetProfileForm
-): CabinetProfileFormErrors | null {
+): CabinetProfileFormErrors | null => {
   const errors: CabinetProfileFormErrors = {};
   const phone = form.phone.replace(CABINET_PROFILE_CONTACTS_PHONE_SEPARATORS_PATTERN, "");
 
@@ -26,4 +26,4 @@ export function validateCabinetProfileFormHelper(
   }
 
   return Object.keys(errors).length > 0 ? errors : null;
-}
+};

@@ -1,12 +1,12 @@
 import type { CatalogCategory, CatalogCategoryTree } from "../types/catalog-categories.types";
 
-export function buildCatalogCategoryTreeHelper(
+export const buildCatalogCategoryTreeHelper = (
   categories: CatalogCategory[]
-): CatalogCategoryTree[] {
+): CatalogCategoryTree[] => {
   return categories
     .filter((category) => !category.parentId)
     .map((category) => ({
       ...category,
       subs: categories.filter((sub) => sub.parentId === category.id),
     }));
-}
+};

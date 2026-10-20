@@ -37,7 +37,11 @@ import type {
  * locker come straight from the carrier, a courier address is typed in. The very first address is
  * always main, so the checkbox only shows once there is another one to replace.
  */
-export function CabinetAddressForm({ canChooseMain, onCancel, onSaved }: CabinetAddressFormProps) {
+export const CabinetAddressForm = ({
+  canChooseMain,
+  onCancel,
+  onSaved,
+}: CabinetAddressFormProps) => {
   const [delivery, setDelivery] = useState<CheckoutDelivery>(CHECKOUT_DEFAULT_DELIVERY);
   const [isMain, setIsMain] = useState(false);
   const [errors, setErrors] = useState<CabinetAddressFormErrors>({});
@@ -46,26 +50,26 @@ export function CabinetAddressForm({ canChooseMain, onCancel, onSaved }: Cabinet
   const isCourier = delivery.method === "courier";
 
   // A chosen branch belongs to one city, carrier and method, so changing any of them clears it.
-  function handleTypeChange({ carrier, method }: CabinetAddressType) {
+  const handleTypeChange = ({ carrier, method }: CabinetAddressType) => {
     setDelivery((current) => ({ ...current, carrier, method, point: null }));
     setErrors({});
-  }
+  };
 
-  function handleCityChange(city: DeliveryCity) {
+  const handleCityChange = (city: DeliveryCity) => {
     setDelivery((current) => ({ ...current, city, point: null }));
-  }
+  };
 
-  function handlePointChange(point: DeliveryPoint) {
+  const handlePointChange = (point: DeliveryPoint) => {
     setDelivery((current) => ({ ...current, point }));
     setErrors((current) => ({ ...current, point: null }));
-  }
+  };
 
-  function handleStreetChange(street: string) {
+  const handleStreetChange = (street: string) => {
     setDelivery((current) => ({ ...current, street }));
     setErrors((current) => ({ ...current, street: null }));
-  }
+  };
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isSaving) return;
@@ -98,7 +102,7 @@ export function CabinetAddressForm({ canChooseMain, onCancel, onSaved }: Cabinet
     } finally {
       setIsSaving(false);
     }
-  }
+  };
 
   return (
     <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-[18px]">
@@ -195,4 +199,4 @@ export function CabinetAddressForm({ canChooseMain, onCancel, onSaved }: Cabinet
       </div>
     </form>
   );
-}
+};

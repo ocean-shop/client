@@ -11,7 +11,7 @@ import { getAuthUser } from "./get-auth-user";
  * from protected paths; this is the check next to the data, which every protected page should
  * make itself, because layouts are not re-rendered on client-side navigation.
  */
-export async function requireAuthUser(redirectTo = AUTH_CABINET_PAGE_PATH) {
+export const requireAuthUser = async (redirectTo = AUTH_CABINET_PAGE_PATH) => {
   const user = await getAuthUser();
 
   if (!user) {
@@ -19,4 +19,4 @@ export async function requireAuthUser(redirectTo = AUTH_CABINET_PAGE_PATH) {
   }
 
   return user;
-}
+};

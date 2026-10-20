@@ -10,13 +10,13 @@ import type { CabinetProfileBirthdayFieldProps } from "./types/cabinet-profile-b
  * calendar back to the trigger. It only renders in edit mode, so reading today here can't cause a
  * hydration mismatch.
  */
-export function CabinetProfileBirthdayField({
+export const CabinetProfileBirthdayField = ({
   label,
   value,
   min,
   onChange,
   disabled,
-}: CabinetProfileBirthdayFieldProps) {
+}: CabinetProfileBirthdayFieldProps) => {
   const labelId = useId();
   const pickerId = useId();
 
@@ -39,4 +39,4 @@ export function CabinetProfileBirthdayField({
       />
     </div>
   );
-}
+};

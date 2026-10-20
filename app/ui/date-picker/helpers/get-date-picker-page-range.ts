@@ -4,10 +4,10 @@ import { getDatePickerDaysInMonthHelper } from "./get-date-picker-days-in-month"
 import { toDatePickerValueHelper } from "./to-date-picker-value";
 
 /** The first and last date the given view shows: one month, one year, or a page of years. */
-export function getDatePickerPageRangeHelper(
+export const getDatePickerPageRangeHelper = (
   view: DatePickerView,
   { year, month }: DatePickerCursor
-): [string, string] {
+): [string, string] => {
   if (view === "days") {
     return [
       toDatePickerValueHelper(year, month, 1),
@@ -22,4 +22,4 @@ export function getDatePickerPageRangeHelper(
   const lastYear = view === "years" ? firstYear + DATE_PICKER_YEARS_PER_PAGE - 1 : year;
 
   return [toDatePickerValueHelper(firstYear, 0, 1), toDatePickerValueHelper(lastYear, 11, 31)];
-}
+};

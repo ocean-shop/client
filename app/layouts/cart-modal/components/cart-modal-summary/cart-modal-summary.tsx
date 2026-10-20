@@ -13,13 +13,13 @@ import {
 } from "./constants/cart-modal-summary.constants";
 import type { CartModalSummaryProps } from "./types/cart-modal-summary.types";
 
-export function CartModalSummary({ totals, onClose }: CartModalSummaryProps) {
+export const CartModalSummary = ({ totals, onClose }: CartModalSummaryProps) => {
   const router = useRouter();
 
-  function handleCheckout() {
+  const handleCheckout = () => {
     onClose();
     router.push(CHECKOUT_PAGE_PATH);
-  }
+  };
 
   return (
     <div className="flex flex-col gap-2.5 border-t border-border-soft bg-surface-soft px-4.5 pb-[22px] pt-3.5 lg:gap-3 lg:px-6 lg:pb-6 lg:pt-[18px]">
@@ -72,4 +72,4 @@ export function CartModalSummary({ totals, onClose }: CartModalSummaryProps) {
       </div>
     </div>
   );
-}
+};

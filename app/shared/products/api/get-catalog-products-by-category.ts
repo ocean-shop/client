@@ -7,10 +7,10 @@ import {
 import { buildCatalogProductsSearchParamsHelper } from "../helpers/build-catalog-products-search-params";
 import type { CatalogProductsQuery, ProductListResponse } from "../types/products.types";
 
-export async function getCatalogProductsByCategory(
+export const getCatalogProductsByCategory = async (
   categoryId: string,
   query: CatalogProductsQuery
-): Promise<ProductListResponse> {
+): Promise<ProductListResponse> => {
   const searchParams = buildCatalogProductsSearchParamsHelper(query);
   searchParams.set(CATALOG_PRODUCTS_QUERY_PARAM.page, String(query.page));
   searchParams.set(CATALOG_PRODUCTS_QUERY_PARAM.limit, String(CATALOG_PRODUCTS_PAGE_SIZE));
@@ -27,4 +27,4 @@ export async function getCatalogProductsByCategory(
   } catch {
     return CATALOG_PRODUCTS_EMPTY_RESPONSE;
   }
-}
+};

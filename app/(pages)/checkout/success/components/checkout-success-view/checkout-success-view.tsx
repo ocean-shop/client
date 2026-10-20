@@ -28,12 +28,12 @@ import {
 } from "./constants/checkout-success-view.constants";
 import type { CheckoutSuccessViewProps } from "./types/checkout-success-view.types";
 
-export function CheckoutSuccessView({ isSignedIn }: CheckoutSuccessViewProps) {
+export const CheckoutSuccessView = ({ isSignedIn }: CheckoutSuccessViewProps) => {
   const isHydrated = useIsHydrated();
   // The placed order lives in browser storage, which the server render cannot see.
   const order = isHydrated ? readCheckoutPlacedOrderHelper() : null;
 
-  function renderContent() {
+  const renderContent = () => {
     if (!isHydrated) return <CheckoutSuccessSkeleton />;
     if (!order) return <CheckoutSuccessMissing />;
 
@@ -111,11 +111,11 @@ export function CheckoutSuccessView({ isSignedIn }: CheckoutSuccessViewProps) {
         </div>
       </>
     );
-  }
+  };
 
   return (
     <div className="px-4 pb-14 pt-7 lg:px-10 lg:pb-[72px] lg:pt-14">
       <div className={CHECKOUT_SUCCESS_CONTENT_CLASS_NAME}>{renderContent()}</div>
     </div>
   );
-}
+};

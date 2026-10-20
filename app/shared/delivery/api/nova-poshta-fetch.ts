@@ -7,18 +7,18 @@ import {
 } from "../constants/delivery.constants";
 import type { NovaPoshtaResponse } from "../types/delivery.types";
 
-function wait(ms: number) {
+const wait = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
+};
 
 /**
  * Nova Poshta reports failures inside a 200 response, so `success` is checked here. A throttled
  * call is retried once, since typing in the city and branch fields easily trips its rate limit.
  */
-export async function novaPoshtaFetch<T>(
+export const novaPoshtaFetch = async <T>(
   calledMethod: string,
   methodProperties: Record<string, string>
-): Promise<T[]> {
+): Promise<T[]> => {
   const apiKey = process.env.NOVA_POSHTA_API_KEY;
 
   if (!apiKey) throw new ApiError(503);
@@ -40,4 +40,4 @@ export async function novaPoshtaFetch<T>(
 
     await wait(NOVA_POSHTA_RETRY_DELAY_MS);
   }
-}
+};

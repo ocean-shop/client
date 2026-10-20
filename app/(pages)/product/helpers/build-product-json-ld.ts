@@ -16,7 +16,7 @@ import type { JsonLdData } from "@/app/shared/seo/types/seo.types";
  * stock under the result. The variation picker is client state, so the default variation stands
  * for the product here.
  */
-export function buildProductJsonLdHelper(product: ProductDetails): JsonLdData {
+export const buildProductJsonLdHelper = (product: ProductDetails): JsonLdData => {
   const offer = resolveProductOfferHelper(product);
   const url = new URL(buildProductHrefHelper(product.slug), SITE_URL).toString();
 
@@ -38,4 +38,4 @@ export function buildProductJsonLdHelper(product: ProductDetails): JsonLdData {
       availability: offer.available ? SCHEMA_ORG_IN_STOCK : SCHEMA_ORG_OUT_OF_STOCK,
     },
   };
-}
+};

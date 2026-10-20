@@ -15,7 +15,7 @@ import {
 
 export const metadata = buildInfoMetadataHelper(INFO_ABOUT_PATH, ABOUT_TITLE, ABOUT_LEAD);
 
-export default function AboutPage() {
+const AboutPage = () => {
   return (
     <>
       <InfoPageHeader title={ABOUT_TITLE} lead={ABOUT_LEAD} />
@@ -32,4 +32,6 @@ export default function AboutPage() {
       </InfoCard>
     </>
   );
-}
+};
+
+export default AboutPage;

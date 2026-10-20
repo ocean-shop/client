@@ -1,6 +1,6 @@
 import type { TermsSectionsProps } from "./types/terms-sections.types";
 
-export function TermsSections({ sections }: TermsSectionsProps) {
+export const TermsSections = ({ sections }: TermsSectionsProps) => {
   return (
     <div className="flex flex-col gap-[18px] rounded-2xl bg-background p-[18px] lg:gap-6 lg:px-8 lg:py-7">
       {sections.map((section) => (
@@ -17,4 +17,4 @@ export function TermsSections({ sections }: TermsSectionsProps) {
       ))}
     </div>
   );
-}
+};

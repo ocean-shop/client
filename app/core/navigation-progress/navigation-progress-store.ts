@@ -8,36 +8,36 @@ import type { NavigationProgressListener } from "./types/navigation-progress.typ
 let pendingCount = 0;
 let listeners: NavigationProgressListener[] = [];
 
-function emit() {
+const emit = () => {
   listeners.forEach((listener) => listener(pendingCount));
-}
+};
 
-function start() {
+const start = () => {
   pendingCount += 1;
   emit();
-}
+};
 
-function end() {
+const end = () => {
   pendingCount = Math.max(0, pendingCount - 1);
   emit();
-}
+};
 
-function subscribe(listener: NavigationProgressListener) {
+const subscribe = (listener: NavigationProgressListener) => {
   listeners = [...listeners, listener];
 
   return () => {
     listeners = listeners.filter((existing) => existing !== listener);
   };
-}
+};
 
-function getSnapshot() {
+const getSnapshot = () => {
   return pendingCount;
-}
+};
 
 /** Nothing is pending while rendering on the server. */
-function getServerSnapshot() {
+const getServerSnapshot = () => {
   return 0;
-}
+};
 
 export const navigationProgressStore = {
   subscribe,

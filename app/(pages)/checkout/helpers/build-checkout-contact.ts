@@ -4,10 +4,10 @@ import { CHECKOUT_EMPTY_CONTACT } from "../constants/checkout.constants";
 import type { CheckoutContact } from "../types/checkout.types";
 
 /** The profile's phone wins over the one the user signed in with, since the user typed it in. */
-export function buildCheckoutContactHelper(
+export const buildCheckoutContactHelper = (
   user: AuthUser | null,
   profile: UserProfile | null
-): CheckoutContact {
+): CheckoutContact => {
   if (!user) return CHECKOUT_EMPTY_CONTACT;
 
   return {
@@ -15,4 +15,4 @@ export function buildCheckoutContactHelper(
     email: user.email ?? "",
     phone: profile?.phoneNumber ?? user.mobileNumber ?? "",
   };
-}
+};

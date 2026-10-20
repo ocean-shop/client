@@ -5,7 +5,7 @@ import { AUTH_API_URL, AUTH_REFRESH_TOKEN_COOKIE } from "../constants/auth.const
 import { clearAuthSessionCookies } from "../helpers/auth-session-cookies";
 
 /** Ends the backend session and drops the token cookies even if the backend call fails. */
-export async function logoutAction() {
+export const logoutAction = async () => {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get(AUTH_REFRESH_TOKEN_COOKIE)?.value;
 
@@ -22,4 +22,4 @@ export async function logoutAction() {
   }
 
   clearAuthSessionCookies(cookieStore);
-}
+};

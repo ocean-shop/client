@@ -1,5 +1,7 @@
 import { CatalogSkeleton } from "../components/catalog-skeleton/catalog-skeleton";
 
-export default function CatalogSearchLoading() {
+const CatalogSearchLoading = () => {
   return <CatalogSkeleton />;
-}
+};
+
+export default CatalogSearchLoading;

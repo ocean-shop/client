@@ -27,7 +27,7 @@ import { LOGIN_IDENTIFIER_STEP_ERROR } from "./components/login-identifier-step/
 import { LOGIN_VIEW_CARD_CLASS_NAME } from "./constants/login-view.constants";
 import type { LoginViewProps } from "./types/login-view.types";
 
-export function LoginView({ redirectTo }: LoginViewProps) {
+export const LoginView = ({ redirectTo }: LoginViewProps) => {
   const router = useRouter();
   const [step, setStep] = useState<LoginStep>("identifier");
   const [identifier, setIdentifier] = useState("");
@@ -48,15 +48,15 @@ export function LoginView({ redirectTo }: LoginViewProps) {
     return () => clearTimeout(timeout);
   }, [step, secondsLeft]);
 
-  function startCodeStep() {
+  const startCodeStep = () => {
     setCode("");
     setCodeStatus("idle");
     setAttemptsLeft(LOGIN_CODE_MAX_ATTEMPTS);
     setSecondsLeft(LOGIN_RESEND_DELAY_SECONDS);
-  }
+  };
 
   /** Resolves to whether the code was sent; failures are reported with a toast. */
-  async function requestOtp(login: string) {
+  const requestOtp = async (login: string) => {
     setIsRequesting(true);
 
     try {
@@ -77,14 +77,14 @@ export function LoginView({ redirectTo }: LoginViewProps) {
     } finally {
       setIsRequesting(false);
     }
-  }
+  };
 
-  function handleIdentifierChange(value: string) {
+  const handleIdentifierChange = (value: string) => {
     setIdentifier(value);
     setIdentifierError(null);
-  }
+  };
 
-  async function handleIdentifierSubmit() {
+  const handleIdentifierSubmit = async () => {
     if (isRequesting) return;
 
     const kind = getLoginIdentifierKindHelper(identifier);
@@ -102,21 +102,21 @@ export function LoginView({ redirectTo }: LoginViewProps) {
     setIdentifierKind(kind);
     startCodeStep();
     setStep("code");
-  }
+  };
 
-  async function handleResend() {
+  const handleResend = async () => {
     if (isRequesting) return;
 
     if (await requestOtp(identifier)) startCodeStep();
-  }
+  };
 
-  function handleCodeChange(value: string) {
+  const handleCodeChange = (value: string) => {
     setCode(value);
     if (codeStatus === "invalid") setCodeStatus("idle");
-  }
+  };
 
   /** A mistyped code is shown inline; expired, blocked and other failures go to a toast. */
-  async function handleCodeConfirm() {
+  const handleCodeConfirm = async () => {
     if (code.length < LOGIN_CODE_LENGTH || codeStatus !== "idle" || isVerifying) return;
 
     setIsVerifying(true);
@@ -147,7 +147,7 @@ export function LoginView({ redirectTo }: LoginViewProps) {
     } finally {
       setIsVerifying(false);
     }
-  }
+  };
 
   return (
     <div className={LOGIN_VIEW_CARD_CLASS_NAME}>
@@ -177,4 +177,4 @@ export function LoginView({ redirectTo }: LoginViewProps) {
       )}
     </div>
   );
-}
+};

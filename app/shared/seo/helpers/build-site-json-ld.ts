@@ -15,7 +15,7 @@ import type { JsonLdData } from "../types/seo.types";
  * Who runs the store and how to search it, rendered once by the root layout. The `SearchAction`
  * lets Google show a search box for the site right in its results.
  */
-export function buildSiteJsonLdHelper(): JsonLdData {
+export const buildSiteJsonLdHelper = (): JsonLdData => {
   const searchUrl = new URL(CATALOG_SEARCH_PAGE_PATH, SITE_URL);
   const organizationId = `${SITE_URL}/#organization`;
 
@@ -45,4 +45,4 @@ export function buildSiteJsonLdHelper(): JsonLdData {
       },
     ],
   };
-}
+};

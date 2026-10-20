@@ -18,7 +18,7 @@ import { useProductSearch } from "./hooks/use-product-search";
 import type { HeaderSearchProps } from "./types/header-search.types";
 
 /** Header search field with its suggestions panel; submitting opens the full results listing. */
-export function HeaderSearch({ variant }: HeaderSearchProps) {
+export const HeaderSearch = ({ variant }: HeaderSearchProps) => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [isDismissed, setIsDismissed] = useState(false);
@@ -33,11 +33,11 @@ export function HeaderSearch({ variant }: HeaderSearchProps) {
   useEffect(() => {
     if (!isPanelOpen) return;
 
-    function handlePointerDown(event: PointerEvent) {
+    const handlePointerDown = (event: PointerEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setIsDismissed(true);
       }
-    }
+    };
 
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
@@ -47,18 +47,18 @@ export function HeaderSearch({ variant }: HeaderSearchProps) {
    * Leaving the header for a listing or a product empties the field: the destination page
    * quotes the term back itself, and an emptied field also closes the panel.
    */
-  function clearSearchTerm() {
+  const clearSearchTerm = () => {
     setSearchTerm("");
-  }
+  };
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!hasSearchableTerm) return;
 
     clearSearchTerm();
     router.push(buildCatalogSearchHrefHelper(trimmedSearchTerm));
-  }
+  };
 
   return (
     <form
@@ -105,4 +105,4 @@ export function HeaderSearch({ variant }: HeaderSearchProps) {
       )}
     </form>
   );
-}
+};

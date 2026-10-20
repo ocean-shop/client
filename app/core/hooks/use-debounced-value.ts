@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 /** Returns `value` only after it has stayed unchanged for `delayMs`. */
-export function useDebouncedValue<T>(value: T, delayMs: number) {
+export const useDebouncedValue = <T>(value: T, delayMs: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
@@ -13,4 +13,4 @@ export function useDebouncedValue<T>(value: T, delayMs: number) {
   }, [value, delayMs]);
 
   return debouncedValue;
-}
+};

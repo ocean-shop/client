@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: CHECKOUT_SUCCESS_METADATA_TITLE,
 };
 
-export default async function CheckoutSuccessPage() {
+const CheckoutSuccessPage = async () => {
   const user = await getAuthUser();
 
   return (
@@ -20,4 +20,6 @@ export default async function CheckoutSuccessPage() {
       <CheckoutSuccessView isSignedIn={Boolean(user)} />
     </div>
   );
-}
+};
+
+export default CheckoutSuccessPage;

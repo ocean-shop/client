@@ -18,7 +18,7 @@ import {
 import type { CabinetOrderDetailsProps } from "./types/cabinet-order-details.types";
 
 /** Everything about one order: its progress, lines, delivery, recipient, payment and totals. */
-export function CabinetOrderDetails({ order, onBack, onRepeat }: CabinetOrderDetailsProps) {
+export const CabinetOrderDetails = ({ order, onBack, onRepeat }: CabinetOrderDetailsProps) => {
   const { recipient } = order;
 
   return (
@@ -81,4 +81,4 @@ export function CabinetOrderDetails({ order, onBack, onRepeat }: CabinetOrderDet
       <CabinetOrderSummary order={order} onRepeat={onRepeat} />
     </div>
   );
-}
+};

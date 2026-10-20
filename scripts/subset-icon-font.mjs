@@ -15,13 +15,13 @@ const USER_AGENT =
 const TOKEN_PATTERN =
   /["'`]([a-z][a-z0-9_]*)["'`]|>\s*([a-z][a-z0-9_]*)\s*<|^\s*([a-z][a-z0-9_]*)\s*$/gm;
 
-async function fetchOk(url) {
+const fetchOk = async (url) => {
   const response = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
 
   if (!response.ok) throw new Error(`${response.status} ${response.statusText}: ${url}`);
 
   return response;
-}
+};
 
 const iconNames = new Set(
   (await (await fetchOk(CODEPOINTS_URL)).text())

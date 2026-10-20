@@ -9,9 +9,9 @@ import type { CatalogCategoryRow } from "../types/catalog-category-filter.types"
  * Only the categories holding a match are listed, so a child whose parent did not match
  * starts a tree of its own instead of being hidden with it.
  */
-export function buildCatalogCategoryRowsHelper(
+export const buildCatalogCategoryRowsHelper = (
   categories: CatalogCategoryOption[]
-): CatalogCategoryRow[] {
+): CatalogCategoryRow[] => {
   const listedIds = new Set(categories.map((category) => category.id));
   const childrenByParentKey = new Map<string, CatalogCategoryOption[]>();
 
@@ -27,7 +27,7 @@ export function buildCatalogCategoryRowsHelper(
   const rows: CatalogCategoryRow[] = [];
   const placedIds = new Set<string>();
 
-  function collectRows(parentKey: string, depth: number) {
+  const collectRows = (parentKey: string, depth: number) => {
     for (const category of childrenByParentKey.get(parentKey) ?? []) {
       /** A category that is its own ancestor would otherwise recurse forever. */
       if (placedIds.has(category.id)) continue;
@@ -36,7 +36,7 @@ export function buildCatalogCategoryRowsHelper(
       rows.push({ id: category.id, label: category.name, depth });
       collectRows(category.id, depth + 1);
     }
-  }
+  };
 
   collectRows(CATALOG_CATEGORY_FILTER_ROOT_KEY, 0);
 
@@ -48,4 +48,4 @@ export function buildCatalogCategoryRowsHelper(
   }
 
   return rows;
-}
+};

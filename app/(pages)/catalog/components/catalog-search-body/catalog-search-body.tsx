@@ -17,7 +17,7 @@ import {
 import type { CatalogSearchBodyProps } from "./types/catalog-search-body.types";
 
 /** The category listing's counterpart for a search term: same grid, sorting and pagination. */
-export function CatalogSearchBody({ query, searchTerm, productList }: CatalogSearchBodyProps) {
+export const CatalogSearchBody = ({ query, searchTerm, productList }: CatalogSearchBodyProps) => {
   const breadcrumbItems = [
     CATALOG_HOME_BREADCRUMB_ITEM,
     { label: CATALOG_SEARCH_BODY_BREADCRUMB_LABEL },
@@ -57,4 +57,4 @@ export function CatalogSearchBody({ query, searchTerm, productList }: CatalogSea
       <CatalogPagination query={query} totalPages={productList.totalPages} />
     </div>
   );
-}
+};
