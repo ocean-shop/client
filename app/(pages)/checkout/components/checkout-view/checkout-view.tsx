@@ -17,9 +17,7 @@ import { createOrderAction } from "@/app/shared/orders/actions/create-order";
 import { Breadcrumb } from "@/app/ui/breadcrumb/breadcrumb";
 import type { BreadcrumbItem } from "@/app/ui/breadcrumb/types/breadcrumb.types";
 import {
-  CHECKOUT_DEFAULT_DELIVERY,
   CHECKOUT_DEFAULT_PAYMENT,
-  CHECKOUT_EMPTY_CONTACT,
   CHECKOUT_ORDER_ERROR_TOAST_TITLE,
   CHECKOUT_PLACED_ORDER_STORAGE_KEY,
   CHECKOUT_SUCCESS_PAGE_PATH,
@@ -45,6 +43,7 @@ import {
   CHECKOUT_SUMMARY_STICKY_CLASS_NAME,
   CHECKOUT_TITLE,
 } from "./constants/checkout-view.constants";
+import type { CheckoutViewProps } from "./types/checkout-view.types";
 
 /** The cart has no page of its own, so its breadcrumb step opens the cart modal instead. */
 const BREADCRUMB_ITEMS: BreadcrumbItem[] = [
@@ -53,12 +52,12 @@ const BREADCRUMB_ITEMS: BreadcrumbItem[] = [
   CHECKOUT_BREADCRUMB_CURRENT_ITEM,
 ];
 
-export function CheckoutView() {
+export function CheckoutView({ initialContact, initialDelivery, isSignedIn }: CheckoutViewProps) {
   const router = useRouter();
   const isHydrated = useIsHydrated();
   const items = useCartItems();
-  const [contact, setContact] = useState(CHECKOUT_EMPTY_CONTACT);
-  const [delivery, setDelivery] = useState(CHECKOUT_DEFAULT_DELIVERY);
+  const [contact, setContact] = useState(initialContact);
+  const [delivery, setDelivery] = useState(initialDelivery);
   const [payment, setPayment] = useState(CHECKOUT_DEFAULT_PAYMENT);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isPlacing, setIsPlacing] = useState(false);
@@ -113,7 +112,7 @@ export function CheckoutView() {
     return (
       <div className={CHECKOUT_GRID_CLASS_NAME}>
         <div className="flex flex-col gap-3.5 lg:gap-4">
-          <CheckoutContact contact={contact} onChange={setContact} />
+          <CheckoutContact contact={contact} isSignedIn={isSignedIn} onChange={setContact} />
           <CheckoutDelivery delivery={delivery} onChange={setDelivery} />
           <CheckoutPayment payment={payment} onChange={setPayment} />
         </div>

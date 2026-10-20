@@ -1,3 +1,4 @@
+import { DELIVERY_ENABLED_CARRIERS } from "@/app/shared/delivery/constants/delivery.constants";
 import type { CabinetAddressType } from "../types/cabinet-address-form.types";
 
 export const CABINET_ADDRESS_FORM_TYPES_LABEL = "Спосіб доставки";
@@ -36,6 +37,10 @@ export const CABINET_ADDRESS_FORM_TYPES: CabinetAddressType[] = [
     note: "2–5 днів",
   },
 ];
+
+export const CABINET_ADDRESS_FORM_AVAILABLE_TYPES = CABINET_ADDRESS_FORM_TYPES.filter(
+  ({ carrier }) => DELIVERY_ENABLED_CARRIERS[carrier]
+);
 
 export const CABINET_ADDRESS_FORM_COURIER_FIELDS = {
   street: {

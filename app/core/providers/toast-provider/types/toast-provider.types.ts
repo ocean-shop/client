@@ -5,7 +5,7 @@ export type ToastItem = {
   variant: ToastVariant;
   title: string;
   message: string;
-  action?: ToastAction;
+  actions?: ToastAction[];
 };
 
 export type ToastListener = (toasts: ToastItem[]) => void;

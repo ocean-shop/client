@@ -3,6 +3,8 @@ import type { LoginIdentifierKind } from "../types/login.types";
 export const LOGIN_PAGE_CLASS_NAME =
   "flex flex-1 flex-col bg-surface-soft px-4 pb-8 pt-7 lg:items-center lg:px-10 lg:pb-[88px] lg:pt-[72px]";
 
+export const LOGIN_METADATA_TITLE = "Вхід";
+
 export const LOGIN_CODE_LENGTH = 4;
 /** Mirrors the backend, which blocks the code after five wrong attempts. */
 export const LOGIN_CODE_MAX_ATTEMPTS = 5;

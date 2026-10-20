@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { useIsHydrated } from "@/app/core/hooks/use-is-hydrated";
-import { toastStore } from "@/app/core/providers/toast-provider/toast-store";
+import { CABINET_ORDERS_PATH } from "@/app/(pages)/cabinet/constants/cabinet.constants";
 import { CHECKOUT_PAYMENTS } from "@/app/(pages)/checkout/constants/checkout.constants";
 import { formatCheckoutDeliveryAddressHelper } from "@/app/(pages)/checkout/helpers/format-checkout-delivery-address";
 import { formatCheckoutDeliveryEstimateHelper } from "@/app/(pages)/checkout/helpers/format-checkout-delivery-estimate";
 import { readCheckoutPlacedOrderHelper } from "@/app/(pages)/checkout/helpers/read-checkout-placed-order";
 import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-product-price";
-import { Button } from "@/app/ui/button/button";
 import { CheckoutSuccessInfo } from "./components/checkout-success-info/checkout-success-info";
 import { CheckoutSuccessItem } from "./components/checkout-success-item/checkout-success-item";
 import { CheckoutSuccessMissing } from "./components/checkout-success-missing/checkout-success-missing";
@@ -22,19 +21,14 @@ import {
   CHECKOUT_SUCCESS_ESTIMATE,
   CHECKOUT_SUCCESS_NUMBER_LABEL,
   CHECKOUT_SUCCESS_ORDERS_LABEL,
-  CHECKOUT_SUCCESS_ORDERS_TOAST_MESSAGE,
-  CHECKOUT_SUCCESS_ORDERS_TOAST_TITLE,
   CHECKOUT_SUCCESS_PAYMENT,
   CHECKOUT_SUCCESS_PAYMENT_STATUS,
   CHECKOUT_SUCCESS_TITLE,
   CHECKOUT_SUCCESS_TOTAL_LABEL,
 } from "./constants/checkout-success-view.constants";
+import type { CheckoutSuccessViewProps } from "./types/checkout-success-view.types";
 
-function showOrdersSoon() {
-  toastStore.success(CHECKOUT_SUCCESS_ORDERS_TOAST_TITLE, CHECKOUT_SUCCESS_ORDERS_TOAST_MESSAGE);
-}
-
-export function CheckoutSuccessView() {
+export function CheckoutSuccessView({ isSignedIn }: CheckoutSuccessViewProps) {
   const isHydrated = useIsHydrated();
   // The placed order lives in browser storage, which the server render cannot see.
   const order = isHydrated ? readCheckoutPlacedOrderHelper() : null;
@@ -106,14 +100,14 @@ export function CheckoutSuccessView() {
           >
             {CHECKOUT_SUCCESS_CONTINUE_LABEL}
           </Link>
-          <Button
-            variant="outline"
-            size="auto"
-            onClick={showOrdersSoon}
-            className="h-[52px] rounded-xl px-6 text-[15px]"
-          >
-            {CHECKOUT_SUCCESS_ORDERS_LABEL}
-          </Button>
+          {isSignedIn && (
+            <Link
+              href={CABINET_ORDERS_PATH}
+              className="inline-flex h-[52px] items-center justify-center rounded-xl border border-footer-border bg-background px-6 text-[15px] font-semibold text-foreground transition-colors hover:border-accent"
+            >
+              {CHECKOUT_SUCCESS_ORDERS_LABEL}
+            </Link>
+          )}
         </div>
       </>
     );

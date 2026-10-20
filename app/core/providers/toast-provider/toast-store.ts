@@ -9,10 +9,10 @@ function emit() {
   listeners.forEach((listener) => listener(toasts));
 }
 
-function show(variant: ToastVariant, title: string, message: string, action?: ToastAction) {
+function show(variant: ToastVariant, title: string, message: string, actions?: ToastAction[]) {
   const id = crypto.randomUUID();
 
-  toasts = [...toasts, { id, variant, title, message, action }];
+  toasts = [...toasts, { id, variant, title, message, actions }];
   emit();
 
   setTimeout(() => dismiss(id), TOAST_AUTO_DISMISS_MS);
@@ -41,8 +41,8 @@ export const toastStore = {
   subscribe,
   getSnapshot,
   dismiss,
-  error: (title: string, message: string, action?: ToastAction) =>
-    show("error", title, message, action),
-  success: (title: string, message: string, action?: ToastAction) =>
-    show("success", title, message, action),
+  error: (title: string, message: string, actions?: ToastAction[]) =>
+    show("error", title, message, actions),
+  success: (title: string, message: string, actions?: ToastAction[]) =>
+    show("success", title, message, actions),
 };

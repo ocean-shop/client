@@ -15,13 +15,13 @@ import { getCabinetAddressErrorMessageHelper } from "../../helpers/get-cabinet-a
 import { CabinetAddressField } from "./components/cabinet-address-field/cabinet-address-field";
 import { CabinetAddressTypeOption } from "./components/cabinet-address-type-option/cabinet-address-type-option";
 import {
+  CABINET_ADDRESS_FORM_AVAILABLE_TYPES,
   CABINET_ADDRESS_FORM_CANCEL_LABEL,
   CABINET_ADDRESS_FORM_COURIER_FIELDS,
   CABINET_ADDRESS_FORM_MAIN_LABEL,
   CABINET_ADDRESS_FORM_SAVE_ERROR_TOAST_TITLE,
   CABINET_ADDRESS_FORM_SAVE_LABEL,
   CABINET_ADDRESS_FORM_STREET_MAX_LENGTH,
-  CABINET_ADDRESS_FORM_TYPES,
   CABINET_ADDRESS_FORM_TYPES_LABEL,
 } from "./constants/cabinet-address-form.constants";
 import { buildCabinetAddressRequestHelper } from "./helpers/build-cabinet-address-request";
@@ -109,9 +109,11 @@ export function CabinetAddressForm({ canChooseMain, onCancel, onSaved }: Cabinet
         <div
           role="radiogroup"
           aria-label={CABINET_ADDRESS_FORM_TYPES_LABEL}
-          className="grid grid-cols-2 gap-2 lg:grid-cols-4"
+          className={`grid grid-cols-2 gap-2 ${
+            CABINET_ADDRESS_FORM_AVAILABLE_TYPES.length % 2 ? "lg:grid-cols-3" : "lg:grid-cols-4"
+          }`}
         >
-          {CABINET_ADDRESS_FORM_TYPES.map((option) => (
+          {CABINET_ADDRESS_FORM_AVAILABLE_TYPES.map((option) => (
             <CabinetAddressTypeOption
               key={`${option.carrier}-${option.method}`}
               option={option}

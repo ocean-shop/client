@@ -1,4 +1,4 @@
-import { CHECKOUT_CARRIERS } from "@/app/(pages)/checkout/constants/checkout.constants";
+import { CHECKOUT_AVAILABLE_CARRIERS } from "@/app/(pages)/checkout/constants/checkout.constants";
 import { getCheckoutCarrierHelper } from "@/app/(pages)/checkout/helpers/get-checkout-carrier";
 import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-product-price";
 import type {
@@ -54,7 +54,7 @@ export function CheckoutDelivery({ delivery, onChange }: CheckoutDeliveryProps) 
         aria-label={CHECKOUT_DELIVERY_CARRIERS_LABEL}
         className="grid grid-cols-2 gap-3"
       >
-        {CHECKOUT_CARRIERS.map((option) => (
+        {CHECKOUT_AVAILABLE_CARRIERS.map((option) => (
           <CheckoutOption
             key={option.id}
             isSelected={option.id === delivery.carrier}

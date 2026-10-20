@@ -1,4 +1,7 @@
-import { DELIVERY_POPULAR_CITIES } from "@/app/shared/delivery/constants/delivery.constants";
+import {
+  DELIVERY_ENABLED_CARRIERS,
+  DELIVERY_POPULAR_CITIES,
+} from "@/app/shared/delivery/constants/delivery.constants";
 import type { OrderPaymentMethod } from "@/app/shared/orders/types/orders.types";
 import type {
   CheckoutCarrierOption,
@@ -9,6 +12,9 @@ import type {
 } from "../types/checkout.types";
 
 export const CHECKOUT_PAGE_CLASS_NAME = "flex-1 bg-surface-soft";
+
+export const CHECKOUT_METADATA_TITLE = "Оформлення замовлення";
+export const CHECKOUT_SUCCESS_METADATA_TITLE = "Замовлення прийнято";
 
 export const CHECKOUT_EMPTY_CONTACT: CheckoutContact = { name: "", email: "", phone: "" };
 
@@ -21,7 +27,7 @@ export const CHECKOUT_DEFAULT_DELIVERY: CheckoutDelivery = {
   apartment: "",
 };
 
-export const CHECKOUT_DEFAULT_PAYMENT: CheckoutPaymentMethod = "card";
+export const CHECKOUT_DEFAULT_PAYMENT: CheckoutPaymentMethod = "wallet";
 
 /**
  * The shop's own delivery tariffs. Real carrier quotes need the sender's city and parcel size,
@@ -53,26 +59,17 @@ export const CHECKOUT_CARRIERS: CheckoutCarrierOption[] = [
   },
 ];
 
+/** Carriers offered for new orders; past orders keep their carrier's label from the full list. */
+export const CHECKOUT_AVAILABLE_CARRIERS = CHECKOUT_CARRIERS.filter(
+  ({ id }) => DELIVERY_ENABLED_CARRIERS[id]
+);
+
 export const CHECKOUT_PAYMENTS: CheckoutPaymentOption[] = [
-  {
-    id: "card",
-    label: "Карткою онлайн",
-    note: "Visa, Mastercard",
-    badge: "credit_card",
-    badgeType: "icon",
-  },
   {
     id: "wallet",
     label: "Apple Pay / Google Pay",
     note: "Швидка оплата з телефону",
     badge: "Pay",
-    badgeType: "text",
-  },
-  {
-    id: "installments",
-    label: "Оплата частинами",
-    note: "До 4 платежів без переплат",
-    badge: "0%",
     badgeType: "text",
   },
   {
@@ -82,17 +79,9 @@ export const CHECKOUT_PAYMENTS: CheckoutPaymentOption[] = [
     badge: "payments",
     badgeType: "icon",
   },
-  {
-    id: "invoice",
-    label: "Рахунок для юросіб",
-    note: "Безготівкова оплата з ПДВ",
-    badge: "receipt_long",
-    badgeType: "icon",
-  },
 ];
 
 export const CHECKOUT_COD_PAYMENT: CheckoutPaymentMethod = "cod";
-export const CHECKOUT_CARD_PAYMENT: CheckoutPaymentMethod = "card";
 
 /** Order of the checks matches the order of the form, so the hint points at the first gap. */
 export const CHECKOUT_VALIDATION_MESSAGES = {
@@ -112,12 +101,9 @@ export const CHECKOUT_NAME_MIN_WORDS = 2;
 export const CHECKOUT_SUCCESS_PAGE_PATH = "/checkout/success";
 export const CHECKOUT_PLACED_ORDER_STORAGE_KEY = "ocean-shop:placed-order";
 
-/** The backend takes cards and cash on delivery only; every other way to pay is settled online. */
+/** The backend takes cards and cash on delivery only; wallet payments are settled as card. */
 export const CHECKOUT_ORDER_PAYMENT_METHODS: Record<CheckoutPaymentMethod, OrderPaymentMethod> = {
-  card: "card",
   wallet: "card",
-  installments: "card",
-  invoice: "card",
   cod: "cod",
 };
 
@@ -129,6 +115,9 @@ export const CHECKOUT_ORDER_EMAIL_MAX_LENGTH = 255;
 export const CHECKOUT_ORDER_SHIPPING_MAX_LENGTH = 255;
 export const CHECKOUT_ORDER_SHIPPING_SEPARATOR = ": ";
 export const CHECKOUT_DELIVERY_TITLE_SEPARATOR = " · ";
+export const CHECKOUT_DELIVERY_ADDRESS_SEPARATOR = ", ";
+/** A branch's number, e.g. "1414" in "Поштомат №1414" or the index in "Відділення 79000". */
+export const CHECKOUT_DELIVERY_POINT_NUMBER_PATTERN = /\d+/;
 export const CHECKOUT_DELIVERY_DATE_FORMATTER = new Intl.DateTimeFormat("uk-UA", {
   day: "numeric",
   month: "long",

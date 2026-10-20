@@ -1,6 +1,7 @@
 import { InfoCard } from "../components/info-card/info-card";
 import { InfoPageHeader } from "../components/info-page-header/info-page-header";
 import { buildInfoMetadataHelper } from "../helpers/build-info-metadata";
+import { INFO_ABOUT_PATH } from "../constants/info.constants";
 import { AboutStats } from "./components/about-stats/about-stats";
 import { AboutValues } from "./components/about-values/about-values";
 import {
@@ -12,7 +13,7 @@ import {
   ABOUT_VALUES_TITLE,
 } from "./constants/about.constants";
 
-export const metadata = buildInfoMetadataHelper(ABOUT_TITLE, ABOUT_LEAD);
+export const metadata = buildInfoMetadataHelper(INFO_ABOUT_PATH, ABOUT_TITLE, ABOUT_LEAD);
 
 export default function AboutPage() {
   return (

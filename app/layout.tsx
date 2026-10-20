@@ -7,6 +7,15 @@ import { LazyCartModal } from "./layouts/lazy-cart-modal/lazy-cart-modal";
 import { QueryProvider } from "./core/providers/query-provider/query-provider";
 import { ToastProvider } from "./core/providers/toast-provider/toast-provider";
 import { getCatalogCategoryTreeHelper } from "./shared/catalog-categories/helpers/get-catalog-category-tree";
+import {
+  SEO_DEFAULT_OPEN_GRAPH,
+  SEO_TITLE_TEMPLATE,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+} from "./shared/seo/constants/seo.constants";
+import { buildSiteJsonLdHelper } from "./shared/seo/helpers/build-site-json-ld";
+import { JsonLd } from "./ui/json-ld/json-ld";
 import "./globals.css";
 
 // Subset to the icons used in the app — regenerate with `npm run icons:subset` after adding one.
@@ -33,9 +42,12 @@ const unbounded = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Ocean Shop",
-  description:
-    "Ocean Shop — інтернет-магазин смартфонів, планшетів, ноутбуків та аксесуарів з доставкою по Україні.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_NAME, template: SEO_TITLE_TEMPLATE },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  openGraph: SEO_DEFAULT_OPEN_GRAPH,
+  twitter: { card: "summary", title: SITE_NAME, description: SITE_DESCRIPTION },
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
@@ -47,6 +59,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${unbounded.variable} ${materialSymbolsOutlined.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col pb-[78px] lg:pb-0">
+        <JsonLd data={buildSiteJsonLdHelper()} />
         <ToastProvider>
           <QueryProvider>
             <Header />

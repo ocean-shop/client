@@ -34,6 +34,14 @@ export const PRODUCT_SEARCH_API_URL = (searchParams: string) =>
 export const PRODUCT_BY_ID_API_URL = (productId: string) =>
   `${process.env.API_BASE_URL}/catalog/products-client/${productId}?${withShopId()}`;
 
+export const PRODUCT_BY_SLUG_API_URL = (slug: string) =>
+  `${process.env.API_BASE_URL}/catalog/products-client/by-slug/${encodeURIComponent(slug)}?${withShopId()}`;
+
+export const PRODUCT_SITEMAP_API_URL = `${process.env.API_BASE_URL}/catalog/products-client/sitemap?${withShopId()}`;
+
+/** Links from before slugs carried the product id; the product page redirects those. */
+export const PRODUCT_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export const CATALOG_FILTERS_BY_CATEGORY_API_URL = (categoryId: string) =>
   `${process.env.API_BASE_URL}/catalog/products-client/filters/by-category/${categoryId}?${withShopId()}`;
 

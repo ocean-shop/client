@@ -9,6 +9,7 @@ function isCartItem(value: unknown): value is CartItem {
   return (
     typeof item.id === "string" &&
     typeof item.productId === "string" &&
+    (item.productSlug === undefined || typeof item.productSlug === "string") &&
     typeof item.name === "string" &&
     typeof item.price === "string" &&
     Number.isInteger(item.quantity) &&

@@ -44,5 +44,3 @@ export const INFO_MENU_GROUPS: InfoMenuGroup[] = [
     ],
   },
 ];
-
-export const INFO_METADATA_TITLE_SUFFIX = " | Ocean Shop";

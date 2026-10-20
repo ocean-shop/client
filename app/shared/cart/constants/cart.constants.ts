@@ -14,6 +14,7 @@ export const CART_ADDED_TOAST_TITLE = "Додано в кошик";
 export const CART_ADDED_TOAST_MESSAGE = (productName: string, quantity: number) =>
   `${productName} — ${quantity} шт.`;
 export const CART_ADDED_TOAST_ACTION_LABEL = "Перейти в кошик";
+export const CART_ADDED_TOAST_CHECKOUT_LABEL = "Оформити замовлення";
 
 export const CART_ADD_ERROR_TOAST_TITLE = "Не вдалося додати в кошик";
 export const CART_ADD_ERROR_TOAST_MESSAGE = "Спробуйте ще раз трохи пізніше.";

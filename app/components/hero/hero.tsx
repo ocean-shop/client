@@ -58,7 +58,7 @@ export async function Hero() {
             {mainBannerProduct && (
               <div className="flex pt-2">
                 <Link
-                  href={buildProductHrefHelper(mainBannerProduct.id)}
+                  href={buildProductHrefHelper(mainBannerProduct.slug)}
                   className="inline-flex h-[50px] items-center justify-center gap-2 rounded-[10px] bg-accent px-[26px] text-[15px] font-semibold text-white transition-colors hover:bg-accent-dark"
                 >
                   {HERO_CTA_LABEL}

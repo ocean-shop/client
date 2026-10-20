@@ -3,6 +3,7 @@ import { InfoFeatureList } from "../components/info-feature-list/info-feature-li
 import { InfoNote } from "../components/info-note/info-note";
 import { InfoPageHeader } from "../components/info-page-header/info-page-header";
 import { buildInfoMetadataHelper } from "../helpers/build-info-metadata";
+import { INFO_LOYALTY_PATH } from "../constants/info.constants";
 import { LoyaltyTiers } from "./components/loyalty-tiers/loyalty-tiers";
 import {
   LOYALTY_EARN_TITLE,
@@ -13,7 +14,7 @@ import {
   LOYALTY_TITLE,
 } from "./constants/loyalty.constants";
 
-export const metadata = buildInfoMetadataHelper(LOYALTY_TITLE, LOYALTY_LEAD);
+export const metadata = buildInfoMetadataHelper(INFO_LOYALTY_PATH, LOYALTY_TITLE, LOYALTY_LEAD);
 
 export default function LoyaltyPage() {
   return (

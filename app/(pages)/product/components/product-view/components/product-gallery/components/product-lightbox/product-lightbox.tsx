@@ -86,7 +86,7 @@ export function ProductLightbox({
       <div onClick={onClose} className="relative flex-1 cursor-zoom-out">
         <Image
           src={activeImage.url}
-          alt={name}
+          alt={activeImage.alt || name}
           fill
           sizes="100vw"
           preload

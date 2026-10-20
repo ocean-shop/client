@@ -43,13 +43,15 @@ export function ProductFavoriteButton({
   const styles = PRODUCT_FAVORITE_BUTTON_STYLES[variant];
 
   function notifyAdded() {
-    const toastId = toastStore.success(FAVORITES_ADDED_TOAST_TITLE, productName, {
-      label: FAVORITES_ADDED_TOAST_ACTION_LABEL,
-      onClick: () => {
-        toastStore.dismiss(toastId);
-        router.push(CABINET_FAVORITES_PATH);
+    const toastId = toastStore.success(FAVORITES_ADDED_TOAST_TITLE, productName, [
+      {
+        label: FAVORITES_ADDED_TOAST_ACTION_LABEL,
+        onClick: () => {
+          toastStore.dismiss(toastId);
+          router.push(CABINET_FAVORITES_PATH);
+        },
       },
-    });
+    ]);
   }
 
   async function toggle() {

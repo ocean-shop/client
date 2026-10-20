@@ -1,5 +1,7 @@
 import { CatalogGrid } from "@/app/components/catalog-grid/catalog-grid";
 import { Breadcrumb } from "@/app/ui/breadcrumb/breadcrumb";
+import { JsonLd } from "@/app/ui/json-ld/json-ld";
+import { buildBreadcrumbJsonLdHelper } from "@/app/shared/seo/helpers/build-breadcrumb-json-ld";
 import { getCatalogCategories } from "@/app/shared/catalog-categories/api/get-catalog-categories";
 import { getCatalogCategoryAncestorsHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-ancestors";
 import { countCatalogActiveFiltersHelper } from "@/app/shared/products/helpers/count-catalog-active-filters";
@@ -30,6 +32,7 @@ export async function CatalogBody({ category, query, productList }: CatalogBodyP
     <div className="flex flex-col">
       <div className="flex items-end justify-between gap-6 pb-5">
         <div className="flex flex-col gap-2">
+          <JsonLd data={buildBreadcrumbJsonLdHelper(breadcrumbItems)} />
           <Breadcrumb items={breadcrumbItems} />
 
           <div className="flex items-baseline gap-3">

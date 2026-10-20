@@ -1,6 +1,10 @@
+import type { SeoFields } from "@/app/shared/seo/types/seo.types";
+
 export type ProductImage = {
   id: string;
   url: string;
+  /** Set in the admin; the product name stands in when it is empty. */
+  alt: string | null;
 };
 
 export type ProductTag = {
@@ -10,6 +14,7 @@ export type ProductTag = {
 
 export type Product = {
   id: string;
+  slug: string;
   name: string;
   sku: string | null;
   price: string;
@@ -30,12 +35,13 @@ export type ProductVariation = {
 };
 
 /** A single product as returned by the product endpoint, with its relations loaded. */
-export type ProductDetails = Product & {
-  description: string | null;
-  available: boolean;
-  tags: ProductTag[];
-  variations: ProductVariation[];
-};
+export type ProductDetails = Product &
+  SeoFields & {
+    description: string | null;
+    available: boolean;
+    tags: ProductTag[];
+    variations: ProductVariation[];
+  };
 
 /**
  * Price, stock and photos the product page currently shows: they come from the selected
@@ -110,9 +116,16 @@ export type ProductSearchListResponse = ProductListResponse & {
 
 export type CatalogProductsSearchParams = Record<string, string | string[] | undefined>;
 
+/** One product URL of the sitemap; `updatedAt` arrives as an ISO string. */
+export type ProductSitemapEntry = {
+  slug: string;
+  updatedAt: string;
+};
+
 /** A suggestion row in the header search panel: one image and one price, nothing else. */
 export type ProductSearchItem = {
   id: string;
+  slug: string;
   name: string;
   price: string;
   oldPrice: string | null;

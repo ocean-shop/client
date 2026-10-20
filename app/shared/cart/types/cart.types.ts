@@ -6,6 +6,8 @@ export type CartItem = {
   /** The offer id: the variation's for a variable product, the product's own otherwise. */
   id: string;
   productId: string;
+  /** Missing on lines saved before slugs; their links fall back to the id, which redirects. */
+  productSlug?: string;
   name: string;
   /** Title of the chosen variation; `null` for a product without variations. */
   variationLabel: string | null;

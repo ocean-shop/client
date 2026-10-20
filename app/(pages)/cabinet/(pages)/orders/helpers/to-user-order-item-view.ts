@@ -20,7 +20,7 @@ export function toUserOrderItemViewHelper(
     name: item.product?.name ?? product?.name ?? "",
     sku: item.product?.sku ?? null,
     image: offer?.images[0]?.url ?? null,
-    href: product ? buildProductHrefHelper(product.id) : null,
+    href: product ? buildProductHrefHelper(product.slug) : null,
     quantity: item.quantity,
     unitPrice,
     sum: unitPrice * item.quantity,

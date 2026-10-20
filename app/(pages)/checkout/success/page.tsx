@@ -1,10 +1,23 @@
-import { CHECKOUT_PAGE_CLASS_NAME } from "../constants/checkout.constants";
+import type { Metadata } from "next";
+import { getAuthUser } from "@/app/shared/auth/helpers/get-auth-user";
+import { SEO_NO_INDEX_METADATA } from "@/app/shared/seo/constants/seo.constants";
+import {
+  CHECKOUT_PAGE_CLASS_NAME,
+  CHECKOUT_SUCCESS_METADATA_TITLE,
+} from "../constants/checkout.constants";
 import { CheckoutSuccessView } from "./components/checkout-success-view/checkout-success-view";
 
-export default function CheckoutSuccessPage() {
+export const metadata: Metadata = {
+  ...SEO_NO_INDEX_METADATA,
+  title: CHECKOUT_SUCCESS_METADATA_TITLE,
+};
+
+export default async function CheckoutSuccessPage() {
+  const user = await getAuthUser();
+
   return (
     <div className={CHECKOUT_PAGE_CLASS_NAME}>
-      <CheckoutSuccessView />
+      <CheckoutSuccessView isSignedIn={Boolean(user)} />
     </div>
   );
 }

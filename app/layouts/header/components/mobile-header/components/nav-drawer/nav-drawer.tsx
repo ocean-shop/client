@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CABINET_FAVORITES_PATH } from "@/app/(pages)/cabinet/constants/cabinet.constants";
 import { cartStore } from "@/app/shared/cart/cart-store";
 import { useCartQuantity } from "@/app/shared/cart/hooks/use-cart-quantity";
 import { Button } from "@/app/ui/button/button";
@@ -71,10 +72,14 @@ export function NavDrawer({ isOpen, onClose }: NavDrawerProps) {
               )}
             </div>
             <div className="h-px bg-border-soft" />
-            <div className="flex cursor-pointer items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground hover:bg-surface">
+            <Link
+              href={CABINET_FAVORITES_PATH}
+              onClick={onClose}
+              className="flex items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground hover:bg-surface"
+            >
               <span className="font-symbols text-[21px] text-accent">favorite</span>
               {NAV_DRAWER_FAVORITES_LABEL}
-            </div>
+            </Link>
           </div>
 
           {NAV_DRAWER_GROUPS.map((group) => (

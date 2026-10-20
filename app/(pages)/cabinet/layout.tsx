@@ -1,8 +1,11 @@
 import { AuthUserProvider } from "@/app/core/providers/auth-user-provider/auth-user-provider";
+import { SEO_NO_INDEX_METADATA } from "@/app/shared/seo/constants/seo.constants";
 import { requireAuthUser } from "@/app/shared/auth/helpers/require-auth-user";
 import { CabinetMobileNav } from "./components/cabinet-mobile-nav/cabinet-mobile-nav";
 import { CabinetSidebar } from "./components/cabinet-sidebar/cabinet-sidebar";
 import { CABINET_PAGE_CLASS_NAME } from "./constants/cabinet.constants";
+
+export const metadata = SEO_NO_INDEX_METADATA;
 
 export default async function CabinetLayout({ children }: LayoutProps<"/cabinet">) {
   const user = await requireAuthUser();

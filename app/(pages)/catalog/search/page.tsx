@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { SEO_NO_INDEX_METADATA } from "@/app/shared/seo/constants/seo.constants";
 import { getCatalogProductsBySearch } from "@/app/shared/products/api/get-catalog-products-by-search";
 import { parseCatalogProductsQueryHelper } from "@/app/shared/products/helpers/parse-catalog-products-query";
 import { HEADER_HOME_HREF } from "@/app/layouts/header/constants/header.constants";
@@ -9,7 +11,13 @@ import { CatalogToolbar } from "../components/catalog-toolbar/catalog-toolbar";
 import {
   CATALOG_CONTENT_CLASS_NAME,
   CATALOG_PAGE_CLASS_NAME,
+  CATALOG_SEARCH_METADATA_TITLE,
 } from "../constants/catalog.constants";
+
+export const metadata: Metadata = {
+  ...SEO_NO_INDEX_METADATA,
+  title: CATALOG_SEARCH_METADATA_TITLE,
+};
 
 export default async function CatalogSearchPage({ searchParams }: PageProps<"/catalog/search">) {
   const resolvedSearchParams = await searchParams;

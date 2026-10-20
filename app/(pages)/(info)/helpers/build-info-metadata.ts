@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
-import { INFO_METADATA_TITLE_SUFFIX } from "../constants/info.constants";
+import { buildSeoMetadataHelper } from "@/app/shared/seo/helpers/build-seo-metadata";
 
-export function buildInfoMetadataHelper(title: string, description?: string): Metadata {
-  return { title: `${title}${INFO_METADATA_TITLE_SUFFIX}`, description };
+export function buildInfoMetadataHelper(
+  path: string,
+  title: string,
+  description?: string
+): Metadata {
+  return buildSeoMetadataHelper({ title, description, path });
 }
