@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getAuthUser } from "@/app/shared/auth/helpers/get-auth-user";
 import { SEO_NO_INDEX_METADATA } from "@/app/shared/seo/constants/seo.constants";
 import {
   CHECKOUT_PAGE_CLASS_NAME,
@@ -11,10 +12,12 @@ export const metadata: Metadata = {
   title: CHECKOUT_SUCCESS_METADATA_TITLE,
 };
 
-export default function CheckoutSuccessPage() {
+export default async function CheckoutSuccessPage() {
+  const user = await getAuthUser();
+
   return (
     <div className={CHECKOUT_PAGE_CLASS_NAME}>
-      <CheckoutSuccessView />
+      <CheckoutSuccessView isSignedIn={Boolean(user)} />
     </div>
   );
 }

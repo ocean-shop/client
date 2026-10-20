@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { CABINET_FAVORITES_PATH } from "@/app/(pages)/cabinet/constants/cabinet.constants";
 import {
   AUTH_CABINET_PAGE_PATH,
   AUTH_LOGIN_PAGE_PATH,
@@ -29,14 +30,17 @@ export function BottomTabBar({ categories }: BottomTabBarProps) {
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const isCartOpen = useCartOpen();
   const cartQuantity = useCartQuantity();
+  const isFavoritesPage = pathname.startsWith(CABINET_FAVORITES_PATH);
   const isAccountPage =
-    pathname === AUTH_LOGIN_PAGE_PATH ||
-    pathname === AUTH_CABINET_PAGE_PATH ||
-    pathname.startsWith(`${AUTH_CABINET_PAGE_PATH}/`);
+    !isFavoritesPage &&
+    (pathname === AUTH_LOGIN_PAGE_PATH ||
+      pathname === AUTH_CABINET_PAGE_PATH ||
+      pathname.startsWith(`${AUTH_CABINET_PAGE_PATH}/`));
 
   function getItemClickHandler(id: string) {
     if (id === "catalog") return () => setIsCatalogOpen(true);
     if (id === "cart") return cartStore.open;
+    if (id === "favorites") return () => router.push(CABINET_FAVORITES_PATH);
     if (id === "account") return () => router.push(AUTH_CABINET_PAGE_PATH);
 
     return undefined;
@@ -48,6 +52,7 @@ export function BottomTabBar({ categories }: BottomTabBarProps) {
         {BOTTOM_TAB_BAR_ITEMS.map((item) => {
           const isCatalog = item.id === "catalog";
           const isCart = item.id === "cart";
+          const isFavorites = item.id === "favorites";
           const isAccount = item.id === "account";
           const badge = isCart ? cartQuantity : 0;
 
@@ -61,6 +66,7 @@ export function BottomTabBar({ categories }: BottomTabBarProps) {
                 item.active ||
                 (isCatalog && isCatalogOpen) ||
                 (isCart && isCartOpen) ||
+                (isFavorites && isFavoritesPage) ||
                 (isAccount && isAccountPage)
                   ? "text-accent"
                   : "text-muted-light"

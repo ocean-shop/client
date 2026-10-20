@@ -30,8 +30,3 @@ export const CHECKOUT_SUCCESS_TOTAL_LABEL = "Разом";
 export const CHECKOUT_SUCCESS_CONTINUE_LABEL = "Продовжити покупки";
 export const CHECKOUT_SUCCESS_CONTINUE_HREF = "/";
 export const CHECKOUT_SUCCESS_ORDERS_LABEL = "Мої замовлення";
-
-/** Accounts do not exist yet, so the button says so instead of opening an empty page. */
-export const CHECKOUT_SUCCESS_ORDERS_TOAST_TITLE = "Скоро";
-export const CHECKOUT_SUCCESS_ORDERS_TOAST_MESSAGE =
-  "Історія замовлень буде доступна в особистому кабінеті найближчим часом.";

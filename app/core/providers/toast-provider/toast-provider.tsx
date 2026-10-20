@@ -22,7 +22,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               variant={toast.variant}
               title={toast.title}
               message={toast.message}
-              action={toast.action}
+              actions={toast.actions}
               onClose={() => toastStore.dismiss(toast.id)}
             />
           </div>

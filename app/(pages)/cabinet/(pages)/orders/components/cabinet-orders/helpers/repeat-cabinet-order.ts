@@ -29,12 +29,14 @@ export function repeatCabinetOrderHelper(order: UserOrderView) {
   const toastId = toastStore.success(
     CABINET_ORDERS_REPEAT_TOAST_TITLE,
     CABINET_ORDERS_REPEAT_TOAST_MESSAGE(order.number, formatProductsCountHelper(lines.length)),
-    {
-      label: CABINET_ORDERS_REPEAT_TOAST_ACTION_LABEL,
-      onClick: () => {
-        toastStore.dismiss(toastId);
-        cartStore.open();
+    [
+      {
+        label: CABINET_ORDERS_REPEAT_TOAST_ACTION_LABEL,
+        onClick: () => {
+          toastStore.dismiss(toastId);
+          cartStore.open();
+        },
       },
-    }
+    ]
   );
 }

@@ -1,4 +1,7 @@
-import { CHECKOUT_DELIVERY_TITLE_SEPARATOR } from "../constants/checkout.constants";
+import {
+  CHECKOUT_DELIVERY_ADDRESS_SEPARATOR,
+  CHECKOUT_DELIVERY_TITLE_SEPARATOR,
+} from "../constants/checkout.constants";
 import type { CheckoutDelivery, CheckoutDeliveryAddress } from "../types/checkout.types";
 import { getCheckoutCarrierHelper } from "./get-checkout-carrier";
 
@@ -13,12 +16,12 @@ export function formatCheckoutDeliveryAddressHelper(
       title: [carrier.label, methodLabel].join(CHECKOUT_DELIVERY_TITLE_SEPARATOR),
       address: [delivery.city.name, delivery.street.trim(), delivery.apartment.trim()]
         .filter(Boolean)
-        .join(", "),
+        .join(CHECKOUT_DELIVERY_ADDRESS_SEPARATOR),
     };
   }
 
   return {
     title: [carrier.label, delivery.point.title].join(CHECKOUT_DELIVERY_TITLE_SEPARATOR),
-    address: `${delivery.city.name}, ${delivery.point.address}`,
+    address: [delivery.city.name, delivery.point.address].join(CHECKOUT_DELIVERY_ADDRESS_SEPARATOR),
   };
 }

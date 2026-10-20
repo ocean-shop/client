@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CABINET_FAVORITES_PATH } from "@/app/(pages)/cabinet/constants/cabinet.constants";
 import { CatalogPanel } from "./components/catalog-panel/catalog-panel";
 import { HeaderCart } from "./components/header-cart/header-cart";
 import { HeaderSearch } from "./components/header-search/header-search";
@@ -43,7 +44,10 @@ export async function Header() {
           <HeaderSearch variant="desktop" />
 
           <div className="flex items-center gap-[22px] text-sm text-muted">
-            <span className="cursor-pointer hover:text-accent">Обране</span>
+            {/* The page itself sends guests to sign in and back. */}
+            <Link href={CABINET_FAVORITES_PATH} className="hover:text-accent">
+              Обране
+            </Link>
             <Link href={AUTH_CABINET_PAGE_PATH} className="hover:text-accent">
               Кабінет
             </Link>

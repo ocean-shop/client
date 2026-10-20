@@ -1,8 +1,9 @@
+import Link from "next/link";
 import { Button } from "@/app/ui/button/button";
 import { TOAST_VARIANT_STYLES } from "./constants/toast.constants";
 import type { ToastProps } from "./types/toast.types";
 
-export function Toast({ variant, title, message, action, onClose }: ToastProps) {
+export function Toast({ variant, title, message, actions, onClose }: ToastProps) {
   const styles = TOAST_VARIANT_STYLES[variant];
 
   return (
@@ -19,14 +20,32 @@ export function Toast({ variant, title, message, action, onClose }: ToastProps) 
       <div className="flex min-w-0 flex-1 flex-col gap-[5px]">
         <span className={`text-[14.5px] font-semibold ${styles.fg}`}>{title}</span>
         <span className="text-pretty text-[13.5px] leading-[1.5] text-muted">{message}</span>
-        {action && (
-          <span
-            role="button"
-            onClick={action.onClick}
-            className={`cursor-pointer pt-0.5 text-[13.5px] font-semibold underline ${styles.fg}`}
-          >
-            {action.label}
-          </span>
+        {actions && actions.length > 0 && (
+          <div className="flex flex-wrap gap-x-4 gap-y-1 pt-0.5">
+            {actions.map((action) => {
+              const className = `cursor-pointer text-[13.5px] font-semibold underline ${styles.fg}`;
+
+              return action.href ? (
+                <Link
+                  key={action.label}
+                  href={action.href}
+                  onClick={action.onClick}
+                  className={className}
+                >
+                  {action.label}
+                </Link>
+              ) : (
+                <span
+                  key={action.label}
+                  role="button"
+                  onClick={action.onClick}
+                  className={className}
+                >
+                  {action.label}
+                </span>
+              );
+            })}
+          </div>
         )}
       </div>
 

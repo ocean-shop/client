@@ -132,6 +132,9 @@ export const CHECKOUT_ORDER_EMAIL_MAX_LENGTH = 255;
 export const CHECKOUT_ORDER_SHIPPING_MAX_LENGTH = 255;
 export const CHECKOUT_ORDER_SHIPPING_SEPARATOR = ": ";
 export const CHECKOUT_DELIVERY_TITLE_SEPARATOR = " · ";
+export const CHECKOUT_DELIVERY_ADDRESS_SEPARATOR = ", ";
+/** A branch's number, e.g. "1414" in "Поштомат №1414" or the index in "Відділення 79000". */
+export const CHECKOUT_DELIVERY_POINT_NUMBER_PATTERN = /\d+/;
 export const CHECKOUT_DELIVERY_DATE_FORMATTER = new Intl.DateTimeFormat("uk-UA", {
   day: "numeric",
   month: "long",
