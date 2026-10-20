@@ -1,4 +1,7 @@
-import { DELIVERY_POPULAR_CITIES } from "@/app/shared/delivery/constants/delivery.constants";
+import {
+  DELIVERY_ENABLED_CARRIERS,
+  DELIVERY_POPULAR_CITIES,
+} from "@/app/shared/delivery/constants/delivery.constants";
 import type { OrderPaymentMethod } from "@/app/shared/orders/types/orders.types";
 import type {
   CheckoutCarrierOption,
@@ -55,6 +58,11 @@ export const CHECKOUT_CARRIERS: CheckoutCarrierOption[] = [
     deliveryDays: { min: 2, max: 5 },
   },
 ];
+
+/** Carriers offered for new orders; past orders keep their carrier's label from the full list. */
+export const CHECKOUT_AVAILABLE_CARRIERS = CHECKOUT_CARRIERS.filter(
+  ({ id }) => DELIVERY_ENABLED_CARRIERS[id]
+);
 
 export const CHECKOUT_PAYMENTS: CheckoutPaymentOption[] = [
   {

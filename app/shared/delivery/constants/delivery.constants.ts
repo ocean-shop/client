@@ -1,8 +1,18 @@
 import type {
+  DeliveryCarrier,
   DeliveryCity,
   DeliveryPoint,
   NovaPoshtaWarehouseCategory,
 } from "../types/delivery.types";
+
+/**
+ * Carriers the shop currently ships with. Public, so client forms see the same value as the
+ * server; Ukrposhta stays on unless the flag is explicitly "false".
+ */
+export const DELIVERY_ENABLED_CARRIERS: Record<DeliveryCarrier, boolean> = {
+  nova: true,
+  ukr: process.env.NEXT_PUBLIC_UKRPOSHTA_ENABLED !== "false",
+};
 
 export const NOVA_POSHTA_API_URL = "https://api.novaposhta.ua/v2.0/json/";
 export const NOVA_POSHTA_ADDRESS_MODEL = "AddressGeneral";
