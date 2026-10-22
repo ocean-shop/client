@@ -11,6 +11,9 @@ export const AUTH_CLIENT_API_URL = `${AUTH_API_URL}/client`;
 
 export const AUTH_REQUEST_HEADERS = { "Content-Type": "application/json" };
 
+/** Reported when the backend accepted the code but sent no tokens back: a bad gateway reply. */
+export const AUTH_MISSING_SESSION_STATUS = 502;
+
 export const AUTH_ACCESS_TOKEN_COOKIE = "access_token";
 export const AUTH_REFRESH_TOKEN_COOKIE = "refresh_token";
 

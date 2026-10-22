@@ -3,7 +3,8 @@ import {
   AUTH_REFRESH_REUSE_MS,
   AUTH_REFRESH_TOKEN_COOKIE,
 } from "../constants/auth.constants";
-import type { AuthSessionResponse, AuthTokens } from "../types/auth.types";
+import { readAuthSession } from "../helpers/read-auth-session";
+import type { AuthTokens } from "../types/auth.types";
 
 const pendingRefreshes = new Map<string, Promise<AuthTokens | null>>();
 
@@ -20,10 +21,7 @@ const requestRefresh = async (refreshToken: string, userAgent: string | null) =>
 
     if (!response.ok) return null;
 
-    const { accessToken, refreshToken: nextRefreshToken }: AuthSessionResponse =
-      await response.json();
-
-    return { accessToken, refreshToken: nextRefreshToken };
+    return (await readAuthSession(response))?.tokens ?? null;
   } catch {
     return null;
   }
