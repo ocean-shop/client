@@ -8,7 +8,7 @@ import type { TermsPrintButtonProps } from "./types/terms-print-button.types";
  * No PDF is published yet, so the browser's print dialog ("Save as PDF") stands in for it.
  * It prints a separate document with only the offer's sections, not the page around them.
  */
-export function TermsPrintButton({ sections, documentTitle }: TermsPrintButtonProps) {
+export const TermsPrintButton = ({ sections, documentTitle }: TermsPrintButtonProps) => {
   const handleClick = () => {
     const iframe = document.createElement("iframe");
 
@@ -37,4 +37,4 @@ export function TermsPrintButton({ sections, documentTitle }: TermsPrintButtonPr
       {TERMS_PRINT_BUTTON_LABEL}
     </button>
   );
-}
+};

@@ -10,7 +10,7 @@ import { useCatalogQuery } from "../../hooks/use-catalog-query";
 import { CATALOG_SORT_LABEL } from "../../constants/catalog.constants";
 import type { CatalogSortSelectProps } from "./types/catalog-sort-select.types";
 
-export function CatalogSortSelect({ query }: CatalogSortSelectProps) {
+export const CatalogSortSelect = ({ query }: CatalogSortSelectProps) => {
   const { applyQuery } = useCatalogQuery(query);
 
   return (
@@ -21,4 +21,4 @@ export function CatalogSortSelect({ query }: CatalogSortSelectProps) {
       onChange={(sortId) => applyQuery({ sort: sortId as CatalogProductSort })}
     />
   );
-}
+};

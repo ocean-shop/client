@@ -1,5 +1,5 @@
 /** Placeholder matching {@link ProductCard}'s footprint so the grid keeps its height while loading. */
-export function ProductCardSkeleton() {
+export const ProductCardSkeleton = () => {
   return (
     <div aria-hidden className="flex animate-pulse flex-col gap-3 rounded-2xl bg-background p-3.5">
       <div className="h-[240px] rounded-xl bg-surface-strong" />
@@ -14,4 +14,4 @@ export function ProductCardSkeleton() {
       <div className="h-11 rounded-[10px] bg-surface-strong" />
     </div>
   );
-}
+};

@@ -22,7 +22,7 @@ import {
 } from "./constants/cabinet-sidebar.constants";
 
 /** Desktop navigation of the cabinet: who is signed in, its sections and the way out. */
-export function CabinetSidebar() {
+export const CabinetSidebar = () => {
   const pathname = usePathname();
   const user = getCabinetUserDisplayHelper(useAuthUser());
   const { logout, isPending } = useCabinetLogout();
@@ -83,4 +83,4 @@ export function CabinetSidebar() {
       </nav>
     </aside>
   );
-}
+};

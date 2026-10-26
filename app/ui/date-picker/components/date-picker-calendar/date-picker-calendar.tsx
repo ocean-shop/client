@@ -12,7 +12,6 @@ import { shiftDatePickerCursorHelper } from "../../helpers/shift-date-picker-cur
 import { toDatePickerValueHelper } from "../../helpers/to-date-picker-value";
 import type { DatePickerCursor, DatePickerView } from "../../types/date-picker.types";
 import {
-  DATE_PICKER_CALENDAR_CELL_CLASS_NAMES,
   DATE_PICKER_CALENDAR_CHOOSE_YEAR_LABEL,
   DATE_PICKER_CALENDAR_MONTHS,
   DATE_PICKER_CALENDAR_NAV_BUTTON_CLASS_NAME,
@@ -21,29 +20,20 @@ import {
   DATE_PICKER_CALENDAR_SHORT_MONTHS,
   DATE_PICKER_CALENDAR_WEEKDAYS,
 } from "./constants/date-picker-calendar.constants";
+import { getDatePickerCalendarCellClassNameHelper } from "./helpers/get-date-picker-calendar-cell-class-name";
 import type { DatePickerCalendarProps } from "./types/date-picker-calendar.types";
-
-function getCellClassName(isSelected: boolean, isCurrent: boolean) {
-  const state = isSelected
-    ? DATE_PICKER_CALENDAR_CELL_CLASS_NAMES.selected
-    : isCurrent
-      ? DATE_PICKER_CALENDAR_CELL_CLASS_NAMES.current
-      : DATE_PICKER_CALENDAR_CELL_CLASS_NAMES.default;
-
-  return `${DATE_PICKER_CALENDAR_CELL_CLASS_NAMES.base} ${state}`;
-}
 
 /**
  * Mounted only while the picker is open, so every opening starts from the picked date (or today,
  * kept within `min`/`max`). The title switches to the year grid, then a month grid, then the days.
  */
-export function DatePickerCalendar({
+export const DatePickerCalendar = ({
   value,
   min,
   max,
   initialView,
   onSelect,
-}: DatePickerCalendarProps) {
+}: DatePickerCalendarProps) => {
   const [today] = useState(getDatePickerTodayHelper);
   const selected = value ? parseDatePickerCursorHelper(value) : null;
   const current = parseDatePickerCursorHelper(today)!;
@@ -70,15 +60,15 @@ export function DatePickerCalendar({
   const firstYear =
     Math.floor(cursor.year / DATE_PICKER_YEARS_PER_PAGE) * DATE_PICKER_YEARS_PER_PAGE;
 
-  function handleYearSelect(year: number) {
+  const handleYearSelect = (year: number) => {
     setCursor({ year, month: cursor.month });
     setView("months");
-  }
+  };
 
-  function handleMonthSelect(month: number) {
+  const handleMonthSelect = (month: number) => {
     setCursor({ year: cursor.year, month });
     setView("days");
-  }
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -150,7 +140,7 @@ export function DatePickerCalendar({
                 aria-current={dayValue === today ? "date" : undefined}
                 disabled={isDatePickerRangeDisabledHelper(dayValue, dayValue, min, max)}
                 onClick={() => onSelect(dayValue)}
-                className={`h-9 ${getCellClassName(dayValue === value, dayValue === today)}`}
+                className={`h-9 ${getDatePickerCalendarCellClassNameHelper(dayValue === value, dayValue === today)}`}
               >
                 {day}
               </Button>
@@ -174,7 +164,7 @@ export function DatePickerCalendar({
                 max
               )}
               onClick={() => handleMonthSelect(month)}
-              className={`h-11 ${getCellClassName(
+              className={`h-11 ${getDatePickerCalendarCellClassNameHelper(
                 selected?.year === cursor.year && selected.month === month,
                 current.year === cursor.year && current.month === month
               )}`}
@@ -200,7 +190,10 @@ export function DatePickerCalendar({
                   max
                 )}
                 onClick={() => handleYearSelect(year)}
-                className={`h-11 ${getCellClassName(selected?.year === year, current.year === year)}`}
+                className={`h-11 ${getDatePickerCalendarCellClassNameHelper(
+                  selected?.year === year,
+                  current.year === year
+                )}`}
               >
                 {year}
               </Button>
@@ -210,4 +203,4 @@ export function DatePickerCalendar({
       )}
     </div>
   );
-}
+};

@@ -7,7 +7,7 @@ import { CabinetOrders } from "./components/cabinet-orders/cabinet-orders";
 import { ORDERS_PAGE_SEARCH_PARAM } from "./constants/orders.constants";
 import { toUserOrderViewHelper } from "./helpers/to-user-order-view";
 
-export default async function CabinetOrdersPage({ searchParams }: PageProps<"/cabinet/orders">) {
+const CabinetOrdersPage = async ({ searchParams }: PageProps<"/cabinet/orders">) => {
   const user = await requireAuthUser(CABINET_ORDERS_PATH);
   const page = parseCabinetPageHelper((await searchParams)[ORDERS_PAGE_SEARCH_PARAM]);
   const response = await getUserOrders(user.id, page);
@@ -21,4 +21,6 @@ export default async function CabinetOrdersPage({ searchParams }: PageProps<"/ca
       totalPages={response.totalPages}
     />
   );
-}
+};
+
+export default CabinetOrdersPage;

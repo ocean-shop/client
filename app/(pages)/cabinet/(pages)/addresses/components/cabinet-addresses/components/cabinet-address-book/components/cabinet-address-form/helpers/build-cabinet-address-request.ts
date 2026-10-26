@@ -7,10 +7,10 @@ import {
 import type { CreateUserShippingRequest } from "../../../../../../../types/addresses.types";
 
 /** Saves the address as the same "title: address" line checkout puts on an order. */
-export function buildCabinetAddressRequestHelper(
+export const buildCabinetAddressRequestHelper = (
   delivery: CheckoutDelivery,
   isMain: boolean
-): CreateUserShippingRequest {
+): CreateUserShippingRequest => {
   const { title, address } = formatCheckoutDeliveryAddressHelper(delivery);
 
   return {
@@ -21,4 +21,4 @@ export function buildCabinetAddressRequestHelper(
       SHIPPING_ADDRESS_MAX_LENGTH
     ),
   };
-}
+};

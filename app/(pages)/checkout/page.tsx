@@ -14,7 +14,7 @@ import { resolveCheckoutDeliveryHelper } from "./helpers/resolve-checkout-delive
 
 export const metadata: Metadata = { ...SEO_NO_INDEX_METADATA, title: CHECKOUT_METADATA_TITLE };
 
-export default async function CheckoutPage() {
+const CheckoutPage = async () => {
   const user = await getAuthUser();
   // Prefilling is a convenience, so a failed lookup leaves the form blank instead of breaking it.
   const [profile, delivery] = user
@@ -35,4 +35,6 @@ export default async function CheckoutPage() {
       />
     </div>
   );
-}
+};
+
+export default CheckoutPage;

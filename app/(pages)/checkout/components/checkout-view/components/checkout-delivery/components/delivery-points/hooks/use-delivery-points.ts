@@ -14,7 +14,7 @@ import {
  * Pick-up points for the chosen carrier, method and city. The previous list stays on screen
  * while the next one loads, but is flagged so it cannot be picked from in the meantime.
  */
-export function useDeliveryPoints({ carrier, method, city, searchTerm }: DeliveryPointsRequest) {
+export const useDeliveryPoints = ({ carrier, method, city, searchTerm }: DeliveryPointsRequest) => {
   const term = searchTerm.trim();
   const debouncedTerm = useDebouncedValue(term, DELIVERY_POINTS_DEBOUNCE_MS);
 
@@ -33,4 +33,4 @@ export function useDeliveryPoints({ carrier, method, city, searchTerm }: Deliver
     isError,
     isStale: isPlaceholderData || term !== debouncedTerm,
   };
-}
+};

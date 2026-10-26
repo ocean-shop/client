@@ -8,11 +8,11 @@ import {
 import type { InfoCheckListProps } from "./types/info-check-list.types";
 
 /** Bulleted list where each line is marked as allowed (check) or not (cross). */
-export function InfoCheckList({
+export const InfoCheckList = ({
   items,
   variant = INFO_CHECK_LIST_DEFAULT_VARIANT,
   layout = INFO_CHECK_LIST_DEFAULT_LAYOUT,
-}: InfoCheckListProps) {
+}: InfoCheckListProps) => {
   return (
     <ul className={INFO_CHECK_LIST_LAYOUT_CLASS_NAMES[layout]}>
       {items.map((item) => (
@@ -28,4 +28,4 @@ export function InfoCheckList({
       ))}
     </ul>
   );
-}
+};

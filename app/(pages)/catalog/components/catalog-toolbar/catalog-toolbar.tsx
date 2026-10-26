@@ -20,32 +20,32 @@ import {
 } from "./constants/catalog-toolbar.constants";
 import type { CatalogToolbarProps } from "./types/catalog-toolbar.types";
 
-export function CatalogToolbar({
+export const CatalogToolbar = ({
   source,
   query,
   resultsCount,
   filterGroups,
   filterCategories,
-}: CatalogToolbarProps) {
+}: CatalogToolbarProps) => {
   const { applyQuery, isPending } = useCatalogQuery(query);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
 
   const filterCount = countCatalogActiveFiltersHelper(query);
 
-  function handleSortSelect(sortId: string) {
+  const handleSortSelect = (sortId: string) => {
     setIsSortOpen(false);
     applyQuery({ sort: sortId as CatalogProductSort });
-  }
+  };
 
   /**
    * Applying from the toolbar rather than from inside the sheet: closing the sheet unmounts
    * its content, which would end the transition before the new products arrive.
    */
-  function handleFiltersApply(nextQuery: CatalogProductsQuery) {
+  const handleFiltersApply = (nextQuery: CatalogProductsQuery) => {
     setIsFiltersOpen(false);
     applyQuery(nextQuery);
-  }
+  };
 
   return (
     <>
@@ -91,4 +91,4 @@ export function CatalogToolbar({
       />
     </>
   );
-}
+};

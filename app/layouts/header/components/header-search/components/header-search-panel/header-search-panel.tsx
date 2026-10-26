@@ -20,7 +20,7 @@ import {
 import type { HeaderSearchPanelProps } from "./types/header-search-panel.types";
 
 /** Suggestions for the term in the header field: rows straight to a product, plus the full listing. */
-export function HeaderSearchPanel({
+export const HeaderSearchPanel = ({
   variant,
   searchTerm,
   result,
@@ -28,7 +28,7 @@ export function HeaderSearchPanel({
   allResultsHref,
   onProductSelect,
   onShowAllResults,
-}: HeaderSearchPanelProps) {
+}: HeaderSearchPanelProps) => {
   const items = result?.items ?? [];
   const isLoadingFirstResults = isSearching && items.length === 0;
   const hasNoResults = !isSearching && items.length === 0;
@@ -120,4 +120,4 @@ export function HeaderSearchPanel({
       )}
     </div>
   );
-}
+};

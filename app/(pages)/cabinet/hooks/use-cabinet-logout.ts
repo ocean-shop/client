@@ -12,11 +12,11 @@ import {
 } from "../constants/cabinet.constants";
 
 /** Ends the session and leaves the cabinet, which is no longer reachable without one. */
-export function useCabinetLogout() {
+export const useCabinetLogout = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  function logout() {
+  const logout = () => {
     startTransition(async () => {
       try {
         await logoutAction();
@@ -26,7 +26,7 @@ export function useCabinetLogout() {
         toastStore.error(CABINET_LOGOUT_ERROR_TOAST_TITLE, DEFAULT_API_ERROR_MESSAGE);
       }
     });
-  }
+  };
 
   return { logout, isPending };
-}
+};

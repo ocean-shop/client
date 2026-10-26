@@ -14,16 +14,16 @@ import { buildUserOrderStepsHelper } from "./build-user-order-steps";
 import { toUserOrderItemViewHelper } from "./to-user-order-item-view";
 
 /** Checkout folds delivery and the cash-on-delivery fee into the total, so they are what is left over. */
-function getDeliveryAmount({ subtotalAmount, discountAmount, totalAmount }: UserOrder) {
+const getDeliveryAmount = ({ subtotalAmount, discountAmount, totalAmount }: UserOrder) => {
   const delivery = Number(totalAmount) - Number(subtotalAmount) + Number(discountAmount);
 
   return Math.max(0, Math.round(delivery * 100) / 100);
-}
+};
 
-export function toUserOrderViewHelper(
+export const toUserOrderViewHelper = (
   order: UserOrder,
   products: Map<string, ProductDetails>
-): UserOrderView {
+): UserOrderView => {
   const name = [order.lastName, order.firstName, order.middleName]
     .filter(Boolean)
     .join(ORDER_NAME_SEPARATOR);
@@ -58,4 +58,4 @@ export function toUserOrderViewHelper(
       total: Number(order.totalAmount),
     },
   };
-}
+};

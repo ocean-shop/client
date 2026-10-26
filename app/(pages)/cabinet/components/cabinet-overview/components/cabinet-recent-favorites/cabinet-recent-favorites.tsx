@@ -10,7 +10,7 @@ import {
 } from "./constants/cabinet-recent-favorites.constants";
 import type { CabinetRecentFavoritesProps } from "./types/cabinet-recent-favorites.types";
 
-export function CabinetRecentFavorites({ products }: CabinetRecentFavoritesProps) {
+export const CabinetRecentFavorites = ({ products }: CabinetRecentFavoritesProps) => {
   return (
     <section className="flex flex-col gap-3.5 rounded-2xl bg-background p-[18px] lg:p-6">
       <div className="flex items-center justify-between">
@@ -47,4 +47,4 @@ export function CabinetRecentFavorites({ products }: CabinetRecentFavoritesProps
       </div>
     </section>
   );
-}
+};

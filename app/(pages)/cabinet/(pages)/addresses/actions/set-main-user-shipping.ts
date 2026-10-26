@@ -8,9 +8,9 @@ import { getShippingClientMainApiUrl } from "../constants/addresses.constants";
 import type { UserShippingActionResult } from "../types/addresses.types";
 
 /** Makes one of the signed-in user's addresses main; the backend unsets the previous one. */
-export async function setMainUserShippingAction(
+export const setMainUserShippingAction = async (
   shippingId: string
-): Promise<UserShippingActionResult> {
+): Promise<UserShippingActionResult> => {
   const user = await getAuthUser();
 
   if (!user) return { ok: false, status: 401, message: null };
@@ -26,4 +26,4 @@ export async function setMainUserShippingAction(
   refresh();
 
   return { ok: true };
-}
+};

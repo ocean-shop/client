@@ -7,6 +7,7 @@ export type ProductCardSizeStyles = {
   root: string;
   image: string;
   imageSizes: string;
+  imageFallback: string;
   favorite: string;
   name: string;
   price: string;
@@ -16,7 +17,8 @@ export type ProductCardSizeStyles = {
 export type ProductCardData = {
   id: string;
   href: string;
-  image: string;
+  /** `null` when the product has no photo; the card shows a placeholder icon instead. */
+  image: string | null;
   imageAlt: string;
   badge?: {
     label: string;

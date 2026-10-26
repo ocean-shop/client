@@ -7,16 +7,16 @@ import {
 } from "./constants/input.constants";
 import type { InputProps } from "./types/input.types";
 
-export function Input({
+export const Input = ({
   size = INPUT_DEFAULT_SIZE,
   variant = INPUT_DEFAULT_VARIANT,
   className,
   ...props
-}: InputProps) {
+}: InputProps) => {
   return (
     <input
       {...props}
       className={`${INPUT_BASE_CLASSNAME} ${INPUT_VARIANT_CLASSNAMES[variant]} ${INPUT_SIZE_CLASSNAMES[size]} ${className ?? ""}`}
     />
   );
-}
+};

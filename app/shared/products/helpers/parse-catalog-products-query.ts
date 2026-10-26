@@ -16,54 +16,54 @@ import type {
 
 type SearchParamValue = string | string[] | undefined;
 
-function toListHelper(value: SearchParamValue): string[] {
+const toListHelper = (value: SearchParamValue): string[] => {
   if (value === undefined) return [];
 
   return Array.isArray(value) ? value : [value];
-}
+};
 
-function firstValueHelper(value: SearchParamValue): string | undefined {
+const firstValueHelper = (value: SearchParamValue): string | undefined => {
   return toListHelper(value)[0];
-}
+};
 
-function parsePageHelper(value: SearchParamValue): number {
+const parsePageHelper = (value: SearchParamValue): number => {
   const page = Number(firstValueHelper(value));
 
   return Number.isInteger(page) && page > 0 ? page : 1;
-}
+};
 
-function parsePriceHelper(value: SearchParamValue): number | undefined {
+const parsePriceHelper = (value: SearchParamValue): number | undefined => {
   const raw = firstValueHelper(value);
   if (!raw) return undefined;
 
   const price = Number(raw);
 
   return Number.isFinite(price) && price >= 0 ? price : undefined;
-}
+};
 
-function parseSortHelper(value: SearchParamValue): CatalogProductSort | undefined {
+const parseSortHelper = (value: SearchParamValue): CatalogProductSort | undefined => {
   const raw = firstValueHelper(value);
 
   return CATALOG_PRODUCT_SORTS.find((sort) => sort === raw);
-}
+};
 
-function parseAvailableHelper(value: SearchParamValue): boolean | undefined {
+const parseAvailableHelper = (value: SearchParamValue): boolean | undefined => {
   const raw = firstValueHelper(value);
   if (raw === "true") return true;
   if (raw === "false") return false;
 
   return undefined;
-}
+};
 
 /** Collapses whitespace and clips the term, matching what the endpoint accepts. */
-function parseSearchTermHelper(value: SearchParamValue): string | undefined {
+const parseSearchTermHelper = (value: SearchParamValue): string | undefined => {
   const term = firstValueHelper(value)?.replace(/\s+/g, " ").trim();
 
   return term ? term.slice(0, PRODUCT_SEARCH_TERM_MAX_LENGTH) : undefined;
-}
+};
 
 /** Reads `attributes=name:value1,value2` entries, repeated or joined with `;`. */
-function parseAttributesHelper(value: SearchParamValue): CatalogFilter[] {
+const parseAttributesHelper = (value: SearchParamValue): CatalogFilter[] => {
   const valuesByName = new Map<string, string[]>();
 
   for (const entry of toListHelper(value)) {
@@ -85,21 +85,21 @@ function parseAttributesHelper(value: SearchParamValue): CatalogFilter[] {
   }
 
   return [...valuesByName].map(([name, values]) => ({ name, values: [...new Set(values)] }));
-}
+};
 
 /** Reads `categoryIds=id1,id2`, repeated or joined, the way the endpoint accepts them. */
-function parseCategoryIdsHelper(value: SearchParamValue): string[] {
+const parseCategoryIdsHelper = (value: SearchParamValue): string[] => {
   const categoryIds = toListHelper(value)
     .flatMap((entry) => entry.split(CATALOG_PRODUCTS_CATEGORY_ID_SEPARATOR))
     .map((categoryId) => categoryId.trim())
     .filter(Boolean);
 
   return [...new Set(categoryIds)];
-}
+};
 
-export function parseCatalogProductsQueryHelper(
+export const parseCatalogProductsQueryHelper = (
   searchParams: CatalogProductsSearchParams
-): CatalogProductsQuery {
+): CatalogProductsQuery => {
   return {
     page: parsePageHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.page]),
     attributes: parseAttributesHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.attributes]),
@@ -110,4 +110,4 @@ export function parseCatalogProductsQueryHelper(
     available: parseAvailableHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.available]),
     searchTerm: parseSearchTermHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.query]),
   };
-}
+};

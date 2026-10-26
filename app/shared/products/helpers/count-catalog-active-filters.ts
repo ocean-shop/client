@@ -1,7 +1,7 @@
 import type { CatalogProductsQuery } from "../types/products.types";
 
 /** Number of applied filters, shown as a badge on the mobile filters button. */
-export function countCatalogActiveFiltersHelper(query: CatalogProductsQuery): number {
+export const countCatalogActiveFiltersHelper = (query: CatalogProductsQuery): number => {
   const attributesCount = query.attributes.reduce(
     (count, attribute) => count + attribute.values.length,
     0
@@ -11,4 +11,4 @@ export function countCatalogActiveFiltersHelper(query: CatalogProductsQuery): nu
   const availableCount = query.available ? 1 : 0;
 
   return attributesCount + query.categoryIds.length + priceCount + availableCount;
-}
+};

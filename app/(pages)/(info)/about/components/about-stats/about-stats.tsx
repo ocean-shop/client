@@ -1,6 +1,6 @@
 import type { AboutStatsProps } from "./types/about-stats.types";
 
-export function AboutStats({ stats }: AboutStatsProps) {
+export const AboutStats = ({ stats }: AboutStatsProps) => {
   return (
     <dl className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:gap-4">
       {stats.map((stat) => (
@@ -16,4 +16,4 @@ export function AboutStats({ stats }: AboutStatsProps) {
       ))}
     </dl>
   );
-}
+};

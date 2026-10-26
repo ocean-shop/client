@@ -10,9 +10,9 @@ import type { CatalogProductsQuery } from "../types/products.types";
  * Serializes the catalog query the same way for the page URL and for the API request,
  * skipping defaults so a pristine catalog keeps a clean URL.
  */
-export function buildCatalogProductsSearchParamsHelper(
+export const buildCatalogProductsSearchParamsHelper = (
   query: CatalogProductsQuery
-): URLSearchParams {
+): URLSearchParams => {
   const searchParams = new URLSearchParams();
 
   /** The search results page keeps its term in the URL, and `by-search` requires it. */
@@ -58,4 +58,4 @@ export function buildCatalogProductsSearchParamsHelper(
   }
 
   return searchParams;
-}
+};

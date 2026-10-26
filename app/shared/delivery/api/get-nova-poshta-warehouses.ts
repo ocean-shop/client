@@ -15,11 +15,11 @@ import { novaPoshtaFetch } from "./nova-poshta-fetch";
  * Parcel lockers have a type of their own to filter by. Branches span several types (cargo,
  * postal, partner points), so they are fetched together and the lockers dropped afterwards.
  */
-export async function getNovaPoshtaWarehouses(
+export const getNovaPoshtaWarehouses = async (
   cityRef: string,
   method: DeliveryPointMethod,
   searchTerm: string
-): Promise<DeliveryPoint[]> {
+): Promise<DeliveryPoint[]> => {
   const isPostomat = method === "postomat";
   const warehouses = await novaPoshtaFetch<NovaPoshtaWarehouse>(NOVA_POSHTA_GET_WAREHOUSES_METHOD, {
     CityRef: cityRef,
@@ -32,4 +32,4 @@ export async function getNovaPoshtaWarehouses(
   return warehouses
     .filter((warehouse) => isPostomat || warehouse.CategoryOfWarehouse !== "Postomat")
     .map(mapNovaPoshtaWarehouseHelper);
-}
+};

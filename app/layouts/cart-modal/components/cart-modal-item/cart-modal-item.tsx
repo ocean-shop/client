@@ -18,7 +18,7 @@ import {
 } from "./constants/cart-modal-item.constants";
 import type { CartModalItemProps } from "./types/cart-modal-item.types";
 
-export function CartModalItem({ item, onNavigate }: CartModalItemProps) {
+export const CartModalItem = ({ item, onNavigate }: CartModalItemProps) => {
   const href = buildProductHrefHelper(item.productSlug ?? item.productId);
   const discountPercent = calculateProductDiscountPercentHelper(item.price, item.oldPrice);
   const meta =
@@ -110,4 +110,4 @@ export function CartModalItem({ item, onNavigate }: CartModalItemProps) {
       </div>
     </div>
   );
-}
+};

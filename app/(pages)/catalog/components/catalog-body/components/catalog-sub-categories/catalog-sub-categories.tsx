@@ -9,7 +9,7 @@ import { formatProductsCountHelper } from "@/app/shared/products/helpers/format-
 import type { CatalogSubCategoriesProps } from "./types/catalog-sub-categories.types";
 
 /** Shortcuts into the children of a parent category: a grid on desktop, a swipe rail on mobile. */
-export async function CatalogSubCategories({ parentId }: CatalogSubCategoriesProps) {
+export const CatalogSubCategories = async ({ parentId }: CatalogSubCategoriesProps) => {
   const subCategories = await getCatalogSubCategories(parentId);
 
   if (subCategories.length === 0) return null;
@@ -42,4 +42,4 @@ export async function CatalogSubCategories({ parentId }: CatalogSubCategoriesPro
       ))}
     </div>
   );
-}
+};

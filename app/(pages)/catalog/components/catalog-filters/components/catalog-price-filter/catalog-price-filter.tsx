@@ -16,16 +16,16 @@ import type { CatalogPriceFilterProps } from "./types/catalog-price-filter.types
  * Holds the price range as draft input until applied. The parent remounts this
  * component (via `key`) whenever the applied range changes, which reseeds the inputs.
  */
-export function CatalogPriceFilter({ priceFrom, priceTo, onApply }: CatalogPriceFilterProps) {
+export const CatalogPriceFilter = ({ priceFrom, priceTo, onApply }: CatalogPriceFilterProps) => {
   const [fromInput, setFromInput] = useState(priceFrom?.toString() ?? "");
   const [toInput, setToInput] = useState(priceTo?.toString() ?? "");
 
-  function apply() {
+  const apply = () => {
     onApply({
       priceFrom: parsePriceInputHelper(fromInput),
       priceTo: parsePriceInputHelper(toInput),
     });
-  }
+  };
 
   return (
     <div className="flex flex-col gap-3.5 rounded-2xl bg-background p-5">
@@ -50,4 +50,4 @@ export function CatalogPriceFilter({ priceFrom, priceTo, onApply }: CatalogPrice
       <Button onClick={apply}>{CATALOG_FILTERS_APPLY_LABEL}</Button>
     </div>
   );
-}
+};

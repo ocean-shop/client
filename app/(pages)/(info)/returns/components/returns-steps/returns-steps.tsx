@@ -1,7 +1,7 @@
 import type { ReturnsStepsProps } from "./types/returns-steps.types";
 
 /** Numbered how-to of a return, from the request to the refund. */
-export function ReturnsSteps({ steps }: ReturnsStepsProps) {
+export const ReturnsSteps = ({ steps }: ReturnsStepsProps) => {
   return (
     <ol className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
       {steps.map((step, index) => (
@@ -15,4 +15,4 @@ export function ReturnsSteps({ steps }: ReturnsStepsProps) {
       ))}
     </ol>
   );
-}
+};

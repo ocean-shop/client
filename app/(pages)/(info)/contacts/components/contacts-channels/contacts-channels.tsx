@@ -1,6 +1,6 @@
 import type { ContactsChannelsProps } from "./types/contacts-channels.types";
 
-export function ContactsChannels({ channels }: ContactsChannelsProps) {
+export const ContactsChannels = ({ channels }: ContactsChannelsProps) => {
   return (
     <ul className="grid gap-3 md:grid-cols-2 lg:gap-4">
       {channels.map((channel) => (
@@ -25,4 +25,4 @@ export function ContactsChannels({ channels }: ContactsChannelsProps) {
       ))}
     </ul>
   );
-}
+};

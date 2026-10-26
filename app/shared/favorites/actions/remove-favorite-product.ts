@@ -9,9 +9,9 @@ import {
 import type { FavoriteProductActionResult } from "../types/favorites.types";
 
 /** Removes a product from the signed-in user's favourites. */
-export async function removeFavoriteProductAction(
+export const removeFavoriteProductAction = async (
   productId: string
-): Promise<FavoriteProductActionResult> {
+): Promise<FavoriteProductActionResult> => {
   const user = await getAuthUser();
 
   if (!user) return { ok: false, status: FAVORITES_UNAUTHORIZED_STATUS };
@@ -21,4 +21,4 @@ export async function removeFavoriteProductAction(
   });
 
   return response.ok ? { ok: true } : { ok: false, status: response.status };
-}
+};

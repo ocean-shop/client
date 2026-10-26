@@ -18,9 +18,9 @@ import type {
  * Saves a new delivery address for the signed-in user and refreshes the page, so the list shows
  * it. The user id comes from the session, never from the caller.
  */
-export async function createUserShippingAction(
+export const createUserShippingAction = async (
   body: CreateUserShippingRequest
-): Promise<CreateUserShippingResult> {
+): Promise<CreateUserShippingResult> => {
   const user = await getAuthUser();
 
   if (!user) return { ok: false, status: 401, message: null };
@@ -40,4 +40,4 @@ export async function createUserShippingAction(
   refresh();
 
   return { ok: true, shipping };
-}
+};

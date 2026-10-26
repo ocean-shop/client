@@ -12,7 +12,7 @@ import {
 } from "./constants/checkout-contact.constants";
 import type { CheckoutContactProps } from "./types/checkout-contact.types";
 
-export function CheckoutContact({ contact, isSignedIn, onChange }: CheckoutContactProps) {
+export const CheckoutContact = ({ contact, isSignedIn, onChange }: CheckoutContactProps) => {
   return (
     <CheckoutSection step={CHECKOUT_CONTACT_STEP} title={CHECKOUT_CONTACT_TITLE}>
       {!isSignedIn && (
@@ -54,4 +54,4 @@ export function CheckoutContact({ contact, isSignedIn, onChange }: CheckoutConta
       </div>
     </CheckoutSection>
   );
-}
+};

@@ -5,13 +5,13 @@ import {
 import type { CheckoutOptionProps } from "./types/checkout-option.types";
 
 /** A radio card: the mark on the left, whatever describes the option on the right. */
-export function CheckoutOption({
+export const CheckoutOption = ({
   isSelected,
   onSelect,
   disabled,
   className,
   children,
-}: CheckoutOptionProps) {
+}: CheckoutOptionProps) => {
   const state = isSelected ? "selected" : "idle";
 
   return (
@@ -32,4 +32,4 @@ export function CheckoutOption({
       {children}
     </button>
   );
-}
+};

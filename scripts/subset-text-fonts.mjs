@@ -19,21 +19,21 @@ const CODEPOINT_RANGES = [
 ];
 const EXTRA_CHARACTERS = "–—‘’“”„•…№€₴™−←→";
 
-function buildCharacterSet() {
+const buildCharacterSet = () => {
   const characters = CODEPOINT_RANGES.flatMap(([start, end]) =>
     Array.from({ length: end - start + 1 }, (_, index) => String.fromCodePoint(start + index))
   );
 
   return characters.join("") + EXTRA_CHARACTERS;
-}
+};
 
-async function fetchOk(url) {
+const fetchOk = async (url) => {
   const response = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
 
   if (!response.ok) throw new Error(`${response.status} ${response.statusText}: ${url}`);
 
   return response;
-}
+};
 
 const text = encodeURIComponent(buildCharacterSet());
 

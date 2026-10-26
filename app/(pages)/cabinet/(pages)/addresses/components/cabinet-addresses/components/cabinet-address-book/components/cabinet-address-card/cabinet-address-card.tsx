@@ -7,12 +7,12 @@ import {
 } from "./constants/cabinet-address-card.constants";
 import type { CabinetAddressCardProps } from "./types/cabinet-address-card.types";
 
-export function CabinetAddressCard({
+export const CabinetAddressCard = ({
   address,
   onSetMain,
   onRemove,
   disabled,
-}: CabinetAddressCardProps) {
+}: CabinetAddressCardProps) => {
   return (
     <div
       className={`flex flex-col gap-2 rounded-[14px] border-[1.5px] p-4 transition-colors ${
@@ -56,4 +56,4 @@ export function CabinetAddressCard({
       </div>
     </div>
   );
-}
+};

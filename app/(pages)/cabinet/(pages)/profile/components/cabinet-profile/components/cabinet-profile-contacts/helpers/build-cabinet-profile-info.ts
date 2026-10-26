@@ -6,12 +6,12 @@ import {
 } from "../constants/cabinet-profile-contacts.constants";
 import type { CabinetProfileInfoItem } from "../types/cabinet-profile-contacts.types";
 
-export function buildCabinetProfileInfoHelper(
+export const buildCabinetProfileInfoHelper = (
   fullName: string | null,
   phone: string | null,
   birthday: string | null,
   email: string | null
-): CabinetProfileInfoItem[] {
+): CabinetProfileInfoItem[] => {
   return [
     {
       label: CABINET_PROFILE_CONTACTS_INFO_LABELS.fullName,
@@ -30,4 +30,4 @@ export function buildCabinetProfileInfoHelper(
       value: email ?? CABINET_PROFILE_CONTACTS_EMPTY_VALUE,
     },
   ];
-}
+};

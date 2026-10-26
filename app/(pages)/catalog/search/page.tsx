@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: CATALOG_SEARCH_METADATA_TITLE,
 };
 
-export default async function CatalogSearchPage({ searchParams }: PageProps<"/catalog/search">) {
+const CatalogSearchPage = async ({ searchParams }: PageProps<"/catalog/search">) => {
   const resolvedSearchParams = await searchParams;
   const query = parseCatalogProductsQueryHelper(resolvedSearchParams);
 
@@ -51,4 +51,6 @@ export default async function CatalogSearchPage({ searchParams }: PageProps<"/ca
       </div>
     </div>
   );
-}
+};
+
+export default CatalogSearchPage;

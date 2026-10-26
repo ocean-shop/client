@@ -11,17 +11,17 @@ import { buildProductMetadataHelper } from "../helpers/build-product-metadata";
 import { getProductByRouteParamHelper } from "../helpers/get-product-by-route-param";
 import { PRODUCT_PAGE_CLASS_NAME } from "../constants/product.constants";
 
-export async function generateMetadata({
+export const generateMetadata = async ({
   params,
-}: PageProps<"/product/[slug]">): Promise<Metadata> {
+}: PageProps<"/product/[slug]">): Promise<Metadata> => {
   const { slug } = await params;
   // Memoized with the page's own request, so the product is fetched once per render.
   const product = await getProductByRouteParamHelper(slug);
 
   return product ? buildProductMetadataHelper(product) : {};
-}
+};
 
-export default async function ProductPage({ params, searchParams }: PageProps<"/product/[slug]">) {
+const ProductPage = async ({ params, searchParams }: PageProps<"/product/[slug]">) => {
   const [{ slug }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const product = await getProductByRouteParamHelper(slug);
 
@@ -42,4 +42,6 @@ export default async function ProductPage({ params, searchParams }: PageProps<"/
       <ProductView product={product} breadcrumbItems={breadcrumbItems} />
     </div>
   );
-}
+};
+
+export default ProductPage;

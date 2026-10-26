@@ -1,6 +1,6 @@
 import type { ContactsRequisitesProps } from "./types/contacts-requisites.types";
 
-export function ContactsRequisites({ requisites }: ContactsRequisitesProps) {
+export const ContactsRequisites = ({ requisites }: ContactsRequisitesProps) => {
   return (
     <dl className="grid gap-x-7 gap-y-2.5 md:grid-cols-2">
       {requisites.map((requisite) => (
@@ -11,4 +11,4 @@ export function ContactsRequisites({ requisites }: ContactsRequisitesProps) {
       ))}
     </dl>
   );
-}
+};

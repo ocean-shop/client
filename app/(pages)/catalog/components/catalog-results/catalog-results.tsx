@@ -9,7 +9,7 @@ import type { CatalogResultsProps } from "./types/catalog-results.types";
  * A catalog query change is a server round trip, so React keeps the old grid on screen until
  * it resolves. Swapping in skeletons while the transition is pending makes the wait legible.
  */
-export function CatalogResults({ productCount, children }: CatalogResultsProps) {
+export const CatalogResults = ({ productCount, children }: CatalogResultsProps) => {
   const pendingCount = useNavigationPendingCount();
 
   if (pendingCount > 0) {
@@ -17,4 +17,4 @@ export function CatalogResults({ productCount, children }: CatalogResultsProps) 
   }
 
   return <>{children}</>;
-}
+};

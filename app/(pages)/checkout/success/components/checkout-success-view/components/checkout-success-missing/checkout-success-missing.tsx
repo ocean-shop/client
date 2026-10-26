@@ -8,7 +8,7 @@ import {
 } from "./constants/checkout-success-missing.constants";
 
 /** Shown when the page is opened directly, without an order placed in this browser. */
-export function CheckoutSuccessMissing() {
+export const CheckoutSuccessMissing = () => {
   return (
     <div className="flex flex-col items-center gap-3 rounded-2xl bg-background px-6 py-14 text-center">
       <span className="font-symbols text-[40px] text-muted-light">
@@ -27,4 +27,4 @@ export function CheckoutSuccessMissing() {
       </Link>
     </div>
   );
-}
+};

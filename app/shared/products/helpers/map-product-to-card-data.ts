@@ -4,30 +4,30 @@ import { calculateProductDiscountPercentHelper } from "./calculate-product-disco
 import { formatProductPriceHelper } from "./format-product-price";
 import type { Product } from "../types/products.types";
 
-function computeDiscountBadgeHelper(
+const computeDiscountBadgeHelper = (
   price: string,
   oldPrice: string | null
-): ProductCardData["badge"] {
+): ProductCardData["badge"] => {
   const percentOff = calculateProductDiscountPercentHelper(price, oldPrice);
 
   if (percentOff === undefined) return undefined;
 
   return { label: `−${percentOff}%`, tone: "sale" };
-}
+};
 
 /** `categorySlug` is only known when the card comes from a catalog page; it feeds the breadcrumbs. */
-export function mapProductToCardDataHelper(
+export const mapProductToCardDataHelper = (
   product: Product,
   categorySlug?: string
-): ProductCardData {
+): ProductCardData => {
   return {
     id: product.id,
     href: buildProductHrefHelper(product.slug, categorySlug),
-    image: product.images[0]?.url ?? "",
+    image: product.images[0]?.url ?? null,
     imageAlt: product.images[0]?.alt || product.name,
     name: product.name,
     price: formatProductPriceHelper(product.price),
     oldPrice: product.oldPrice ? formatProductPriceHelper(product.oldPrice) : undefined,
     badge: computeDiscountBadgeHelper(product.price, product.oldPrice),
   };
-}
+};

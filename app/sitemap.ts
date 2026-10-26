@@ -25,7 +25,7 @@ const INFO_PATHS = [
 
 const toUrl = (path: string) => new URL(path, SITE_URL).toString();
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const [categories, products] = await Promise.all([
     getCatalogCategories(),
     getProductSitemapEntries(),
@@ -53,4 +53,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.3,
     })),
   ];
-}
+};
+
+export default sitemap;

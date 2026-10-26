@@ -12,13 +12,13 @@ import {
 import type { CabinetAddressRemoveModalProps } from "./types/cabinet-address-remove-modal.types";
 
 /** Asks before an address is removed, since there is no way to bring it back. */
-export function CabinetAddressRemoveModal({
+export const CabinetAddressRemoveModal = ({
   address,
   isOpen,
   isRemoving,
   onClose,
   onConfirm,
-}: CabinetAddressRemoveModalProps) {
+}: CabinetAddressRemoveModalProps) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -60,4 +60,4 @@ export function CabinetAddressRemoveModal({
       </div>
     </Modal>
   );
-}
+};

@@ -1,5 +1,7 @@
 import { ProductSkeleton } from "../components/product-skeleton/product-skeleton";
 
-export default function ProductLoading() {
+const ProductLoading = () => {
   return <ProductSkeleton />;
-}
+};
+
+export default ProductLoading;

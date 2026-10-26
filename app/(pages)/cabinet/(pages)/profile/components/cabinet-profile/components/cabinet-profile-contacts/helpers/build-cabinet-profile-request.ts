@@ -7,9 +7,9 @@ import {
 import type { CabinetProfileForm } from "../types/cabinet-profile-contacts.types";
 
 /** Joins the name back into one `fullName` and brings the phone to `+380XXXXXXXXX`; blanks become `null`. */
-export function buildCabinetProfileRequestHelper(
+export const buildCabinetProfileRequestHelper = (
   form: CabinetProfileForm
-): UpdateUserProfileRequest {
+): UpdateUserProfileRequest => {
   const fullName = [form.lastName, form.firstName, form.middleName]
     .map((part) => part.trim().replace(/\s+/g, " "))
     .filter(Boolean)
@@ -23,4 +23,4 @@ export function buildCabinetProfileRequestHelper(
       : null,
     birthday: form.birthday,
   };
-}
+};

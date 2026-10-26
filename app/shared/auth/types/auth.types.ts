@@ -30,8 +30,16 @@ export type AuthTokens = {
   refreshToken: string;
 };
 
-/** Body of both `verify-otp` and `refresh`. */
-export type AuthSessionResponse = AuthTokens & { user: AuthUser };
+/**
+ * Body of both `verify-otp` and `refresh`. The refresh token comes in the `Set-Cookie` header;
+ * only older backends still repeat it here.
+ */
+export type AuthSessionResponse = Pick<AuthTokens, "accessToken"> & {
+  user: AuthUser;
+  refreshToken?: string;
+};
+
+export type AuthSession = { user: AuthUser; tokens: AuthTokens };
 
 /** `message` is the backend's own explanation, e.g. a wrong or expired code. */
 export type VerifyClientOtpResult =

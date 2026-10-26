@@ -11,8 +11,11 @@ export const AUTH_CLIENT_API_URL = `${AUTH_API_URL}/client`;
 
 export const AUTH_REQUEST_HEADERS = { "Content-Type": "application/json" };
 
+/** Reported when the backend accepted the code but sent no tokens back: a bad gateway reply. */
+export const AUTH_MISSING_SESSION_STATUS = 502;
+
 export const AUTH_ACCESS_TOKEN_COOKIE = "access_token";
-export const AUTH_REFRESH_TOKEN_COOKIE = "refresh_token";
+export const AUTH_REFRESH_TOKEN_COOKIE = "client_refresh_token";
 
 /** A minute shorter than the 15-minute JWT so the cookie never outlives the token it holds. */
 export const AUTH_ACCESS_TOKEN_MAX_AGE_SECONDS = 14 * 60;

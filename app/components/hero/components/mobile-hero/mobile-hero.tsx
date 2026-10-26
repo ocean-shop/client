@@ -13,7 +13,7 @@ import {
   MOBILE_HERO_PROMO_CODE,
 } from "./constants/mobile-hero.constants";
 
-export function MobileHero() {
+export const MobileHero = () => {
   const { props: imageProps } = getImageProps({
     src: MOBILE_HERO_IMAGE_URL,
     alt: MOBILE_HERO_IMAGE_ALT,
@@ -52,4 +52,4 @@ export function MobileHero() {
       </div>
     </section>
   );
-}
+};

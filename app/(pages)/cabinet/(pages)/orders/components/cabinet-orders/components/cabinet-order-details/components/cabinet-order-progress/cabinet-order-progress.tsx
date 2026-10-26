@@ -5,7 +5,7 @@ import {
 import type { CabinetOrderProgressProps } from "./types/cabinet-order-progress.types";
 
 /** A vertical trail on mobile that turns into a horizontal one on desktop. */
-export function CabinetOrderProgress({ steps }: CabinetOrderProgressProps) {
+export const CabinetOrderProgress = ({ steps }: CabinetOrderProgressProps) => {
   return (
     <ol className="flex flex-col lg:flex-row">
       {steps.map((step, index) => {
@@ -43,4 +43,4 @@ export function CabinetOrderProgress({ steps }: CabinetOrderProgressProps) {
       })}
     </ol>
   );
-}
+};

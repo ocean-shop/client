@@ -4,7 +4,7 @@ import { useSyncExternalStore } from "react";
 import { Toast } from "@/app/ui/toast/toast";
 import { toastStore } from "./toast-store";
 
-export function ToastProvider({ children }: { children: React.ReactNode }) {
+export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const toasts = useSyncExternalStore(
     toastStore.subscribe,
     toastStore.getSnapshot,
@@ -30,4 +30,4 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       </div>
     </>
   );
-}
+};

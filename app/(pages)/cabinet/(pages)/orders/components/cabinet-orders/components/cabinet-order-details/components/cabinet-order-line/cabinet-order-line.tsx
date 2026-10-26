@@ -7,7 +7,7 @@ import {
 } from "./constants/cabinet-order-line.constants";
 import type { CabinetOrderLineProps } from "./types/cabinet-order-line.types";
 
-export function CabinetOrderLine({ item, isLast }: CabinetOrderLineProps) {
+export const CabinetOrderLine = ({ item, isLast }: CabinetOrderLineProps) => {
   return (
     <div
       className={`flex items-center gap-3 py-3.5 lg:gap-4 ${isLast ? "" : "border-b border-border-soft"}`}
@@ -48,4 +48,4 @@ export function CabinetOrderLine({ item, isLast }: CabinetOrderLineProps) {
       </span>
     </div>
   );
-}
+};

@@ -24,7 +24,7 @@ import type {
 } from "./types/cabinet-address-book.types";
 
 /** The saved addresses, swapped for the add form while a new one is being filled in. */
-export function CabinetAddressBook({ addresses }: CabinetAddressBookProps) {
+export const CabinetAddressBook = ({ addresses }: CabinetAddressBookProps) => {
   const [isAdding, setIsAdding] = useState(false);
   const [status, setStatus] = useState<CabinetAddressBookStatus | null>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
@@ -33,17 +33,17 @@ export function CabinetAddressBook({ addresses }: CabinetAddressBookProps) {
 
   const isRemoving = pendingId !== null && pendingId === removingAddress?.id;
 
-  function handleAdd() {
+  const handleAdd = () => {
     setStatus(null);
     setIsAdding(true);
-  }
+  };
 
-  function handleSaved() {
+  const handleSaved = () => {
     setIsAdding(false);
     setStatus("saved");
-  }
+  };
 
-  async function handleSetMain(address: UserShippingView) {
+  const handleSetMain = async (address: UserShippingView) => {
     if (pendingId) return;
 
     setStatus(null);
@@ -66,18 +66,18 @@ export function CabinetAddressBook({ addresses }: CabinetAddressBookProps) {
     } finally {
       setPendingId(null);
     }
-  }
+  };
 
-  function handleRemoveOpen(address: UserShippingView) {
+  const handleRemoveOpen = (address: UserShippingView) => {
     setRemovingAddress(address);
     setIsRemoveOpen(true);
-  }
+  };
 
-  function handleRemoveClose() {
+  const handleRemoveClose = () => {
     if (!isRemoving) setIsRemoveOpen(false);
-  }
+  };
 
-  async function handleRemoveConfirm() {
+  const handleRemoveConfirm = async () => {
     if (!removingAddress || pendingId) return;
 
     setStatus(null);
@@ -101,7 +101,7 @@ export function CabinetAddressBook({ addresses }: CabinetAddressBookProps) {
     } finally {
       setPendingId(null);
     }
-  }
+  };
 
   return (
     <section className="flex flex-col gap-3.5 rounded-2xl bg-background p-[18px] lg:p-6">
@@ -163,4 +163,4 @@ export function CabinetAddressBook({ addresses }: CabinetAddressBookProps) {
       />
     </section>
   );
-}
+};

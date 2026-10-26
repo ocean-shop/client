@@ -1,6 +1,6 @@
 import type { CartItem, CartTotals } from "../types/cart.types";
 
-export function calculateCartTotalsHelper(items: CartItem[]): CartTotals {
+export const calculateCartTotalsHelper = (items: CartItem[]): CartTotals => {
   return items.reduce<CartTotals>(
     (totals, item) => {
       const price = Number(item.price);
@@ -16,4 +16,4 @@ export function calculateCartTotalsHelper(items: CartItem[]): CartTotals {
     },
     { quantity: 0, subtotal: 0, discount: 0, total: 0 }
   );
-}
+};

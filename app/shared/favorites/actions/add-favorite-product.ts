@@ -10,9 +10,9 @@ import {
 import type { FavoriteProductActionResult } from "../types/favorites.types";
 
 /** Adds a product to the signed-in user's favourites; adding one that is already there is a no-op. */
-export async function addFavoriteProductAction(
+export const addFavoriteProductAction = async (
   productId: string
-): Promise<FavoriteProductActionResult> {
+): Promise<FavoriteProductActionResult> => {
   const user = await getAuthUser();
 
   if (!user) return { ok: false, status: FAVORITES_UNAUTHORIZED_STATUS };
@@ -24,4 +24,4 @@ export async function addFavoriteProductAction(
   });
 
   return response.ok ? { ok: true } : { ok: false, status: response.status };
-}
+};

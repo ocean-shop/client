@@ -24,7 +24,7 @@ const MobileCatalogPanel = dynamic(
   { ssr: false }
 );
 
-export function BottomTabBar({ categories }: BottomTabBarProps) {
+export const BottomTabBar = ({ categories }: BottomTabBarProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
@@ -37,14 +37,14 @@ export function BottomTabBar({ categories }: BottomTabBarProps) {
       pathname === AUTH_CABINET_PAGE_PATH ||
       pathname.startsWith(`${AUTH_CABINET_PAGE_PATH}/`));
 
-  function getItemClickHandler(id: string) {
+  const getItemClickHandler = (id: string) => {
     if (id === "catalog") return () => setIsCatalogOpen(true);
     if (id === "cart") return cartStore.open;
     if (id === "favorites") return () => router.push(CABINET_FAVORITES_PATH);
     if (id === "account") return () => router.push(AUTH_CABINET_PAGE_PATH);
 
     return undefined;
-  }
+  };
 
   return (
     <>
@@ -93,4 +93,4 @@ export function BottomTabBar({ categories }: BottomTabBarProps) {
       />
     </>
   );
-}
+};

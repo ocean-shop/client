@@ -7,11 +7,11 @@ import {
 } from "./constants/product-variations.constants";
 import type { ProductVariationsProps } from "./types/product-variations.types";
 
-export function ProductVariations({
+export const ProductVariations = ({
   variations,
   selectedVariationId,
   onSelect,
-}: ProductVariationsProps) {
+}: ProductVariationsProps) => {
   return (
     <div className="flex flex-col gap-2.5">
       <div className="text-sm text-muted">{PRODUCT_VARIATIONS_TITLE}</div>
@@ -45,4 +45,4 @@ export function ProductVariations({
       </div>
     </div>
   );
-}
+};

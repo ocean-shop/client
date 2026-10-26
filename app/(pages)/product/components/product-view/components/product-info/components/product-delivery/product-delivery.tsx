@@ -1,6 +1,6 @@
 import { PRODUCT_DELIVERY_CARDS } from "./constants/product-delivery.constants";
 
-export function ProductDelivery() {
+export const ProductDelivery = () => {
   return (
     <div className="grid gap-2.5 sm:grid-cols-3">
       {PRODUCT_DELIVERY_CARDS.map((card) => (
@@ -12,4 +12,4 @@ export function ProductDelivery() {
       ))}
     </div>
   );
-}
+};

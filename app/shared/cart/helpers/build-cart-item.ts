@@ -2,7 +2,10 @@ import type { ProductDetails, ProductOffer } from "@/app/shared/products/types/p
 import type { CartItemInput } from "../types/cart.types";
 
 /** Snapshots the offer being bought, so the cart line keeps the variation the visitor picked. */
-export function buildCartItemHelper(product: ProductDetails, offer: ProductOffer): CartItemInput {
+export const buildCartItemHelper = (
+  product: ProductDetails,
+  offer: ProductOffer
+): CartItemInput => {
   const variation = product.variations.find((item) => item.id === offer.id);
 
   return {
@@ -16,4 +19,4 @@ export function buildCartItemHelper(product: ProductDetails, offer: ProductOffer
     price: offer.price,
     oldPrice: offer.oldPrice,
   };
-}
+};

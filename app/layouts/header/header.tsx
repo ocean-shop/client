@@ -13,7 +13,7 @@ import { AUTH_CABINET_PAGE_PATH } from "@/app/shared/auth/constants/auth.constan
 import { getCatalogCategoryTreeHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-tree";
 import type { HeaderNavItem } from "./types/header.types";
 
-export async function Header() {
+export const Header = async () => {
   const categoryTree = await getCatalogCategoryTreeHelper();
   const categoryNavItems: HeaderNavItem[] = categoryTree.map((category) => ({
     label: category.name,
@@ -75,4 +75,4 @@ export async function Header() {
       </header>
     </>
   );
-}
+};

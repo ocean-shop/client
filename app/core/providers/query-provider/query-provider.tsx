@@ -6,7 +6,7 @@ import { useState } from "react";
 import { QUERY_CLIENT_CONFIG } from "./constants/query-provider.constants";
 import { LoadingIndicator } from "./components/loading-indicator/loading-indicator";
 
-export function QueryProvider({ children }: { children: React.ReactNode }) {
+export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient(QUERY_CLIENT_CONFIG));
 
   return (
@@ -16,4 +16,4 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
-}
+};

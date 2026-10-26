@@ -5,11 +5,16 @@ import type { ToastItem, ToastListener } from "./types/toast-provider.types";
 let toasts: ToastItem[] = [];
 let listeners: ToastListener[] = [];
 
-function emit() {
+const emit = () => {
   listeners.forEach((listener) => listener(toasts));
-}
+};
 
-function show(variant: ToastVariant, title: string, message: string, actions?: ToastAction[]) {
+const dismiss = (id: string) => {
+  toasts = toasts.filter((toast) => toast.id !== id);
+  emit();
+};
+
+const show = (variant: ToastVariant, title: string, message: string, actions?: ToastAction[]) => {
   const id = crypto.randomUUID();
 
   toasts = [...toasts, { id, variant, title, message, actions }];
@@ -18,24 +23,19 @@ function show(variant: ToastVariant, title: string, message: string, actions?: T
   setTimeout(() => dismiss(id), TOAST_AUTO_DISMISS_MS);
 
   return id;
-}
+};
 
-function dismiss(id: string) {
-  toasts = toasts.filter((toast) => toast.id !== id);
-  emit();
-}
-
-function subscribe(listener: ToastListener) {
+const subscribe = (listener: ToastListener) => {
   listeners = [...listeners, listener];
 
   return () => {
     listeners = listeners.filter((existing) => existing !== listener);
   };
-}
+};
 
-function getSnapshot() {
+const getSnapshot = () => {
   return toasts;
-}
+};
 
 export const toastStore = {
   subscribe,

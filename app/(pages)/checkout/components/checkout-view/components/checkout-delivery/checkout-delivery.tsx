@@ -21,15 +21,15 @@ import {
 } from "./constants/checkout-delivery.constants";
 import type { CheckoutDeliveryProps } from "./types/checkout-delivery.types";
 
-export function CheckoutDelivery({ delivery, onChange }: CheckoutDeliveryProps) {
+export const CheckoutDelivery = ({ delivery, onChange }: CheckoutDeliveryProps) => {
   const carrier = getCheckoutCarrierHelper(delivery.carrier);
 
   // A chosen branch belongs to one city, carrier and method, so changing any of them clears it.
-  function handleCityChange(city: DeliveryCity) {
+  const handleCityChange = (city: DeliveryCity) => {
     onChange({ ...delivery, city, point: null });
-  }
+  };
 
-  function handleCarrierChange(carrierId: DeliveryCarrier) {
+  const handleCarrierChange = (carrierId: DeliveryCarrier) => {
     const nextCarrier = getCheckoutCarrierHelper(carrierId);
     const hasMethod = nextCarrier.methods.some((method) => method.id === delivery.method);
 
@@ -39,11 +39,11 @@ export function CheckoutDelivery({ delivery, onChange }: CheckoutDeliveryProps) 
       method: hasMethod ? delivery.method : nextCarrier.methods[0].id,
       point: null,
     });
-  }
+  };
 
-  function handleMethodChange(method: DeliveryMethod) {
+  const handleMethodChange = (method: DeliveryMethod) => {
     onChange({ ...delivery, method, point: null });
-  }
+  };
 
   return (
     <CheckoutSection step={CHECKOUT_DELIVERY_STEP} title={CHECKOUT_DELIVERY_TITLE}>
@@ -124,4 +124,4 @@ export function CheckoutDelivery({ delivery, onChange }: CheckoutDeliveryProps) 
       )}
     </CheckoutSection>
   );
-}
+};

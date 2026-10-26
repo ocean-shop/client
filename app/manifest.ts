@@ -6,7 +6,7 @@ import {
   SITE_NAME,
 } from "./shared/seo/constants/seo.constants";
 
-export default function manifest(): MetadataRoute.Manifest {
+const manifest = (): MetadataRoute.Manifest => {
   return {
     name: SITE_NAME,
     short_name: SITE_NAME,
@@ -18,4 +18,6 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: SEO_MANIFEST_THEME_COLOR,
     icons: [{ src: "/favicon.ico", sizes: "any", type: "image/x-icon" }],
   };
-}
+};
+
+export default manifest;

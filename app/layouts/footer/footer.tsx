@@ -7,7 +7,7 @@ import {
   FOOTER_SUPPORT,
 } from "./constants/footer.constants";
 
-export function Footer() {
+export const Footer = () => {
   return (
     <footer className="hidden lg:block border-t border-footer-border bg-footer">
       <div className="mx-auto grid max-w-page grid-cols-[1.6fr_1fr_1fr_1fr] gap-10 px-10 py-11">
@@ -49,4 +49,4 @@ export function Footer() {
       </div>
     </footer>
   );
-}
+};

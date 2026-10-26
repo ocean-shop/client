@@ -1,6 +1,6 @@
 import type { DeliveryCity, NovaPoshtaSettlement } from "../types/delivery.types";
 
-export function mapNovaPoshtaSettlementHelper(settlement: NovaPoshtaSettlement): DeliveryCity {
+export const mapNovaPoshtaSettlementHelper = (settlement: NovaPoshtaSettlement): DeliveryCity => {
   const district = settlement.Region
     ? `${settlement.Region} ${settlement.RegionTypesCode}`.trim()
     : "";
@@ -13,4 +13,4 @@ export function mapNovaPoshtaSettlementHelper(settlement: NovaPoshtaSettlement):
     district: settlement.Region,
     region: [district, area].filter(Boolean).join(", "),
   };
-}
+};

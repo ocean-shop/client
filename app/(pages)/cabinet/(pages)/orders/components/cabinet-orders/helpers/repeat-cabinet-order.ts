@@ -11,7 +11,7 @@ import {
 } from "../constants/cabinet-orders.constants";
 
 /** Puts every product of the order that can still be bought back in the cart, in the same quantities. */
-export function repeatCabinetOrderHelper(order: UserOrderView) {
+export const repeatCabinetOrderHelper = (order: UserOrderView) => {
   const lines = order.items.flatMap((item) =>
     item.cartItem ? [{ cartItem: item.cartItem, quantity: item.quantity }] : []
   );
@@ -39,4 +39,4 @@ export function repeatCabinetOrderHelper(order: UserOrderView) {
       },
     ]
   );
-}
+};

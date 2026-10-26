@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { buildSeoMetadataHelper } from "@/app/shared/seo/helpers/build-seo-metadata";
 
-export function buildInfoMetadataHelper(
+export const buildInfoMetadataHelper = (
   path: string,
   title: string,
   description?: string
-): Metadata {
+): Metadata => {
   return buildSeoMetadataHelper({ title, description, path });
-}
+};

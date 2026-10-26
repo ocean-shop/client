@@ -16,20 +16,20 @@ import {
 } from "./constants/login-identifier-step.constants";
 import type { LoginIdentifierStepProps } from "./types/login-identifier-step.types";
 
-export function LoginIdentifierStep({
+export const LoginIdentifierStep = ({
   value,
   error,
   isRequesting,
   onChange,
   onSubmit,
-}: LoginIdentifierStepProps) {
+}: LoginIdentifierStepProps) => {
   const kind = getLoginIdentifierKindHelper(value);
   const icon = kind ? LOGIN_IDENTIFIER_STEP_ICONS[kind] : LOGIN_IDENTIFIER_STEP_DEFAULT_ICON;
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit();
-  }
+  };
 
   return (
     <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5 lg:gap-6">
@@ -88,4 +88,4 @@ export function LoginIdentifierStep({
       </p>
     </form>
   );
-}
+};

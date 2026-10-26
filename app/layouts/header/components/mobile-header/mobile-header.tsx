@@ -14,7 +14,7 @@ const NavDrawer = dynamic(
   { ssr: false }
 );
 
-export function MobileHeader({ categories }: MobileHeaderProps) {
+export const MobileHeader = ({ categories }: MobileHeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -52,4 +52,4 @@ export function MobileHeader({ categories }: MobileHeaderProps) {
       <NavDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </header>
   );
-}
+};

@@ -8,10 +8,10 @@ import type { UserOrderItem, UserOrderItemView } from "../types/orders.types";
  * Orders keep no variation, so a repeat buys the product's default offer at today's price.
  * The line itself keeps the price the user actually paid.
  */
-export function toUserOrderItemViewHelper(
+export const toUserOrderItemViewHelper = (
   item: UserOrderItem,
   product: ProductDetails | undefined
-): UserOrderItemView {
+): UserOrderItemView => {
   const offer = product ? resolveProductOfferHelper(product) : null;
   const unitPrice = Number(item.unitPrice);
 
@@ -26,4 +26,4 @@ export function toUserOrderItemViewHelper(
     sum: unitPrice * item.quantity,
     cartItem: product && offer?.available ? buildCartItemHelper(product, offer) : null,
   };
-}
+};

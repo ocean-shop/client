@@ -4,7 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/app/ui/button/button";
 import type { SelectProps } from "./types/select.types";
 
-export function Select({ options, label, selectedId, defaultSelectedId, onChange }: SelectProps) {
+export const Select = ({
+  options,
+  label,
+  selectedId,
+  defaultSelectedId,
+  onChange,
+}: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [internalSelectedId, setInternalSelectedId] = useState(defaultSelectedId ?? options[0]?.id);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -15,21 +21,21 @@ export function Select({ options, label, selectedId, defaultSelectedId, onChange
   useEffect(() => {
     if (!isOpen) return;
 
-    function handlePointerDown(event: PointerEvent) {
+    const handlePointerDown = (event: PointerEvent) => {
       if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
-    }
+    };
 
     document.addEventListener("pointerdown", handlePointerDown);
     return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, [isOpen]);
 
-  function handleSelect(id: string) {
+  const handleSelect = (id: string) => {
     setInternalSelectedId(id);
     setIsOpen(false);
     onChange?.(id);
-  }
+  };
 
   if (!selectedOption) return null;
 
@@ -73,4 +79,4 @@ export function Select({ options, label, selectedId, defaultSelectedId, onChange
       </div>
     </div>
   );
-}
+};

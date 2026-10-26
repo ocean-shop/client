@@ -31,11 +31,11 @@ import type { ProductCardCartButtonProps } from "./types/product-card-cart-butto
  * Once any offer of the product is in the cart, the button turns into a shortcut to the cart
  * instead of quietly adding more: a card cannot show which variation it would add next.
  */
-export function ProductCardCartButton({ productId, productName }: ProductCardCartButtonProps) {
+export const ProductCardCartButton = ({ productId, productName }: ProductCardCartButtonProps) => {
   const [isPending, setIsPending] = useState(false);
   const isInCart = useCartItems().some((item) => item.productId === productId);
 
-  async function addToCart() {
+  const addToCart = async () => {
     setIsPending(true);
 
     try {
@@ -61,14 +61,14 @@ export function ProductCardCartButton({ productId, productName }: ProductCardCar
     } finally {
       setIsPending(false);
     }
-  }
+  };
 
-  function getLabel() {
+  const getLabel = () => {
     if (isPending) return PRODUCT_CARD_CART_BUTTON_PENDING_LABEL;
     if (isInCart) return PRODUCT_CARD_CART_BUTTON_IN_CART_LABEL;
 
     return PRODUCT_CARD_CART_BUTTON_ADD_LABEL;
-  }
+  };
 
   return (
     <Button
@@ -83,4 +83,4 @@ export function ProductCardCartButton({ productId, productName }: ProductCardCar
       {getLabel()}
     </Button>
   );
-}
+};

@@ -1,5 +1,5 @@
 /** Holds the layout while the placed order is read from browser storage. */
-export function CheckoutSuccessSkeleton() {
+export const CheckoutSuccessSkeleton = () => {
   return (
     <div className="flex animate-pulse flex-col gap-5 lg:gap-7">
       <div className="flex flex-col items-center gap-3 lg:gap-3.5">
@@ -11,4 +11,4 @@ export function CheckoutSuccessSkeleton() {
       <div className="h-[420px] rounded-2xl bg-background lg:h-[340px]" />
     </div>
   );
-}
+};

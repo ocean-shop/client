@@ -12,23 +12,23 @@ import {
   setAuthSessionCookies,
 } from "./app/shared/auth/helpers/auth-session-cookies";
 
-function isProtectedPath(pathname: string) {
+const isProtectedPath = (pathname: string) => {
   return AUTH_PROTECTED_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
-}
+};
 
-function redirectToLogin(request: NextRequest) {
+const redirectToLogin = (request: NextRequest) => {
   const url = new URL(AUTH_LOGIN_PAGE_PATH, request.url);
   url.searchParams.set(AUTH_REDIRECT_PARAM, request.nextUrl.pathname + request.nextUrl.search);
 
   return NextResponse.redirect(url);
-}
+};
 
 /**
  * Keeps the session alive: once the short-lived access cookie expires, the refresh token is
  * traded for a new pair before anything renders. Server Components cannot write cookies, so
  * this is the one place where refreshing can happen.
  */
-export async function proxy(request: NextRequest) {
+export const proxy = async (request: NextRequest) => {
   const isProtected = isProtectedPath(request.nextUrl.pathname);
   const refreshToken = request.cookies.get(AUTH_REFRESH_TOKEN_COOKIE)?.value;
 
@@ -52,7 +52,7 @@ export async function proxy(request: NextRequest) {
   setAuthSessionCookies(response.cookies, tokens);
 
   return response;
-}
+};
 
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.[\\w]+$).*)"],

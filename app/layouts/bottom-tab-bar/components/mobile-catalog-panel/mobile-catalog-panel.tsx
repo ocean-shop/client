@@ -10,7 +10,7 @@ import {
 import { HEADER_CATALOG_LABEL } from "../../../header/constants/header.constants";
 import type { MobileCatalogPanelProps } from "./types/mobile-catalog-panel.types";
 
-export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalogPanelProps) {
+export const MobileCatalogPanel = ({ categories, isOpen, onClose }: MobileCatalogPanelProps) => {
   const [activeCategoryId, setActiveCategoryId] = useState(categories[0]?.id);
 
   const activeCategory =
@@ -121,4 +121,4 @@ export function MobileCatalogPanel({ categories, isOpen, onClose }: MobileCatalo
       </div>
     </div>
   );
-}
+};

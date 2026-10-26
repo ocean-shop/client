@@ -3,11 +3,11 @@ import { CONTACTS_FORM_PHONE_SEPARATORS_PATTERN } from "../constants/contacts-fo
 import type { ContactsFormValues } from "../types/contacts-form.types";
 
 /** Trims the fields and drops spaces, dashes and brackets typed into a phone number. */
-export function buildContactsRequestHelper({
+export const buildContactsRequestHelper = ({
   name,
   contact,
   message,
-}: ContactsFormValues): SendContactMessageRequest {
+}: ContactsFormValues): SendContactMessageRequest => {
   const trimmedContact = contact.trim();
 
   return {
@@ -17,4 +17,4 @@ export function buildContactsRequestHelper({
       : trimmedContact.replace(CONTACTS_FORM_PHONE_SEPARATORS_PATTERN, ""),
     message: message.trim(),
   };
-}
+};

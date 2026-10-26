@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { CabinetStatCardProps } from "./types/cabinet-stat-card.types";
 
 /** Shortcut to a cabinet section with its current state. On mobile the last card spans the row. */
-export function CabinetStatCard({ href, icon, label, value, note }: CabinetStatCardProps) {
+export const CabinetStatCard = ({ href, icon, label, value, note }: CabinetStatCardProps) => {
   return (
     <Link
       href={href}
@@ -19,4 +19,4 @@ export function CabinetStatCard({ href, icon, label, value, note }: CabinetStatC
       <span className="text-[12.5px] leading-[1.4] text-muted-light">{note}</span>
     </Link>
   );
-}
+};

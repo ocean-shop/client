@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: { ...SEO_DEFAULT_OPEN_GRAPH, url: "/" },
 };
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="flex flex-1 flex-col">
       <Hero />
@@ -24,4 +24,6 @@ export default function Home() {
       <HomeLoyalty />
     </div>
   );
-}
+};
+
+export default Home;

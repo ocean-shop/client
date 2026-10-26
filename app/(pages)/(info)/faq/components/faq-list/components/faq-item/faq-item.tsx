@@ -7,7 +7,7 @@ import {
 } from "./constants/faq-item.constants";
 import type { FaqItemProps } from "./types/faq-item.types";
 
-export function FaqItem({ entry, isOpen, onToggle }: FaqItemProps) {
+export const FaqItem = ({ entry, isOpen, onToggle }: FaqItemProps) => {
   const answerId = useId();
 
   return (
@@ -42,4 +42,4 @@ export function FaqItem({ entry, isOpen, onToggle }: FaqItemProps) {
       )}
     </div>
   );
-}
+};

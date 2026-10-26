@@ -6,7 +6,7 @@ import { INFO_HOME_LABEL, INFO_HOME_PATH } from "../../constants/info.constants"
 import { findInfoMenuEntryHelper } from "../../helpers/find-info-menu-entry";
 
 /** Desktop trail "Головна → group → page"; mobile shows the chip row instead. */
-export function InfoBreadcrumb() {
+export const InfoBreadcrumb = () => {
   const entry = findInfoMenuEntryHelper(usePathname());
 
   if (!entry) return null;
@@ -22,4 +22,4 @@ export function InfoBreadcrumb() {
       />
     </div>
   );
-}
+};

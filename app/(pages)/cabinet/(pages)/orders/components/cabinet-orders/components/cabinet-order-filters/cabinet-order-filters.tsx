@@ -5,7 +5,7 @@ import {
 } from "./constants/cabinet-order-filters.constants";
 import type { CabinetOrderFiltersProps } from "./types/cabinet-order-filters.types";
 
-export function CabinetOrderFilters({ filters, activeId, onChange }: CabinetOrderFiltersProps) {
+export const CabinetOrderFilters = ({ filters, activeId, onChange }: CabinetOrderFiltersProps) => {
   return (
     <div className="flex gap-2 overflow-x-auto [scrollbar-width:none]">
       {filters.map((filter) => {
@@ -29,4 +29,4 @@ export function CabinetOrderFilters({ filters, activeId, onChange }: CabinetOrde
       })}
     </div>
   );
-}
+};

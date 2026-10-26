@@ -1,8 +1,8 @@
 /** Returns `undefined` when there is nothing to advertise: no old price, or one that is not higher. */
-export function calculateProductDiscountPercentHelper(
+export const calculateProductDiscountPercentHelper = (
   price: string,
   oldPrice: string | null
-): number | undefined {
+): number | undefined => {
   if (!oldPrice) return undefined;
 
   const priceAmount = Number(price);
@@ -10,4 +10,4 @@ export function calculateProductDiscountPercentHelper(
   if (oldPriceAmount <= priceAmount) return undefined;
 
   return Math.round(((oldPriceAmount - priceAmount) / oldPriceAmount) * 100);
-}
+};

@@ -13,13 +13,13 @@ import {
 import { useDeliveryPoints } from "./hooks/use-delivery-points";
 import type { DeliveryPointsProps } from "./types/delivery-points.types";
 
-export function DeliveryPoints({
+export const DeliveryPoints = ({
   carrier,
   method,
   city,
   selectedPoint,
   onSelect,
-}: DeliveryPointsProps) {
+}: DeliveryPointsProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { points, isLoading, isError, isStale } = useDeliveryPoints({
     carrier,
@@ -97,4 +97,4 @@ export function DeliveryPoints({
       )}
     </div>
   );
-}
+};

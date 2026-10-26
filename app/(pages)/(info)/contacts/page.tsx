@@ -19,7 +19,7 @@ import {
 
 export const metadata = buildInfoMetadataHelper(INFO_CONTACTS_PATH, CONTACTS_TITLE, CONTACTS_LEAD);
 
-export default function ContactsPage() {
+const ContactsPage = () => {
   return (
     <>
       <InfoPageHeader title={CONTACTS_TITLE} lead={CONTACTS_LEAD} />
@@ -46,4 +46,6 @@ export default function ContactsPage() {
       </InfoCard>
     </>
   );
-}
+};
+
+export default ContactsPage;

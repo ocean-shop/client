@@ -6,7 +6,7 @@ import {
 import type { CabinetAddressesProps } from "./types/cabinet-addresses.types";
 
 /** The delivery addresses the user saved, and the form to add another. */
-export function CabinetAddresses({ addresses }: CabinetAddressesProps) {
+export const CabinetAddresses = ({ addresses }: CabinetAddressesProps) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="hidden flex-col gap-1.5 lg:flex">
@@ -19,4 +19,4 @@ export function CabinetAddresses({ addresses }: CabinetAddressesProps) {
       <CabinetAddressBook addresses={addresses} />
     </div>
   );
-}
+};

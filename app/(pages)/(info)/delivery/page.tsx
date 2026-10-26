@@ -17,7 +17,7 @@ import {
 
 export const metadata = buildInfoMetadataHelper(INFO_DELIVERY_PATH, DELIVERY_TITLE, DELIVERY_LEAD);
 
-export default function DeliveryPage() {
+const DeliveryPage = () => {
   return (
     <>
       <InfoPageHeader title={DELIVERY_TITLE} lead={DELIVERY_LEAD} />
@@ -33,4 +33,6 @@ export default function DeliveryPage() {
       <InfoNote text={DELIVERY_NOTE} />
     </>
   );
-}
+};
+
+export default DeliveryPage;

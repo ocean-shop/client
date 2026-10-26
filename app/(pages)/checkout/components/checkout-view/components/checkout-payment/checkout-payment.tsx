@@ -7,7 +7,7 @@ import {
 } from "./constants/checkout-payment.constants";
 import type { CheckoutPaymentProps } from "./types/checkout-payment.types";
 
-export function CheckoutPayment({ payment, onChange }: CheckoutPaymentProps) {
+export const CheckoutPayment = ({ payment, onChange }: CheckoutPaymentProps) => {
   return (
     <CheckoutSection step={CHECKOUT_PAYMENT_STEP} title={CHECKOUT_PAYMENT_TITLE}>
       <div role="radiogroup" aria-label={CHECKOUT_PAYMENT_TITLE} className="flex flex-col gap-2">
@@ -35,4 +35,4 @@ export function CheckoutPayment({ payment, onChange }: CheckoutPaymentProps) {
       </div>
     </CheckoutSection>
   );
-}
+};

@@ -5,10 +5,10 @@ const escapeHtml = (value: string) =>
   value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 /** Standalone HTML with only the offer's sections, for printing to PDF. */
-export function buildTermsPrintDocumentHelper(
+export const buildTermsPrintDocumentHelper = (
   sections: TermsSection[],
   documentTitle: string
-): string {
+): string => {
   const body = sections
     .map(
       (section) =>
@@ -19,4 +19,4 @@ export function buildTermsPrintDocumentHelper(
   return `<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>${escapeHtml(
     documentTitle
   )}</title><style>${TERMS_PRINT_DOCUMENT_STYLES}</style></head><body>${body}</body></html>`;
-}
+};

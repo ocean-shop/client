@@ -7,7 +7,7 @@ import {
   HOME_ABOUT_TITLE,
 } from "./constants/home-about.constants";
 
-export function HomeAbout() {
+export const HomeAbout = () => {
   return (
     <section className="bg-surface-soft lg:bg-background">
       <div className="mx-auto flex max-w-page flex-col gap-4 px-4.5 pb-2 pt-8 lg:gap-10 lg:px-10 lg:pb-14 lg:pt-[72px]">
@@ -75,4 +75,4 @@ export function HomeAbout() {
       </div>
     </section>
   );
-}
+};

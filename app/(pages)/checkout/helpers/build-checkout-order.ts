@@ -13,12 +13,12 @@ import { buildCheckoutOrderItemsHelper } from "./build-checkout-order-items";
 import { formatCheckoutDeliveryAddressHelper } from "./format-checkout-delivery-address";
 import { roundCheckoutAmountHelper } from "./round-checkout-amount";
 
-function trimName(value: string | undefined) {
+const trimName = (value: string | undefined) => {
   return value ? value.slice(0, CHECKOUT_ORDER_NAME_MAX_LENGTH) : undefined;
-}
+};
 
 /** The ПІБ field reads "Прізвище Ім’я По батькові", the order Ukrainian forms use. */
-function splitName(name: string) {
+const splitName = (name: string) => {
   const [lastName, firstName, ...middleNames] = name.trim().split(/\s+/);
 
   return {
@@ -26,22 +26,22 @@ function splitName(name: string) {
     firstName: trimName(firstName),
     middleName: trimName(middleNames.join(" ")),
   };
-}
+};
 
 /** Validation has already made sure the number ends in a `0` and nine more digits. */
-function normalizePhone(phone: string) {
+const normalizePhone = (phone: string) => {
   return `${CHECKOUT_ORDER_PHONE_PREFIX}${phone.replace(/\D/g, "").slice(-CHECKOUT_ORDER_PHONE_DIGITS)}`;
-}
+};
 
 /** Expects a draft that already passed `validateCheckoutFormHelper`. */
-export function buildCheckoutOrderHelper({
+export const buildCheckoutOrderHelper = ({
   contact,
   delivery,
   payment,
   items,
   cartTotals,
   totals,
-}: CheckoutOrderDraft): CreateOrderInput {
+}: CheckoutOrderDraft): CreateOrderInput => {
   const { title, address } = formatCheckoutDeliveryAddressHelper(delivery);
 
   return {
@@ -60,4 +60,4 @@ export function buildCheckoutOrderHelper({
     totalAmount: roundCheckoutAmountHelper(totals.total),
     items: buildCheckoutOrderItemsHelper(items),
   };
-}
+};

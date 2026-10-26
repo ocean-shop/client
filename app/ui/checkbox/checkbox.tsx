@@ -9,7 +9,7 @@ import {
 } from "./constants/checkbox.constants";
 import type { CheckboxProps } from "./types/checkbox.types";
 
-export function Checkbox({
+export const Checkbox = ({
   checked,
   onChange,
   label,
@@ -17,7 +17,7 @@ export function Checkbox({
   wrapperClassName,
   className,
   ...props
-}: CheckboxProps) {
+}: CheckboxProps) => {
   return (
     <label className={`${CHECKBOX_WRAPPER_CLASSNAME} ${wrapperClassName ?? ""}`}>
       <input
@@ -38,4 +38,4 @@ export function Checkbox({
       {count !== undefined && <span className={CHECKBOX_COUNT_CLASSNAME}>{count}</span>}
     </label>
   );
-}
+};

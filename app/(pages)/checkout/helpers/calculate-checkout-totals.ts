@@ -7,11 +7,11 @@ import type {
 } from "../types/checkout.types";
 import { getCheckoutCarrierHelper } from "./get-checkout-carrier";
 
-export function calculateCheckoutTotalsHelper(
+export const calculateCheckoutTotalsHelper = (
   cartTotals: CartTotals,
   delivery: CheckoutDelivery,
   payment: CheckoutPaymentMethod
-): CheckoutTotals {
+): CheckoutTotals => {
   const carrier = getCheckoutCarrierHelper(delivery.carrier);
   const shipping = carrier.methods.find((method) => method.id === delivery.method)?.price ?? 0;
   // The carrier takes its cut of everything it collects, delivery included.
@@ -23,4 +23,4 @@ export function calculateCheckoutTotalsHelper(
       : 0;
 
   return { shipping, codFee, total: cartTotals.total + shipping + codFee };
-}
+};

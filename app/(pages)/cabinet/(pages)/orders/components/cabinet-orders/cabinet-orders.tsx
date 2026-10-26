@@ -23,7 +23,7 @@ import { repeatCabinetOrderHelper } from "./helpers/repeat-cabinet-order";
 import type { CabinetOrdersFilterId, CabinetOrdersProps } from "./types/cabinet-orders.types";
 
 /** The user's orders with status chips, swapped for one order's details once it is opened. */
-export function CabinetOrders({ orders, page, totalPages }: CabinetOrdersProps) {
+export const CabinetOrders = ({ orders, page, totalPages }: CabinetOrdersProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [filterId, setFilterId] = useState<CabinetOrdersFilterId>(CABINET_ORDERS_DEFAULT_FILTER);
@@ -37,16 +37,16 @@ export function CabinetOrders({ orders, page, totalPages }: CabinetOrdersProps) 
   const statuses = filters.find((filter) => filter.id === filterId)?.statuses ?? null;
   const visibleOrders = orders.filter((order) => !statuses || statuses.includes(order.status));
 
-  function handleOpen(order: UserOrderView) {
+  const handleOpen = (order: UserOrderView) => {
     setOpenOrder(order);
     window.scrollTo({ top: 0 });
-  }
+  };
 
-  function handlePageChange(nextPage: number) {
+  const handlePageChange = (nextPage: number) => {
     startTransition(() => {
       router.push(`${CABINET_ORDERS_PATH}?${ORDERS_PAGE_SEARCH_PARAM}=${nextPage}`);
     });
-  }
+  };
 
   if (openOrder) {
     return (
@@ -104,4 +104,4 @@ export function CabinetOrders({ orders, page, totalPages }: CabinetOrdersProps) 
       )}
     </div>
   );
-}
+};

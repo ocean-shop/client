@@ -4,7 +4,7 @@ import { InfoSidebar } from "./components/info-sidebar/info-sidebar";
 import { INFO_PAGE_CLASS_NAME } from "./constants/info.constants";
 
 /** Shared frame of the static pages for buyers and about the company. */
-export default function InfoLayout({ children }: { children: React.ReactNode }) {
+const InfoLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={INFO_PAGE_CLASS_NAME}>
       <InfoMobileNav />
@@ -19,4 +19,6 @@ export default function InfoLayout({ children }: { children: React.ReactNode }) 
       </div>
     </div>
   );
-}
+};
+
+export default InfoLayout;

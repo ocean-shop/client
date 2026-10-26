@@ -3,7 +3,7 @@ import { CABINET_PROFILE_TEXT, CABINET_PROFILE_TITLE } from "./constants/cabinet
 import type { CabinetProfileProps } from "./types/cabinet-profile.types";
 
 /** The user's personal details, which checkout fills in for them. */
-export function CabinetProfile({ profile }: CabinetProfileProps) {
+export const CabinetProfile = ({ profile }: CabinetProfileProps) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="hidden flex-col gap-1.5 lg:flex">
@@ -16,4 +16,4 @@ export function CabinetProfile({ profile }: CabinetProfileProps) {
       <CabinetProfileContacts profile={profile} />
     </div>
   );
-}
+};

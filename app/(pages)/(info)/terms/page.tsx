@@ -7,7 +7,7 @@ import { TERMS_EDITION, TERMS_SECTIONS, TERMS_TITLE } from "./constants/terms.co
 
 export const metadata = buildInfoMetadataHelper(INFO_TERMS_PATH, TERMS_TITLE);
 
-export default function TermsPage() {
+const TermsPage = () => {
   return (
     <>
       <InfoPageHeader
@@ -23,4 +23,6 @@ export default function TermsPage() {
       <TermsSections sections={TERMS_SECTIONS} />
     </>
   );
-}
+};
+
+export default TermsPage;

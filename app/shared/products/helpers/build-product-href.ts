@@ -6,10 +6,10 @@ import { PRODUCT_CATEGORY_SEARCH_PARAM, PRODUCT_PAGE_PATH } from "../constants/p
  *
  * `productSlug` may also be a product id where no slug is known: the page redirects it.
  */
-export function buildProductHrefHelper(productSlug: string, categorySlug?: string): string {
+export const buildProductHrefHelper = (productSlug: string, categorySlug?: string): string => {
   const path = `${PRODUCT_PAGE_PATH}/${productSlug}`;
 
   if (!categorySlug) return path;
 
   return `${path}?${PRODUCT_CATEGORY_SEARCH_PARAM}=${encodeURIComponent(categorySlug)}`;
-}
+};

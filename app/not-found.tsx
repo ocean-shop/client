@@ -4,6 +4,8 @@ import { NOT_FOUND_METADATA_TITLE } from "./components/not-found-view/constants/
 
 export const metadata: Metadata = { title: NOT_FOUND_METADATA_TITLE };
 
-export default function NotFound() {
+const NotFound = () => {
   return <NotFoundView />;
-}
+};
+
+export default NotFound;

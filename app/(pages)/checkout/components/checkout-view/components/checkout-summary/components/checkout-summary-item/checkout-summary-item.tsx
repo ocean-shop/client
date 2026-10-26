@@ -4,7 +4,7 @@ import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-p
 import { CHECKOUT_SUMMARY_ITEM_QUANTITY_LABEL } from "./constants/checkout-summary-item.constants";
 import type { CheckoutSummaryItemProps } from "./types/checkout-summary-item.types";
 
-export function CheckoutSummaryItem({ item }: CheckoutSummaryItemProps) {
+export const CheckoutSummaryItem = ({ item }: CheckoutSummaryItemProps) => {
   const hasDiscount =
     calculateProductDiscountPercentHelper(item.price, item.oldPrice) !== undefined;
 
@@ -38,4 +38,4 @@ export function CheckoutSummaryItem({ item }: CheckoutSummaryItemProps) {
       </div>
     </div>
   );
-}
+};

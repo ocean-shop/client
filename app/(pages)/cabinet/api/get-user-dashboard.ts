@@ -4,10 +4,10 @@ import { getDashboardClientApiUrl } from "../constants/cabinet.constants";
 import type { UserDashboardResponse } from "../types/cabinet.types";
 
 /** Everything the cabinet's overview shows, in one request. Server-only, since it needs the access token cookie. */
-export async function getUserDashboard(userId: string): Promise<UserDashboardResponse> {
+export const getUserDashboard = async (userId: string): Promise<UserDashboardResponse> => {
   const response = await authFetch(getDashboardClientApiUrl(userId));
 
   if (!response.ok) throw new ApiError(response.status);
 
   return response.json();
-}
+};

@@ -16,7 +16,7 @@ import {
 } from "../../constants/catalog.constants";
 import type { CatalogBodyProps } from "./types/catalog-body.types";
 
-export async function CatalogBody({ category, query, productList }: CatalogBodyProps) {
+export const CatalogBody = async ({ category, query, productList }: CatalogBodyProps) => {
   const categories = await getCatalogCategories();
 
   const ancestors = getCatalogCategoryAncestorsHelper(categories, category);
@@ -63,4 +63,4 @@ export async function CatalogBody({ category, query, productList }: CatalogBodyP
       <CatalogPagination query={query} totalPages={productList.totalPages} />
     </div>
   );
-}
+};

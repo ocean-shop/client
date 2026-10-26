@@ -1,7 +1,7 @@
 import type { InfoFeatureListProps } from "./types/info-feature-list.types";
 
 /** Rows of an icon, a description and a value on the right, e.g. delivery methods and their prices. */
-export function InfoFeatureList({ items }: InfoFeatureListProps) {
+export const InfoFeatureList = ({ items }: InfoFeatureListProps) => {
   return (
     <ul className="flex flex-col">
       {items.map((item) => (
@@ -31,4 +31,4 @@ export function InfoFeatureList({ items }: InfoFeatureListProps) {
       ))}
     </ul>
   );
-}
+};

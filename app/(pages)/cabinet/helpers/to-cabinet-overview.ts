@@ -9,10 +9,10 @@ import type {
   UserDashboardResponse,
 } from "../types/cabinet.types";
 
-function toCabinetActiveOrder(
+const toCabinetActiveOrder = (
   order: UserOrder,
   products: Map<string, ProductDetails>
-): CabinetActiveOrder | null {
+): CabinetActiveOrder | null => {
   if (order.status === "cancelled") return null;
 
   const view = toUserOrderViewHelper(order, products);
@@ -28,14 +28,14 @@ function toCabinetActiveOrder(
     items: view.items.map(({ id, name, image }) => ({ id, name, image })),
     trackingHref: null,
   };
-}
+};
 
 /** `products` only needs the items of the latest active order, the one the overview shows. */
-export function toCabinetOverviewHelper(
+export const toCabinetOverviewHelper = (
   dashboard: UserDashboardResponse,
   products: Map<string, ProductDetails>,
   greetingName: string | null
-): CabinetOverview {
+): CabinetOverview => {
   const [latestOrder] = dashboard.lastActiveOrders;
   const mainAddress = dashboard.mainShipping
     ? toUserShippingViewHelper(dashboard.mainShipping)
@@ -56,4 +56,4 @@ export function toCabinetOverviewHelper(
     favoritesCount: dashboard.favoriteProductsCount,
     mainAddress: mainAddress && { title: mainAddress.title, address: mainAddress.address },
   };
-}
+};

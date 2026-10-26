@@ -18,7 +18,7 @@ import {
 } from "./constants/hero.constants";
 import { MobileHero } from "./components/mobile-hero/mobile-hero";
 
-export async function Hero() {
+export const Hero = async () => {
   const mainBannerProduct = await getMainBannerProduct();
 
   const { props: imageProps } = getImageProps({
@@ -91,4 +91,4 @@ export async function Hero() {
       </section>
     </>
   );
-}
+};

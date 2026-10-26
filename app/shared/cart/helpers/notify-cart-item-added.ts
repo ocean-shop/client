@@ -9,7 +9,7 @@ import {
 } from "../constants/cart.constants";
 
 /** Confirms an addition and offers shortcuts into the cart or straight to checkout. */
-export function notifyCartItemAddedHelper(productName: string, quantity: number) {
+export const notifyCartItemAddedHelper = (productName: string, quantity: number) => {
   const toastId = toastStore.success(
     CART_ADDED_TOAST_TITLE,
     CART_ADDED_TOAST_MESSAGE(productName, quantity),
@@ -28,4 +28,4 @@ export function notifyCartItemAddedHelper(productName: string, quantity: number)
       },
     ]
   );
-}
+};

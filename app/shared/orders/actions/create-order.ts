@@ -12,7 +12,7 @@ import type {
  * Places the order. Runs as an action because `API_BASE_URL` and `SHOP_ID` are server-only. A
  * signed-in buyer's order is tied to them, so it shows up in their cabinet.
  */
-export async function createOrderAction(input: CreateOrderInput): Promise<CreateOrderResult> {
+export const createOrderAction = async (input: CreateOrderInput): Promise<CreateOrderResult> => {
   const user = await getAuthUser();
   const body: CreateOrderRequest = {
     ...input,
@@ -30,4 +30,4 @@ export async function createOrderAction(input: CreateOrderInput): Promise<Create
   if (!response.ok) return { ok: false, status: response.status };
 
   return { ok: true, order: await response.json() };
-}
+};

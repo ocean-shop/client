@@ -7,7 +7,7 @@ import { repeatCabinetOrderHelper } from "../../../components/cabinet-orders/hel
 import type { CabinetOrderPageProps } from "./types/cabinet-order-page.types";
 
 /** An order opened by its own link, e.g. from the overview; "back" leads to the full list. */
-export function CabinetOrderPage({ order }: CabinetOrderPageProps) {
+export const CabinetOrderPage = ({ order }: CabinetOrderPageProps) => {
   const router = useRouter();
 
   return (
@@ -17,4 +17,4 @@ export function CabinetOrderPage({ order }: CabinetOrderPageProps) {
       onRepeat={() => repeatCabinetOrderHelper(order)}
     />
   );
-}
+};

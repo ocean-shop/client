@@ -6,9 +6,7 @@ import { parseCabinetPageHelper } from "../../helpers/parse-cabinet-page";
 import { CabinetFavorites } from "./components/cabinet-favorites/cabinet-favorites";
 import { FAVORITES_PAGE_SEARCH_PARAM, FAVORITES_PAGE_SIZE } from "./constants/favorites.constants";
 
-export default async function CabinetFavoritesPage({
-  searchParams,
-}: PageProps<"/cabinet/favorites">) {
+const CabinetFavoritesPage = async ({ searchParams }: PageProps<"/cabinet/favorites">) => {
   const user = await requireAuthUser(CABINET_FAVORITES_PATH);
   const page = parseCabinetPageHelper((await searchParams)[FAVORITES_PAGE_SEARCH_PARAM]);
   const response = await getFavoriteProducts(user.id, page, FAVORITES_PAGE_SIZE);
@@ -16,13 +14,12 @@ export default async function CabinetFavoritesPage({
   return (
     <CabinetFavorites
       key={page}
-      // Cards render a required image, so products without one are skipped, as in the catalog.
-      products={response.items
-        .filter((product) => product.images.length > 0)
-        .map((product) => mapProductToCardDataHelper(product))}
+      products={response.items.map((product) => mapProductToCardDataHelper(product))}
       total={response.total}
       page={response.page}
       totalPages={response.totalPages}
     />
   );
-}
+};
+
+export default CabinetFavoritesPage;

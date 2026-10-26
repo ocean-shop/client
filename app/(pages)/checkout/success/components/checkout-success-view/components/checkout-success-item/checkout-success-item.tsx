@@ -3,7 +3,7 @@ import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-p
 import { CHECKOUT_SUCCESS_ITEM_QUANTITY_LABEL } from "./constants/checkout-success-item.constants";
 import type { CheckoutSuccessItemProps } from "./types/checkout-success-item.types";
 
-export function CheckoutSuccessItem({ item }: CheckoutSuccessItemProps) {
+export const CheckoutSuccessItem = ({ item }: CheckoutSuccessItemProps) => {
   return (
     <div className="flex items-center gap-3 border-b border-surface py-3">
       <div className="relative h-[52px] w-[52px] flex-none overflow-hidden rounded-[10px] bg-footer lg:h-14 lg:w-14">
@@ -27,4 +27,4 @@ export function CheckoutSuccessItem({ item }: CheckoutSuccessItemProps) {
       </span>
     </div>
   );
-}
+};

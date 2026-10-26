@@ -6,7 +6,7 @@ import {
 } from "./constants/loyalty-tier.constants";
 import type { LoyaltyTierProps } from "./types/loyalty-tier.types";
 
-export function LoyaltyTier({ tier }: LoyaltyTierProps) {
+export const LoyaltyTier = ({ tier }: LoyaltyTierProps) => {
   const styles = tier.isFeatured ? LOYALTY_TIER_FEATURED_STYLES : LOYALTY_TIER_REGULAR_STYLES;
 
   return (
@@ -39,4 +39,4 @@ export function LoyaltyTier({ tier }: LoyaltyTierProps) {
       </ul>
     </li>
   );
-}
+};

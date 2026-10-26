@@ -6,20 +6,29 @@ import {
 } from "./constants/product-card.constants";
 import type { ProductCardProps } from "./types/product-card.types";
 
-export function ProductCard({ product, size = "default", cta, favorite }: ProductCardProps) {
+export const ProductCard = ({ product, size = "default", cta, favorite }: ProductCardProps) => {
   const styles = PRODUCT_CARD_SIZE_STYLES[size];
 
   return (
     <div className={`flex flex-col bg-background ${styles.root}`}>
       <div className={`relative overflow-hidden bg-footer ${styles.image}`}>
         <Link href={product.href} aria-label={product.name} className="absolute inset-0">
-          <Image
-            src={product.image}
-            alt={product.imageAlt}
-            sizes={styles.imageSizes}
-            fill
-            className="object-cover"
-          />
+          {product.image ? (
+            <Image
+              src={product.image}
+              alt={product.imageAlt}
+              sizes={styles.imageSizes}
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <span
+              aria-hidden
+              className={`flex h-full items-center justify-center font-symbols text-muted-light ${styles.imageFallback}`}
+            >
+              image
+            </span>
+          )}
         </Link>
 
         {product.badge && (
@@ -66,4 +75,4 @@ export function ProductCard({ product, size = "default", cta, favorite }: Produc
       {cta}
     </div>
   );
-}
+};

@@ -1,9 +1,9 @@
 import type { CatalogCategory } from "../types/catalog-categories.types";
 
-export function getCatalogCategoryAncestorsHelper(
+export const getCatalogCategoryAncestorsHelper = (
   categories: CatalogCategory[],
   category: CatalogCategory
-): CatalogCategory[] {
+): CatalogCategory[] => {
   const ancestors: CatalogCategory[] = [];
   let current: CatalogCategory | undefined = category;
 
@@ -16,4 +16,4 @@ export function getCatalogCategoryAncestorsHelper(
   }
 
   return ancestors;
-}
+};

@@ -11,7 +11,7 @@ import {
 } from "../constants/delivery-city-select.constants";
 
 /** Settlements matching the typed name, fetched once the visitor pauses typing. */
-export function useDeliveryCities(searchTerm: string, isEnabled: boolean) {
+export const useDeliveryCities = (searchTerm: string, isEnabled: boolean) => {
   const term = searchTerm.trim();
   const debouncedTerm = useDebouncedValue(term, DELIVERY_CITY_SELECT_DEBOUNCE_MS);
   const hasSearchableTerm = debouncedTerm.length >= DELIVERY_CITY_SELECT_TERM_MIN_LENGTH;
@@ -30,4 +30,4 @@ export function useDeliveryCities(searchTerm: string, isEnabled: boolean) {
     /** True while waiting out the debounce as well, so stale rows never look settled. */
     isSearching: isEnabled && (isFetching || term !== debouncedTerm),
   };
-}
+};

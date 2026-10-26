@@ -8,10 +8,10 @@ import { PRODUCT_HOME_BREADCRUMB_ITEM } from "../constants/product.constants";
  * The category chain is only available when the visitor arrives from a catalog page, which passes
  * the slug along. Direct hits and stale slugs fall back to `Головна / product name`.
  */
-export async function buildProductBreadcrumbItemsHelper(
+export const buildProductBreadcrumbItemsHelper = async (
   productName: string,
   categorySlug?: string
-): Promise<BreadcrumbItem[]> {
+): Promise<BreadcrumbItem[]> => {
   const items: BreadcrumbItem[] = [PRODUCT_HOME_BREADCRUMB_ITEM];
 
   if (categorySlug) {
@@ -28,4 +28,4 @@ export async function buildProductBreadcrumbItemsHelper(
   items.push({ label: productName });
 
   return items;
-}
+};

@@ -3,7 +3,7 @@ import { Button } from "@/app/ui/button/button";
 import { TOAST_VARIANT_STYLES } from "./constants/toast.constants";
 import type { ToastProps } from "./types/toast.types";
 
-export function Toast({ variant, title, message, actions, onClose }: ToastProps) {
+export const Toast = ({ variant, title, message, actions, onClose }: ToastProps) => {
   const styles = TOAST_VARIANT_STYLES[variant];
 
   return (
@@ -59,4 +59,4 @@ export function Toast({ variant, title, message, actions, onClose }: ToastProps)
       </Button>
     </div>
   );
-}
+};

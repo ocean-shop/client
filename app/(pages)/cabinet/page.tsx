@@ -6,7 +6,7 @@ import { CabinetOverview } from "./components/cabinet-overview/cabinet-overview"
 import { getCabinetGreetingNameHelper } from "./helpers/get-cabinet-greeting-name";
 import { toCabinetOverviewHelper } from "./helpers/to-cabinet-overview";
 
-export default async function CabinetPage() {
+const CabinetPage = async () => {
   const user = await requireAuthUser();
   const [dashboard, profile] = await Promise.all([
     getUserDashboard(user.id),
@@ -17,4 +17,6 @@ export default async function CabinetPage() {
   const greetingName = getCabinetGreetingNameHelper(profile.fullName);
 
   return <CabinetOverview overview={toCabinetOverviewHelper(dashboard, products, greetingName)} />;
-}
+};
+
+export default CabinetPage;

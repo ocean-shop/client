@@ -1,10 +1,10 @@
 import type { CatalogFilter } from "../types/products.types";
 
-export function toggleCatalogAttributeValueHelper(
+export const toggleCatalogAttributeValueHelper = (
   attributes: CatalogFilter[],
   name: string,
   value: string
-): CatalogFilter[] {
+): CatalogFilter[] => {
   if (!attributes.some((attribute) => attribute.name === name)) {
     return [...attributes, { name, values: [value] }];
   }
@@ -20,4 +20,4 @@ export function toggleCatalogAttributeValueHelper(
       return { name, values };
     })
     .filter((attribute) => attribute.values.length > 0);
-}
+};

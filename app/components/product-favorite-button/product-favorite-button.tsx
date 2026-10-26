@@ -29,12 +29,12 @@ import {
 import type { ProductFavoriteButtonProps } from "./types/product-favorite-button.types";
 
 /** The heart on a product photo. Guests are sent to sign in and brought back to the same page. */
-export function ProductFavoriteButton({
+export const ProductFavoriteButton = ({
   productId,
   productName,
   variant,
   initialIsFavorite = false,
-}: ProductFavoriteButtonProps) {
+}: ProductFavoriteButtonProps) => {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const { ids, status } = useFavorites();
@@ -42,7 +42,7 @@ export function ProductFavoriteButton({
   const isFavorite = status === "ready" ? ids.has(productId) : initialIsFavorite;
   const styles = PRODUCT_FAVORITE_BUTTON_STYLES[variant];
 
-  function notifyAdded() {
+  const notifyAdded = () => {
     const toastId = toastStore.success(FAVORITES_ADDED_TOAST_TITLE, productName, [
       {
         label: FAVORITES_ADDED_TOAST_ACTION_LABEL,
@@ -52,9 +52,9 @@ export function ProductFavoriteButton({
         },
       },
     ]);
-  }
+  };
 
-  async function toggle() {
+  const toggle = async () => {
     setIsPending(true);
 
     try {
@@ -83,7 +83,7 @@ export function ProductFavoriteButton({
     } finally {
       setIsPending(false);
     }
-  }
+  };
 
   return (
     <Button
@@ -105,4 +105,4 @@ export function ProductFavoriteButton({
       </span>
     </Button>
   );
-}
+};
