@@ -23,7 +23,7 @@ export const mapProductToCardDataHelper = (
   return {
     id: product.id,
     href: buildProductHrefHelper(product.slug, categorySlug),
-    image: product.images[0]?.url ?? "",
+    image: product.images[0]?.url ?? null,
     imageAlt: product.images[0]?.alt || product.name,
     name: product.name,
     price: formatProductPriceHelper(product.price),

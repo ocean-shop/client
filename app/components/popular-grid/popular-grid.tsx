@@ -15,9 +15,7 @@ export const PopularGrid = async () => {
     categories,
     CATALOG_CATEGORIES_POPULAR_LIMIT
   );
-  const popularProducts = products
-    .filter((product) => product.images.length > 0)
-    .map((product) => mapProductToCardDataHelper(product));
+  const popularProducts = products.map((product) => mapProductToCardDataHelper(product));
 
   return (
     <section className="bg-surface-soft">

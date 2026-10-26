@@ -13,13 +13,22 @@ export const ProductCard = ({ product, size = "default", cta, favorite }: Produc
     <div className={`flex flex-col bg-background ${styles.root}`}>
       <div className={`relative overflow-hidden bg-footer ${styles.image}`}>
         <Link href={product.href} aria-label={product.name} className="absolute inset-0">
-          <Image
-            src={product.image}
-            alt={product.imageAlt}
-            sizes={styles.imageSizes}
-            fill
-            className="object-cover"
-          />
+          {product.image ? (
+            <Image
+              src={product.image}
+              alt={product.imageAlt}
+              sizes={styles.imageSizes}
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <span
+              aria-hidden
+              className={`flex h-full items-center justify-center font-symbols text-muted-light ${styles.imageFallback}`}
+            >
+              image
+            </span>
+          )}
         </Link>
 
         {product.badge && (
