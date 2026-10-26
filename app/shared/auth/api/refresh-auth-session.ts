@@ -1,5 +1,5 @@
 import {
-  AUTH_API_URL,
+  AUTH_CLIENT_API_URL,
   AUTH_REFRESH_REUSE_MS,
   AUTH_REFRESH_TOKEN_COOKIE,
 } from "../constants/auth.constants";
@@ -10,7 +10,7 @@ const pendingRefreshes = new Map<string, Promise<AuthTokens | null>>();
 
 const requestRefresh = async (refreshToken: string, userAgent: string | null) => {
   try {
-    const response = await fetch(`${AUTH_API_URL}/refresh`, {
+    const response = await fetch(`${AUTH_CLIENT_API_URL}/refresh`, {
       method: "POST",
       headers: {
         Cookie: `${AUTH_REFRESH_TOKEN_COOKIE}=${refreshToken}`,
