@@ -10,6 +10,12 @@ export const LOGIN_CODE_LENGTH = 4;
 export const LOGIN_CODE_MAX_ATTEMPTS = 5;
 export const LOGIN_RESEND_DELAY_SECONDS = 60;
 
+/**
+ * Whether visitors can sign in with a phone number. Public, so the client form sees it; phone
+ * login stays on unless the flag is explicitly "false", leaving email as the only option.
+ */
+export const LOGIN_PHONE_ENABLED = process.env.NEXT_PUBLIC_PHONE_LOGIN_ENABLED !== "false";
+
 export const LOGIN_EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /** `+380`, `380` or a bare `0`, followed by the nine digits of a Ukrainian mobile number. */
 export const LOGIN_PHONE_PATTERN = /^(?:\+?38)?0\d{9}$/;
