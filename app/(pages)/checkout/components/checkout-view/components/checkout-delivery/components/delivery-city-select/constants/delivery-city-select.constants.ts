@@ -3,6 +3,8 @@ export const DELIVERY_CITY_SELECT_SEARCH_PLACEHOLDER = "Почніть ввод�
 export const DELIVERY_CITY_SELECT_POPULAR_LABEL = "Популярні міста";
 export const DELIVERY_CITY_SELECT_SEARCHING_LABEL = "Шукаємо…";
 export const DELIVERY_CITY_SELECT_EMPTY_LABEL = "Нічого не знайдено";
+export const DELIVERY_CITY_SELECT_ERROR_LABEL =
+  "Пошук зараз недоступний. Спробуйте ще раз трохи пізніше.";
 
 export const DELIVERY_CITY_SELECT_QUERY_KEY = "delivery-cities";
 export const DELIVERY_CITY_SELECT_DEBOUNCE_MS = 300;

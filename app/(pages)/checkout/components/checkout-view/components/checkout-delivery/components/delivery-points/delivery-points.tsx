@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/app/ui/input/input";
 import { CheckoutOption } from "../../../checkout-option/checkout-option";
+import { DeliveryManualPoint } from "./components/delivery-manual-point/delivery-manual-point";
 import {
   DELIVERY_POINTS_EMPTY_LABEL,
   DELIVERY_POINTS_ERROR_LABEL,
@@ -19,6 +20,8 @@ export const DeliveryPoints = ({
   city,
   selectedPoint,
   onSelect,
+  manualPoint,
+  onManualPointChange,
 }: DeliveryPointsProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { points, isLoading, isError, isStale } = useDeliveryPoints({
@@ -27,6 +30,10 @@ export const DeliveryPoints = ({
     city,
     searchTerm,
   });
+
+  const hasFailed = isError && !points;
+  // Whatever was typed in by hand stays in view should the list load later, until a point is picked.
+  const isManual = hasFailed || manualPoint !== null;
 
   // A search can hide the chosen point, so it stays pinned on top of the results.
   const isSelectedListed = points?.some((point) => point.id === selectedPoint?.id);
@@ -39,20 +46,22 @@ export const DeliveryPoints = ({
     <div className="flex flex-col gap-2">
       <span className="text-[13px] font-medium text-muted">{DELIVERY_POINTS_TITLES[method]}</span>
 
-      <div className="relative">
-        <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 font-symbols text-xl text-muted-light">
-          search
-        </span>
-        <Input
-          variant="outline"
-          size="xl"
-          type="search"
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-          placeholder={DELIVERY_POINTS_SEARCH_PLACEHOLDER}
-          className="pl-11"
-        />
-      </div>
+      {!hasFailed && (
+        <div className="relative">
+          <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 font-symbols text-xl text-muted-light">
+            search
+          </span>
+          <Input
+            variant="outline"
+            size="xl"
+            type="search"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder={DELIVERY_POINTS_SEARCH_PLACEHOLDER}
+            className="pl-11"
+          />
+        </div>
+      )}
 
       {isLoading && (
         <div className="flex animate-pulse flex-col gap-2">
@@ -62,8 +71,17 @@ export const DeliveryPoints = ({
         </div>
       )}
 
-      {isError && !points && (
+      {hasFailed && (
         <span className="px-1 text-[13px] text-error-dark">{DELIVERY_POINTS_ERROR_LABEL}</span>
+      )}
+
+      {isManual && (
+        <DeliveryManualPoint
+          method={method}
+          city={city}
+          value={manualPoint}
+          onChange={onManualPointChange}
+        />
       )}
 
       {points && visiblePoints.length === 0 && (

@@ -6,6 +6,7 @@ import {
   CHECKOUT_VALIDATION_MESSAGES,
 } from "../constants/checkout.constants";
 import type { CheckoutContact, CheckoutDelivery } from "../types/checkout.types";
+import { isCheckoutManualPointCompleteHelper } from "./is-checkout-manual-point-complete";
 
 /** Returns the message for the first field that still needs attention, or `null` when all is set. */
 export const validateCheckoutFormHelper = (
@@ -28,5 +29,13 @@ export const validateCheckoutFormHelper = (
     return delivery.street.trim() ? null : CHECKOUT_VALIDATION_MESSAGES.street;
   }
 
-  return delivery.point ? null : CHECKOUT_VALIDATION_MESSAGES.point;
+  if (delivery.point) return null;
+
+  if (delivery.manualPoint) {
+    return isCheckoutManualPointCompleteHelper(delivery.manualPoint)
+      ? null
+      : CHECKOUT_VALIDATION_MESSAGES.manualPoint;
+  }
+
+  return CHECKOUT_VALIDATION_MESSAGES.point;
 };

@@ -27,6 +27,21 @@ export type DeliveryPoint = {
   meta: string;
 };
 
+/**
+ * A branch or parcel locker typed in by hand, for when the carrier's list cannot be loaded. The
+ * settlement is free text too, so a village the city search never offered can still be named.
+ */
+export type DeliveryManualPoint = {
+  city: string;
+  number: string;
+};
+
+export type DeliveryCitiesResult =
+  { ok: true; cities: DeliveryCity[] } | { ok: false; status: number };
+
+export type DeliveryPointsResult =
+  { ok: true; points: DeliveryPoint[] } | { ok: false; status: number };
+
 export type DeliveryPointsRequest = {
   carrier: DeliveryCarrier;
   method: DeliveryPointMethod;

@@ -23,6 +23,8 @@ export const NOVA_POSHTA_POSTOMAT_TYPE_REF = "f9316480-5f2d-425d-bc2c-ac7cd29dec
 /** Nova Poshta answers bursts with "Try again after 0.5 seconds" instead of an HTTP error. */
 export const NOVA_POSHTA_RETRY_DELAY_MS = 600;
 export const NOVA_POSHTA_RETRY_ATTEMPTS = 2;
+/** Where the API is unreachable a connect hangs for long, so each attempt gives up early. */
+export const NOVA_POSHTA_REQUEST_TIMEOUT_MS = 5000;
 
 export const NOVA_POSHTA_WAREHOUSE_TITLES: Record<NovaPoshtaWarehouseCategory, string> = {
   Branch: "Відділення",
@@ -54,6 +56,11 @@ export const DELIVERY_EMPTY_CITIES: DeliveryCity[] = [];
 export const DELIVERY_EMPTY_POINTS: DeliveryPoint[] = [];
 
 export const DELIVERY_REQUEST_REVALIDATE_SECONDS = 60 * 60;
+
+/** Statuses reported for a carrier call that never got an HTTP answer. */
+export const DELIVERY_TIMEOUT_STATUS = 504;
+export const DELIVERY_FAILED_STATUS = 502;
+export const DELIVERY_TIMEOUT_ERROR_NAME = "TimeoutError";
 
 /** Shown before the visitor types anything, so the most common choices are one click away. */
 export const DELIVERY_POPULAR_CITIES: DeliveryCity[] = [

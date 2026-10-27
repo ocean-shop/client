@@ -2,6 +2,7 @@ import { ApiError, apiFetch } from "@/app/core/api/api-fetch";
 import {
   NOVA_POSHTA_ADDRESS_MODEL,
   NOVA_POSHTA_API_URL,
+  NOVA_POSHTA_REQUEST_TIMEOUT_MS,
   NOVA_POSHTA_RETRY_ATTEMPTS,
   NOVA_POSHTA_RETRY_DELAY_MS,
 } from "../constants/delivery.constants";
@@ -33,6 +34,7 @@ export const novaPoshtaFetch = async <T>(
         calledMethod,
         methodProperties,
       }),
+      signal: AbortSignal.timeout(NOVA_POSHTA_REQUEST_TIMEOUT_MS),
     });
 
     if (response.success) return response.data;

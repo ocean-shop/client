@@ -7,7 +7,11 @@ import { CHECKOUT_DEFAULT_DELIVERY } from "@/app/(pages)/checkout/constants/chec
 import type { CheckoutDelivery } from "@/app/(pages)/checkout/types/checkout.types";
 import { DEFAULT_API_ERROR_MESSAGE } from "@/app/core/api/constants/api.constants";
 import { toastStore } from "@/app/core/providers/toast-provider/toast-store";
-import type { DeliveryCity, DeliveryPoint } from "@/app/shared/delivery/types/delivery.types";
+import type {
+  DeliveryCity,
+  DeliveryManualPoint,
+  DeliveryPoint,
+} from "@/app/shared/delivery/types/delivery.types";
 import { Button } from "@/app/ui/button/button";
 import { Checkbox } from "@/app/ui/checkbox/checkbox";
 import { createUserShippingAction } from "../../../../../../actions/create-user-shipping";
@@ -51,16 +55,21 @@ export const CabinetAddressForm = ({
 
   // A chosen branch belongs to one city, carrier and method, so changing any of them clears it.
   const handleTypeChange = ({ carrier, method }: CabinetAddressType) => {
-    setDelivery((current) => ({ ...current, carrier, method, point: null }));
+    setDelivery((current) => ({ ...current, carrier, method, point: null, manualPoint: null }));
     setErrors({});
   };
 
   const handleCityChange = (city: DeliveryCity) => {
-    setDelivery((current) => ({ ...current, city, point: null }));
+    setDelivery((current) => ({ ...current, city, point: null, manualPoint: null }));
   };
 
   const handlePointChange = (point: DeliveryPoint) => {
-    setDelivery((current) => ({ ...current, point }));
+    setDelivery((current) => ({ ...current, point, manualPoint: null }));
+    setErrors((current) => ({ ...current, point: null }));
+  };
+
+  const handleManualPointChange = (manualPoint: DeliveryManualPoint) => {
+    setDelivery((current) => ({ ...current, manualPoint }));
     setErrors((current) => ({ ...current, point: null }));
   };
 
@@ -163,6 +172,8 @@ export const CabinetAddressForm = ({
               city={delivery.city}
               selectedPoint={delivery.point}
               onSelect={handlePointChange}
+              manualPoint={delivery.manualPoint}
+              onManualPointChange={handleManualPointChange}
             />
             {errors.point && <span className="text-[12.5px] text-error-dark">{errors.point}</span>}
           </div>

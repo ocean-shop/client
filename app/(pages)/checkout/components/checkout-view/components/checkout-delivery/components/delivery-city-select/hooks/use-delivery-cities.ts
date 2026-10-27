@@ -1,6 +1,7 @@
 "use client";
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { ApiError } from "@/app/core/api/api-fetch";
 import { useDebouncedValue } from "@/app/core/hooks/use-debounced-value";
 import { searchDeliveryCitiesAction } from "@/app/shared/delivery/actions/search-delivery-cities";
 import {
@@ -16,12 +17,20 @@ export const useDeliveryCities = (searchTerm: string, isEnabled: boolean) => {
   const debouncedTerm = useDebouncedValue(term, DELIVERY_CITY_SELECT_DEBOUNCE_MS);
   const hasSearchableTerm = debouncedTerm.length >= DELIVERY_CITY_SELECT_TERM_MIN_LENGTH;
 
-  const { data, isFetching } = useQuery({
+  const { data, isFetching, isError } = useQuery({
     queryKey: [DELIVERY_CITY_SELECT_QUERY_KEY, debouncedTerm],
-    queryFn: () => searchDeliveryCitiesAction(debouncedTerm),
+    queryFn: async () => {
+      const result = await searchDeliveryCitiesAction(debouncedTerm);
+
+      if (!result.ok) throw new ApiError(result.status);
+
+      return result.cities;
+    },
     placeholderData: keepPreviousData,
     staleTime: DELIVERY_CITY_SELECT_STALE_TIME_MS,
     enabled: isEnabled && hasSearchableTerm,
+    // The carrier call already retries a throttled request, so one more attempt is enough.
+    retry: 1,
   });
 
   return {
@@ -29,5 +38,6 @@ export const useDeliveryCities = (searchTerm: string, isEnabled: boolean) => {
     hasSearchableTerm: term.length >= DELIVERY_CITY_SELECT_TERM_MIN_LENGTH,
     /** True while waiting out the debounce as well, so stale rows never look settled. */
     isSearching: isEnabled && (isFetching || term !== debouncedTerm),
+    isError,
   };
 };

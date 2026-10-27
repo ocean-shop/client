@@ -1,6 +1,7 @@
 "use client";
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { ApiError } from "@/app/core/api/api-fetch";
 import { useDebouncedValue } from "@/app/core/hooks/use-debounced-value";
 import { getDeliveryPointsAction } from "@/app/shared/delivery/actions/get-delivery-points";
 import type { DeliveryPointsRequest } from "@/app/shared/delivery/types/delivery.types";
@@ -20,7 +21,18 @@ export const useDeliveryPoints = ({ carrier, method, city, searchTerm }: Deliver
 
   const { data, isPending, isError, isPlaceholderData } = useQuery({
     queryKey: [DELIVERY_POINTS_QUERY_KEY, carrier, method, city.id, debouncedTerm],
-    queryFn: () => getDeliveryPointsAction({ carrier, method, city, searchTerm: debouncedTerm }),
+    queryFn: async () => {
+      const result = await getDeliveryPointsAction({
+        carrier,
+        method,
+        city,
+        searchTerm: debouncedTerm,
+      });
+
+      if (!result.ok) throw new ApiError(result.status);
+
+      return result.points;
+    },
     placeholderData: keepPreviousData,
     staleTime: DELIVERY_POINTS_STALE_TIME_MS,
     // The carrier call already retries a throttled request, so one more attempt is enough.

@@ -1,7 +1,9 @@
 import {
   DELIVERY_ENABLED_CARRIERS,
   DELIVERY_POPULAR_CITIES,
+  UKRPOSHTA_POINT_TITLE,
 } from "@/app/shared/delivery/constants/delivery.constants";
+import type { DeliveryCarrier } from "@/app/shared/delivery/types/delivery.types";
 import type { OrderPaymentMethod } from "@/app/shared/orders/types/orders.types";
 import type {
   CheckoutCarrierOption,
@@ -23,6 +25,7 @@ export const CHECKOUT_DEFAULT_DELIVERY: CheckoutDelivery = {
   carrier: "nova",
   method: "branch",
   point: null,
+  manualPoint: null,
   street: "",
   apartment: "",
 };
@@ -89,6 +92,7 @@ export const CHECKOUT_VALIDATION_MESSAGES = {
   email: "Вкажіть коректний email.",
   phone: "Вкажіть мобільний номер у форматі +380 XX XXX XX XX.",
   point: "Оберіть відділення або поштомат.",
+  manualPoint: "Вкажіть населений пункт і номер відділення або поштомату.",
   street: "Вкажіть вулицю та номер будинку.",
 };
 
@@ -116,6 +120,17 @@ export const CHECKOUT_ORDER_SHIPPING_MAX_LENGTH = 255;
 export const CHECKOUT_ORDER_SHIPPING_SEPARATOR = ": ";
 export const CHECKOUT_DELIVERY_TITLE_SEPARATOR = " · ";
 export const CHECKOUT_DELIVERY_ADDRESS_SEPARATOR = ", ";
+/**
+ * Titles for a point typed in by hand, written the way the carrier's own list names it, so a saved
+ * address finds the real point again once the list loads.
+ */
+export const CHECKOUT_MANUAL_POINT_TITLES: Record<
+  DeliveryCarrier,
+  (methodLabel: string, pointNumber: string) => string
+> = {
+  nova: (methodLabel, pointNumber) => `${methodLabel} №${pointNumber}`,
+  ukr: (_methodLabel, pointNumber) => UKRPOSHTA_POINT_TITLE(pointNumber),
+};
 /** A branch's number, e.g. "1414" in "Поштомат №1414" or the index in "Відділення 79000". */
 export const CHECKOUT_DELIVERY_POINT_NUMBER_PATTERN = /\d+/;
 export const CHECKOUT_DELIVERY_DATE_FORMATTER = new Intl.DateTimeFormat("uk-UA", {

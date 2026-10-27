@@ -57,6 +57,7 @@ export const CABINET_ADDRESS_FORM_COURIER_FIELDS = {
 
 export const CABINET_ADDRESS_FORM_VALIDATION_MESSAGES = {
   point: "Оберіть відділення або поштомат.",
+  manualPoint: "Вкажіть населений пункт і номер відділення або поштомату.",
   street: "Вкажіть вулицю та номер будинку.",
 };
 

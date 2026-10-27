@@ -2,6 +2,7 @@ import type { CartItem, CartTotals } from "@/app/shared/cart/types/cart.types";
 import type {
   DeliveryCarrier,
   DeliveryCity,
+  DeliveryManualPoint,
   DeliveryMethod,
   DeliveryPoint,
 } from "@/app/shared/delivery/types/delivery.types";
@@ -18,6 +19,8 @@ export type CheckoutDelivery = {
   method: DeliveryMethod;
   /** The chosen branch or parcel locker; unused for courier delivery. */
   point: DeliveryPoint | null;
+  /** Typed in when the carrier's list cannot be loaded; a chosen `point` takes precedence. */
+  manualPoint: DeliveryManualPoint | null;
   street: string;
   apartment: string;
 };

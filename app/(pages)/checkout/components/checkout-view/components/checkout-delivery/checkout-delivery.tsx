@@ -26,7 +26,7 @@ export const CheckoutDelivery = ({ delivery, onChange }: CheckoutDeliveryProps) 
 
   // A chosen branch belongs to one city, carrier and method, so changing any of them clears it.
   const handleCityChange = (city: DeliveryCity) => {
-    onChange({ ...delivery, city, point: null });
+    onChange({ ...delivery, city, point: null, manualPoint: null });
   };
 
   const handleCarrierChange = (carrierId: DeliveryCarrier) => {
@@ -38,11 +38,12 @@ export const CheckoutDelivery = ({ delivery, onChange }: CheckoutDeliveryProps) 
       carrier: carrierId,
       method: hasMethod ? delivery.method : nextCarrier.methods[0].id,
       point: null,
+      manualPoint: null,
     });
   };
 
   const handleMethodChange = (method: DeliveryMethod) => {
-    onChange({ ...delivery, method, point: null });
+    onChange({ ...delivery, method, point: null, manualPoint: null });
   };
 
   return (
@@ -119,7 +120,9 @@ export const CheckoutDelivery = ({ delivery, onChange }: CheckoutDeliveryProps) 
           method={delivery.method}
           city={delivery.city}
           selectedPoint={delivery.point}
-          onSelect={(point) => onChange({ ...delivery, point })}
+          onSelect={(point) => onChange({ ...delivery, point, manualPoint: null })}
+          manualPoint={delivery.manualPoint}
+          onManualPointChange={(manualPoint) => onChange({ ...delivery, manualPoint })}
         />
       )}
     </CheckoutSection>

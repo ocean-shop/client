@@ -7,6 +7,7 @@ import { Input } from "@/app/ui/input/input";
 import {
   DELIVERY_CITY_SELECT_CLOSE_KEY,
   DELIVERY_CITY_SELECT_EMPTY_LABEL,
+  DELIVERY_CITY_SELECT_ERROR_LABEL,
   DELIVERY_CITY_SELECT_LABEL,
   DELIVERY_CITY_SELECT_POPULAR_LABEL,
   DELIVERY_CITY_SELECT_SEARCHING_LABEL,
@@ -19,16 +20,18 @@ export const DeliveryCitySelect = ({ city, onChange }: DeliveryCitySelectProps) 
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const selectRef = useRef<HTMLDivElement>(null);
-  const { cities, hasSearchableTerm, isSearching } = useDeliveryCities(searchTerm, isOpen);
+  const { cities, hasSearchableTerm, isSearching, isError } = useDeliveryCities(searchTerm, isOpen);
 
   const options = hasSearchableTerm ? (cities ?? []) : DELIVERY_POPULAR_CITIES;
   const status = !hasSearchableTerm
     ? DELIVERY_CITY_SELECT_POPULAR_LABEL
     : isSearching
       ? DELIVERY_CITY_SELECT_SEARCHING_LABEL
-      : options.length === 0
-        ? DELIVERY_CITY_SELECT_EMPTY_LABEL
-        : null;
+      : isError
+        ? DELIVERY_CITY_SELECT_ERROR_LABEL
+        : options.length === 0
+          ? DELIVERY_CITY_SELECT_EMPTY_LABEL
+          : null;
 
   useEffect(() => {
     if (!isOpen) return;

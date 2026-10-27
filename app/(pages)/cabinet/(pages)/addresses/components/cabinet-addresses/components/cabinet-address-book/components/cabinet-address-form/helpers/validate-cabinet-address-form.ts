@@ -1,3 +1,4 @@
+import { isCheckoutManualPointCompleteHelper } from "@/app/(pages)/checkout/helpers/is-checkout-manual-point-complete";
 import type { CheckoutDelivery } from "@/app/(pages)/checkout/types/checkout.types";
 import { CABINET_ADDRESS_FORM_VALIDATION_MESSAGES } from "../constants/cabinet-address-form.constants";
 import type { CabinetAddressFormErrors } from "../types/cabinet-address-form.types";
@@ -12,5 +13,13 @@ export const validateCabinetAddressFormHelper = (
       : { street: CABINET_ADDRESS_FORM_VALIDATION_MESSAGES.street };
   }
 
-  return delivery.point ? null : { point: CABINET_ADDRESS_FORM_VALIDATION_MESSAGES.point };
+  if (delivery.point) return null;
+
+  if (delivery.manualPoint) {
+    return isCheckoutManualPointCompleteHelper(delivery.manualPoint)
+      ? null
+      : { point: CABINET_ADDRESS_FORM_VALIDATION_MESSAGES.manualPoint };
+  }
+
+  return { point: CABINET_ADDRESS_FORM_VALIDATION_MESSAGES.point };
 };
