@@ -4,6 +4,7 @@ import {
   UKRPOSHTA_POINT_TITLE,
 } from "@/app/shared/delivery/constants/delivery.constants";
 import type { DeliveryCarrier } from "@/app/shared/delivery/types/delivery.types";
+import { ORDERS_AUTOMATIC_PAYMENT_ENABLED } from "@/app/shared/orders/constants/orders.constants";
 import type { OrderPaymentMethod } from "@/app/shared/orders/types/orders.types";
 import type {
   CheckoutCarrierOption,
@@ -30,7 +31,9 @@ export const CHECKOUT_DEFAULT_DELIVERY: CheckoutDelivery = {
   apartment: "",
 };
 
-export const CHECKOUT_DEFAULT_PAYMENT: CheckoutPaymentMethod = "wallet";
+export const CHECKOUT_DEFAULT_PAYMENT: CheckoutPaymentMethod = ORDERS_AUTOMATIC_PAYMENT_ENABLED
+  ? "wallet"
+  : "cod";
 
 /**
  * The shop's own delivery tariffs. Real carrier quotes need the sender's city and parcel size,
@@ -83,6 +86,11 @@ export const CHECKOUT_PAYMENTS: CheckoutPaymentOption[] = [
     badgeType: "icon",
   },
 ];
+
+/** Payments offered for new orders; past orders keep their payment's label from the full list. */
+export const CHECKOUT_AVAILABLE_PAYMENTS = CHECKOUT_PAYMENTS.filter(
+  ({ id }) => ORDERS_AUTOMATIC_PAYMENT_ENABLED || id !== "wallet"
+);
 
 export const CHECKOUT_COD_PAYMENT: CheckoutPaymentMethod = "cod";
 

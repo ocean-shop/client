@@ -1,4 +1,4 @@
-import { CHECKOUT_PAYMENTS } from "@/app/(pages)/checkout/constants/checkout.constants";
+import { CHECKOUT_AVAILABLE_PAYMENTS } from "@/app/(pages)/checkout/constants/checkout.constants";
 import { CheckoutOption } from "../checkout-option/checkout-option";
 import { CheckoutSection } from "../checkout-section/checkout-section";
 import {
@@ -11,7 +11,7 @@ export const CheckoutPayment = ({ payment, onChange }: CheckoutPaymentProps) => 
   return (
     <CheckoutSection step={CHECKOUT_PAYMENT_STEP} title={CHECKOUT_PAYMENT_TITLE}>
       <div role="radiogroup" aria-label={CHECKOUT_PAYMENT_TITLE} className="flex flex-col gap-2">
-        {CHECKOUT_PAYMENTS.map((option) => (
+        {CHECKOUT_AVAILABLE_PAYMENTS.map((option) => (
           <CheckoutOption
             key={option.id}
             isSelected={option.id === payment}

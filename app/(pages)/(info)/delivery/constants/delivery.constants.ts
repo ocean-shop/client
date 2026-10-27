@@ -1,3 +1,4 @@
+import { ORDERS_AUTOMATIC_PAYMENT_ENABLED } from "@/app/shared/orders/constants/orders.constants";
 import type { InfoFeatureItem } from "../../components/info-feature-list/types/info-feature-list.types";
 import type { DeliveryPaymentMethod } from "../components/delivery-payments/types/delivery-payments.types";
 
@@ -53,11 +54,15 @@ export const DELIVERY_PAYMENT_METHODS: DeliveryPaymentMethod[] = [
     title: "Банківська картка",
     text: "Visa, Mastercard онлайн. Кошти списуються після підтвердження замовлення.",
   },
-  {
-    icon: "contactless",
-    title: "Apple Pay та Google Pay",
-    text: "Оплата в один дотик без введення даних картки.",
-  },
+  ...(ORDERS_AUTOMATIC_PAYMENT_ENABLED
+    ? [
+        {
+          icon: "contactless",
+          title: "Apple Pay та Google Pay",
+          text: "Оплата в один дотик без введення даних картки.",
+        },
+      ]
+    : []),
   {
     icon: "payments",
     title: "Накладений платіж",
