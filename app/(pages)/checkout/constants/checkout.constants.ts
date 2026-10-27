@@ -33,7 +33,7 @@ export const CHECKOUT_DEFAULT_DELIVERY: CheckoutDelivery = {
 
 export const CHECKOUT_DEFAULT_PAYMENT: CheckoutPaymentMethod = ORDERS_AUTOMATIC_PAYMENT_ENABLED
   ? "wallet"
-  : "cod";
+  : "manual";
 
 /**
  * The shop's own delivery tariffs. Real carrier quotes need the sender's city and parcel size,
@@ -70,14 +70,27 @@ export const CHECKOUT_AVAILABLE_CARRIERS = CHECKOUT_CARRIERS.filter(
   ({ id }) => DELIVERY_ENABLED_CARRIERS[id]
 );
 
+const CHECKOUT_WALLET_PAYMENT_OPTION: CheckoutPaymentOption = {
+  id: "wallet",
+  label: "Apple Pay / Google Pay",
+  note: "Швидка оплата з телефону",
+  badge: "Pay",
+  badgeType: "text",
+};
+
+const CHECKOUT_MANUAL_PAYMENT_OPTION: CheckoutPaymentOption = {
+  id: "manual",
+  label: "Оплатити вручну",
+  note: "Переказ за реквізитами, які надішлемо на email",
+  badge: "account_balance",
+  badgeType: "icon",
+};
+
+/** The default payment goes first: wallet when automatic payments are on, manual otherwise. */
 export const CHECKOUT_PAYMENTS: CheckoutPaymentOption[] = [
-  {
-    id: "wallet",
-    label: "Apple Pay / Google Pay",
-    note: "Швидка оплата з телефону",
-    badge: "Pay",
-    badgeType: "text",
-  },
+  ...(ORDERS_AUTOMATIC_PAYMENT_ENABLED
+    ? [CHECKOUT_WALLET_PAYMENT_OPTION, CHECKOUT_MANUAL_PAYMENT_OPTION]
+    : [CHECKOUT_MANUAL_PAYMENT_OPTION, CHECKOUT_WALLET_PAYMENT_OPTION]),
   {
     id: "cod",
     label: "Накладений платіж",
@@ -113,8 +126,9 @@ export const CHECKOUT_NAME_MIN_WORDS = 2;
 export const CHECKOUT_SUCCESS_PAGE_PATH = "/checkout/success";
 export const CHECKOUT_PLACED_ORDER_STORAGE_KEY = "ocean-shop:placed-order";
 
-/** The backend takes cards and cash on delivery only; wallet payments are settled as card. */
+/** Wallet payments are settled as card; manual is a bank transfer by details sent in an email. */
 export const CHECKOUT_ORDER_PAYMENT_METHODS: Record<CheckoutPaymentMethod, OrderPaymentMethod> = {
+  manual: "manual",
   wallet: "card",
   cod: "cod",
 };

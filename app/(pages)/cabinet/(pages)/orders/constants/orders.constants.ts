@@ -51,6 +51,7 @@ export const ORDER_CANCELLED_STEP_LABEL = "Скасовано";
 export const ORDER_PAYMENT_METHOD_LABELS: Record<OrderPaymentMethod, string> = {
   card: "Карткою онлайн",
   cod: "Накладений платіж",
+  manual: "Оплата за реквізитами",
 };
 
 export const ORDER_PAYMENT_NOTES: Record<
@@ -59,6 +60,7 @@ export const ORDER_PAYMENT_NOTES: Record<
 > = {
   card: { paid: "Оплачено", unpaid: "Очікує оплати" },
   cod: { paid: "Оплачено при отриманні", unpaid: "Оплата при отриманні" },
+  manual: { paid: "Оплачено", unpaid: "Очікує оплати за реквізитами" },
 };
 
 export const ORDER_NAME_SEPARATOR = " ";
