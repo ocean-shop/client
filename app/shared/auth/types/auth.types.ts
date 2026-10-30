@@ -8,7 +8,12 @@ export type RequestClientOtpResult = { ok: true } | { ok: false; status: number 
 export type VerifyClientOtpRequest = RequestClientOtpRequest & {
   /** The four-digit one-time code. */
   code: string;
+  /** Shop the client signs in to; the backend binds the client to it. */
+  shopId: string;
 };
+
+/** `shopId` is server-only configuration, so the action fills it in. */
+export type VerifyClientOtpInput = Omit<VerifyClientOtpRequest, "shopId">;
 
 export type AuthUser = {
   id: string;
