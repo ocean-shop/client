@@ -1,4 +1,4 @@
-export type HeroBenefit = {
+export type DesktopHeroBenefit = {
   icon: string;
   title: string;
 };

@@ -13,6 +13,8 @@ export const CATALOG_SUB_CATEGORIES_API_URL = (parentId: string) => {
 
 export const CATALOG_CATEGORIES_POPULAR_LIMIT = 5;
 
+export const CATALOG_CATEGORY_PAGE_PATH = "/catalog";
+
 export const CATALOG_CATEGORY_ICONS: Record<string, string> = {
   electronics: "devices",
   shoes: "checkroom",

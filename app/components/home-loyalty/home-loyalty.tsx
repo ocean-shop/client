@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { ButtonLink } from "@/app/ui/button-link/button-link";
+import { HomeLoyaltySteps } from "./components/home-loyalty-steps/home-loyalty-steps";
 import {
   HOME_LOYALTY_DESCRIPTION,
   HOME_LOYALTY_DETAILS_HREF,
@@ -6,8 +7,6 @@ import {
   HOME_LOYALTY_EYEBROW_LABEL,
   HOME_LOYALTY_JOIN_HREF,
   HOME_LOYALTY_JOIN_LABEL,
-  HOME_LOYALTY_STEP_NUMBER_LENGTH,
-  HOME_LOYALTY_STEPS,
   HOME_LOYALTY_TITLE,
 } from "./constants/home-loyalty.constants";
 
@@ -30,55 +29,35 @@ export const HomeLoyalty = () => {
             </p>
 
             <div className="hidden gap-3 pt-1.5 lg:flex">
-              <Link
+              <ButtonLink
                 href={HOME_LOYALTY_JOIN_HREF}
-                className="inline-flex h-12 items-center justify-center rounded-xl bg-white px-6 text-[14.5px] font-semibold text-accent transition-colors hover:bg-accent-soft"
+                variant="primary-inverse"
+                size="auto"
+                className="h-12 rounded-xl px-6 text-[14.5px]"
               >
                 {HOME_LOYALTY_JOIN_LABEL}
-              </Link>
-              <Link
+              </ButtonLink>
+              <ButtonLink
                 href={HOME_LOYALTY_DETAILS_HREF}
-                className="inline-flex h-12 items-center justify-center rounded-xl border border-white/40 px-5 text-[14.5px] font-semibold text-white transition-colors hover:bg-white/10"
+                variant="unstyled"
+                size="auto"
+                className="h-12 rounded-xl border border-white/40 px-5 text-[14.5px] font-semibold text-white hover:bg-white/10"
               >
                 {HOME_LOYALTY_DETAILS_LABEL}
-              </Link>
+              </ButtonLink>
             </div>
           </div>
 
-          <ol className="flex flex-col gap-2.5 lg:grid lg:grid-cols-3 lg:gap-3.5">
-            {HOME_LOYALTY_STEPS.map((step, index) => (
-              <li
-                key={step.title}
-                className="flex items-center gap-3 rounded-xl bg-white/10 p-3 lg:flex-col lg:items-stretch lg:rounded-2xl lg:px-5 lg:py-[22px]"
-              >
-                <div className="flex items-center justify-between">
-                  <span
-                    aria-hidden
-                    className="font-symbols text-[22px] text-accent-highlight lg:text-[26px]"
-                  >
-                    {step.icon}
-                  </span>
-                  <span className="hidden font-heading text-[13px] text-accent-highlight lg:inline">
-                    {String(index + 1).padStart(HOME_LOYALTY_STEP_NUMBER_LENGTH, "0")}
-                  </span>
-                </div>
+          <HomeLoyaltySteps />
 
-                <div className="flex flex-col gap-0.5 lg:gap-3">
-                  <span className="text-sm font-semibold lg:text-[15.5px]">{step.title}</span>
-                  <span className="text-[12.5px] text-on-accent-muted lg:text-[13.5px] lg:leading-[1.5]">
-                    {step.text}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ol>
-
-          <Link
+          <ButtonLink
             href={HOME_LOYALTY_JOIN_HREF}
-            className="inline-flex h-[46px] items-center justify-center rounded-xl bg-white text-sm font-semibold text-accent transition-colors hover:bg-accent-soft lg:hidden"
+            variant="primary-inverse"
+            size="auto"
+            className="h-[46px] rounded-xl text-sm lg:hidden"
           >
             {HOME_LOYALTY_JOIN_LABEL}
-          </Link>
+          </ButtonLink>
         </div>
       </div>
     </section>
