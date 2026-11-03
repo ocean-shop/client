@@ -1,4 +1,5 @@
 import { buildProductHrefHelper } from "@/app/shared/products/helpers/build-product-href";
+import { resolveProductPreviewHelper } from "@/app/shared/products/helpers/resolve-product-preview";
 import type { ProductDetails } from "@/app/shared/products/types/products.types";
 import { toUserShippingViewHelper } from "../(pages)/addresses/helpers/to-user-shipping-view";
 import type { UserOrder } from "../(pages)/orders/types/orders.types";
@@ -46,13 +47,17 @@ export const toCabinetOverviewHelper = (
     activeOrder: latestOrder ? toCabinetActiveOrder(latestOrder, products) : null,
     ordersCount: dashboard.ordersCount,
     activeOrdersCount: dashboard.activeOrdersCount,
-    favorites: dashboard.lastFavoriteProducts.map((product) => ({
-      id: product.id,
-      name: product.name,
-      price: Number(product.price),
-      image: product.images[0]?.url ?? null,
-      href: buildProductHrefHelper(product.slug),
-    })),
+    favorites: dashboard.lastFavoriteProducts.map((product) => {
+      const { price, images } = resolveProductPreviewHelper(product);
+
+      return {
+        id: product.id,
+        name: product.name,
+        price: Number(price),
+        image: images[0]?.url ?? null,
+        href: buildProductHrefHelper(product.slug),
+      };
+    }),
     favoritesCount: dashboard.favoriteProductsCount,
     mainAddress: mainAddress && { title: mainAddress.title, address: mainAddress.address },
   };

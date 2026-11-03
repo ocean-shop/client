@@ -20,6 +20,11 @@ export type Product = {
   price: string;
   oldPrice: string | null;
   images: ProductImage[];
+  /**
+   * A variable product keeps `price` at zero and its photos here; empty for simple products.
+   * Optional on listings: responses cached before the API started sending it lack it.
+   */
+  variations?: ProductVariation[];
 };
 
 export type ProductVariation = {
@@ -55,6 +60,9 @@ export type ProductOffer = {
   available: boolean;
   images: ProductImage[];
 };
+
+/** What a product card or list row shows: the default variation's price and photos, if any. */
+export type ProductPreview = Pick<ProductOffer, "price" | "oldPrice" | "images">;
 
 export type CatalogFilter = {
   name: string;
