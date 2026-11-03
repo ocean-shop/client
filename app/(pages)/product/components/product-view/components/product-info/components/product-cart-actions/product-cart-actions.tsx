@@ -12,6 +12,7 @@ import {
   PRODUCT_CART_ADD_LABEL,
   PRODUCT_CART_DECREASE_LABEL,
   PRODUCT_CART_INCREASE_LABEL,
+  PRODUCT_CART_ONE_CLICK_ENABLED,
   PRODUCT_CART_ONE_CLICK_LABEL,
   PRODUCT_CART_ONE_CLICK_TOAST_MESSAGE,
   PRODUCT_CART_ONE_CLICK_TOAST_TITLE,
@@ -75,14 +76,16 @@ export const ProductCartActions = ({ product, offer }: ProductCartActionsProps) 
         {isAvailable ? PRODUCT_CART_ADD_LABEL : PRODUCT_CART_UNAVAILABLE_LABEL}
       </Button>
 
-      <Button
-        variant="unstyled"
-        size="auto"
-        onClick={handleOneClick}
-        className="h-[52px] rounded-xl border border-accent bg-background px-5 text-[15px] font-semibold text-accent hover:bg-accent-soft"
-      >
-        {PRODUCT_CART_ONE_CLICK_LABEL}
-      </Button>
+      {PRODUCT_CART_ONE_CLICK_ENABLED && (
+        <Button
+          variant="unstyled"
+          size="auto"
+          onClick={handleOneClick}
+          className="h-[52px] rounded-xl border border-accent bg-background px-5 text-[15px] font-semibold text-accent hover:bg-accent-soft"
+        >
+          {PRODUCT_CART_ONE_CLICK_LABEL}
+        </Button>
+      )}
     </div>
   );
 };
