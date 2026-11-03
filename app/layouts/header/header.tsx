@@ -3,11 +3,7 @@ import { CABINET_FAVORITES_PATH } from "@/app/(pages)/cabinet/constants/cabinet.
 import { CatalogPanel } from "./components/catalog-panel/catalog-panel";
 import { HeaderCart } from "./components/header-cart/header-cart";
 import { HeaderSearch } from "./components/header-search/header-search";
-import {
-  HEADER_BRAND_NAME,
-  HEADER_HOME_HREF,
-  HEADER_NAV_SALES_ITEM,
-} from "./constants/header.constants";
+import { HEADER_BRAND_NAME, HEADER_HOME_HREF } from "./constants/header.constants";
 import { MobileHeader } from "./components/mobile-header/mobile-header";
 import { AUTH_CABINET_PAGE_PATH } from "@/app/shared/auth/constants/auth.constants";
 import { getCatalogCategoryTreeHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-tree";
@@ -15,11 +11,10 @@ import type { HeaderNavItem } from "./types/header.types";
 
 export const Header = async () => {
   const categoryTree = await getCatalogCategoryTreeHelper();
-  const categoryNavItems: HeaderNavItem[] = categoryTree.map((category) => ({
+  const navItems: HeaderNavItem[] = categoryTree.map((category) => ({
     label: category.name,
     href: `/catalog/${category.slug}`,
   }));
-  const navItems = [...categoryNavItems, HEADER_NAV_SALES_ITEM];
 
   return (
     <>

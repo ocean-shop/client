@@ -17,7 +17,12 @@ import {
 import type { CatalogSearchBodyProps } from "./types/catalog-search-body.types";
 
 /** The category listing's counterpart for a search term: same grid, sorting and pagination. */
-export const CatalogSearchBody = ({ query, searchTerm, productList }: CatalogSearchBodyProps) => {
+export const CatalogSearchBody = ({
+  query,
+  searchTerm,
+  productList,
+  isSortVisible,
+}: CatalogSearchBodyProps) => {
   const breadcrumbItems = [
     CATALOG_HOME_BREADCRUMB_ITEM,
     { label: CATALOG_SEARCH_BODY_BREADCRUMB_LABEL },
@@ -45,9 +50,11 @@ export const CatalogSearchBody = ({ query, searchTerm, productList }: CatalogSea
           </div>
         </div>
 
-        <div className="hidden lg:block">
-          <CatalogSortSelect query={query} />
-        </div>
+        {isSortVisible && (
+          <div className="hidden lg:block">
+            <CatalogSortSelect query={query} />
+          </div>
+        )}
       </div>
 
       <CatalogResults productCount={productList.items.length}>

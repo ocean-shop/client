@@ -12,7 +12,10 @@ import { cartStore } from "@/app/shared/cart/cart-store";
 import { useCartOpen } from "@/app/shared/cart/hooks/use-cart-open";
 import { useCartQuantity } from "@/app/shared/cart/hooks/use-cart-quantity";
 import { Button } from "@/app/ui/button/button";
-import { BOTTOM_TAB_BAR_ITEMS } from "./constants/bottom-tab-bar.constants";
+import {
+  BOTTOM_TAB_BAR_HOME_PATH,
+  BOTTOM_TAB_BAR_ITEMS,
+} from "./constants/bottom-tab-bar.constants";
 import type { BottomTabBarProps } from "./types/bottom-tab-bar.types";
 
 // Starts closed, so it skips the server HTML and loads in its own chunk after hydration.
@@ -30,6 +33,7 @@ export const BottomTabBar = ({ categories }: BottomTabBarProps) => {
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const isCartOpen = useCartOpen();
   const cartQuantity = useCartQuantity();
+  const isHomePage = pathname === BOTTOM_TAB_BAR_HOME_PATH && !isCatalogOpen && !isCartOpen;
   const isFavoritesPage = pathname.startsWith(CABINET_FAVORITES_PATH);
   const isAccountPage =
     !isFavoritesPage &&
@@ -38,6 +42,7 @@ export const BottomTabBar = ({ categories }: BottomTabBarProps) => {
       pathname.startsWith(`${AUTH_CABINET_PAGE_PATH}/`));
 
   const getItemClickHandler = (id: string) => {
+    if (id === "home") return () => router.push(BOTTOM_TAB_BAR_HOME_PATH);
     if (id === "catalog") return () => setIsCatalogOpen(true);
     if (id === "cart") return cartStore.open;
     if (id === "favorites") return () => router.push(CABINET_FAVORITES_PATH);
@@ -50,6 +55,7 @@ export const BottomTabBar = ({ categories }: BottomTabBarProps) => {
     <>
       <div className="fixed inset-x-0 bottom-0 z-30 flex border-t border-border-soft bg-background px-2 pb-[14px] pt-2 lg:hidden">
         {BOTTOM_TAB_BAR_ITEMS.map((item) => {
+          const isHome = item.id === "home";
           const isCatalog = item.id === "catalog";
           const isCart = item.id === "cart";
           const isFavorites = item.id === "favorites";
@@ -63,7 +69,7 @@ export const BottomTabBar = ({ categories }: BottomTabBarProps) => {
               size="auto"
               onClick={getItemClickHandler(item.id)}
               className={`flex-1 flex-col justify-start text-center text-[10.5px] !gap-0 ${
-                item.active ||
+                (isHome && isHomePage) ||
                 (isCatalog && isCatalogOpen) ||
                 (isCart && isCartOpen) ||
                 (isFavorites && isFavoritesPage) ||
