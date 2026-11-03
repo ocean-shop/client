@@ -1,4 +1,4 @@
-import { DATE_PICKER_CALENDAR_CELL_CLASS_NAMES } from "../constants/date-picker-calendar.constants";
+import { DATE_PICKER_CALENDAR_CELL_CLASS_NAMES } from "../constants/date-picker-calendar-cell.constants";
 
 /** Selected wins over current, so the picked cell stays highlighted even when it's today. */
 export const getDatePickerCalendarCellClassNameHelper = (

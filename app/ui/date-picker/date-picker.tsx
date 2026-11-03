@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
+import { useEscapeKey } from "@/app/core/hooks/use-escape-key";
+import { useOutsidePointerDown } from "@/app/core/hooks/use-outside-pointer-down";
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { DatePickerCalendar } from "./components/date-picker-calendar/date-picker-calendar";
 import {
   DATE_PICKER_CLEAR_LABEL,
-  DATE_PICKER_CLOSE_KEY,
   DATE_PICKER_DEFAULT_PLACEHOLDER,
   DATE_PICKER_DEFAULT_VIEW,
   DATE_PICKER_POPOVER_CLASS_NAME,
@@ -41,35 +43,17 @@ export const DatePicker = ({
       ? DATE_PICKER_TRIGGER_STATE_CLASS_NAMES.invalid
       : DATE_PICKER_TRIGGER_STATE_CLASS_NAMES.default;
 
-  useEffect(() => {
-    if (!isOpen) return;
+  const closeAndFocusTrigger = () => {
+    setIsOpen(false);
+    triggerRef.current?.focus();
+  };
 
-    const handlePointerDown = (event: PointerEvent) => {
-      if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== DATE_PICKER_CLOSE_KEY) return;
-
-      setIsOpen(false);
-      triggerRef.current?.focus();
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen]);
+  useOutsidePointerDown(rootRef, () => setIsOpen(false), isOpen);
+  useEscapeKey(closeAndFocusTrigger, isOpen);
 
   const handleSelect = (nextValue: string | null) => {
     onChange(nextValue);
-    setIsOpen(false);
-    triggerRef.current?.focus();
+    closeAndFocusTrigger();
   };
 
   return (
@@ -89,7 +73,7 @@ export const DatePicker = ({
         <span className={`truncate ${label ? "text-foreground" : "text-muted-light"}`}>
           {label ?? placeholder}
         </span>
-        <span className="font-symbols text-xl text-muted-light">event</span>
+        <MaterialIcon name="event" className="text-xl text-muted-light" />
       </button>
 
       {isOpen && (

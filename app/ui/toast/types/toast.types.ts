@@ -1,5 +1,12 @@
 export type ToastVariant = "error" | "success";
 
+export type ToastVariantStyles = {
+  icon: string;
+  iconBg: string;
+  fg: string;
+  border: string;
+};
+
 /** Rendered as a link when `href` is set; `onClick` still runs, e.g. to dismiss the toast. */
 export type ToastAction = {
   label: string;

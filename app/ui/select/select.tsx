@@ -1,7 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useOutsidePointerDown } from "@/app/core/hooks/use-outside-pointer-down";
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
+import {
+  SELECT_MENU_CLASS_NAME,
+  SELECT_OPTION_CLASS_NAME,
+  SELECT_OPTION_STATE_CLASS_NAMES,
+  SELECT_TRIGGER_CLASS_NAME,
+} from "./constants/select.constants";
 import type { SelectProps } from "./types/select.types";
 
 export const Select = ({
@@ -18,18 +26,7 @@ export const Select = ({
   const activeId = selectedId ?? internalSelectedId;
   const selectedOption = options.find((option) => option.id === activeId) ?? options[0];
 
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handlePointerDown = (event: PointerEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [isOpen]);
+  useOutsidePointerDown(selectRef, () => setIsOpen(false), isOpen);
 
   const handleSelect = (id: string) => {
     setInternalSelectedId(id);
@@ -47,31 +44,34 @@ export const Select = ({
         <Button
           variant="unstyled"
           size="auto"
+          aria-expanded={isOpen}
           onClick={() => setIsOpen((open) => !open)}
-          className="h-[42px] gap-2.5 rounded-[10px] border border-footer-border bg-background px-3.5 text-sm font-medium text-foreground"
+          className={SELECT_TRIGGER_CLASS_NAME}
         >
           {selectedOption.label}
-          <span className="font-symbols text-xl text-muted-light">expand_more</span>
+          <MaterialIcon name="expand_more" className="text-xl text-muted-light" />
         </Button>
 
         {isOpen && (
-          <div className="absolute right-0 top-[calc(100%+6px)] z-10 w-[252px] rounded-xl border border-border-soft bg-background p-1.5 shadow-[0_18px_40px_-22px_rgba(17,28,45,.45)]">
+          <div className={SELECT_MENU_CLASS_NAME}>
             {options.map((option) => {
               const isSelected = option.id === activeId;
 
               return (
-                <div
+                <button
                   key={option.id}
+                  type="button"
+                  aria-pressed={isSelected}
                   onClick={() => handleSelect(option.id)}
-                  className={`flex cursor-pointer items-center gap-2 rounded-[9px] px-2.5 py-2.5 text-sm hover:bg-surface ${
-                    isSelected ? "font-semibold text-accent-dark" : "font-normal text-foreground"
+                  className={`${SELECT_OPTION_CLASS_NAME} ${
+                    SELECT_OPTION_STATE_CLASS_NAMES[isSelected ? "selected" : "default"]
                   }`}
                 >
-                  <span className="w-[18px] font-symbols text-lg text-accent">
-                    {isSelected ? "check" : ""}
+                  <span className="w-[18px]">
+                    {isSelected && <MaterialIcon name="check" className="text-lg text-accent" />}
                   </span>
                   {option.label}
-                </div>
+                </button>
               );
             })}
           </div>

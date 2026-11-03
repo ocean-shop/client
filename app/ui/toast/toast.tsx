@@ -1,50 +1,34 @@
-import Link from "next/link";
 import { Button } from "@/app/ui/button/button";
-import { TOAST_VARIANT_STYLES } from "./constants/toast.constants";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
+import { ToastActionLink } from "./components/toast-action-link/toast-action-link";
+import {
+  TOAST_CLASS_NAME,
+  TOAST_CLOSE_BUTTON_CLASS_NAME,
+  TOAST_CLOSE_LABEL,
+  TOAST_ICON_CLASS_NAME,
+  TOAST_VARIANT_STYLES,
+} from "./constants/toast.constants";
 import type { ToastProps } from "./types/toast.types";
 
 export const Toast = ({ variant, title, message, actions, onClose }: ToastProps) => {
   const styles = TOAST_VARIANT_STYLES[variant];
 
   return (
-    <div
-      className={`flex w-[420px] items-start gap-3 rounded-2xl border bg-background p-3.5 pl-4 shadow-[0_18px_40px_-22px_rgba(17,28,45,.45)] ${styles.border}`}
-    >
-      <span
-        className={`flex h-[30px] w-[30px] flex-none items-center justify-center rounded-[9px] font-symbols text-[19px] text-white ${styles.iconBg}`}
-        style={{ fontVariationSettings: "'FILL' 1" }}
-      >
-        {styles.icon}
-      </span>
+    <div className={`${TOAST_CLASS_NAME} ${styles.border}`}>
+      <MaterialIcon
+        name={styles.icon}
+        filled
+        className={`${TOAST_ICON_CLASS_NAME} ${styles.iconBg}`}
+      />
 
       <div className="flex min-w-0 flex-1 flex-col gap-[5px]">
         <span className={`text-[14.5px] font-semibold ${styles.fg}`}>{title}</span>
         <span className="text-pretty text-[13.5px] leading-[1.5] text-muted">{message}</span>
         {actions && actions.length > 0 && (
           <div className="flex flex-wrap gap-x-4 gap-y-1 pt-0.5">
-            {actions.map((action) => {
-              const className = `cursor-pointer text-[13.5px] font-semibold underline ${styles.fg}`;
-
-              return action.href ? (
-                <Link
-                  key={action.label}
-                  href={action.href}
-                  onClick={action.onClick}
-                  className={className}
-                >
-                  {action.label}
-                </Link>
-              ) : (
-                <span
-                  key={action.label}
-                  role="button"
-                  onClick={action.onClick}
-                  className={className}
-                >
-                  {action.label}
-                </span>
-              );
-            })}
+            {actions.map((action) => (
+              <ToastActionLink key={action.label} action={action} colorClassName={styles.fg} />
+            ))}
           </div>
         )}
       </div>
@@ -52,10 +36,11 @@ export const Toast = ({ variant, title, message, actions, onClose }: ToastProps)
       <Button
         variant="ghost"
         size="auto"
+        aria-label={TOAST_CLOSE_LABEL}
         onClick={onClose}
-        className="h-[30px] w-[30px] flex-none rounded-[9px] hover:bg-black/[.06]"
+        className={TOAST_CLOSE_BUTTON_CLASS_NAME}
       >
-        <span className="font-symbols text-[19px]">close</span>
+        <MaterialIcon name="close" className="text-[19px]" />
       </Button>
     </div>
   );

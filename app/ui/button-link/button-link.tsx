@@ -1,11 +1,10 @@
 import Link from "next/link";
 import {
-  BUTTON_BASE_CLASSNAME,
   BUTTON_DEFAULT_SIZE,
   BUTTON_DEFAULT_VARIANT,
-  BUTTON_SIZE_CLASSNAMES,
-  BUTTON_VARIANT_CLASSNAMES,
 } from "@/app/ui/button/constants/button.constants";
+import { getButtonClassNameHelper } from "@/app/ui/button/helpers/get-button-class-name";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { BUTTON_LINK_TRAILING_ICON_CLASS_NAME } from "./constants/button-link.constants";
 import type { ButtonLinkProps } from "./types/button-link.types";
 
@@ -19,15 +18,10 @@ export const ButtonLink = ({
   ...props
 }: ButtonLinkProps) => {
   return (
-    <Link
-      {...props}
-      className={`${BUTTON_BASE_CLASSNAME} ${BUTTON_VARIANT_CLASSNAMES[variant]} ${BUTTON_SIZE_CLASSNAMES[size]} ${className ?? ""}`}
-    >
+    <Link {...props} className={getButtonClassNameHelper(variant, size, className)}>
       {children}
       {trailingIcon && (
-        <span aria-hidden className={BUTTON_LINK_TRAILING_ICON_CLASS_NAME}>
-          {trailingIcon}
-        </span>
+        <MaterialIcon name={trailingIcon} className={BUTTON_LINK_TRAILING_ICON_CLASS_NAME} />
       )}
     </Link>
   );
