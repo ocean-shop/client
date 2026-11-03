@@ -1,4 +1,5 @@
 import type { ProductCardData } from "@/app/ui/product-card/types/product-card.types";
+import { PRODUCT_DISCOUNT_BADGE_LABEL } from "../constants/products.constants";
 import { buildProductHrefHelper } from "./build-product-href";
 import { calculateProductDiscountPercentHelper } from "./calculate-product-discount-percent";
 import { formatProductPriceHelper } from "./format-product-price";
@@ -13,7 +14,7 @@ const computeDiscountBadgeHelper = (
 
   if (percentOff === undefined) return undefined;
 
-  return { label: `−${percentOff}%`, tone: "sale" };
+  return { label: PRODUCT_DISCOUNT_BADGE_LABEL(percentOff), tone: "sale" };
 };
 
 /** `categorySlug` is only known when the card comes from a catalog page; it feeds the breadcrumbs. */

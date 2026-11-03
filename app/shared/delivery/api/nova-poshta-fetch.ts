@@ -1,16 +1,16 @@
 import { ApiError, apiFetch } from "@/app/core/api/api-fetch";
+import { API_JSON_HEADERS } from "@/app/core/api/constants/api.constants";
 import {
+  DELIVERY_FAILED_STATUS,
+  DELIVERY_UNCONFIGURED_STATUS,
   NOVA_POSHTA_ADDRESS_MODEL,
   NOVA_POSHTA_API_URL,
   NOVA_POSHTA_REQUEST_TIMEOUT_MS,
   NOVA_POSHTA_RETRY_ATTEMPTS,
   NOVA_POSHTA_RETRY_DELAY_MS,
 } from "../constants/delivery.constants";
+import { waitHelper } from "../helpers/wait";
 import type { NovaPoshtaResponse } from "../types/delivery.types";
-
-const wait = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
 
 /**
  * Nova Poshta reports failures inside a 200 response, so `success` is checked here. A throttled
@@ -22,12 +22,12 @@ export const novaPoshtaFetch = async <T>(
 ): Promise<T[]> => {
   const apiKey = process.env.NOVA_POSHTA_API_KEY;
 
-  if (!apiKey) throw new ApiError(503);
+  if (!apiKey) throw new ApiError(DELIVERY_UNCONFIGURED_STATUS);
 
   for (let attempt = 1; ; attempt++) {
     const response = await apiFetch<NovaPoshtaResponse<T>>(NOVA_POSHTA_API_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: API_JSON_HEADERS,
       body: JSON.stringify({
         apiKey,
         modelName: NOVA_POSHTA_ADDRESS_MODEL,
@@ -38,8 +38,8 @@ export const novaPoshtaFetch = async <T>(
     });
 
     if (response.success) return response.data;
-    if (attempt >= NOVA_POSHTA_RETRY_ATTEMPTS) throw new ApiError(502);
+    if (attempt >= NOVA_POSHTA_RETRY_ATTEMPTS) throw new ApiError(DELIVERY_FAILED_STATUS);
 
-    await wait(NOVA_POSHTA_RETRY_DELAY_MS);
+    await waitHelper(NOVA_POSHTA_RETRY_DELAY_MS);
   }
 };

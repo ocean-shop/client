@@ -1,9 +1,6 @@
 import { redirect } from "next/navigation";
-import {
-  AUTH_CABINET_PAGE_PATH,
-  AUTH_LOGIN_PAGE_PATH,
-  AUTH_REDIRECT_PARAM,
-} from "../constants/auth.constants";
+import { AUTH_CABINET_PAGE_PATH } from "../constants/auth.constants";
+import { buildAuthLoginHref } from "./build-auth-login-href";
 import { getAuthUser } from "./get-auth-user";
 
 /**
@@ -14,9 +11,7 @@ import { getAuthUser } from "./get-auth-user";
 export const requireAuthUser = async (redirectTo = AUTH_CABINET_PAGE_PATH) => {
   const user = await getAuthUser();
 
-  if (!user) {
-    redirect(`${AUTH_LOGIN_PAGE_PATH}?${AUTH_REDIRECT_PARAM}=${encodeURIComponent(redirectTo)}`);
-  }
+  if (!user) redirect(buildAuthLoginHref(redirectTo));
 
   return user;
 };

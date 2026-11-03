@@ -1,10 +1,10 @@
+import { API_DEFAULT_REVALIDATE_SECONDS } from "@/app/core/api/constants/api.constants";
+import { fetchApiOrFallback } from "@/app/core/api/fetch-api-or-fallback";
 import {
   CATALOG_PRODUCTS_BY_SEARCH_API_URL,
-  CATALOG_PRODUCTS_PAGE_SIZE,
-  CATALOG_PRODUCTS_QUERY_PARAM,
   CATALOG_PRODUCTS_SEARCH_EMPTY_RESPONSE,
 } from "../constants/products.constants";
-import { buildCatalogProductsSearchParamsHelper } from "../helpers/build-catalog-products-search-params";
+import { buildCatalogProductsPageSearchParamsHelper } from "../helpers/build-catalog-products-page-search-params";
 import type { CatalogProductsQuery, ProductSearchListResponse } from "../types/products.types";
 
 /**
@@ -15,26 +15,16 @@ import type { CatalogProductsQuery, ProductSearchListResponse } from "../types/p
 export const getCatalogProductsBySearch = async (
   query: CatalogProductsQuery
 ): Promise<ProductSearchListResponse> => {
-  const searchParams = buildCatalogProductsSearchParamsHelper(query);
-  searchParams.set(CATALOG_PRODUCTS_QUERY_PARAM.page, String(query.page));
-  searchParams.set(CATALOG_PRODUCTS_QUERY_PARAM.limit, String(CATALOG_PRODUCTS_PAGE_SIZE));
+  const productList = await fetchApiOrFallback(
+    CATALOG_PRODUCTS_BY_SEARCH_API_URL(buildCatalogProductsPageSearchParamsHelper(query)),
+    { next: { revalidate: API_DEFAULT_REVALIDATE_SECONDS } },
+    CATALOG_PRODUCTS_SEARCH_EMPTY_RESPONSE
+  );
 
-  try {
-    const response = await fetch(CATALOG_PRODUCTS_BY_SEARCH_API_URL(searchParams.toString()), {
-      next: { revalidate: 300 },
-    });
-
-    if (!response.ok) return CATALOG_PRODUCTS_SEARCH_EMPTY_RESPONSE;
-
-    const productList: ProductSearchListResponse = await response.json();
-
-    /** An API that does not send them yet leaves the panel empty rather than breaking it. */
-    return {
-      ...productList,
-      filters: productList.filters ?? [],
-      categories: productList.categories ?? [],
-    };
-  } catch {
-    return CATALOG_PRODUCTS_SEARCH_EMPTY_RESPONSE;
-  }
+  /** An API that does not send them yet leaves the panel empty rather than breaking it. */
+  return {
+    ...productList,
+    filters: productList.filters ?? [],
+    categories: productList.categories ?? [],
+  };
 };

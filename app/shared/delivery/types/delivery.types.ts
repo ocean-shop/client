@@ -1,3 +1,5 @@
+import type { ApiActionResult } from "@/app/core/api/types/api.types";
+
 /** Mirrors the backend's `shippingMethod` enum, so an order can carry it as is. */
 export type DeliveryCarrier = "nova" | "ukr";
 
@@ -36,11 +38,9 @@ export type DeliveryManualPoint = {
   number: string;
 };
 
-export type DeliveryCitiesResult =
-  { ok: true; cities: DeliveryCity[] } | { ok: false; status: number };
+export type DeliveryCitiesResult = ApiActionResult<{ cities: DeliveryCity[] }>;
 
-export type DeliveryPointsResult =
-  { ok: true; points: DeliveryPoint[] } | { ok: false; status: number };
+export type DeliveryPointsResult = ApiActionResult<{ points: DeliveryPoint[] }>;
 
 export type DeliveryPointsRequest = {
   carrier: DeliveryCarrier;

@@ -9,8 +9,6 @@ export const AUTH_PROTECTED_PATHS = [AUTH_CABINET_PAGE_PATH];
 export const AUTH_API_URL = `${process.env.API_BASE_URL}/user/auth`;
 export const AUTH_CLIENT_API_URL = `${AUTH_API_URL}/client`;
 
-export const AUTH_REQUEST_HEADERS = { "Content-Type": "application/json" };
-
 /** Reported when the backend accepted the code but sent no tokens back: a bad gateway reply. */
 export const AUTH_MISSING_SESSION_STATUS = 502;
 

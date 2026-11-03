@@ -5,6 +5,7 @@ import {
   CATALOG_PRODUCTS_QUERY_PARAM,
   PRODUCT_SEARCH_API_URL,
   PRODUCT_SEARCH_EMPTY_RESPONSE,
+  PRODUCT_SEARCH_REVALIDATE_SECONDS,
   PRODUCT_SEARCH_TERM_MAX_LENGTH,
   PRODUCT_SEARCH_TERM_MIN_LENGTH,
 } from "../constants/products.constants";
@@ -22,6 +23,6 @@ export const searchProductsAction = async (searchTerm: string): Promise<ProductS
   const searchParams = new URLSearchParams({ [CATALOG_PRODUCTS_QUERY_PARAM.query]: term });
 
   return apiFetch<ProductSearchResponse>(PRODUCT_SEARCH_API_URL(searchParams.toString()), {
-    next: { revalidate: 60 },
+    next: { revalidate: PRODUCT_SEARCH_REVALIDATE_SECONDS },
   });
 };

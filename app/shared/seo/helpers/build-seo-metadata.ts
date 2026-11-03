@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import {
-  SEO_LOCALE,
+  SEO_DEFAULT_OPEN_GRAPH,
   SEO_NO_INDEX_METADATA,
   SEO_TITLE_SUFFIX,
-  SITE_NAME,
 } from "../constants/seo.constants";
 import type { SeoMetadataInput } from "../types/seo.types";
 import { truncateSeoDescriptionHelper } from "./truncate-seo-description";
@@ -34,9 +33,7 @@ export const buildSeoMetadataHelper = ({
     alternates: { canonical },
     robots: noIndex ? SEO_NO_INDEX_METADATA.robots : undefined,
     openGraph: {
-      type: "website",
-      siteName: SITE_NAME,
-      locale: SEO_LOCALE,
+      ...SEO_DEFAULT_OPEN_GRAPH,
       title: resolvedTitle,
       description: resolvedDescription,
       url: canonical,

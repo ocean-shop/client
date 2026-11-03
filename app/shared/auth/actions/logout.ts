@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { AUTH_CLIENT_API_URL, AUTH_REFRESH_TOKEN_COOKIE } from "../constants/auth.constants";
 import { clearAuthSessionCookies } from "../helpers/auth-session-cookies";
+import { buildAuthRefreshCookieHeader } from "../helpers/build-auth-refresh-cookie-header";
 
 /** Ends the backend session and drops the token cookies even if the backend call fails. */
 export const logoutAction = async () => {
@@ -13,7 +14,7 @@ export const logoutAction = async () => {
     try {
       await fetch(`${AUTH_CLIENT_API_URL}/logout`, {
         method: "POST",
-        headers: { Cookie: `${AUTH_REFRESH_TOKEN_COOKIE}=${refreshToken}` },
+        headers: buildAuthRefreshCookieHeader(refreshToken),
         cache: "no-store",
       });
     } catch {

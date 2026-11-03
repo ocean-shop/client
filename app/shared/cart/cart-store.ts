@@ -1,10 +1,6 @@
 import { localStorageService } from "@/app/core/local-storage/local-storage.service";
-import {
-  CART_EMPTY_ITEMS,
-  CART_ITEM_MAX_QUANTITY,
-  CART_ITEM_MIN_QUANTITY,
-  CART_STORAGE_KEY,
-} from "./constants/cart.constants";
+import { CART_EMPTY_ITEMS, CART_STORAGE_KEY } from "./constants/cart.constants";
+import { clampCartItemQuantityHelper } from "./helpers/clamp-cart-item-quantity";
 import { parseCartItemsHelper } from "./helpers/parse-cart-items";
 import type { CartItem, CartItemInput, CartListener } from "./types/cart.types";
 
@@ -40,23 +36,21 @@ const commit = (nextItems: CartItem[]) => {
   emit();
 };
 
-const clampQuantity = (quantity: number) => {
-  return Math.min(CART_ITEM_MAX_QUANTITY, Math.max(CART_ITEM_MIN_QUANTITY, quantity));
-};
-
 /** Adding an offer already in the cart raises its quantity and refreshes its price and photo. */
 const add = (input: CartItemInput, quantity: number) => {
   const current = getItems();
   const existing = current.find((item) => item.id === input.id);
 
   if (!existing) {
-    commit([...current, { ...input, quantity: clampQuantity(quantity) }]);
+    commit([...current, { ...input, quantity: clampCartItemQuantityHelper(quantity) }]);
     return;
   }
 
   commit(
     current.map((item) =>
-      item.id === input.id ? { ...input, quantity: clampQuantity(item.quantity + quantity) } : item
+      item.id === input.id
+        ? { ...input, quantity: clampCartItemQuantityHelper(item.quantity + quantity) }
+        : item
     )
   );
 };
@@ -64,7 +58,7 @@ const add = (input: CartItemInput, quantity: number) => {
 const setQuantity = (id: string, quantity: number) => {
   commit(
     getItems().map((item) =>
-      item.id === id ? { ...item, quantity: clampQuantity(quantity) } : item
+      item.id === id ? { ...item, quantity: clampCartItemQuantityHelper(quantity) } : item
     )
   );
 };

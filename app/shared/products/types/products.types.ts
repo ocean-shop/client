@@ -1,3 +1,4 @@
+import type { SearchParamsRecord } from "@/app/core/search-params/types/search-params.types";
 import type { SeoFields } from "@/app/shared/seo/types/seo.types";
 
 export type ProductImage = {
@@ -122,7 +123,7 @@ export type ProductSearchListResponse = ProductListResponse & {
   categories: CatalogCategoryOption[];
 };
 
-export type CatalogProductsSearchParams = Record<string, string | string[] | undefined>;
+export type CatalogProductsSearchParams = SearchParamsRecord;
 
 /** One product URL of the sitemap; `updatedAt` arrives as an ISO string. */
 export type ProductSitemapEntry = {

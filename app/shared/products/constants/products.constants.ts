@@ -1,3 +1,4 @@
+import { withShopIdSearchParams as withShopId } from "@/app/core/api/helpers/with-shop-id-search-params";
 import type { SelectOption } from "@/app/ui/select/types/select.types";
 import type {
   CatalogProductSort,
@@ -6,16 +7,9 @@ import type {
   ProductSearchResponse,
 } from "../types/products.types";
 
-export const SHOP_ID_QUERY_PARAM = "shopId";
-
-/** Every catalog endpoint is scoped to this storefront, so `shopId` rides along with the query. */
-const withShopId = (searchParams?: string) => {
-  const params = new URLSearchParams(searchParams);
-
-  if (process.env.SHOP_ID) params.set(SHOP_ID_QUERY_PARAM, process.env.SHOP_ID);
-
-  return params.toString();
-};
+/** Header suggestions change with every term, so they are cached only briefly. */
+export const PRODUCT_SEARCH_REVALIDATE_SECONDS = 60;
+export const PRODUCT_SITEMAP_REVALIDATE_SECONDS = 60 * 60;
 
 export const POPULAR_PRODUCTS_API_URL = `${process.env.API_BASE_URL}/catalog/products-client/popular?${withShopId()}`;
 
@@ -64,6 +58,10 @@ export const PRODUCT_CATEGORY_SEARCH_PARAM = "category";
 export const CATALOG_PRODUCTS_PAGE_SIZE = 20;
 
 export const CATALOG_PRODUCTS_LOCALE = "uk-UA";
+
+export const PRODUCT_PRICE_CURRENCY_SIGN = "₴";
+
+export const PRODUCT_DISCOUNT_BADGE_LABEL = (percentOff: number) => `−${percentOff}%`;
 
 /** Counting only reads `total`, so the smallest page keeps the response tiny. */
 export const CATALOG_PRODUCTS_COUNT_LIMIT = 1;

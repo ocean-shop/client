@@ -1,8 +1,6 @@
-import {
-  AUTH_CLIENT_API_URL,
-  AUTH_REFRESH_REUSE_MS,
-  AUTH_REFRESH_TOKEN_COOKIE,
-} from "../constants/auth.constants";
+import { AUTH_CLIENT_API_URL, AUTH_REFRESH_REUSE_MS } from "../constants/auth.constants";
+import { buildAuthRefreshCookieHeader } from "../helpers/build-auth-refresh-cookie-header";
+import { buildUserAgentHeader } from "../helpers/build-user-agent-header";
 import { readAuthSession } from "../helpers/read-auth-session";
 import type { AuthTokens } from "../types/auth.types";
 
@@ -13,8 +11,8 @@ const requestRefresh = async (refreshToken: string, userAgent: string | null) =>
     const response = await fetch(`${AUTH_CLIENT_API_URL}/refresh`, {
       method: "POST",
       headers: {
-        Cookie: `${AUTH_REFRESH_TOKEN_COOKIE}=${refreshToken}`,
-        ...(userAgent && { "User-Agent": userAgent }),
+        ...buildAuthRefreshCookieHeader(refreshToken),
+        ...buildUserAgentHeader(userAgent),
       },
       cache: "no-store",
     });

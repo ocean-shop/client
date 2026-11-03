@@ -1,19 +1,22 @@
-import { API_ERROR_MESSAGES, DEFAULT_API_ERROR_MESSAGE } from "./constants/api.constants";
+import { getApiStatusErrorMessage } from "./helpers/get-api-status-error-message";
 
 export class ApiError extends Error {
   status: number;
 
   constructor(status: number) {
-    super(API_ERROR_MESSAGES[status] ?? DEFAULT_API_ERROR_MESSAGE);
+    super(getApiStatusErrorMessage(status));
     this.name = "ApiError";
     this.status = status;
   }
 }
 
-export const apiFetch = async <T>(input: RequestInfo | URL, init?: RequestInit): Promise<T> => {
-  const response = await fetch(input, init);
-
+/** The JSON body of a successful response; any other status is thrown as an `ApiError`. */
+export const readApiResponse = async <T>(response: Response): Promise<T> => {
   if (!response.ok) throw new ApiError(response.status);
 
   return response.json() as Promise<T>;
+};
+
+export const apiFetch = async <T>(input: RequestInfo | URL, init?: RequestInit): Promise<T> => {
+  return readApiResponse<T>(await fetch(input, init));
 };

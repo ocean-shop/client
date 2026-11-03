@@ -2,7 +2,7 @@
 
 import { refresh } from "next/cache";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
-import { getApiErrorMessage } from "@/app/shared/auth/helpers/get-api-error-message";
+import { getApiErrorMessage } from "@/app/core/api/helpers/get-api-error-message";
 import { getAuthUser } from "@/app/shared/auth/helpers/get-auth-user";
 import { getProfileClientApiUrl, PROFILE_REQUEST_HEADERS } from "../constants/profile.constants";
 import { normalizeProfileBirthdayHelper } from "../helpers/normalize-profile-birthday";

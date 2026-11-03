@@ -60,6 +60,8 @@ export const DELIVERY_REQUEST_REVALIDATE_SECONDS = 60 * 60;
 /** Statuses reported for a carrier call that never got an HTTP answer. */
 export const DELIVERY_TIMEOUT_STATUS = 504;
 export const DELIVERY_FAILED_STATUS = 502;
+/** Reported when the carrier's API key is not configured on this server. */
+export const DELIVERY_UNCONFIGURED_STATUS = 503;
 export const DELIVERY_TIMEOUT_ERROR_NAME = "TimeoutError";
 
 /** Shown before the visitor types anything, so the most common choices are one click away. */

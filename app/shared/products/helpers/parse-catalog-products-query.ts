@@ -1,39 +1,26 @@
+import { getFirstSearchParamValue } from "@/app/core/search-params/helpers/get-first-search-param-value";
+import type { SearchParamValue } from "@/app/core/search-params/types/search-params.types";
 import {
-  CATALOG_PRODUCTS_ATTRIBUTE_GROUP_SEPARATOR,
-  CATALOG_PRODUCTS_ATTRIBUTE_NAME_SEPARATOR,
-  CATALOG_PRODUCTS_ATTRIBUTE_VALUE_SEPARATOR,
-  CATALOG_PRODUCTS_CATEGORY_ID_SEPARATOR,
   CATALOG_PRODUCTS_QUERY_PARAM,
   CATALOG_PRODUCT_SORTS,
   PRODUCT_SEARCH_TERM_MAX_LENGTH,
 } from "../constants/products.constants";
 import type {
-  CatalogFilter,
   CatalogProductSort,
   CatalogProductsQuery,
   CatalogProductsSearchParams,
 } from "../types/products.types";
+import { parseCatalogAttributesHelper } from "./parse-catalog-attributes";
+import { parseCatalogCategoryIdsHelper } from "./parse-catalog-category-ids";
 
-type SearchParamValue = string | string[] | undefined;
-
-const toListHelper = (value: SearchParamValue): string[] => {
-  if (value === undefined) return [];
-
-  return Array.isArray(value) ? value : [value];
-};
-
-const firstValueHelper = (value: SearchParamValue): string | undefined => {
-  return toListHelper(value)[0];
-};
-
-const parsePageHelper = (value: SearchParamValue): number => {
-  const page = Number(firstValueHelper(value));
+const parsePage = (value: SearchParamValue): number => {
+  const page = Number(getFirstSearchParamValue(value));
 
   return Number.isInteger(page) && page > 0 ? page : 1;
 };
 
-const parsePriceHelper = (value: SearchParamValue): number | undefined => {
-  const raw = firstValueHelper(value);
+const parsePrice = (value: SearchParamValue): number | undefined => {
+  const raw = getFirstSearchParamValue(value);
   if (!raw) return undefined;
 
   const price = Number(raw);
@@ -41,14 +28,14 @@ const parsePriceHelper = (value: SearchParamValue): number | undefined => {
   return Number.isFinite(price) && price >= 0 ? price : undefined;
 };
 
-const parseSortHelper = (value: SearchParamValue): CatalogProductSort | undefined => {
-  const raw = firstValueHelper(value);
+const parseSort = (value: SearchParamValue): CatalogProductSort | undefined => {
+  const raw = getFirstSearchParamValue(value);
 
   return CATALOG_PRODUCT_SORTS.find((sort) => sort === raw);
 };
 
-const parseAvailableHelper = (value: SearchParamValue): boolean | undefined => {
-  const raw = firstValueHelper(value);
+const parseAvailable = (value: SearchParamValue): boolean | undefined => {
+  const raw = getFirstSearchParamValue(value);
   if (raw === "true") return true;
   if (raw === "false") return false;
 
@@ -56,58 +43,25 @@ const parseAvailableHelper = (value: SearchParamValue): boolean | undefined => {
 };
 
 /** Collapses whitespace and clips the term, matching what the endpoint accepts. */
-const parseSearchTermHelper = (value: SearchParamValue): string | undefined => {
-  const term = firstValueHelper(value)?.replace(/\s+/g, " ").trim();
+const parseSearchTerm = (value: SearchParamValue): string | undefined => {
+  const term = getFirstSearchParamValue(value)?.replace(/\s+/g, " ").trim();
 
   return term ? term.slice(0, PRODUCT_SEARCH_TERM_MAX_LENGTH) : undefined;
-};
-
-/** Reads `attributes=name:value1,value2` entries, repeated or joined with `;`. */
-const parseAttributesHelper = (value: SearchParamValue): CatalogFilter[] => {
-  const valuesByName = new Map<string, string[]>();
-
-  for (const entry of toListHelper(value)) {
-    for (const group of entry.split(CATALOG_PRODUCTS_ATTRIBUTE_GROUP_SEPARATOR)) {
-      const separatorIndex = group.indexOf(CATALOG_PRODUCTS_ATTRIBUTE_NAME_SEPARATOR);
-      if (separatorIndex <= 0) continue;
-
-      const name = group.slice(0, separatorIndex).trim();
-      const values = group
-        .slice(separatorIndex + 1)
-        .split(CATALOG_PRODUCTS_ATTRIBUTE_VALUE_SEPARATOR)
-        .map((attributeValue) => attributeValue.trim())
-        .filter(Boolean);
-
-      if (!name || values.length === 0) continue;
-
-      valuesByName.set(name, [...(valuesByName.get(name) ?? []), ...values]);
-    }
-  }
-
-  return [...valuesByName].map(([name, values]) => ({ name, values: [...new Set(values)] }));
-};
-
-/** Reads `categoryIds=id1,id2`, repeated or joined, the way the endpoint accepts them. */
-const parseCategoryIdsHelper = (value: SearchParamValue): string[] => {
-  const categoryIds = toListHelper(value)
-    .flatMap((entry) => entry.split(CATALOG_PRODUCTS_CATEGORY_ID_SEPARATOR))
-    .map((categoryId) => categoryId.trim())
-    .filter(Boolean);
-
-  return [...new Set(categoryIds)];
 };
 
 export const parseCatalogProductsQueryHelper = (
   searchParams: CatalogProductsSearchParams
 ): CatalogProductsQuery => {
   return {
-    page: parsePageHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.page]),
-    attributes: parseAttributesHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.attributes]),
-    categoryIds: parseCategoryIdsHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.categoryIds]),
-    sort: parseSortHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.sort]),
-    priceFrom: parsePriceHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.priceFrom]),
-    priceTo: parsePriceHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.priceTo]),
-    available: parseAvailableHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.available]),
-    searchTerm: parseSearchTermHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.query]),
+    page: parsePage(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.page]),
+    attributes: parseCatalogAttributesHelper(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.attributes]),
+    categoryIds: parseCatalogCategoryIdsHelper(
+      searchParams[CATALOG_PRODUCTS_QUERY_PARAM.categoryIds]
+    ),
+    sort: parseSort(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.sort]),
+    priceFrom: parsePrice(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.priceFrom]),
+    priceTo: parsePrice(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.priceTo]),
+    available: parseAvailable(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.available]),
+    searchTerm: parseSearchTerm(searchParams[CATALOG_PRODUCTS_QUERY_PARAM.query]),
   };
 };

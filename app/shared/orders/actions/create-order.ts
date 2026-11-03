@@ -1,7 +1,8 @@
 "use server";
 
+import { API_JSON_HEADERS, API_SHOP_ID } from "@/app/core/api/constants/api.constants";
 import { getAuthUser } from "@/app/shared/auth/helpers/get-auth-user";
-import { ORDERS_CLIENT_API_URL, ORDERS_REQUEST_HEADERS } from "../constants/orders.constants";
+import { ORDERS_CLIENT_API_URL } from "../constants/orders.constants";
 import type {
   CreateOrderInput,
   CreateOrderRequest,
@@ -16,13 +17,13 @@ export const createOrderAction = async (input: CreateOrderInput): Promise<Create
   const user = await getAuthUser();
   const body: CreateOrderRequest = {
     ...input,
-    shopId: process.env.SHOP_ID ?? "",
+    shopId: API_SHOP_ID,
     ...(user && { userId: user.id }),
   };
 
   const response = await fetch(ORDERS_CLIENT_API_URL, {
     method: "POST",
-    headers: ORDERS_REQUEST_HEADERS,
+    headers: API_JSON_HEADERS,
     body: JSON.stringify(body),
     cache: "no-store",
   });
