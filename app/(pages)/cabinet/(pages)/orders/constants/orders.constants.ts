@@ -1,21 +1,12 @@
-import { ORDERS_CLIENT_API_URL } from "@/app/shared/orders/constants/orders.constants";
 import type { OrderPaymentMethod, OrderStatus } from "@/app/shared/orders/types/orders.types";
-import type { UserOrderPaymentStatus } from "../types/orders.types";
+import type {
+  UserOrderPaymentStatus,
+  UserOrderStatusMeta,
+  UserOrderStepConfig,
+} from "../types/orders.types";
 
 export const ORDERS_PAGE_SIZE = 20;
 export const ORDERS_PAGE_SEARCH_PARAM = "page";
-
-export const getUserOrdersApiUrl = (userId: string, page: number) => {
-  const params = new URLSearchParams({
-    shopId: process.env.SHOP_ID ?? "",
-    page: String(page),
-    limit: String(ORDERS_PAGE_SIZE),
-  });
-
-  return `${ORDERS_CLIENT_API_URL}/by-user/${userId}?${params.toString()}`;
-};
-
-export const getUserOrderApiUrl = (orderId: string) => `${ORDERS_CLIENT_API_URL}/${orderId}`;
 
 /** A non-uuid id, someone else's order and a missing one all end up as the same 404 page. */
 export const ORDER_NOT_FOUND_STATUSES = [400, 403, 404];
@@ -23,6 +14,16 @@ export const ORDER_NOT_FOUND_STATUSES = [400, 403, 404];
 /** Orders without a number of their own are shown by the start of their id, as checkout does. */
 export const ORDER_SHORT_ID_LENGTH = 8;
 export const ORDER_NUMBER_PREFIX = "#";
+
+export const ORDER_TITLE_PREFIX = "Замовлення";
+export const ORDER_META_SEPARATOR = " · ";
+
+export const ORDER_STATUS_META: Record<OrderStatus, UserOrderStatusMeta> = {
+  pending: { label: "Оформлено", icon: "schedule" },
+  processing: { label: "Збираємо", icon: "inventory_2" },
+  shipped: { label: "В дорозі", icon: "local_shipping" },
+  cancelled: { label: "Скасовано", icon: "cancel" },
+};
 
 export const ORDER_DATE_FORMATTER = new Intl.DateTimeFormat("uk-UA", {
   day: "numeric",
@@ -40,7 +41,7 @@ export const ORDER_STEP_DATE_FORMATTER = new Intl.DateTimeFormat("uk-UA", {
 });
 
 /** The backend has no "delivered" status, so the trail ends once the parcel is handed over. */
-export const ORDER_STEPS: { status: Exclude<OrderStatus, "cancelled">; label: string }[] = [
+export const ORDER_STEPS: UserOrderStepConfig[] = [
   { status: "pending", label: "Оформлено" },
   { status: "processing", label: "Збираємо" },
   { status: "shipped", label: "Відправлено" },

@@ -11,14 +11,8 @@ import {
 } from "../constants/orders.constants";
 import type { UserOrder, UserOrderView } from "../types/orders.types";
 import { buildUserOrderStepsHelper } from "./build-user-order-steps";
+import { getUserOrderDeliveryAmountHelper } from "./get-user-order-delivery-amount";
 import { toUserOrderItemViewHelper } from "./to-user-order-item-view";
-
-/** Checkout folds delivery and the cash-on-delivery fee into the total, so they are what is left over. */
-const getDeliveryAmount = ({ subtotalAmount, discountAmount, totalAmount }: UserOrder) => {
-  const delivery = Number(totalAmount) - Number(subtotalAmount) + Number(discountAmount);
-
-  return Math.max(0, Math.round(delivery * 100) / 100);
-};
 
 export const toUserOrderViewHelper = (
   order: UserOrder,
@@ -54,7 +48,7 @@ export const toUserOrderViewHelper = (
     amounts: {
       subtotal: Number(order.subtotalAmount),
       discount: Number(order.discountAmount),
-      delivery: getDeliveryAmount(order),
+      delivery: getUserOrderDeliveryAmountHelper(order),
       total: Number(order.totalAmount),
     },
   };

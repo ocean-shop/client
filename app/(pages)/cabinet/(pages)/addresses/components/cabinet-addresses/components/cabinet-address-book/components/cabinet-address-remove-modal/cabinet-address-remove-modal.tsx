@@ -1,10 +1,11 @@
 "use client";
 
-import { Button } from "@/app/ui/button/button";
+import { FormActions } from "@/app/ui/form-actions/form-actions";
 import { Modal } from "@/app/ui/modal/modal";
 import {
   CABINET_ADDRESS_REMOVE_MODAL_CANCEL_LABEL,
   CABINET_ADDRESS_REMOVE_MODAL_CONFIRM_LABEL,
+  CABINET_ADDRESS_REMOVE_MODAL_FOOTER_CLASS_NAME,
   CABINET_ADDRESS_REMOVE_MODAL_MAIN_NOTE,
   CABINET_ADDRESS_REMOVE_MODAL_TEXT,
   CABINET_ADDRESS_REMOVE_MODAL_TITLE,
@@ -25,25 +26,15 @@ export const CabinetAddressRemoveModal = ({
       onClose={onClose}
       title={CABINET_ADDRESS_REMOVE_MODAL_TITLE}
       footer={
-        <div className="flex flex-col-reverse gap-2.5 border-t border-surface px-4.5 py-3.5 lg:flex-row lg:justify-end lg:px-6 lg:py-4">
-          <Button
-            variant="outline"
-            size="auto"
-            onClick={onClose}
-            disabled={isRemoving}
-            className="h-[46px] rounded-[11px] px-5 text-sm"
-          >
-            {CABINET_ADDRESS_REMOVE_MODAL_CANCEL_LABEL}
-          </Button>
-          <Button
-            size="auto"
-            onClick={onConfirm}
-            disabled={isRemoving}
-            className="h-[46px] rounded-[11px] !bg-error-dark px-6 text-sm"
-          >
-            {CABINET_ADDRESS_REMOVE_MODAL_CONFIRM_LABEL}
-          </Button>
-        </div>
+        <FormActions
+          cancelLabel={CABINET_ADDRESS_REMOVE_MODAL_CANCEL_LABEL}
+          confirmLabel={CABINET_ADDRESS_REMOVE_MODAL_CONFIRM_LABEL}
+          onCancel={onClose}
+          onConfirm={onConfirm}
+          disabled={isRemoving}
+          isDestructive
+          className={CABINET_ADDRESS_REMOVE_MODAL_FOOTER_CLASS_NAME}
+        />
       }
     >
       <div className="flex flex-col gap-3 py-4">

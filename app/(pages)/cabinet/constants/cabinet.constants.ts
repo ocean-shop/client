@@ -1,4 +1,6 @@
+import type { ApiActionMessageFailure } from "@/app/core/api/types/api.types";
 import { AUTH_CABINET_PAGE_PATH } from "@/app/shared/auth/constants/auth.constants";
+import type { EmptyStateLink } from "@/app/ui/empty-state/types/empty-state.types";
 import type { CabinetMenuItem } from "../types/cabinet.types";
 
 export const CABINET_PAGE_CLASS_NAME = "flex flex-1 flex-col bg-surface-soft";
@@ -29,10 +31,17 @@ export const CABINET_LOGOUT_REDIRECT_PATH = "/";
 
 export const DASHBOARD_CLIENT_API_URL = `${process.env.API_BASE_URL}/user/client/dashboard`;
 
-export const getDashboardClientApiUrl = (userId: string) => {
-  const params = new URLSearchParams({ shopId: process.env.SHOP_ID ?? "" });
+/** What a cabinet server action hands back when the session is gone. */
+export const CABINET_ACTION_UNAUTHORIZED_FAILURE: ApiActionMessageFailure = {
+  ok: false,
+  status: 401,
+  message: null,
+};
 
-  return `${DASHBOARD_CLIENT_API_URL}/${userId}?${params.toString()}`;
+/** Where an empty list of the cabinet sends the user. */
+export const CABINET_EMPTY_LIST_LINK: EmptyStateLink = {
+  href: "/",
+  label: "Перейти до покупок",
 };
 
 /** Profiles keep the name as "Прізвище Ім’я По батькові", so the first name is the second word. */

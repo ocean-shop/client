@@ -1,3 +1,4 @@
+import type { ApiActionMessageResult } from "@/app/core/api/types/api.types";
 import type { DeliveryCarrier } from "@/app/shared/delivery/types/delivery.types";
 
 /** A saved delivery address as the backend keeps it: the carrier plus one free-form line. */
@@ -20,13 +21,10 @@ export type CreateUserShippingRequest = {
   isMain: boolean;
 };
 
-/** `message` is the backend's own explanation, e.g. a failed validation. */
-export type CreateUserShippingResult =
-  { ok: true; shipping: UserShipping } | { ok: false; status: number; message: string | null };
+export type CreateUserShippingResult = ApiActionMessageResult<{ shipping: UserShipping }>;
 
 /** Result of making an address main or removing it. */
-export type UserShippingActionResult =
-  { ok: true } | { ok: false; status: number; message: string | null };
+export type UserShippingActionResult = ApiActionMessageResult;
 
 /** A saved address split back into what its card shows. */
 export type UserShippingView = {

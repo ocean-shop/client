@@ -1,6 +1,6 @@
-import { ApiError } from "@/app/core/api/api-error";
+import { readApiResponse } from "@/app/core/api/helpers/read-api-response";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
-import { getProfileClientApiUrl } from "../constants/profile.constants";
+import { buildProfileClientApiUrlHelper } from "../helpers/build-profile-client-api-url";
 import { normalizeProfileBirthdayHelper } from "../helpers/normalize-profile-birthday";
 import type { UserProfile } from "../types/profile.types";
 
@@ -9,11 +9,8 @@ import type { UserProfile } from "../types/profile.types";
  * never saved one still get a profile back, with every field set to `null`.
  */
 export const getUserProfile = async (userId: string): Promise<UserProfile> => {
-  const response = await authFetch(getProfileClientApiUrl(userId));
-
-  if (!response.ok) throw new ApiError(response.status);
-
-  const { fullName, phoneNumber, birthday }: UserProfile = await response.json();
+  const response = await authFetch(buildProfileClientApiUrlHelper(userId));
+  const { fullName, phoneNumber, birthday } = await readApiResponse<UserProfile>(response);
 
   return { userId, fullName, phoneNumber, birthday: normalizeProfileBirthdayHelper(birthday) };
 };

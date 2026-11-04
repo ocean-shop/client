@@ -9,18 +9,10 @@ import {
   CABINET_OVERVIEW_ADDRESS_STAT,
   CABINET_OVERVIEW_FAVORITES_STAT,
   CABINET_OVERVIEW_LOCALE,
-  CABINET_OVERVIEW_ORDER_WORD_FORMS,
   CABINET_OVERVIEW_ORDERS_STAT,
 } from "../constants/cabinet-overview.constants";
 import type { CabinetOverviewStat } from "../types/cabinet-overview.types";
-
-const pluralRules = new Intl.PluralRules(CABINET_OVERVIEW_LOCALE);
-
-const formatOrdersCount = (count: number) => {
-  const word = CABINET_OVERVIEW_ORDER_WORD_FORMS[pluralRules.select(count)];
-
-  return `${count.toLocaleString(CABINET_OVERVIEW_LOCALE)} ${word ?? CABINET_OVERVIEW_ORDER_WORD_FORMS.other}`;
-};
+import { formatCabinetOrdersCountHelper } from "./format-cabinet-orders-count";
 
 /** The three shortcut cards under the active order, each with its own empty wording. */
 export const buildCabinetOverviewStatsHelper = (
@@ -37,7 +29,7 @@ export const buildCabinetOverviewStatsHelper = (
       href: CABINET_ORDERS_PATH,
       icon: orders.icon,
       label: orders.label,
-      value: ordersCount ? formatOrdersCount(ordersCount) : orders.emptyValue,
+      value: ordersCount ? formatCabinetOrdersCountHelper(ordersCount) : orders.emptyValue,
       note: !ordersCount
         ? orders.emptyNote
         : activeOrdersCount

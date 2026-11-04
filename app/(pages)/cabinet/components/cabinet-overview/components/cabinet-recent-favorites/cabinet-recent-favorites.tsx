@@ -1,7 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-product-price";
+import { ProductThumbnail } from "@/app/ui/product-thumbnail/product-thumbnail";
+import { SurfaceCard } from "@/app/ui/surface-card/surface-card";
 import { CABINET_FAVORITES_PATH } from "../../../../constants/cabinet.constants";
+import { CabinetSectionHeader } from "../../../cabinet-section-header/cabinet-section-header";
 import {
   CABINET_RECENT_FAVORITES_IMAGE_SIZES,
   CABINET_RECENT_FAVORITES_LIMIT,
@@ -12,30 +14,22 @@ import type { CabinetRecentFavoritesProps } from "./types/cabinet-recent-favorit
 
 export const CabinetRecentFavorites = ({ products }: CabinetRecentFavoritesProps) => {
   return (
-    <section className="flex flex-col gap-3.5 rounded-2xl bg-background p-[18px] lg:p-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-[15.5px] font-semibold text-foreground">
-          {CABINET_RECENT_FAVORITES_TITLE}
-        </h2>
+    <SurfaceCard as="section" className="flex flex-col gap-3.5">
+      <CabinetSectionHeader title={CABINET_RECENT_FAVORITES_TITLE}>
         <Link href={CABINET_FAVORITES_PATH} className="text-[13.5px] font-semibold text-accent">
           {CABINET_RECENT_FAVORITES_LINK_LABEL}
         </Link>
-      </div>
+      </CabinetSectionHeader>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-3.5">
         {products.slice(0, CABINET_RECENT_FAVORITES_LIMIT).map((product) => (
           <Link key={product.id} href={product.href} className="flex flex-col gap-2">
-            <div className="relative h-[120px] overflow-hidden rounded-xl bg-footer lg:h-[140px]">
-              {product.image && (
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  sizes={CABINET_RECENT_FAVORITES_IMAGE_SIZES}
-                  className="object-cover"
-                />
-              )}
-            </div>
+            <ProductThumbnail
+              image={product.image}
+              alt={product.name}
+              sizes={CABINET_RECENT_FAVORITES_IMAGE_SIZES}
+              className="h-[120px] rounded-xl lg:h-[140px]"
+            />
             <span className="text-[13.5px] font-medium leading-[1.35] text-foreground">
               {product.name}
             </span>
@@ -45,6 +39,6 @@ export const CabinetRecentFavorites = ({ products }: CabinetRecentFavoritesProps
           </Link>
         ))}
       </div>
-    </section>
+    </SurfaceCard>
   );
 };

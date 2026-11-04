@@ -1,13 +1,12 @@
 "use server";
 
 import { refresh } from "next/cache";
+import { API_JSON_HEADERS } from "@/app/core/api/constants/api.constants";
+import { readApiActionFailure } from "@/app/core/api/helpers/read-api-action-failure";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
-import { getApiErrorMessage } from "@/app/core/api/helpers/get-api-error-message";
 import { getAuthUser } from "@/app/shared/auth/helpers/get-auth-user";
-import {
-  getShippingClientApiUrl,
-  SHIPPING_REQUEST_HEADERS,
-} from "../constants/addresses.constants";
+import { CABINET_ACTION_UNAUTHORIZED_FAILURE } from "../../../constants/cabinet.constants";
+import { buildShippingClientApiUrlHelper } from "../helpers/build-shipping-client-api-url";
 import type {
   CreateUserShippingRequest,
   CreateUserShippingResult,
@@ -23,17 +22,15 @@ export const createUserShippingAction = async (
 ): Promise<CreateUserShippingResult> => {
   const user = await getAuthUser();
 
-  if (!user) return { ok: false, status: 401, message: null };
+  if (!user) return CABINET_ACTION_UNAUTHORIZED_FAILURE;
 
-  const response = await authFetch(getShippingClientApiUrl(user.id), {
+  const response = await authFetch(buildShippingClientApiUrlHelper(user.id), {
     method: "POST",
-    headers: SHIPPING_REQUEST_HEADERS,
+    headers: API_JSON_HEADERS,
     body: JSON.stringify(body),
   });
 
-  if (!response.ok) {
-    return { ok: false, status: response.status, message: await getApiErrorMessage(response) };
-  }
+  if (!response.ok) return readApiActionFailure(response);
 
   const shipping: UserShipping = await response.json();
 

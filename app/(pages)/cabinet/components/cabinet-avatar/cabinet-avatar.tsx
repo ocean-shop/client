@@ -1,3 +1,4 @@
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { CABINET_USER_FALLBACK_ICON } from "../../constants/cabinet.constants";
 import type { CabinetAvatarProps } from "./types/cabinet-avatar.types";
 
@@ -8,7 +9,7 @@ export const CabinetAvatar = ({ initial, className }: CabinetAvatarProps) => {
       aria-hidden
       className={`flex flex-none items-center justify-center rounded-full bg-accent font-bold text-white ${className ?? ""}`}
     >
-      {initial ?? <span className="font-symbols text-[22px]">{CABINET_USER_FALLBACK_ICON}</span>}
+      {initial ?? <MaterialIcon name={CABINET_USER_FALLBACK_ICON} className="text-[22px]" />}
     </span>
   );
 };

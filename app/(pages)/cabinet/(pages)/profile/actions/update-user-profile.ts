@@ -1,10 +1,12 @@
 "use server";
 
 import { refresh } from "next/cache";
+import { API_JSON_HEADERS } from "@/app/core/api/constants/api.constants";
+import { readApiActionFailure } from "@/app/core/api/helpers/read-api-action-failure";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
-import { getApiErrorMessage } from "@/app/core/api/helpers/get-api-error-message";
 import { getAuthUser } from "@/app/shared/auth/helpers/get-auth-user";
-import { getProfileClientApiUrl, PROFILE_REQUEST_HEADERS } from "../constants/profile.constants";
+import { CABINET_ACTION_UNAUTHORIZED_FAILURE } from "../../../constants/cabinet.constants";
+import { buildProfileClientApiUrlHelper } from "../helpers/build-profile-client-api-url";
 import { normalizeProfileBirthdayHelper } from "../helpers/normalize-profile-birthday";
 import type {
   UpdateUserProfileRequest,
@@ -21,17 +23,15 @@ export const updateUserProfileAction = async (
 ): Promise<UpdateUserProfileResult> => {
   const user = await getAuthUser();
 
-  if (!user) return { ok: false, status: 401, message: null };
+  if (!user) return CABINET_ACTION_UNAUTHORIZED_FAILURE;
 
-  const response = await authFetch(getProfileClientApiUrl(user.id), {
+  const response = await authFetch(buildProfileClientApiUrlHelper(user.id), {
     method: "PUT",
-    headers: PROFILE_REQUEST_HEADERS,
+    headers: API_JSON_HEADERS,
     body: JSON.stringify(body),
   });
 
-  if (!response.ok) {
-    return { ok: false, status: response.status, message: await getApiErrorMessage(response) };
-  }
+  if (!response.ok) return readApiActionFailure(response);
 
   const { fullName, phoneNumber, birthday }: UserProfile = await response.json();
 
