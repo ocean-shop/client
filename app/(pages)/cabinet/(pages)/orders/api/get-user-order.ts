@@ -1,4 +1,4 @@
-import { ApiError } from "@/app/core/api/api-fetch";
+import { ApiError } from "@/app/core/api/api-error";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
 import { getUserOrderApiUrl, ORDER_NOT_FOUND_STATUSES } from "../constants/orders.constants";
 import type { UserOrder } from "../types/orders.types";

@@ -1,4 +1,4 @@
-import { ApiError } from "@/app/core/api/api-fetch";
+import { ApiError } from "@/app/core/api/api-error";
 import {
   DELIVERY_FAILED_STATUS,
   DELIVERY_TIMEOUT_ERROR_NAME,

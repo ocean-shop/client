@@ -1,4 +1,5 @@
-import { ApiError, apiFetch } from "@/app/core/api/api-fetch";
+import { ApiError } from "@/app/core/api/api-error";
+import { apiFetch } from "@/app/core/api/api-fetch";
 import {
   DELIVERY_REQUEST_REVALIDATE_SECONDS,
   DELIVERY_UNCONFIGURED_STATUS,

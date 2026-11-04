@@ -1,7 +1,7 @@
 "use client";
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { ApiError } from "@/app/core/api/api-fetch";
+import { ApiError } from "@/app/core/api/api-error";
 import { useDebouncedValue } from "@/app/core/hooks/use-debounced-value";
 import { getDeliveryPointsAction } from "@/app/shared/delivery/actions/get-delivery-points";
 import type { DeliveryPointsRequest } from "@/app/shared/delivery/types/delivery.types";

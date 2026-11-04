@@ -2,9 +2,11 @@
 
 import { useSyncExternalStore } from "react";
 import { Toast } from "@/app/ui/toast/toast";
+import { TOAST_VIEWPORT_CLASS_NAME } from "./constants/toast-provider.constants";
 import { toastStore } from "./toast-store";
+import type { ToastProviderProps } from "./types/toast-provider.types";
 
-export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
+export const ToastProvider = ({ children }: ToastProviderProps) => {
   const toasts = useSyncExternalStore(
     toastStore.subscribe,
     toastStore.getSnapshot,
@@ -15,7 +17,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     <>
       {children}
 
-      <div className="pointer-events-none fixed inset-x-0 top-4 z-50 flex flex-col items-center gap-2.5 px-4 sm:left-auto sm:right-4 sm:items-end">
+      <div className={TOAST_VIEWPORT_CLASS_NAME}>
         {toasts.map((toast) => (
           <div key={toast.id} className="pointer-events-auto">
             <Toast

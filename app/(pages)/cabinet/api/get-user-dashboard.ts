@@ -1,4 +1,4 @@
-import { ApiError } from "@/app/core/api/api-fetch";
+import { ApiError } from "@/app/core/api/api-error";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
 import { getDashboardClientApiUrl } from "../constants/cabinet.constants";
 import type { UserDashboardResponse } from "../types/cabinet.types";

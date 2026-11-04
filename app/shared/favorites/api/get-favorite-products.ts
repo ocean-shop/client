@@ -1,4 +1,4 @@
-import { readApiResponse } from "@/app/core/api/api-fetch";
+import { readApiResponse } from "@/app/core/api/helpers/read-api-response";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
 import type { ProductListResponse } from "@/app/shared/products/types/products.types";
 import { buildFavoritesClientListApiUrlHelper } from "../helpers/build-favorites-client-list-api-url";

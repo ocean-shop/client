@@ -1,4 +1,4 @@
-import { ApiError } from "@/app/core/api/api-fetch";
+import { ApiError } from "@/app/core/api/api-error";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
 import { getProfileClientApiUrl } from "../constants/profile.constants";
 import { normalizeProfileBirthdayHelper } from "../helpers/normalize-profile-birthday";

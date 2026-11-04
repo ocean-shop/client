@@ -1,4 +1,4 @@
-import { ApiError } from "@/app/core/api/api-fetch";
+import { ApiError } from "@/app/core/api/api-error";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
 import { getUserOrdersApiUrl } from "../constants/orders.constants";
 import type { UserOrdersResponse } from "../types/orders.types";
