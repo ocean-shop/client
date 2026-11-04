@@ -13,9 +13,6 @@ export const LOGIN_IDENTIFIER_STEP_SUBMIT_LABEL = "Отримати код";
 export const LOGIN_IDENTIFIER_STEP_SUBMITTING_LABEL = "Надсилаємо код…";
 export const LOGIN_IDENTIFIER_STEP_TERMS =
   "Продовжуючи, ви погоджуєтесь з умовами використання та політикою конфіденційності.";
-export const LOGIN_IDENTIFIER_STEP_ERROR = LOGIN_PHONE_ENABLED
-  ? "Вкажіть коректний email або номер у форматі +380 XX XXX XX XX."
-  : "Вкажіть коректний email.";
 
 /** Icon shown while the value is not yet recognisable as either kind; email-only login is always mail. */
 export const LOGIN_IDENTIFIER_STEP_DEFAULT_ICON = LOGIN_PHONE_ENABLED ? "person" : "mail";

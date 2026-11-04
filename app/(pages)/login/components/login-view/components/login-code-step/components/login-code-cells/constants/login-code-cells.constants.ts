@@ -1,6 +1,12 @@
+import { LOGIN_CODE_LENGTH } from "@/app/(pages)/login/constants/login.constants";
 import type { LoginCodeCellState } from "../types/login-code-cells.types";
 
 export const LOGIN_CODE_CELLS_INPUT_LABEL = "Код підтвердження";
+
+export const LOGIN_CODE_CELL_INDEXES = Array.from(
+  { length: LOGIN_CODE_LENGTH },
+  (_, index) => index
+);
 
 export const LOGIN_CODE_CELL_CLASS_NAME =
   "flex h-[54px] items-center justify-center rounded-xl border-[1.5px] font-heading text-[21px] font-semibold transition-colors lg:h-[60px] lg:text-2xl";

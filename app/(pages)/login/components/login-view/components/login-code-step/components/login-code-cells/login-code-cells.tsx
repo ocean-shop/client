@@ -5,29 +5,21 @@ import {
 import { Input } from "@/app/ui/input/input";
 import {
   LOGIN_CODE_CELL_CLASS_NAME,
+  LOGIN_CODE_CELL_INDEXES,
   LOGIN_CODE_CELL_STATE_CLASS_NAMES,
   LOGIN_CODE_CELLS_INPUT_LABEL,
 } from "./constants/login-code-cells.constants";
-import type { LoginCodeCellState, LoginCodeCellsProps } from "./types/login-code-cells.types";
-
-const CELL_INDEXES = Array.from({ length: LOGIN_CODE_LENGTH }, (_, index) => index);
+import { getLoginCodeCellStateHelper } from "./helpers/get-login-code-cell-state";
+import type { LoginCodeCellsProps } from "./types/login-code-cells.types";
 
 export const LoginCodeCells = ({ code, status, onChange }: LoginCodeCellsProps) => {
-  const getCellState = (index: number): LoginCodeCellState => {
-    if (status === "verified") return "verified";
-    if (status === "invalid") return "invalid";
-    if (index < code.length) return "filled";
-
-    return index === code.length ? "active" : "empty";
-  };
-
   return (
     <div className="relative">
       <div aria-hidden className="grid grid-cols-4 gap-2 lg:gap-2.5">
-        {CELL_INDEXES.map((index) => (
+        {LOGIN_CODE_CELL_INDEXES.map((index) => (
           <div
             key={index}
-            className={`${LOGIN_CODE_CELL_CLASS_NAME} ${LOGIN_CODE_CELL_STATE_CLASS_NAMES[getCellState(index)]}`}
+            className={`${LOGIN_CODE_CELL_CLASS_NAME} ${LOGIN_CODE_CELL_STATE_CLASS_NAMES[getLoginCodeCellStateHelper(index, code.length, status)]}`}
           >
             {code[index] ?? ""}
           </div>

@@ -1,6 +1,8 @@
 import { getLoginIdentifierKindHelper } from "@/app/(pages)/login/helpers/get-login-identifier-kind";
 import { Button } from "@/app/ui/button/button";
+import { FormField } from "@/app/ui/form-field/form-field";
 import { Input } from "@/app/ui/input/input";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import {
   LOGIN_IDENTIFIER_STEP_DEFAULT_ICON,
   LOGIN_IDENTIFIER_STEP_DESCRIPTION,
@@ -42,16 +44,13 @@ export const LoginIdentifierStep = ({
         </p>
       </div>
 
-      <label className="flex flex-col gap-1.5">
-        <span className="text-[13px] font-medium text-muted">{LOGIN_IDENTIFIER_STEP_LABEL}</span>
+      <FormField label={LOGIN_IDENTIFIER_STEP_LABEL} error={error}>
         <div
           className={`${LOGIN_IDENTIFIER_STEP_FIELD_CLASS_NAME} ${
             LOGIN_IDENTIFIER_STEP_FIELD_STATE_CLASS_NAMES[error ? "error" : "default"]
           }`}
         >
-          <span aria-hidden className="font-symbols text-[20px] text-muted-light">
-            {icon}
-          </span>
+          <MaterialIcon name={icon} className="text-[20px] text-muted-light" />
           <Input
             variant="ghost"
             size="auto"
@@ -66,21 +65,11 @@ export const LoginIdentifierStep = ({
             className="h-full flex-1 text-[15px]"
           />
         </div>
-        {error && <span className="text-[13px] text-error-dark">{error}</span>}
-      </label>
+      </FormField>
 
-      <Button
-        type="submit"
-        size="auto"
-        disabled={isRequesting}
-        className="h-[52px] rounded-xl text-[15px]"
-      >
+      <Button type="submit" size="xl" disabled={isRequesting}>
         {isRequesting ? LOGIN_IDENTIFIER_STEP_SUBMITTING_LABEL : LOGIN_IDENTIFIER_STEP_SUBMIT_LABEL}
-        {!isRequesting && (
-          <span aria-hidden className="font-symbols text-[19px] font-normal">
-            arrow_forward
-          </span>
-        )}
+        {!isRequesting && <MaterialIcon name="arrow_forward" className="text-[19px] font-normal" />}
       </Button>
 
       <p className="text-center text-[12.5px] leading-normal text-muted-light">
