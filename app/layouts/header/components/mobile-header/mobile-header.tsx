@@ -3,9 +3,12 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useState } from "react";
+import { buildCatalogCategoryHrefHelper } from "@/app/shared/catalog-categories/helpers/build-catalog-category-href";
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { HEADER_BRAND_NAME, HEADER_HOME_HREF } from "../../constants/header.constants";
 import { HeaderSearch } from "../header-search/header-search";
+import { MOBILE_HEADER_OPEN_MENU_LABEL } from "./constants/mobile-header.constants";
 import type { MobileHeaderProps } from "./types/mobile-header.types";
 
 // Starts closed, so it skips the server HTML and loads in its own chunk after hydration.
@@ -24,10 +27,10 @@ export const MobileHeader = ({ categories }: MobileHeaderProps) => {
           variant="unstyled"
           size="auto"
           onClick={() => setIsMenuOpen(true)}
-          aria-label="Відкрити меню"
-          className="font-symbols text-2xl text-muted"
+          aria-label={MOBILE_HEADER_OPEN_MENU_LABEL}
+          className="text-muted"
         >
-          menu
+          <MaterialIcon name="menu" className="text-2xl" />
         </Button>
         <Link
           href={HEADER_HOME_HREF}
@@ -43,7 +46,11 @@ export const MobileHeader = ({ categories }: MobileHeaderProps) => {
 
       <div className="flex gap-4.5 overflow-x-auto px-4.5 pb-3 text-[13.5px] text-foreground [scrollbar-width:none]">
         {categories.map((category) => (
-          <Link key={category.id} href={`/catalog/${category.slug}`} className="flex-none">
+          <Link
+            key={category.id}
+            href={buildCatalogCategoryHrefHelper(category.slug)}
+            className="flex-none"
+          >
             {category.name}
           </Link>
         ))}

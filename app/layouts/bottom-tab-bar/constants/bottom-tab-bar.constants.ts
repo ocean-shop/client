@@ -1,8 +1,6 @@
-import type { BottomTabBarItem } from "../types/bottom-tab-bar.types";
+import type { BottomTabBarItemData } from "../types/bottom-tab-bar.types";
 
-export const BOTTOM_TAB_BAR_HOME_PATH = "/";
-
-export const BOTTOM_TAB_BAR_ITEMS: BottomTabBarItem[] = [
+export const BOTTOM_TAB_BAR_ITEMS: BottomTabBarItemData[] = [
   { id: "home", icon: "storefront", label: "Головна" },
   { id: "catalog", icon: "apps", label: "Каталог" },
   { id: "favorites", icon: "favorite", label: "Обране" },

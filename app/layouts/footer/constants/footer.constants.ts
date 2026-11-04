@@ -1,4 +1,5 @@
 import { ORDERS_AUTOMATIC_PAYMENT_ENABLED } from "@/app/shared/orders/constants/orders.constants";
+import { SUPPORT_EMAIL, SUPPORT_PHONE } from "@/app/shared/support/constants/support.constants";
 import type { FooterLinkColumn, FooterSupportInfo } from "../types/footer.types";
 
 export const FOOTER_BRAND_DESCRIPTION =
@@ -26,8 +27,8 @@ export const FOOTER_LINK_COLUMNS: FooterLinkColumn[] = [
 
 export const FOOTER_SUPPORT: FooterSupportInfo = {
   title: "Підтримка",
-  phone: "0 800 300 450",
-  email: "support@ocean.ua",
+  phone: SUPPORT_PHONE,
+  email: SUPPORT_EMAIL,
   hours: "Щодня, 24/7",
 };
 

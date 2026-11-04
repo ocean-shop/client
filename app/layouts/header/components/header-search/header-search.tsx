@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEscapeKey } from "@/app/core/hooks/use-escape-key";
+import { useOutsidePointerDown } from "@/app/core/hooks/use-outside-pointer-down";
 import {
   PRODUCT_SEARCH_TERM_MAX_LENGTH,
   PRODUCT_SEARCH_TERM_MIN_LENGTH,
 } from "@/app/shared/products/constants/products.constants";
 import { buildCatalogSearchHrefHelper } from "@/app/shared/products/helpers/build-catalog-search-href";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { HEADER_SEARCH_PLACEHOLDER } from "../../constants/header.constants";
 import { HeaderSearchPanel } from "./components/header-search-panel/header-search-panel";
 import {
@@ -30,18 +33,10 @@ export const HeaderSearch = ({ variant }: HeaderSearchProps) => {
 
   const { result, isSearching } = useProductSearch(trimmedSearchTerm, isPanelOpen);
 
-  useEffect(() => {
-    if (!isPanelOpen) return;
+  const dismissPanel = () => setIsDismissed(true);
 
-    const handlePointerDown = (event: PointerEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setIsDismissed(true);
-      }
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [isPanelOpen]);
+  useOutsidePointerDown(containerRef, dismissPanel, isPanelOpen);
+  useEscapeKey(dismissPanel, isPanelOpen);
 
   /**
    * Leaving the header for a listing or a product empties the field: the destination page
@@ -68,9 +63,7 @@ export const HeaderSearch = ({ variant }: HeaderSearchProps) => {
       className={HEADER_SEARCH_FORM_CLASS_NAMES[variant]}
     >
       <div className={HEADER_SEARCH_FIELD_CLASS_NAMES[variant]}>
-        <span aria-hidden className="font-symbols text-[19px] text-muted">
-          search
-        </span>
+        <MaterialIcon name="search" className="text-[19px] text-muted" />
         {/* `text` rather than `search`: the field keeps the design's own look, with no UA clear button. */}
         <input
           type="text"
@@ -85,9 +78,6 @@ export const HeaderSearch = ({ variant }: HeaderSearchProps) => {
             setIsDismissed(false);
           }}
           onFocus={() => setIsDismissed(false)}
-          onKeyDown={(event) => {
-            if (event.key === "Escape") setIsDismissed(true);
-          }}
           className={HEADER_SEARCH_INPUT_CLASS_NAME}
         />
       </div>

@@ -5,6 +5,7 @@ import { calculateCartTotalsHelper } from "@/app/shared/cart/helpers/calculate-c
 import { useCartItems } from "@/app/shared/cart/hooks/use-cart-items";
 import { useCartOpen } from "@/app/shared/cart/hooks/use-cart-open";
 import { formatProductsCountHelper } from "@/app/shared/products/helpers/format-products-count";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { Modal } from "@/app/ui/modal/modal";
 import { CartModalItem } from "./components/cart-modal-item/cart-modal-item";
 import { CartModalSummary } from "./components/cart-modal-summary/cart-modal-summary";
@@ -35,7 +36,7 @@ export const CartModal = () => {
 
       {items.length === 0 && (
         <div className="flex flex-col items-center gap-2 px-3 py-10 text-center text-[14.5px] text-muted">
-          <span className="font-symbols text-[34px] text-muted-light">{CART_MODAL_EMPTY_ICON}</span>
+          <MaterialIcon name={CART_MODAL_EMPTY_ICON} className="text-[34px] text-muted-light" />
           {CART_MODAL_EMPTY_LABEL}
         </div>
       )}

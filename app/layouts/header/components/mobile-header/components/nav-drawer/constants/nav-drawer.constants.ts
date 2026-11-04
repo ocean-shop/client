@@ -1,4 +1,7 @@
+import { CABINET_ORDERS_PATH } from "@/app/(pages)/cabinet/constants/cabinet.constants";
 import type { NavDrawerGroup } from "../types/nav-drawer.types";
+
+export const NAV_DRAWER_CLOSE_LABEL = "Закрити меню";
 
 export const NAV_DRAWER_GROUPS: NavDrawerGroup[] = [
   {
@@ -8,7 +11,7 @@ export const NAV_DRAWER_GROUPS: NavDrawerGroup[] = [
       { label: "Повернення товару", href: "/returns" },
       { label: "Програма лояльності", href: "/loyalty" },
       { label: "Часті запитання (FAQ)", href: "/faq" },
-      { label: "Відстеження замовлення", href: "/cabinet/orders" },
+      { label: "Відстеження замовлення", href: CABINET_ORDERS_PATH },
     ],
   },
   {
@@ -22,13 +25,3 @@ export const NAV_DRAWER_GROUPS: NavDrawerGroup[] = [
     ],
   },
 ];
-
-export const NAV_DRAWER_CART_LABEL = "Кошик";
-
-export const NAV_DRAWER_FAVORITES_LABEL = "Обране";
-
-export const NAV_DRAWER_SUPPORT_LABEL = "Підтримка 24/7";
-
-export const NAV_DRAWER_SUPPORT_PHONE = "0 800 300 450";
-
-export const NAV_DRAWER_SUPPORT_EMAIL = "support@ocean.ua";

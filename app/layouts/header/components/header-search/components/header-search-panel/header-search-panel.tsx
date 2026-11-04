@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
-import { buildProductHrefHelper } from "@/app/shared/products/helpers/build-product-href";
-import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-product-price";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
+import { HeaderSearchPanelItem } from "./components/header-search-panel-item/header-search-panel-item";
+import { HeaderSearchPanelSkeleton } from "./components/header-search-panel-skeleton/header-search-panel-skeleton";
 import {
   HEADER_SEARCH_PANEL_ALL_RESULTS_CLASS_NAMES,
   HEADER_SEARCH_PANEL_ALL_RESULTS_LABEL,
@@ -9,13 +9,9 @@ import {
   HEADER_SEARCH_PANEL_CLASS_NAMES,
   HEADER_SEARCH_PANEL_FOUND_LABEL,
   HEADER_SEARCH_PANEL_HEADING_CLASS_NAMES,
-  HEADER_SEARCH_PANEL_IMAGE_CLASS_NAMES,
   HEADER_SEARCH_PANEL_LIST_CLASS_NAMES,
-  HEADER_SEARCH_PANEL_NAME_CLASS_NAMES,
   HEADER_SEARCH_PANEL_NO_RESULTS_MESSAGE,
-  HEADER_SEARCH_PANEL_PRICE_CLASS_NAMES,
   HEADER_SEARCH_PANEL_PRODUCTS_LABEL,
-  HEADER_SEARCH_PANEL_SKELETON_COUNT,
 } from "./constants/header-search-panel.constants";
 import type { HeaderSearchPanelProps } from "./types/header-search-panel.types";
 
@@ -45,62 +41,21 @@ export const HeaderSearchPanel = ({
       </div>
 
       <div className={HEADER_SEARCH_PANEL_LIST_CLASS_NAMES[variant]}>
-        {isLoadingFirstResults &&
-          Array.from({ length: HEADER_SEARCH_PANEL_SKELETON_COUNT }, (_, index) => (
-            <div key={index} aria-hidden className="flex animate-pulse items-center gap-3 p-2">
-              <div className={HEADER_SEARCH_PANEL_IMAGE_CLASS_NAMES[variant]} />
-              <div className="flex flex-1 flex-col gap-2">
-                <div className="h-3.5 rounded bg-surface-strong" />
-                <div className="h-3.5 w-2/3 rounded bg-surface-strong" />
-              </div>
-            </div>
-          ))}
+        {isLoadingFirstResults && <HeaderSearchPanelSkeleton variant={variant} />}
 
         {items.map((item) => (
-          <Link
+          <HeaderSearchPanelItem
             key={item.id}
-            href={buildProductHrefHelper(item.slug)}
-            onClick={onProductSelect}
-            className={`flex items-center gap-3 rounded-xl p-2 hover:bg-surface ${
-              isSearching ? "opacity-60" : ""
-            }`}
-          >
-            <div className={HEADER_SEARCH_PANEL_IMAGE_CLASS_NAMES[variant]}>
-              {item.image ? (
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  sizes="56px"
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <span className="flex h-full items-center justify-center font-symbols text-[22px] text-muted-light">
-                  image
-                </span>
-              )}
-            </div>
-
-            <span className={`min-w-0 flex-1 ${HEADER_SEARCH_PANEL_NAME_CLASS_NAMES[variant]}`}>
-              {item.name}
-            </span>
-
-            <div className="flex flex-col items-end gap-0.5">
-              <span className={HEADER_SEARCH_PANEL_PRICE_CLASS_NAMES[variant]}>
-                {formatProductPriceHelper(item.price)}
-              </span>
-              {item.oldPrice && (
-                <span className="text-xs text-muted-light line-through">
-                  {formatProductPriceHelper(item.oldPrice)}
-                </span>
-              )}
-            </div>
-          </Link>
+            variant={variant}
+            item={item}
+            isStale={isSearching}
+            onSelect={onProductSelect}
+          />
         ))}
 
         {hasNoResults && (
           <div className="flex flex-col items-center gap-1.5 px-3 py-7 text-center text-sm text-muted">
-            <span className="font-symbols text-[30px] text-muted-light">search_off</span>
+            <MaterialIcon name="search_off" className="text-[30px] text-muted-light" />
             {HEADER_SEARCH_PANEL_NO_RESULTS_MESSAGE(searchTerm)}
           </div>
         )}

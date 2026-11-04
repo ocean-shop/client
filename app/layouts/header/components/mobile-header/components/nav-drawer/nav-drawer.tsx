@@ -1,27 +1,13 @@
 import Link from "next/link";
-import { CABINET_FAVORITES_PATH } from "@/app/(pages)/cabinet/constants/cabinet.constants";
-import { cartStore } from "@/app/shared/cart/cart-store";
-import { useCartQuantity } from "@/app/shared/cart/hooks/use-cart-quantity";
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { HEADER_BRAND_NAME } from "../../../../constants/header.constants";
-import {
-  NAV_DRAWER_CART_LABEL,
-  NAV_DRAWER_FAVORITES_LABEL,
-  NAV_DRAWER_GROUPS,
-  NAV_DRAWER_SUPPORT_EMAIL,
-  NAV_DRAWER_SUPPORT_LABEL,
-  NAV_DRAWER_SUPPORT_PHONE,
-} from "./constants/nav-drawer.constants";
+import { NavDrawerShortcuts } from "./components/nav-drawer-shortcuts/nav-drawer-shortcuts";
+import { NavDrawerSupport } from "./components/nav-drawer-support/nav-drawer-support";
+import { NAV_DRAWER_CLOSE_LABEL, NAV_DRAWER_GROUPS } from "./constants/nav-drawer.constants";
 import type { NavDrawerProps } from "./types/nav-drawer.types";
 
 export const NavDrawer = ({ isOpen, onClose }: NavDrawerProps) => {
-  const cartQuantity = useCartQuantity();
-
-  const handleCartClick = () => {
-    onClose();
-    cartStore.open();
-  };
-
   return (
     <>
       <div
@@ -49,38 +35,14 @@ export const NavDrawer = ({ isOpen, onClose }: NavDrawerProps) => {
             variant="unstyled"
             size="auto"
             onClick={onClose}
-            aria-label="Закрити меню"
-            className="font-symbols text-2xl"
+            aria-label={NAV_DRAWER_CLOSE_LABEL}
           >
-            close
+            <MaterialIcon name="close" className="text-2xl" />
           </Button>
         </div>
 
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-3.5 py-3.5 [scrollbar-width:none]">
-          <div className="flex shrink-0 flex-col overflow-hidden rounded-[14px] bg-background">
-            <div
-              role="button"
-              onClick={handleCartClick}
-              className="flex cursor-pointer items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground hover:bg-surface"
-            >
-              <span className="font-symbols text-[21px] text-accent">shopping_bag</span>
-              {NAV_DRAWER_CART_LABEL}
-              {cartQuantity > 0 && (
-                <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-white">
-                  {cartQuantity}
-                </span>
-              )}
-            </div>
-            <div className="h-px bg-border-soft" />
-            <Link
-              href={CABINET_FAVORITES_PATH}
-              onClick={onClose}
-              className="flex items-center gap-3 px-4 py-3.5 text-[14.5px] font-medium text-foreground hover:bg-surface"
-            >
-              <span className="font-symbols text-[21px] text-accent">favorite</span>
-              {NAV_DRAWER_FAVORITES_LABEL}
-            </Link>
-          </div>
+          <NavDrawerShortcuts onClose={onClose} />
 
           {NAV_DRAWER_GROUPS.map((group) => (
             <div
@@ -101,15 +63,7 @@ export const NavDrawer = ({ isOpen, onClose }: NavDrawerProps) => {
             </div>
           ))}
 
-          <div className="flex shrink-0 flex-col gap-1.5 rounded-[14px] bg-accent-soft p-4">
-            <div className="text-xs font-semibold uppercase tracking-[.1em] text-accent">
-              {NAV_DRAWER_SUPPORT_LABEL}
-            </div>
-            <div className="font-heading text-[17px] font-semibold text-foreground">
-              {NAV_DRAWER_SUPPORT_PHONE}
-            </div>
-            <div className="text-sm text-muted">{NAV_DRAWER_SUPPORT_EMAIL}</div>
-          </div>
+          <NavDrawerSupport />
         </div>
       </div>
     </>

@@ -1,6 +1,6 @@
-import type { CatalogPanelPromo } from "../types/catalog-panel.types";
+import type { CatalogPanelPromoContent } from "../types/catalog-panel-promo.types";
 
-export const CATALOG_PANEL_PROMO: CatalogPanelPromo = {
+export const CATALOG_PANEL_PROMO: CatalogPanelPromoContent = {
   badge: "НОВИНКА",
   title: "Ocean Flow Pro Series",
   description: "Нове покоління просторового звуку з активним заглушенням до 48 дБ.",

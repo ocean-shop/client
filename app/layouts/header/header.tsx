@@ -1,20 +1,22 @@
 import Link from "next/link";
 import { CABINET_FAVORITES_PATH } from "@/app/(pages)/cabinet/constants/cabinet.constants";
+import { AUTH_CABINET_PAGE_PATH } from "@/app/shared/auth/constants/auth.constants";
+import { buildCatalogCategoryHrefHelper } from "@/app/shared/catalog-categories/helpers/build-catalog-category-href";
+import { getCatalogCategoryTreeHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-tree";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { CatalogPanel } from "./components/catalog-panel/catalog-panel";
 import { HeaderCart } from "./components/header-cart/header-cart";
 import { HeaderSearch } from "./components/header-search/header-search";
-import { HEADER_BRAND_NAME, HEADER_HOME_HREF } from "./constants/header.constants";
 import { MobileHeader } from "./components/mobile-header/mobile-header";
-import { AUTH_CABINET_PAGE_PATH } from "@/app/shared/auth/constants/auth.constants";
-import { getCatalogCategoryTreeHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-tree";
-import type { HeaderNavItem } from "./types/header.types";
+import {
+  HEADER_BRAND_NAME,
+  HEADER_CABINET_LABEL,
+  HEADER_FAVORITES_LABEL,
+  HEADER_HOME_HREF,
+} from "./constants/header.constants";
 
 export const Header = async () => {
   const categoryTree = await getCatalogCategoryTreeHelper();
-  const navItems: HeaderNavItem[] = categoryTree.map((category) => ({
-    label: category.name,
-    href: `/catalog/${category.slug}`,
-  }));
 
   return (
     <>
@@ -23,12 +25,10 @@ export const Header = async () => {
       <header className="sticky top-0 z-30 hidden lg:block bg-background">
         <div className="mx-auto flex max-w-page items-center gap-7 px-10 py-5">
           <Link href={HEADER_HOME_HREF} className="flex items-center gap-2">
-            <span
-              aria-hidden
-              className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-accent font-symbols text-[17px] text-white"
-            >
-              waves
-            </span>
+            <MaterialIcon
+              name="waves"
+              className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-accent text-[17px] text-white"
+            />
             <span className="font-heading text-[19px] font-semibold tracking-tight text-foreground">
               {HEADER_BRAND_NAME}
             </span>
@@ -41,10 +41,10 @@ export const Header = async () => {
           <div className="flex items-center gap-[22px] text-sm text-muted">
             {/* The page itself sends guests to sign in and back. */}
             <Link href={CABINET_FAVORITES_PATH} className="hover:text-accent">
-              Обране
+              {HEADER_FAVORITES_LABEL}
             </Link>
             <Link href={AUTH_CABINET_PAGE_PATH} className="hover:text-accent">
-              Кабінет
+              {HEADER_CABINET_LABEL}
             </Link>
             <HeaderCart />
           </div>
@@ -52,17 +52,13 @@ export const Header = async () => {
 
         <div className="border-b border-border-soft">
           <div className="mx-auto flex max-w-page gap-[26px] px-10 pb-4 text-sm text-muted">
-            {navItems.map((item) => (
+            {categoryTree.map((category) => (
               <Link
-                key={item.href}
-                href={item.href}
-                className={
-                  item.active
-                    ? "border-b-2 border-accent pb-0.5 font-semibold text-accent"
-                    : "hover:text-accent"
-                }
+                key={category.id}
+                href={buildCatalogCategoryHrefHelper(category.slug)}
+                className="hover:text-accent"
               >
-                {item.label}
+                {category.name}
               </Link>
             ))}
           </div>
