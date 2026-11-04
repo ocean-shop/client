@@ -1,8 +1,6 @@
 import type { TermsSection } from "../../../types/terms.types";
 import { TERMS_PRINT_DOCUMENT_STYLES } from "../constants/terms-print-button.constants";
-
-const escapeHtml = (value: string) =>
-  value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+import { escapeHtmlHelper } from "./escape-html";
 
 /** Standalone HTML with only the offer's sections, for printing to PDF. */
 export const buildTermsPrintDocumentHelper = (
@@ -12,11 +10,11 @@ export const buildTermsPrintDocumentHelper = (
   const body = sections
     .map(
       (section) =>
-        `<section><h2>${escapeHtml(section.title)}</h2><p>${escapeHtml(section.text)}</p></section>`
+        `<section><h2>${escapeHtmlHelper(section.title)}</h2><p>${escapeHtmlHelper(section.text)}</p></section>`
     )
     .join("");
 
-  return `<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>${escapeHtml(
+  return `<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>${escapeHtmlHelper(
     documentTitle
   )}</title><style>${TERMS_PRINT_DOCUMENT_STYLES}</style></head><body>${body}</body></html>`;
 };

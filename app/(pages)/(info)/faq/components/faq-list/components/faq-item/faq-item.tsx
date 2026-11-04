@@ -1,4 +1,5 @@
 import { useId } from "react";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import {
   FAQ_ITEM_CLOSED_ICON,
   FAQ_ITEM_ICON_CLOSED_CLASS_NAME,
@@ -22,14 +23,12 @@ export const FaqItem = ({ entry, isOpen, onToggle }: FaqItemProps) => {
         <span className="flex-1 text-[14.5px] font-semibold leading-[1.4] text-foreground lg:text-[15.5px]">
           {entry.question}
         </span>
-        <span
-          aria-hidden
-          className={`flex h-8 w-8 flex-none items-center justify-center rounded-[9px] font-symbols text-xl transition-colors ${
+        <MaterialIcon
+          name={isOpen ? FAQ_ITEM_OPEN_ICON : FAQ_ITEM_CLOSED_ICON}
+          className={`flex h-8 w-8 flex-none items-center justify-center rounded-[9px] text-xl transition-colors ${
             isOpen ? FAQ_ITEM_ICON_OPEN_CLASS_NAME : FAQ_ITEM_ICON_CLOSED_CLASS_NAME
           }`}
-        >
-          {isOpen ? FAQ_ITEM_OPEN_ICON : FAQ_ITEM_CLOSED_ICON}
-        </span>
+        />
       </button>
 
       {isOpen && (

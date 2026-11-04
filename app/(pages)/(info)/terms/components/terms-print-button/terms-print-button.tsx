@@ -2,6 +2,7 @@
 
 import { TERMS_PRINT_BUTTON_LABEL } from "./constants/terms-print-button.constants";
 import { buildTermsPrintDocumentHelper } from "./helpers/build-terms-print-document";
+import { printHtmlDocumentHelper } from "./helpers/print-html-document";
 import type { TermsPrintButtonProps } from "./types/terms-print-button.types";
 
 /**
@@ -10,22 +11,7 @@ import type { TermsPrintButtonProps } from "./types/terms-print-button.types";
  */
 export const TermsPrintButton = ({ sections, documentTitle }: TermsPrintButtonProps) => {
   const handleClick = () => {
-    const iframe = document.createElement("iframe");
-
-    iframe.setAttribute("aria-hidden", "true");
-    iframe.style.cssText = "position:fixed;width:0;height:0;border:0;visibility:hidden";
-    iframe.srcdoc = buildTermsPrintDocumentHelper(sections, documentTitle);
-    iframe.onload = () => {
-      const frameWindow = iframe.contentWindow;
-
-      if (!frameWindow) return iframe.remove();
-
-      frameWindow.addEventListener("afterprint", () => iframe.remove());
-      frameWindow.focus();
-      frameWindow.print();
-    };
-
-    document.body.appendChild(iframe);
+    printHtmlDocumentHelper(buildTermsPrintDocumentHelper(sections, documentTitle));
   };
 
   return (

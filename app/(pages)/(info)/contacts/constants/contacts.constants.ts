@@ -45,7 +45,6 @@ export const CONTACTS_SHOWROOM_LINES = [
 export const CONTACTS_FORM_TITLE = "Напишіть нам";
 
 export const CONTACTS_CLIENT_API_URL = `${process.env.API_BASE_URL}/user/client/contacts`;
-export const CONTACTS_REQUEST_HEADERS = { "Content-Type": "application/json" };
 
 export const CONTACTS_REQUISITES_TITLE = "Реквізити";
 

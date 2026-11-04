@@ -1,3 +1,4 @@
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import {
   LOYALTY_TIER_FEATURED_STYLES,
   LOYALTY_TIER_PERK_ICON,
@@ -27,12 +28,10 @@ export const LoyaltyTier = ({ tier }: LoyaltyTierProps) => {
       <ul className="flex flex-col gap-2">
         {tier.perks.map((perk) => (
           <li key={perk} className={`flex gap-2 text-[13.5px] leading-[1.45] ${styles.perk}`}>
-            <span
-              aria-hidden
-              className={`flex-none font-symbols text-[17px] leading-[inherit] ${styles.icon}`}
-            >
-              {LOYALTY_TIER_PERK_ICON}
-            </span>
+            <MaterialIcon
+              name={LOYALTY_TIER_PERK_ICON}
+              className={`flex-none text-[17px] leading-[inherit] ${styles.icon}`}
+            />
             <span>{perk}</span>
           </li>
         ))}
