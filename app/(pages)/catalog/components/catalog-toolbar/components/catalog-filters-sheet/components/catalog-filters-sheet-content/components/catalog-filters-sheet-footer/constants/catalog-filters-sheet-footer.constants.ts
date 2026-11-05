@@ -1,0 +1,1 @@
+export const CATALOG_FILTERS_SHEET_FOOTER_SHOW_RESULTS_LABEL = "Показати";

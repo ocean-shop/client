@@ -1,3 +1,5 @@
+import type { CatalogFilterVariant } from "../../../types/catalog-filters.types";
+
 export const CATALOG_CATEGORY_FILTER_TITLE = "Категорії";
 
 export const CATALOG_CATEGORY_FILTER_MORE_LABEL = "Показати ще";
@@ -12,3 +14,8 @@ export const CATALOG_CATEGORY_FILTER_INDENT_STEP = 18;
 
 /** Stands in for "no parent" while the rows are grouped; category ids are uuids, so it is free. */
 export const CATALOG_CATEGORY_FILTER_ROOT_KEY = "root";
+
+export const CATALOG_CATEGORY_FILTER_ROW_CLASS_NAMES: Record<CatalogFilterVariant, string> = {
+  card: "min-h-[30px]",
+  sheet: "min-h-11",
+};

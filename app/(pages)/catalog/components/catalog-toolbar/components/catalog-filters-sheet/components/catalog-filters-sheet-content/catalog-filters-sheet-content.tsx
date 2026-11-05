@@ -1,38 +1,15 @@
 ﻿"use client";
 
-import { useState } from "react";
-import { Button } from "@/app/ui/button/button";
-import { Checkbox } from "@/app/ui/checkbox/checkbox";
-import { Input } from "@/app/ui/input/input";
-import { formatProductsCountHelper } from "@/app/shared/products/helpers/format-products-count";
-import { hasCatalogAttributeValueHelper } from "@/app/shared/products/helpers/has-catalog-attribute-value";
-import { toggleCatalogAttributeValueHelper } from "@/app/shared/products/helpers/toggle-catalog-attribute-value";
-import { toggleCatalogCategoryIdHelper } from "@/app/shared/products/helpers/toggle-catalog-category-id";
-import type {
-  CatalogFilter,
-  CatalogProductsQuery,
-} from "@/app/shared/products/types/products.types";
 import { useCatalogProductsCount } from "../../../../../../hooks/use-catalog-products-count";
+import { CatalogAttributeFilter } from "../../../../../catalog-filters/components/catalog-attribute-filter/catalog-attribute-filter";
+import { CatalogAvailabilityFilter } from "../../../../../catalog-filters/components/catalog-availability-filter/catalog-availability-filter";
 import { CatalogCategoryFilter } from "../../../../../catalog-filters/components/catalog-category-filter/catalog-category-filter";
-import { parsePriceInputHelper } from "../../../../../catalog-filters/helpers/parse-price-input";
-import {
-  CATALOG_FILTERS_AVAILABILITY_LABEL,
-  CATALOG_FILTERS_AVAILABLE_ONLY_LABEL,
-  CATALOG_FILTERS_MORE_LABEL,
-  CATALOG_FILTERS_PRICE_FROM_PLACEHOLDER,
-  CATALOG_FILTERS_PRICE_LABEL,
-  CATALOG_FILTERS_PRICE_TO_PLACEHOLDER,
-  CATALOG_FILTERS_VISIBLE_OPTIONS_COUNT,
-} from "../../../../../catalog-filters/constants/catalog-filters.constants";
-import {
-  CATALOG_FILTERS_SHEET_CLOSE_LABEL,
-  CATALOG_FILTERS_SHEET_RESET_LABEL,
-  CATALOG_FILTERS_SHEET_SHOW_RESULTS_LABEL,
-  CATALOG_FILTERS_SHEET_TITLE,
-} from "../../constants/catalog-filters-sheet.constants";
+import { CatalogPriceSection } from "../../../../../catalog-filters/components/catalog-price-section/catalog-price-section";
+import { CatalogFiltersSheetFooter } from "./components/catalog-filters-sheet-footer/catalog-filters-sheet-footer";
+import { CatalogFiltersSheetHeader } from "./components/catalog-filters-sheet-header/catalog-filters-sheet-header";
+import { useCatalogFiltersDraft } from "./hooks/use-catalog-filters-draft";
 import type { CatalogFiltersSheetContentProps } from "./types/catalog-filters-sheet-content.types";
 
-/** Selections stay local until "show results" applies them to the URL. */
 export const CatalogFiltersSheetContent = ({
   isOpen,
   onClose,
@@ -44,212 +21,56 @@ export const CatalogFiltersSheetContent = ({
   categories,
   query,
 }: CatalogFiltersSheetContentProps) => {
-  const [priceFrom, setPriceFrom] = useState(query.priceFrom?.toString() ?? "");
-  const [priceTo, setPriceTo] = useState(query.priceTo?.toString() ?? "");
-  const [attributes, setAttributes] = useState<CatalogFilter[]>(query.attributes);
-  const [categoryIds, setCategoryIds] = useState<string[]>(query.categoryIds);
-  const [isAvailableOnly, setIsAvailableOnly] = useState(query.available === true);
-  const [collapsedGroupIds, setCollapsedGroupIds] = useState<Set<string>>(new Set());
-  const [expandedGroupIds, setExpandedGroupIds] = useState<Set<string>>(new Set());
-
-  const draftQuery: CatalogProductsQuery = {
-    ...query,
-    page: 1,
-    attributes,
-    categoryIds,
-    priceFrom: parsePriceInputHelper(priceFrom),
-    priceTo: parsePriceInputHelper(priceTo),
-    available: isAvailableOnly || undefined,
-  };
-
-  const { count, isCounting } = useCatalogProductsCount(source, draftQuery, isOpen);
-
-  const toggleOption = (name: string, value: string) => {
-    setAttributes((prev) => toggleCatalogAttributeValueHelper(prev, name, value));
-  };
-
-  const toggleCategory = (categoryId: string) => {
-    setCategoryIds((prev) => toggleCatalogCategoryIdHelper(prev, categoryId));
-  };
-
-  const toggleGroupCollapsed = (groupId: string) => {
-    setCollapsedGroupIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(groupId)) next.delete(groupId);
-      else next.add(groupId);
-      return next;
-    });
-  };
-
-  const expandGroup = (groupId: string) => {
-    setExpandedGroupIds((prev) => new Set(prev).add(groupId));
-  };
-
-  const resetFilters = () => {
-    setPriceFrom("");
-    setPriceTo("");
-    setAttributes([]);
-    setCategoryIds([]);
-    setIsAvailableOnly(false);
-  };
-
-  const showResults = () => {
-    onApply(draftQuery);
-  };
+  const draft = useCatalogFiltersDraft(query);
+  const { count, isCounting } = useCatalogProductsCount(source, draft.draftQuery, isOpen);
 
   return (
     <>
-      <div className="flex items-center gap-3 border-b border-border-soft bg-background px-4.5 py-4">
-        <span className="flex-1 font-heading text-[19px] font-semibold tracking-[-.02em] text-foreground">
-          {CATALOG_FILTERS_SHEET_TITLE}
-        </span>
-        <Button variant="text" size="auto" onClick={resetFilters} className="text-[13.5px]">
-          {CATALOG_FILTERS_SHEET_RESET_LABEL}
-        </Button>
-        <Button
-          variant="outline"
-          size="auto"
-          onClick={onClose}
-          aria-label={CATALOG_FILTERS_SHEET_CLOSE_LABEL}
-          className="h-[38px] w-[38px] rounded-[11px] p-0 font-symbols text-[21px] text-foreground"
-        >
-          close
-        </Button>
-      </div>
+      <CatalogFiltersSheetHeader onReset={draft.resetFilters} onClose={onClose} />
 
       <div className="flex min-h-0 flex-1 flex-col overflow-y-auto bg-surface-soft pb-24 [scrollbar-width:none]">
         {categories && (
           <CatalogCategoryFilter
+            variant="sheet"
             categories={categories}
-            selectedIds={categoryIds}
-            onToggle={toggleCategory}
-            className="flex flex-col gap-1.5 border-b border-border-soft bg-background p-4.5"
-            rowWrapperClassName="min-h-11"
+            selectedIds={draft.categoryIds}
+            onToggle={draft.toggleCategory}
           />
         )}
 
-        <div className="flex flex-col gap-3.5 border-b border-border-soft bg-background p-4.5">
-          <div className="text-[15px] font-semibold text-foreground">
-            {CATALOG_FILTERS_PRICE_LABEL}
-          </div>
-          <div className="flex items-center gap-2.5">
-            <Input
-              size="lg"
-              type="number"
-              min={0}
-              value={priceFrom}
-              onChange={(event) => setPriceFrom(event.target.value)}
-              placeholder={CATALOG_FILTERS_PRICE_FROM_PLACEHOLDER}
-            />
-            <span className="text-muted-light">â€”</span>
-            <Input
-              size="lg"
-              type="number"
-              min={0}
-              value={priceTo}
-              onChange={(event) => setPriceTo(event.target.value)}
-              placeholder={CATALOG_FILTERS_PRICE_TO_PLACEHOLDER}
-            />
-          </div>
-        </div>
+        <CatalogPriceSection
+          variant="sheet"
+          fromValue={draft.priceFrom}
+          toValue={draft.priceTo}
+          onFromChange={draft.setPriceFrom}
+          onToChange={draft.setPriceTo}
+        />
 
-        <div className="flex flex-col gap-3.5 border-b border-border-soft bg-background p-4.5">
-          <div className="text-[15px] font-semibold text-foreground">
-            {CATALOG_FILTERS_AVAILABILITY_LABEL}
-          </div>
-          <Checkbox
-            checked={isAvailableOnly}
-            onChange={setIsAvailableOnly}
-            label={CATALOG_FILTERS_AVAILABLE_ONLY_LABEL}
-            wrapperClassName="min-h-11"
+        <CatalogAvailabilityFilter
+          variant="sheet"
+          checked={draft.isAvailableOnly}
+          onChange={draft.setIsAvailableOnly}
+        />
+
+        {groups.map((group) => (
+          <CatalogAttributeFilter
+            key={group.id}
+            variant="sheet"
+            group={group}
+            selectedAttributes={draft.attributes}
+            onToggle={draft.toggleOption}
           />
-        </div>
-
-        {groups.map((group) => {
-          const isCollapsed = collapsedGroupIds.has(group.id);
-          const isExpanded = expandedGroupIds.has(group.id);
-          const visibleOptions = isExpanded
-            ? group.options
-            : group.options.slice(0, CATALOG_FILTERS_VISIBLE_OPTIONS_COUNT);
-          const hasMore =
-            !isExpanded && group.options.length > CATALOG_FILTERS_VISIBLE_OPTIONS_COUNT;
-
-          return (
-            <div
-              key={group.id}
-              className="flex flex-col gap-3.5 border-b border-border-soft bg-background p-4.5"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[15px] font-semibold text-foreground">{group.title}</span>
-                <Button
-                  variant="ghost"
-                  size="auto"
-                  onClick={() => toggleGroupCollapsed(group.id)}
-                  aria-label={group.title}
-                  className="font-symbols text-[21px]"
-                >
-                  {isCollapsed ? "expand_more" : "expand_less"}
-                </Button>
-              </div>
-
-              {!isCollapsed && (
-                <>
-                  <div className="flex flex-col">
-                    {visibleOptions.map((option) => (
-                      <Checkbox
-                        key={option.id}
-                        checked={hasCatalogAttributeValueHelper(
-                          attributes,
-                          group.name,
-                          option.value
-                        )}
-                        onChange={() => toggleOption(group.name, option.value)}
-                        label={option.label}
-                        count={option.count}
-                        wrapperClassName="min-h-11"
-                      />
-                    ))}
-                  </div>
-
-                  {hasMore && (
-                    <Button
-                      variant="text"
-                      size="auto"
-                      onClick={() => expandGroup(group.id)}
-                      className="self-start text-[13.5px]"
-                    >
-                      {CATALOG_FILTERS_MORE_LABEL}
-                    </Button>
-                  )}
-                </>
-              )}
-            </div>
-          );
-        })}
+        ))}
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 flex gap-2.5 border-t border-border-soft bg-background p-3.5 pb-5">
-        <Button
-          variant="outline"
-          size="auto"
-          onClick={resetFilters}
-          className="h-[50px] w-[110px] flex-none rounded-xl px-2 text-[14.5px] font-semibold"
-        >
-          {CATALOG_FILTERS_SHEET_RESET_LABEL}
-        </Button>
-        <Button
-          size="auto"
-          onClick={showResults}
-          disabled={isApplying}
-          className="h-[50px] flex-1 rounded-xl text-[14.5px] font-semibold"
-        >
-          {/* Falls back to the applied total until the first draft count arrives. */}
-          <span className={isCounting ? "opacity-60" : ""}>
-            {CATALOG_FILTERS_SHEET_SHOW_RESULTS_LABEL}{" "}
-            {formatProductsCountHelper(count ?? resultsCount)}
-          </span>
-        </Button>
-      </div>
+      <CatalogFiltersSheetFooter
+        onReset={draft.resetFilters}
+        onShowResults={() => onApply(draft.draftQuery)}
+        isApplying={isApplying}
+        isCounting={isCounting}
+        /* Falls back to the applied total until the first draft count arrives. */
+        count={count ?? resultsCount}
+      />
     </>
   );
 };
