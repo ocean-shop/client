@@ -5,25 +5,35 @@ import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import {
   QUANTITY_STEPPER_BUTTON_CLASS_NAME,
   QUANTITY_STEPPER_DECREASE_LABEL,
+  QUANTITY_STEPPER_DEFAULT_SIZE,
   QUANTITY_STEPPER_INCREASE_LABEL,
+  QUANTITY_STEPPER_SIZE_STYLES,
 } from "./constants/quantity-stepper.constants";
 import type { QuantityStepperProps } from "./types/quantity-stepper.types";
 
-export const QuantityStepper = ({ value, min, max, onChange }: QuantityStepperProps) => {
+export const QuantityStepper = ({
+  value,
+  min,
+  max,
+  size = QUANTITY_STEPPER_DEFAULT_SIZE,
+  onChange,
+}: QuantityStepperProps) => {
+  const styles = QUANTITY_STEPPER_SIZE_STYLES[size];
+
   return (
-    <div className="flex h-[38px] items-center rounded-[10px] border border-footer-border lg:h-10">
+    <div className={`flex items-center border border-footer-border ${styles.root}`}>
       <Button
         variant="unstyled"
         size="auto"
         onClick={() => onChange(value - 1)}
         disabled={value <= min}
         aria-label={QUANTITY_STEPPER_DECREASE_LABEL}
-        className={QUANTITY_STEPPER_BUTTON_CLASS_NAME}
+        className={`${QUANTITY_STEPPER_BUTTON_CLASS_NAME} ${styles.button}`}
       >
-        <MaterialIcon name="remove" className="text-lg" />
+        <MaterialIcon name="remove" className={styles.icon} />
       </Button>
 
-      <span className="w-[26px] text-center text-[14.5px] font-semibold">{value}</span>
+      <span className={`text-center font-semibold ${styles.value}`}>{value}</span>
 
       <Button
         variant="unstyled"
@@ -31,9 +41,9 @@ export const QuantityStepper = ({ value, min, max, onChange }: QuantityStepperPr
         onClick={() => onChange(value + 1)}
         disabled={value >= max}
         aria-label={QUANTITY_STEPPER_INCREASE_LABEL}
-        className={QUANTITY_STEPPER_BUTTON_CLASS_NAME}
+        className={`${QUANTITY_STEPPER_BUTTON_CLASS_NAME} ${styles.button}`}
       >
-        <MaterialIcon name="add" className="text-lg" />
+        <MaterialIcon name="add" className={styles.icon} />
       </Button>
     </div>
   );

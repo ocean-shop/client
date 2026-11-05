@@ -63,6 +63,8 @@ export const PRODUCT_PRICE_CURRENCY_SIGN = "₴";
 
 export const PRODUCT_DISCOUNT_BADGE_LABEL = (percentOff: number) => `−${percentOff}%`;
 
+export const PRODUCT_UNAVAILABLE_LABEL = "Немає в наявності";
+
 /** Counting only reads `total`, so the smallest page keeps the response tiny. */
 export const CATALOG_PRODUCTS_COUNT_LIMIT = 1;
 

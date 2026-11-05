@@ -1,5 +1,8 @@
-export const PRODUCT_GALLERY_ZOOM_LABEL = "Збільшити фото";
 export const PRODUCT_GALLERY_NO_IMAGES_ICON = "image_not_supported";
+
+/** Names a photo for screen readers wherever a row of photos can be switched between. */
+export const PRODUCT_GALLERY_IMAGE_LABEL = (name: string, index: number) =>
+  `${name} — ${index + 1}`;
 
 export const PRODUCT_GALLERY_LAYOUT_CLASS_NAME = "flex flex-col-reverse gap-3 lg:grid lg:gap-3.5";
 
@@ -15,14 +18,3 @@ export const PRODUCT_GALLERY_COLUMNS_CLASS_NAME = {
 /** Main photo: tall on desktop as in the design, shorter on phones so the info stays reachable. */
 export const PRODUCT_GALLERY_MAIN_CLASS_NAME =
   "relative h-[380px] overflow-hidden rounded-[18px] bg-footer lg:h-[560px]";
-
-/**
- * Photos are shown whole rather than cropped to fill: product shots arrive in mixed aspect ratios,
- * and cropping them to the tall frame zooms straight into the middle of the product.
- */
-export const PRODUCT_GALLERY_MAIN_IMAGE_CLASS_NAME = "object-contain p-5 lg:p-8";
-export const PRODUCT_GALLERY_THUMB_IMAGE_CLASS_NAME = "object-contain p-1.5";
-
-/** The main photo never exceeds half of a page-width container, so it is asked for at that size. */
-export const PRODUCT_GALLERY_MAIN_SIZES = "(min-width: 1024px) 760px, 100vw";
-export const PRODUCT_GALLERY_THUMB_SIZES = "84px";

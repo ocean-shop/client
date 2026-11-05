@@ -32,6 +32,7 @@ export const ProductView = ({ product, breadcrumbItems }: ProductViewProps) => {
       <ProductInfo
         product={product}
         offer={offer}
+        discountPercent={discountPercent}
         breadcrumbItems={breadcrumbItems}
         onSelectVariation={setSelectedVariationId}
       />

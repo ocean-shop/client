@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
+import { getFirstSearchParamValue } from "@/app/core/search-params/helpers/get-first-search-param-value";
 import { PRODUCT_CATEGORY_SEARCH_PARAM } from "@/app/shared/products/constants/products.constants";
 import { buildProductHrefHelper } from "@/app/shared/products/helpers/build-product-href";
 import { buildBreadcrumbJsonLdHelper } from "@/app/shared/seo/helpers/build-breadcrumb-json-ld";
@@ -27,8 +28,9 @@ const ProductPage = async ({ params, searchParams }: PageProps<"/product/[slug]"
 
   if (!product) notFound();
 
-  const categoryParam = resolvedSearchParams[PRODUCT_CATEGORY_SEARCH_PARAM];
-  const categorySlug = typeof categoryParam === "string" ? categoryParam : undefined;
+  const categorySlug = getFirstSearchParamValue(
+    resolvedSearchParams[PRODUCT_CATEGORY_SEARCH_PARAM]
+  );
 
   // Links from before slugs carry the product id; they move to the slug address for good.
   if (product.slug !== slug) permanentRedirect(buildProductHrefHelper(product.slug, categorySlug));

@@ -1,18 +1,14 @@
-import Image from "next/image";
 import { useState } from "react";
-import { ProductFavoriteButton } from "@/app/components/product-favorite-button/product-favorite-button";
-import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
+import { ProductGalleryDots } from "./components/product-gallery-dots/product-gallery-dots";
+import { ProductGalleryMain } from "./components/product-gallery-main/product-gallery-main";
+import { ProductGalleryThumbs } from "./components/product-gallery-thumbs/product-gallery-thumbs";
 import { ProductLightbox } from "./components/product-lightbox/product-lightbox";
 import {
   PRODUCT_GALLERY_COLUMNS_CLASS_NAME,
   PRODUCT_GALLERY_LAYOUT_CLASS_NAME,
   PRODUCT_GALLERY_MAIN_CLASS_NAME,
-  PRODUCT_GALLERY_MAIN_IMAGE_CLASS_NAME,
-  PRODUCT_GALLERY_MAIN_SIZES,
   PRODUCT_GALLERY_NO_IMAGES_ICON,
-  PRODUCT_GALLERY_THUMB_IMAGE_CLASS_NAME,
-  PRODUCT_GALLERY_THUMB_SIZES,
-  PRODUCT_GALLERY_ZOOM_LABEL,
 } from "./constants/product-gallery.constants";
 import type { ProductGalleryProps } from "./types/product-gallery.types";
 
@@ -31,9 +27,7 @@ export const ProductGallery = ({
   if (!activeImage) {
     return (
       <div className={`flex items-center justify-center ${PRODUCT_GALLERY_MAIN_CLASS_NAME}`}>
-        <span className="font-symbols text-5xl text-muted-light">
-          {PRODUCT_GALLERY_NO_IMAGES_ICON}
-        </span>
+        <MaterialIcon name={PRODUCT_GALLERY_NO_IMAGES_ICON} className="text-5xl text-muted-light" />
       </div>
     );
   }
@@ -49,80 +43,30 @@ export const ProductGallery = ({
         }`}
       >
         {hasThumbs && (
-          <div className="flex gap-2.5 overflow-x-auto [scrollbar-width:none] lg:flex-col lg:overflow-visible">
-            {images.map((image, index) => (
-              <Button
-                key={image.id}
-                variant="unstyled"
-                size="auto"
-                onClick={() => setActiveIndex(index)}
-                aria-label={`${name} — ${index + 1}`}
-                aria-current={index === activeIndex}
-                className={`relative h-[72px] w-[72px] shrink-0 overflow-hidden rounded-xl border-2 bg-footer lg:h-[84px] lg:w-full ${
-                  index === activeIndex ? "border-accent" : "border-transparent"
-                }`}
-              >
-                <Image
-                  src={image.url}
-                  alt=""
-                  fill
-                  sizes={PRODUCT_GALLERY_THUMB_SIZES}
-                  className={PRODUCT_GALLERY_THUMB_IMAGE_CLASS_NAME}
-                />
-              </Button>
-            ))}
-          </div>
+          <ProductGalleryThumbs
+            images={images}
+            activeIndex={activeIndex}
+            name={name}
+            onSelect={setActiveIndex}
+          />
         )}
 
-        <div className={PRODUCT_GALLERY_MAIN_CLASS_NAME}>
-          <Button
-            variant="unstyled"
-            size="auto"
-            onClick={() => setIsZoomOpen(true)}
-            aria-label={PRODUCT_GALLERY_ZOOM_LABEL}
-            className="absolute inset-0 cursor-zoom-in"
-          >
-            <Image
-              src={activeImage.url}
-              alt={activeImage.alt || name}
-              fill
-              sizes={PRODUCT_GALLERY_MAIN_SIZES}
-              preload
-              className={PRODUCT_GALLERY_MAIN_IMAGE_CLASS_NAME}
-            />
-          </Button>
-
-          {discountPercent !== undefined && (
-            <span className="pointer-events-none absolute left-4 top-4 rounded-md bg-background px-2.5 py-[5px] text-xs font-semibold tracking-[.03em] text-accent">
-              −{discountPercent}%
-            </span>
-          )}
-
-          <div className="absolute right-3.5 top-3.5">
-            <ProductFavoriteButton productId={productId} productName={name} variant="gallery" />
-          </div>
-
-          <span className="pointer-events-none absolute bottom-4 right-4 flex h-9 w-9 items-center justify-center rounded-xl bg-white/85 font-symbols text-xl text-muted">
-            zoom_in
-          </span>
-
+        <ProductGalleryMain
+          productId={productId}
+          image={activeImage}
+          name={name}
+          discountPercent={discountPercent}
+          onZoom={() => setIsZoomOpen(true)}
+        >
           {hasThumbs && (
-            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">
-              {images.map((image, index) => (
-                <Button
-                  key={image.id}
-                  variant="unstyled"
-                  size="auto"
-                  onClick={() => setActiveIndex(index)}
-                  aria-label={`${name} — ${index + 1}`}
-                  className={`h-1.5 rounded-[3px] transition-all ${
-                    index === activeIndex ? "w-5 bg-accent" : "w-1.5 bg-white/75"
-                  }`}
-                />
-              ))}
-            </div>
+            <ProductGalleryDots
+              images={images}
+              activeIndex={activeIndex}
+              name={name}
+              onSelect={setActiveIndex}
+            />
           )}
-        </div>
+        </ProductGalleryMain>
       </div>
 
       {isZoomOpen && (
