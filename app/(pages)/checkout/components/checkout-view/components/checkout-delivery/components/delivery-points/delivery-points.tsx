@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@/app/ui/input/input";
-import { CheckoutOption } from "../../../checkout-option/checkout-option";
+import { FORM_FIELD_LABEL_CLASS_NAME } from "@/app/ui/form-field/constants/form-field.constants";
 import { DeliveryManualPoint } from "./components/delivery-manual-point/delivery-manual-point";
+import { DeliveryPointsList } from "./components/delivery-points-list/delivery-points-list";
+import { DeliveryPointsSearch } from "./components/delivery-points-search/delivery-points-search";
+import { DeliveryPointsSkeleton } from "./components/delivery-points-skeleton/delivery-points-skeleton";
 import {
   DELIVERY_POINTS_EMPTY_LABEL,
   DELIVERY_POINTS_ERROR_LABEL,
-  DELIVERY_POINTS_SEARCH_PLACEHOLDER,
-  DELIVERY_POINTS_SKELETON_ROWS,
   DELIVERY_POINTS_TITLES,
 } from "./constants/delivery-points.constants";
+import { getVisibleDeliveryPointsHelper } from "./helpers/get-visible-delivery-points";
 import { useDeliveryPoints } from "./hooks/use-delivery-points";
 import type { DeliveryPointsProps } from "./types/delivery-points.types";
 
@@ -34,42 +35,15 @@ export const DeliveryPoints = ({
   const hasFailed = isError && !points;
   // Whatever was typed in by hand stays in view should the list load later, until a point is picked.
   const isManual = hasFailed || manualPoint !== null;
-
-  // A search can hide the chosen point, so it stays pinned on top of the results.
-  const isSelectedListed = points?.some((point) => point.id === selectedPoint?.id);
-  const visiblePoints = [
-    ...(selectedPoint && !isSelectedListed ? [selectedPoint] : []),
-    ...(points ?? []),
-  ];
+  const visiblePoints = getVisibleDeliveryPointsHelper(points, selectedPoint);
 
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-[13px] font-medium text-muted">{DELIVERY_POINTS_TITLES[method]}</span>
+      <span className={FORM_FIELD_LABEL_CLASS_NAME}>{DELIVERY_POINTS_TITLES[method]}</span>
 
-      {!hasFailed && (
-        <div className="relative">
-          <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 font-symbols text-xl text-muted-light">
-            search
-          </span>
-          <Input
-            variant="outline"
-            size="xl"
-            type="search"
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder={DELIVERY_POINTS_SEARCH_PLACEHOLDER}
-            className="pl-11"
-          />
-        </div>
-      )}
+      {!hasFailed && <DeliveryPointsSearch value={searchTerm} onChange={setSearchTerm} />}
 
-      {isLoading && (
-        <div className="flex animate-pulse flex-col gap-2">
-          {Array.from({ length: DELIVERY_POINTS_SKELETON_ROWS }, (_, index) => (
-            <div key={index} className="h-[78px] rounded-xl bg-surface" />
-          ))}
-        </div>
-      )}
+      {isLoading && <DeliveryPointsSkeleton />}
 
       {hasFailed && (
         <span className="px-1 text-[13px] text-error-dark">{DELIVERY_POINTS_ERROR_LABEL}</span>
@@ -89,29 +63,13 @@ export const DeliveryPoints = ({
       )}
 
       {visiblePoints.length > 0 && (
-        <div
-          role="radiogroup"
-          aria-label={DELIVERY_POINTS_TITLES[method]}
-          className={`flex max-h-[360px] flex-col gap-2 overflow-y-auto transition-opacity ${
-            isStale ? "opacity-60" : ""
-          }`}
-        >
-          {visiblePoints.map((point) => (
-            <CheckoutOption
-              key={point.id}
-              isSelected={point.id === selectedPoint?.id}
-              onSelect={() => onSelect(point)}
-              disabled={isStale}
-              className="items-start px-3.5 py-3"
-            >
-              <span className="flex min-w-0 flex-1 flex-col gap-[3px]">
-                <span className="text-sm font-semibold">{point.title}</span>
-                <span className="text-[13.5px] text-muted">{point.address}</span>
-                {point.meta && <span className="text-[12.5px] text-muted-light">{point.meta}</span>}
-              </span>
-            </CheckoutOption>
-          ))}
-        </div>
+        <DeliveryPointsList
+          label={DELIVERY_POINTS_TITLES[method]}
+          points={visiblePoints}
+          selectedPointId={selectedPoint?.id}
+          isStale={isStale}
+          onSelect={onSelect}
+        />
       )}
     </div>
   );

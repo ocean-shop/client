@@ -1,6 +1,7 @@
 import {
   CHECKOUT_EMAIL_PATTERN,
   CHECKOUT_NAME_MIN_WORDS,
+  CHECKOUT_NAME_WORD_SEPARATOR_PATTERN,
   CHECKOUT_PHONE_PATTERN,
   CHECKOUT_PHONE_SEPARATORS_PATTERN,
   CHECKOUT_VALIDATION_MESSAGES,
@@ -13,7 +14,9 @@ export const validateCheckoutFormHelper = (
   contact: CheckoutContact,
   delivery: CheckoutDelivery
 ): string | null => {
-  if (contact.name.trim().split(/\s+/).filter(Boolean).length < CHECKOUT_NAME_MIN_WORDS) {
+  const nameWords = contact.name.trim().split(CHECKOUT_NAME_WORD_SEPARATOR_PATTERN).filter(Boolean);
+
+  if (nameWords.length < CHECKOUT_NAME_MIN_WORDS) {
     return CHECKOUT_VALIDATION_MESSAGES.name;
   }
 

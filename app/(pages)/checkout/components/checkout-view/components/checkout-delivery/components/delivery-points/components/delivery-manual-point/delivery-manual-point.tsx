@@ -1,4 +1,4 @@
-import { CheckoutField } from "../../../../../checkout-field/checkout-field";
+import { FormInput } from "@/app/ui/form-input/form-input";
 import {
   DELIVERY_MANUAL_POINT_CITY_FIELD,
   DELIVERY_MANUAL_POINT_CITY_MAX_LENGTH,
@@ -23,13 +23,13 @@ export const DeliveryManualPoint = ({
 
   return (
     <div className="grid gap-3.5 lg:grid-cols-[2fr_1fr]">
-      <CheckoutField
+      <FormInput
         {...DELIVERY_MANUAL_POINT_CITY_FIELD}
         value={cityValue}
         maxLength={DELIVERY_MANUAL_POINT_CITY_MAX_LENGTH}
         onChange={(event) => onChange({ city: event.target.value, number: numberValue })}
       />
-      <CheckoutField
+      <FormInput
         {...DELIVERY_MANUAL_POINT_NUMBER_FIELDS[method]}
         value={numberValue}
         inputMode="numeric"

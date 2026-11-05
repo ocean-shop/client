@@ -1,9 +1,11 @@
 import type { CreateOrderInput } from "@/app/shared/orders/types/orders.types";
 import {
+  CHECKOUT_NAME_WORD_SEPARATOR_PATTERN,
   CHECKOUT_ORDER_EMAIL_MAX_LENGTH,
   CHECKOUT_ORDER_NAME_MAX_LENGTH,
   CHECKOUT_ORDER_PAYMENT_METHODS,
   CHECKOUT_ORDER_PHONE_DIGITS,
+  CHECKOUT_ORDER_PHONE_IGNORED_PATTERN,
   CHECKOUT_ORDER_PHONE_PREFIX,
   CHECKOUT_ORDER_SHIPPING_MAX_LENGTH,
   CHECKOUT_ORDER_SHIPPING_SEPARATOR,
@@ -19,7 +21,9 @@ const trimName = (value: string | undefined) => {
 
 /** The ПІБ field reads "Прізвище Ім’я По батькові", the order Ukrainian forms use. */
 const splitName = (name: string) => {
-  const [lastName, firstName, ...middleNames] = name.trim().split(/\s+/);
+  const [lastName, firstName, ...middleNames] = name
+    .trim()
+    .split(CHECKOUT_NAME_WORD_SEPARATOR_PATTERN);
 
   return {
     lastName: trimName(lastName),
@@ -30,7 +34,7 @@ const splitName = (name: string) => {
 
 /** Validation has already made sure the number ends in a `0` and nine more digits. */
 const normalizePhone = (phone: string) => {
-  return `${CHECKOUT_ORDER_PHONE_PREFIX}${phone.replace(/\D/g, "").slice(-CHECKOUT_ORDER_PHONE_DIGITS)}`;
+  return `${CHECKOUT_ORDER_PHONE_PREFIX}${phone.replace(CHECKOUT_ORDER_PHONE_IGNORED_PATTERN, "").slice(-CHECKOUT_ORDER_PHONE_DIGITS)}`;
 };
 
 /** Expects a draft that already passed `validateCheckoutFormHelper`. */

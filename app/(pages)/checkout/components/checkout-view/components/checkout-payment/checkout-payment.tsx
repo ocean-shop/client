@@ -1,5 +1,6 @@
 import { CHECKOUT_AVAILABLE_PAYMENTS } from "@/app/(pages)/checkout/constants/checkout.constants";
-import { CheckoutOption } from "../checkout-option/checkout-option";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
+import { RadioCard } from "@/app/ui/radio-card/radio-card";
 import { CheckoutSection } from "../checkout-section/checkout-section";
 import {
   CHECKOUT_PAYMENT_STEP,
@@ -12,7 +13,7 @@ export const CheckoutPayment = ({ payment, onChange }: CheckoutPaymentProps) => 
     <CheckoutSection step={CHECKOUT_PAYMENT_STEP} title={CHECKOUT_PAYMENT_TITLE}>
       <div role="radiogroup" aria-label={CHECKOUT_PAYMENT_TITLE} className="flex flex-col gap-2">
         {CHECKOUT_AVAILABLE_PAYMENTS.map((option) => (
-          <CheckoutOption
+          <RadioCard
             key={option.id}
             isSelected={option.id === payment}
             onSelect={() => onChange(option.id)}
@@ -25,12 +26,12 @@ export const CheckoutPayment = ({ payment, onChange }: CheckoutPaymentProps) => 
 
             <span className="flex h-8 min-w-[52px] flex-none items-center justify-center rounded-lg border border-border-soft bg-background px-2 text-foreground lg:min-w-[60px]">
               {option.badgeType === "icon" ? (
-                <span className="font-symbols text-xl text-accent">{option.badge}</span>
+                <MaterialIcon name={option.badge} className="text-xl text-accent" />
               ) : (
                 <span className="whitespace-nowrap text-xs font-bold">{option.badge}</span>
               )}
             </span>
-          </CheckoutOption>
+          </RadioCard>
         ))}
       </div>
     </CheckoutSection>

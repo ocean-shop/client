@@ -5,13 +5,14 @@ import {
 } from "../constants/checkout.constants";
 import type { CheckoutDelivery, CheckoutDeliveryAddress } from "../types/checkout.types";
 import { getCheckoutCarrierHelper } from "./get-checkout-carrier";
+import { getCheckoutDeliveryMethodHelper } from "./get-checkout-delivery-method";
 import { isCheckoutManualPointCompleteHelper } from "./is-checkout-manual-point-complete";
 
 export const formatCheckoutDeliveryAddressHelper = (
   delivery: CheckoutDelivery
 ): CheckoutDeliveryAddress => {
   const carrier = getCheckoutCarrierHelper(delivery.carrier);
-  const methodLabel = carrier.methods.find((method) => method.id === delivery.method)?.label ?? "";
+  const methodLabel = getCheckoutDeliveryMethodHelper(carrier, delivery.method)?.label ?? "";
 
   if (delivery.method !== "courier" && delivery.point) {
     return {

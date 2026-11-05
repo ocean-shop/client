@@ -122,6 +122,7 @@ export const CHECKOUT_EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const CHECKOUT_PHONE_PATTERN = /^(?:\+?38)?0\d{9}$/;
 export const CHECKOUT_PHONE_SEPARATORS_PATTERN = /[\s()-]/g;
 export const CHECKOUT_NAME_MIN_WORDS = 2;
+export const CHECKOUT_NAME_WORD_SEPARATOR_PATTERN = /\s+/;
 
 export const CHECKOUT_SUCCESS_PAGE_PATH = "/checkout/success";
 export const CHECKOUT_PLACED_ORDER_STORAGE_KEY = "ocean-shop:placed-order";
@@ -136,6 +137,7 @@ export const CHECKOUT_ORDER_PAYMENT_METHODS: Record<CheckoutPaymentMethod, Order
 /** The backend wants `+380XXXXXXXXX`; the form accepts the same number with or without `+38`. */
 export const CHECKOUT_ORDER_PHONE_PREFIX = "+380";
 export const CHECKOUT_ORDER_PHONE_DIGITS = 9;
+export const CHECKOUT_ORDER_PHONE_IGNORED_PATTERN = /\D/g;
 export const CHECKOUT_ORDER_NAME_MAX_LENGTH = 100;
 export const CHECKOUT_ORDER_EMAIL_MAX_LENGTH = 255;
 export const CHECKOUT_ORDER_SHIPPING_MAX_LENGTH = 255;
@@ -163,4 +165,5 @@ export const CHECKOUT_DELIVERY_DATE_FORMATTER = new Intl.DateTimeFormat("uk-UA",
 /** Orders without a number of their own are shown by the start of their id. */
 export const CHECKOUT_ORDER_SHORT_ID_LENGTH = 8;
 
-export const CHECKOUT_ORDER_ERROR_TOAST_TITLE = "Не вдалося оформити замовлення";
+export const CHECKOUT_ITEM_QUANTITY_LABEL = (quantity: number) => `${quantity} шт.`;
+export const CHECKOUT_ITEM_META_SEPARATOR = " · ";

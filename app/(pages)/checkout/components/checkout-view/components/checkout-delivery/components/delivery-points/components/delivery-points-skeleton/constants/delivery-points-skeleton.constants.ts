@@ -1,0 +1,1 @@
+export const DELIVERY_POINTS_SKELETON_ROWS = 3;
