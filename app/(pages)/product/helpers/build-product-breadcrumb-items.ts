@@ -1,4 +1,5 @@
 import { getCatalogCategories } from "@/app/shared/catalog-categories/api/get-catalog-categories";
+import { buildCatalogCategoryHrefHelper } from "@/app/shared/catalog-categories/helpers/build-catalog-category-href";
 import { findCatalogCategoryBySlugHelper } from "@/app/shared/catalog-categories/helpers/find-catalog-category-by-slug";
 import { getCatalogCategoryAncestorsHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-ancestors";
 import type { BreadcrumbItem } from "@/app/ui/breadcrumb/types/breadcrumb.types";
@@ -21,7 +22,12 @@ export const buildProductBreadcrumbItemsHelper = async (
     if (category) {
       const trail = [...getCatalogCategoryAncestorsHelper(categories, category), category];
 
-      items.push(...trail.map((item) => ({ label: item.name, href: `/catalog/${item.slug}` })));
+      items.push(
+        ...trail.map((item) => ({
+          label: item.name,
+          href: buildCatalogCategoryHrefHelper(item.slug),
+        }))
+      );
     }
   }
 

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Button } from "@/app/ui/button/button";
+import { CountBadge } from "@/app/ui/count-badge/count-badge";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { countCatalogActiveFiltersHelper } from "@/app/shared/products/helpers/count-catalog-active-filters";
 import {
   CATALOG_PRODUCTS_DEFAULT_SORT,
@@ -11,6 +13,7 @@ import type {
   CatalogProductSort,
   CatalogProductsQuery,
 } from "@/app/shared/products/types/products.types";
+import { CATALOG_TOOLBAR_CLASS_NAME } from "../../constants/catalog.constants";
 import { useCatalogQuery } from "../../hooks/use-catalog-query";
 import { CatalogFiltersSheet } from "./components/catalog-filters-sheet/catalog-filters-sheet";
 import { CatalogSortSheet } from "./components/catalog-sort-sheet/catalog-sort-sheet";
@@ -31,8 +34,6 @@ export const CatalogToolbar = ({
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
 
-  const filterCount = countCatalogActiveFiltersHelper(query);
-
   const handleSortSelect = (sortId: string) => {
     setIsSortOpen(false);
     applyQuery({ sort: sortId as CatalogProductSort });
@@ -49,23 +50,19 @@ export const CatalogToolbar = ({
 
   return (
     <>
-      <div className="sticky top-[var(--mobile-header-height)] z-20 flex gap-2.5 border-t border-border-soft bg-background px-4.5 py-2.5 lg:hidden">
+      <div className={CATALOG_TOOLBAR_CLASS_NAME}>
         <Button
           variant="outline"
           onClick={() => setIsFiltersOpen(true)}
           className="h-11 flex-1 gap-2"
         >
-          <span className="font-symbols text-[19px] text-accent">tune</span>
+          <MaterialIcon name="tune" className="text-[19px] text-accent" />
           {CATALOG_TOOLBAR_FILTERS_LABEL}
-          {filterCount > 0 && (
-            <span className="flex h-[19px] min-w-[19px] items-center justify-center rounded-full bg-accent px-1.5 text-[11px] font-bold text-white">
-              {filterCount}
-            </span>
-          )}
+          <CountBadge count={countCatalogActiveFiltersHelper(query)} size="md" />
         </Button>
 
         <Button variant="outline" onClick={() => setIsSortOpen(true)} className="h-11 flex-1 gap-2">
-          <span className="font-symbols text-[19px] text-accent">swap_vert</span>
+          <MaterialIcon name="swap_vert" className="text-[19px] text-accent" />
           {CATALOG_TOOLBAR_SORT_LABEL}
         </Button>
       </div>

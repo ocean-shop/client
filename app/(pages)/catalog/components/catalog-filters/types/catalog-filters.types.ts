@@ -3,6 +3,9 @@ import type {
   CatalogProductsQuery,
 } from "@/app/shared/products/types/products.types";
 
+/** A filter is a standalone card on desktop and a section of the filters sheet on mobile. */
+export type CatalogFilterVariant = "card" | "sheet";
+
 export type CatalogFilterOption = {
   id: string;
   /** Raw attribute value sent to the API. */

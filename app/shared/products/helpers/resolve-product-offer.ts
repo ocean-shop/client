@@ -1,3 +1,5 @@
+import { findProductVariationHelper } from "./find-product-variation";
+import { resolveProductPreviewHelper } from "./resolve-product-preview";
 import type { ProductDetails, ProductOffer } from "../types/products.types";
 
 /**
@@ -8,29 +10,13 @@ export const resolveProductOfferHelper = (
   product: ProductDetails,
   variationId?: string
 ): ProductOffer => {
-  const variation =
-    product.variations.find((item) => item.id === variationId) ??
-    product.variations.find((item) => item.isDefault) ??
-    product.variations[0];
-
-  if (!variation) {
-    return {
-      id: product.id,
-      sku: product.sku,
-      price: product.price,
-      oldPrice: product.oldPrice,
-      available: product.available,
-      images: product.images,
-    };
-  }
+  const variation = findProductVariationHelper(product.variations, variationId);
+  const preview = resolveProductPreviewHelper(product, variation?.id);
 
   return {
-    id: variation.id,
-    sku: variation.sku ?? product.sku,
-    price: variation.price,
-    oldPrice: variation.oldPrice,
-    available: variation.available,
-    // A variation without its own shots reuses the product gallery instead of showing nothing.
-    images: variation.images.length > 0 ? variation.images : product.images,
+    ...preview,
+    id: variation?.id ?? product.id,
+    sku: variation?.sku ?? product.sku,
+    available: variation?.available ?? product.available,
   };
 };

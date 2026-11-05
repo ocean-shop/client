@@ -1,6 +1,8 @@
-import { ApiError, apiFetch } from "@/app/core/api/api-fetch";
+import { ApiError } from "@/app/core/api/api-error";
+import { apiFetch } from "@/app/core/api/api-fetch";
 import {
   DELIVERY_REQUEST_REVALIDATE_SECONDS,
+  DELIVERY_UNCONFIGURED_STATUS,
   UKRPOSHTA_API_URL,
 } from "../constants/delivery.constants";
 import { unwrapUkrposhtaEntriesHelper } from "../helpers/unwrap-ukrposhta-entries";
@@ -13,7 +15,7 @@ export const ukrposhtaFetch = async <T>(
 ): Promise<T[]> => {
   const token = process.env.UKRPOSHTA_API_TOKEN;
 
-  if (!token) throw new ApiError(503);
+  if (!token) throw new ApiError(DELIVERY_UNCONFIGURED_STATUS);
 
   const response = await apiFetch<UkrposhtaEntries<T>>(
     `${UKRPOSHTA_API_URL}/${path}?${searchParams.toString()}`,

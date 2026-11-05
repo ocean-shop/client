@@ -1,3 +1,4 @@
+import { CabinetPageHeader } from "../../../../components/cabinet-page-header/cabinet-page-header";
 import { CabinetAddressBook } from "./components/cabinet-address-book/cabinet-address-book";
 import {
   CABINET_ADDRESSES_TEXT,
@@ -9,12 +10,7 @@ import type { CabinetAddressesProps } from "./types/cabinet-addresses.types";
 export const CabinetAddresses = ({ addresses }: CabinetAddressesProps) => {
   return (
     <div className="flex flex-col gap-4">
-      <div className="hidden flex-col gap-1.5 lg:flex">
-        <h1 className="font-heading text-2xl font-semibold tracking-[-.025em] text-foreground">
-          {CABINET_ADDRESSES_TITLE}
-        </h1>
-        <p className="text-sm text-muted">{CABINET_ADDRESSES_TEXT}</p>
-      </div>
+      <CabinetPageHeader title={CABINET_ADDRESSES_TITLE} text={CABINET_ADDRESSES_TEXT} />
 
       <CabinetAddressBook addresses={addresses} />
     </div>

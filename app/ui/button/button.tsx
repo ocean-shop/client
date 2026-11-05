@@ -1,10 +1,5 @@
-import {
-  BUTTON_BASE_CLASSNAME,
-  BUTTON_DEFAULT_SIZE,
-  BUTTON_DEFAULT_VARIANT,
-  BUTTON_SIZE_CLASSNAMES,
-  BUTTON_VARIANT_CLASSNAMES,
-} from "./constants/button.constants";
+import { BUTTON_DEFAULT_SIZE, BUTTON_DEFAULT_VARIANT } from "./constants/button.constants";
+import { getButtonClassNameHelper } from "./helpers/get-button-class-name";
 import type { ButtonProps } from "./types/button.types";
 
 export const Button = ({
@@ -15,10 +10,6 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   return (
-    <button
-      type={type}
-      {...props}
-      className={`${BUTTON_BASE_CLASSNAME} ${BUTTON_VARIANT_CLASSNAMES[variant]} ${BUTTON_SIZE_CLASSNAMES[size]} ${className ?? ""}`}
-    />
+    <button type={type} {...props} className={getButtonClassNameHelper(variant, size, className)} />
   );
 };

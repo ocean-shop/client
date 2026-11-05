@@ -8,4 +8,6 @@ export type CatalogSearchBodyProps = {
   query: CatalogProductsQuery;
   searchTerm: string;
   productList: ProductListResponse;
+  /** False when the term itself matched nothing, so there is nothing to sort. */
+  isSortVisible: boolean;
 };

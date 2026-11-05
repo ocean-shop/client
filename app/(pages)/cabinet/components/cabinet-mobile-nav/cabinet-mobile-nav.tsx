@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuthUser } from "@/app/shared/auth/hooks/use-auth-user";
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import {
   CABINET_LOGOUT_ICON,
   CABINET_LOGOUT_LABEL,
@@ -13,6 +14,7 @@ import { getCabinetUserDisplayHelper } from "../../helpers/get-cabinet-user-disp
 import { isCabinetPathActiveHelper } from "../../helpers/is-cabinet-path-active";
 import { useCabinetLogout } from "../../hooks/use-cabinet-logout";
 import { CabinetAvatar } from "../cabinet-avatar/cabinet-avatar";
+import { CabinetUserName } from "../cabinet-user-name/cabinet-user-name";
 import {
   CABINET_MOBILE_NAV_SEGMENT_ACTIVE_CLASS_NAME,
   CABINET_MOBILE_NAV_SEGMENT_CLASS_NAME,
@@ -29,12 +31,7 @@ export const CabinetMobileNav = () => {
     <div className="flex flex-col gap-3 border-y border-border-soft bg-background px-4 pb-3 pt-4 lg:hidden">
       <div className="flex items-center gap-3">
         <CabinetAvatar initial={user.initial} className="h-[42px] w-[42px] text-sm" />
-        <div className="flex min-w-0 flex-1 flex-col gap-px">
-          <span className="truncate text-[15px] font-semibold text-foreground">{user.title}</span>
-          {user.subtitle && (
-            <span className="truncate text-[12.5px] text-muted-light">{user.subtitle}</span>
-          )}
-        </div>
+        <CabinetUserName title={user.title} subtitle={user.subtitle} className="flex-1 gap-px" />
         <Button
           variant="unstyled"
           size="auto"
@@ -43,7 +40,7 @@ export const CabinetMobileNav = () => {
           aria-label={CABINET_LOGOUT_LABEL}
           className="h-10 w-10 flex-none rounded-[11px] border border-footer-border text-error-dark"
         >
-          <span className="font-symbols text-[20px]">{CABINET_LOGOUT_ICON}</span>
+          <MaterialIcon name={CABINET_LOGOUT_ICON} className="text-[20px]" />
         </Button>
       </div>
 

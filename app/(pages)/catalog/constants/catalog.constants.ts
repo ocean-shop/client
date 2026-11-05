@@ -7,10 +7,16 @@ export const CATALOG_PRODUCTS_COUNT_DEBOUNCE_MS = 350;
 
 export const CATALOG_SEARCH_METADATA_TITLE = "Пошук";
 
+const CATALOG_CONTENT_BASE_CLASS_NAME =
+  "mx-auto grid max-w-page items-start gap-8 px-4.5 pb-14 pt-4 lg:px-10 lg:pt-6.5";
+
 /** Shared by the catalog page and its loading skeleton so the two occupy the same layout. */
 export const CATALOG_PAGE_CLASS_NAME = "flex-1 bg-surface-soft";
-export const CATALOG_CONTENT_CLASS_NAME =
-  "mx-auto grid max-w-page items-start gap-8 px-4.5 pb-14 pt-4 lg:grid-cols-[284px_1fr] lg:px-10 lg:pt-6.5";
+export const CATALOG_TOOLBAR_CLASS_NAME =
+  "sticky top-[var(--mobile-header-height)] z-20 flex gap-2.5 border-t border-border-soft bg-background px-4.5 py-2.5 lg:hidden";
+export const CATALOG_CONTENT_CLASS_NAME = `${CATALOG_CONTENT_BASE_CLASS_NAME} lg:grid-cols-[284px_1fr]`;
+/** The same layout without the filters column, for a search term that matched nothing. */
+export const CATALOG_CONTENT_WITHOUT_FILTERS_CLASS_NAME = CATALOG_CONTENT_BASE_CLASS_NAME;
 
 /** No query has run yet on first load, so the skeleton fills a plausible first page. */
 export const CATALOG_SKELETON_PRODUCT_COUNT = 8;
@@ -20,10 +26,6 @@ export const CATALOG_HOME_BREADCRUMB_ITEM: BreadcrumbItem = {
   label: "Головна",
   href: "/",
 };
-
-export const CATALOG_SORT_LABEL = "Сортувати";
-
-export const CATALOG_PRODUCTS_LABEL = "товарів";
 
 export const CATALOG_NO_MATCHES_MESSAGE =
   "За обраними фільтрами товарів не знайдено. Спробуйте змінити параметри.";

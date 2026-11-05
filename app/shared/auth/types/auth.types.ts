@@ -1,14 +1,21 @@
+import type { ApiActionResult } from "@/app/core/api/types/api.types";
+
 export type RequestClientOtpRequest = {
   /** Email or Ukrainian phone number in `+380XXXXXXXXX`, `380XXXXXXXXX` or `0XXXXXXXXX` format. */
   login: string;
 };
 
-export type RequestClientOtpResult = { ok: true } | { ok: false; status: number };
+export type RequestClientOtpResult = ApiActionResult;
 
 export type VerifyClientOtpRequest = RequestClientOtpRequest & {
   /** The four-digit one-time code. */
   code: string;
+  /** Shop the client signs in to; the backend binds the client to it. */
+  shopId: string;
 };
+
+/** `shopId` is server-only configuration, so the action fills it in. */
+export type VerifyClientOtpInput = Omit<VerifyClientOtpRequest, "shopId">;
 
 export type AuthUser = {
   id: string;

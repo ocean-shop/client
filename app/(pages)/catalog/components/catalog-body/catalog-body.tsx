@@ -1,66 +1,29 @@
-import { CatalogGrid } from "@/app/components/catalog-grid/catalog-grid";
-import { Breadcrumb } from "@/app/ui/breadcrumb/breadcrumb";
 import { JsonLd } from "@/app/ui/json-ld/json-ld";
 import { buildBreadcrumbJsonLdHelper } from "@/app/shared/seo/helpers/build-breadcrumb-json-ld";
 import { getCatalogCategories } from "@/app/shared/catalog-categories/api/get-catalog-categories";
-import { getCatalogCategoryAncestorsHelper } from "@/app/shared/catalog-categories/helpers/get-catalog-category-ancestors";
 import { countCatalogActiveFiltersHelper } from "@/app/shared/products/helpers/count-catalog-active-filters";
-import { CatalogPagination } from "../catalog-pagination/catalog-pagination";
-import { CatalogResults } from "../catalog-results/catalog-results";
-import { CatalogSortSelect } from "../catalog-sort-select/catalog-sort-select";
+import { CatalogListing } from "../catalog-listing/catalog-listing";
 import { CatalogSubCategories } from "./components/catalog-sub-categories/catalog-sub-categories";
-import {
-  CATALOG_HOME_BREADCRUMB_ITEM,
-  CATALOG_NO_MATCHES_MESSAGE,
-  CATALOG_PRODUCTS_LABEL,
-} from "../../constants/catalog.constants";
+import { CATALOG_NO_MATCHES_MESSAGE } from "../../constants/catalog.constants";
+import { buildCatalogBodyBreadcrumbItemsHelper } from "./helpers/build-catalog-body-breadcrumb-items";
 import type { CatalogBodyProps } from "./types/catalog-body.types";
 
 export const CatalogBody = async ({ category, query, productList }: CatalogBodyProps) => {
   const categories = await getCatalogCategories();
-
-  const ancestors = getCatalogCategoryAncestorsHelper(categories, category);
-  const breadcrumbItems = [
-    CATALOG_HOME_BREADCRUMB_ITEM,
-    ...ancestors.map((ancestor) => ({ label: ancestor.name, href: `/catalog/${ancestor.slug}` })),
-    { label: category.name },
-  ];
-
+  const breadcrumbItems = buildCatalogBodyBreadcrumbItemsHelper(categories, category);
   const hasActiveFilters = countCatalogActiveFiltersHelper(query) > 0;
 
   return (
-    <div className="flex flex-col">
-      <div className="flex items-end justify-between gap-6 pb-5">
-        <div className="flex flex-col gap-2">
-          <JsonLd data={buildBreadcrumbJsonLdHelper(breadcrumbItems)} />
-          <Breadcrumb items={breadcrumbItems} />
-
-          <div className="flex items-baseline gap-3">
-            <h1 className="font-heading text-[28px] font-semibold tracking-[-.025em] text-foreground">
-              {category.name}
-            </h1>
-            <span className="text-sm text-muted-light">
-              {productList.total.toLocaleString("uk-UA")} {CATALOG_PRODUCTS_LABEL}
-            </span>
-          </div>
-        </div>
-
-        <div className="hidden lg:block">
-          <CatalogSortSelect query={query} />
-        </div>
-      </div>
-
+    <CatalogListing
+      title={category.name}
+      breadcrumbItems={breadcrumbItems}
+      query={query}
+      productList={productList}
+      emptyMessage={hasActiveFilters ? CATALOG_NO_MATCHES_MESSAGE : undefined}
+      categorySlug={category.slug}
+    >
+      <JsonLd data={buildBreadcrumbJsonLdHelper(breadcrumbItems)} />
       <CatalogSubCategories parentId={category.id} />
-
-      <CatalogResults productCount={productList.items.length}>
-        <CatalogGrid
-          products={productList.items}
-          emptyMessage={hasActiveFilters ? CATALOG_NO_MATCHES_MESSAGE : undefined}
-          categorySlug={category.slug}
-        />
-      </CatalogResults>
-
-      <CatalogPagination query={query} totalPages={productList.totalPages} />
-    </div>
+    </CatalogListing>
   );
 };

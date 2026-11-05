@@ -1,11 +1,12 @@
 import type { LocalStorageListener } from "./types/local-storage.types";
 
-/**
- * JSON wrapper around `window.localStorage`. Every call is a no-op on the server, and a full,
- * blocked (private mode) or hand-edited storage degrades to the fallback instead of throwing.
- */
+/** Merely reading `window.localStorage` throws when the browser blocks site data. */
 const isAvailable = () => {
-  return typeof window !== "undefined" && !!window.localStorage;
+  try {
+    return typeof window !== "undefined" && !!window.localStorage;
+  } catch {
+    return false;
+  }
 };
 
 const getItem = <T>(key: string, fallback: T): T => {
@@ -53,6 +54,10 @@ const subscribe = (key: string, listener: LocalStorageListener) => {
   return () => window.removeEventListener("storage", handleStorage);
 };
 
+/**
+ * JSON wrapper around `window.localStorage`. Every call is a no-op on the server, and a full,
+ * blocked (private mode) or hand-edited storage degrades to the fallback instead of throwing.
+ */
 export const localStorageService = {
   getItem,
   setItem,

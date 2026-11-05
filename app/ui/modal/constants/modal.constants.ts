@@ -1,5 +1,11 @@
-export const MODAL_CLOSE_KEY = "Escape";
 export const MODAL_DEFAULT_CLOSE_LABEL = "Закрити";
+
+export const MODAL_OVERLAY_CLASS_NAME = "fixed inset-0 z-40 bg-foreground/45 transition-opacity";
+
+export const MODAL_OVERLAY_STATE_CLASS_NAMES = {
+  open: "opacity-100",
+  closed: "pointer-events-none opacity-0",
+};
 
 /**
  * Below `lg` the modal is a bottom sheet sliding up from the edge; from `lg` it is a centred
@@ -12,3 +18,6 @@ export const MODAL_PANEL_STATE_CLASS_NAMES = {
   open: "translate-y-0 lg:-translate-y-1/2 lg:opacity-100",
   closed: "pointer-events-none translate-y-full lg:-translate-y-[46%] lg:opacity-0",
 };
+
+export const MODAL_BODY_CLASS_NAME =
+  "flex flex-1 flex-col overflow-y-auto px-4.5 py-1 [scrollbar-width:none] lg:px-6 lg:py-1.5";

@@ -1,17 +1,15 @@
-import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-product-price";
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
+import { SurfaceCard } from "@/app/ui/surface-card/surface-card";
+import { CHECKOUT_SECTION_TITLE_CLASS_NAME } from "../../constants/checkout-view.constants";
 import { CheckoutSummaryItem } from "./components/checkout-summary-item/checkout-summary-item";
+import { CheckoutSummaryTotals } from "./components/checkout-summary-totals/checkout-summary-totals";
 import {
-  CHECKOUT_SUMMARY_COD_LABEL,
-  CHECKOUT_SUMMARY_DELIVERY_LABEL,
-  CHECKOUT_SUMMARY_DISCOUNT_LABEL,
   CHECKOUT_SUMMARY_EDIT_LABEL,
-  CHECKOUT_SUMMARY_ITEMS_LABEL,
   CHECKOUT_SUMMARY_PLACE_LABEL,
   CHECKOUT_SUMMARY_PLACING_LABEL,
   CHECKOUT_SUMMARY_TERMS_LABEL,
   CHECKOUT_SUMMARY_TITLE,
-  CHECKOUT_SUMMARY_TOTAL_LABEL,
 } from "./constants/checkout-summary.constants";
 import type { CheckoutSummaryProps } from "./types/checkout-summary.types";
 
@@ -26,11 +24,9 @@ export const CheckoutSummary = ({
   onEdit,
 }: CheckoutSummaryProps) => {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl bg-background p-[18px] lg:p-6">
+    <SurfaceCard className="flex flex-col gap-4">
       <div className="flex items-baseline justify-between">
-        <h2 className="font-heading text-base font-semibold tracking-[-.015em] text-foreground lg:text-[17px]">
-          {CHECKOUT_SUMMARY_TITLE}
-        </h2>
+        <h2 className={CHECKOUT_SECTION_TITLE_CLASS_NAME}>{CHECKOUT_SUMMARY_TITLE}</h2>
         <Button variant="text" size="auto" onClick={onEdit} className="text-[13.5px]">
           {CHECKOUT_SUMMARY_EDIT_LABEL}
         </Button>
@@ -42,41 +38,7 @@ export const CheckoutSummary = ({
         ))}
       </div>
 
-      <div className="flex flex-col gap-2.5 text-sm text-muted">
-        <div className="flex justify-between">
-          <span>{CHECKOUT_SUMMARY_ITEMS_LABEL(cartTotals.quantity)}</span>
-          <span>{formatProductPriceHelper(cartTotals.subtotal)}</span>
-        </div>
-
-        <div className="flex justify-between font-medium text-accent">
-          <span>{CHECKOUT_SUMMARY_DISCOUNT_LABEL}</span>
-          <span>
-            {cartTotals.discount > 0 && "−"}
-            {formatProductPriceHelper(cartTotals.discount)}
-          </span>
-        </div>
-
-        <div className="flex justify-between">
-          <span>{CHECKOUT_SUMMARY_DELIVERY_LABEL(carrierLabel)}</span>
-          <span>{formatProductPriceHelper(totals.shipping)}</span>
-        </div>
-
-        {totals.codFee > 0 && (
-          <div className="flex justify-between">
-            <span>{CHECKOUT_SUMMARY_COD_LABEL}</span>
-            <span>{formatProductPriceHelper(totals.codFee)}</span>
-          </div>
-        )}
-
-        <div className="flex items-baseline justify-between border-t border-border-soft pt-3">
-          <span className="text-[15px] font-semibold text-foreground">
-            {CHECKOUT_SUMMARY_TOTAL_LABEL}
-          </span>
-          <span className="font-heading text-[22px] font-semibold text-foreground">
-            {formatProductPriceHelper(totals.total)}
-          </span>
-        </div>
-      </div>
+      <CheckoutSummaryTotals cartTotals={cartTotals} totals={totals} carrierLabel={carrierLabel} />
 
       {hint && (
         <span role="alert" className="text-[13px] text-error-dark">
@@ -91,12 +53,12 @@ export const CheckoutSummary = ({
         className="h-[54px] rounded-xl text-[15.5px]"
       >
         {isPlacing ? CHECKOUT_SUMMARY_PLACING_LABEL : CHECKOUT_SUMMARY_PLACE_LABEL}
-        {!isPlacing && <span className="font-symbols text-[19px]">arrow_forward</span>}
+        {!isPlacing && <MaterialIcon name="arrow_forward" className="text-[19px]" />}
       </Button>
 
       <span className="text-center text-[12.5px] leading-normal text-muted-light">
         {CHECKOUT_SUMMARY_TERMS_LABEL}
       </span>
-    </div>
+    </SurfaceCard>
   );
 };

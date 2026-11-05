@@ -6,6 +6,14 @@ import type {
 export const PRODUCT_FAVORITE_BUTTON_ADD_LABEL = "Додати в обране";
 export const PRODUCT_FAVORITE_BUTTON_REMOVE_LABEL = "Прибрати з обраного";
 
+export const PRODUCT_FAVORITE_BUTTON_ICON = "favorite";
+
+/** Material Symbols axis: a filled heart for favourites, an outline otherwise. */
+export const PRODUCT_FAVORITE_BUTTON_ICON_FILL = {
+  filled: "'FILL' 1",
+  outlined: "'FILL' 0",
+} as const;
+
 export const PRODUCT_FAVORITE_BUTTON_STYLES: Record<
   ProductFavoriteButtonVariant,
   ProductFavoriteButtonStyles

@@ -1,4 +1,5 @@
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import {
   CABINET_ADDRESS_CARD_MAIN_BADGE,
   CABINET_ADDRESS_CARD_REMOVE_LABEL,
@@ -20,7 +21,7 @@ export const CabinetAddressCard = ({
       }`}
     >
       <div className="flex items-center gap-2.5">
-        <span className="font-symbols text-xl text-accent">{address.icon}</span>
+        <MaterialIcon name={address.icon} className="text-xl text-accent" />
         <span className="min-w-0 flex-1 text-[14.5px] font-semibold text-foreground">
           {address.title}
         </span>

@@ -1,5 +1,9 @@
 export const TERMS_PRINT_BUTTON_LABEL = "Завантажити PDF";
 
+/** Keeps the print iframe out of sight and out of the layout. */
+export const TERMS_PRINT_FRAME_STYLES =
+  "position:fixed;width:0;height:0;border:0;visibility:hidden";
+
 /** Plain black-on-white typography for paper; the site's fonts are not loaded in the print frame. */
 export const TERMS_PRINT_DOCUMENT_STYLES = `
   @page { margin: 20mm 18mm; }

@@ -4,6 +4,7 @@ import type { BreadcrumbItem } from "@/app/ui/breadcrumb/types/breadcrumb.types"
 export type ProductInfoProps = {
   product: ProductDetails;
   offer: ProductOffer;
+  discountPercent?: number;
   breadcrumbItems: BreadcrumbItem[];
   onSelectVariation: (variationId: string) => void;
 };

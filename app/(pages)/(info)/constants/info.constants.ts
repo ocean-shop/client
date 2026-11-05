@@ -1,4 +1,4 @@
-import type { InfoMenuGroup } from "../types/info.types";
+import type { InfoMenuGroup, InfoMenuItem } from "../types/info.types";
 
 export const INFO_PAGE_CLASS_NAME = "flex flex-1 flex-col bg-surface-soft";
 
@@ -44,3 +44,5 @@ export const INFO_MENU_GROUPS: InfoMenuGroup[] = [
     ],
   },
 ];
+
+export const INFO_MENU_ITEMS: InfoMenuItem[] = INFO_MENU_GROUPS.flatMap((group) => group.items);

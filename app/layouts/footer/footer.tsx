@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HEADER_BRAND_NAME } from "@/app/layouts/header/constants/header.constants";
 import {
   FOOTER_BRAND_DESCRIPTION,
   FOOTER_COPYRIGHT,
@@ -12,7 +13,7 @@ export const Footer = () => {
     <footer className="hidden lg:block border-t border-footer-border bg-footer">
       <div className="mx-auto grid max-w-page grid-cols-[1.6fr_1fr_1fr_1fr] gap-10 px-10 py-11">
         <div className="flex flex-col gap-2.5">
-          <span className="font-heading text-lg font-semibold">Ocean</span>
+          <span className="font-heading text-lg font-semibold">{HEADER_BRAND_NAME}</span>
           <p className="max-w-[300px] text-pretty text-[13.5px] leading-[1.6] text-muted">
             {FOOTER_BRAND_DESCRIPTION}
           </p>

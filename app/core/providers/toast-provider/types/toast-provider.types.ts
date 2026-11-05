@@ -8,4 +8,6 @@ export type ToastItem = {
   actions?: ToastAction[];
 };
 
-export type ToastListener = (toasts: ToastItem[]) => void;
+export type ToastProviderProps = {
+  children: React.ReactNode;
+};

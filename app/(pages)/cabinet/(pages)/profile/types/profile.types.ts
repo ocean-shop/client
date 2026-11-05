@@ -1,3 +1,5 @@
+import type { ApiActionMessageResult } from "@/app/core/api/types/api.types";
+
 /** The user's own contact details; every field stays `null` until the user fills it in. */
 export type UserProfile = {
   userId: string;
@@ -17,6 +19,4 @@ export type UpdateUserProfileRequest = {
   birthday: string | null;
 };
 
-/** `message` is the backend's own explanation, e.g. a failed validation. */
-export type UpdateUserProfileResult =
-  { ok: true; profile: UserProfile } | { ok: false; status: number; message: string | null };
+export type UpdateUserProfileResult = ApiActionMessageResult<{ profile: UserProfile }>;

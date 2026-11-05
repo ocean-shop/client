@@ -1,4 +1,4 @@
-import type { NavigationProgressListener } from "./types/navigation-progress.types";
+import { createStoreListeners } from "@/app/core/store/helpers/create-store-listeners";
 
 /**
  * Data is fetched on the server, so there is no client request to observe: the only signal
@@ -6,11 +6,8 @@ import type { NavigationProgressListener } from "./types/navigation-progress.typ
  * Every transition reports itself here and the global progress bar reads the total.
  */
 let pendingCount = 0;
-let listeners: NavigationProgressListener[] = [];
 
-const emit = () => {
-  listeners.forEach((listener) => listener(pendingCount));
-};
+const { emit, subscribe } = createStoreListeners();
 
 const start = () => {
   pendingCount += 1;
@@ -20,14 +17,6 @@ const start = () => {
 const end = () => {
   pendingCount = Math.max(0, pendingCount - 1);
   emit();
-};
-
-const subscribe = (listener: NavigationProgressListener) => {
-  listeners = [...listeners, listener];
-
-  return () => {
-    listeners = listeners.filter((existing) => existing !== listener);
-  };
 };
 
 const getSnapshot = () => {

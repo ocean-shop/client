@@ -1,3 +1,5 @@
+import type { ApiActionResult } from "@/app/core/api/types/api.types";
+
 /** Mirrors the backend's `shippingMethod` enum, so an order can carry it as is. */
 export type DeliveryCarrier = "nova" | "ukr";
 
@@ -26,6 +28,19 @@ export type DeliveryPoint = {
   address: string;
   meta: string;
 };
+
+/**
+ * A branch or parcel locker typed in by hand, for when the carrier's list cannot be loaded. The
+ * settlement is free text too, so a village the city search never offered can still be named.
+ */
+export type DeliveryManualPoint = {
+  city: string;
+  number: string;
+};
+
+export type DeliveryCitiesResult = ApiActionResult<{ cities: DeliveryCity[] }>;
+
+export type DeliveryPointsResult = ApiActionResult<{ points: DeliveryPoint[] }>;
 
 export type DeliveryPointsRequest = {
   carrier: DeliveryCarrier;

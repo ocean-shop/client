@@ -5,11 +5,9 @@ export const DELIVERY_POINTS_TITLES: Record<DeliveryPointMethod, string> = {
   postomat: "Оберіть поштомат",
 };
 
-export const DELIVERY_POINTS_SEARCH_PLACEHOLDER = "Номер або адреса";
 export const DELIVERY_POINTS_EMPTY_LABEL = "Нічого не знайдено. Спробуйте інший номер чи адресу.";
 export const DELIVERY_POINTS_ERROR_LABEL =
-  "Не вдалося завантажити відділення перевізника. Спробуйте ще раз трохи пізніше.";
-export const DELIVERY_POINTS_SKELETON_ROWS = 3;
+  "Не вдалося завантажити відділення перевізника. Вкажіть населений пункт і номер вручну.";
 
 export const DELIVERY_POINTS_QUERY_KEY = "delivery-points";
 export const DELIVERY_POINTS_DEBOUNCE_MS = 300;

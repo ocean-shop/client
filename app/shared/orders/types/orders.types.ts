@@ -1,7 +1,8 @@
+import type { ApiActionResult } from "@/app/core/api/types/api.types";
 import type { DeliveryCarrier } from "@/app/shared/delivery/types/delivery.types";
 
 /** Mirrors the backend's `paymentMethod` enum. */
-export type OrderPaymentMethod = "card" | "cod";
+export type OrderPaymentMethod = "card" | "cod" | "manual";
 
 /** Mirrors the backend's order `status` enum. */
 export type OrderStatus = "pending" | "processing" | "shipped" | "cancelled";
@@ -42,5 +43,4 @@ export type Order = {
   createdAt: string;
 };
 
-/** A server action cannot throw a typed error to the client, so a failure carries its status. */
-export type CreateOrderResult = { ok: true; order: Order } | { ok: false; status: number };
+export type CreateOrderResult = ApiActionResult<{ order: Order }>;

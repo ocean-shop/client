@@ -1,6 +1,7 @@
 "use server";
 
-import { AUTH_CLIENT_API_URL, AUTH_REQUEST_HEADERS } from "../constants/auth.constants";
+import { API_JSON_HEADERS } from "@/app/core/api/constants/api.constants";
+import { AUTH_CLIENT_API_URL } from "../constants/auth.constants";
 import type { RequestClientOtpRequest, RequestClientOtpResult } from "../types/auth.types";
 
 /**
@@ -12,7 +13,7 @@ export const requestClientOtpAction = async (
 ): Promise<RequestClientOtpResult> => {
   const response = await fetch(`${AUTH_CLIENT_API_URL}/request-otp`, {
     method: "POST",
-    headers: AUTH_REQUEST_HEADERS,
+    headers: API_JSON_HEADERS,
     body: JSON.stringify(body),
     cache: "no-store",
   });

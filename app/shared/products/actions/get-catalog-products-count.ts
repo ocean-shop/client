@@ -1,6 +1,7 @@
 "use server";
 
 import { apiFetch } from "@/app/core/api/api-fetch";
+import { API_DEFAULT_REVALIDATE_SECONDS } from "@/app/core/api/constants/api.constants";
 import {
   CATALOG_PRODUCTS_BY_CATEGORY_API_URL,
   CATALOG_PRODUCTS_BY_SEARCH_API_URL,
@@ -27,7 +28,9 @@ export const getCatalogProductsCountAction = async (
       ? CATALOG_PRODUCTS_BY_CATEGORY_API_URL(source.categoryId, params.toString())
       : CATALOG_PRODUCTS_BY_SEARCH_API_URL(params.toString());
 
-  const productList = await apiFetch<ProductListResponse>(url, { next: { revalidate: 300 } });
+  const productList = await apiFetch<ProductListResponse>(url, {
+    next: { revalidate: API_DEFAULT_REVALIDATE_SECONDS },
+  });
 
   return productList.total;
 };

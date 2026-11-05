@@ -1,36 +1,25 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { useOutsidePointerDown } from "@/app/core/hooks/use-outside-pointer-down";
+import { buildCatalogCategoryHrefHelper } from "@/app/shared/catalog-categories/helpers/build-catalog-category-href";
+import { useActiveCatalogCategory } from "@/app/shared/catalog-categories/hooks/use-active-catalog-category";
 import { Button } from "@/app/ui/button/button";
-import {
-  CATALOG_CATEGORY_DEFAULT_ICON,
-  CATALOG_CATEGORY_ICONS,
-} from "@/app/shared/catalog-categories/constants/catalog-categories.constants";
+import { CatalogCategoryItem } from "@/app/ui/catalog-category-item/catalog-category-item";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { HEADER_CATALOG_LABEL } from "../../constants/header.constants";
-import { CATALOG_PANEL_PROMO } from "./constants/catalog-panel.constants";
+import { CatalogPanelPromo } from "./components/catalog-panel-promo/catalog-panel-promo";
 import type { CatalogPanelProps } from "./types/catalog-panel.types";
 
 export const CatalogPanel = ({ categories }: CatalogPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeCategoryId, setActiveCategoryId] = useState(categories[0]?.id);
+  const { activeCategory, setActiveCategoryId } = useActiveCatalogCategory(categories);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  const activeCategory =
-    categories.find((category) => category.id === activeCategoryId) ?? categories[0];
+  const closePanel = () => setIsOpen(false);
 
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handlePointerDown = (event: PointerEvent) => {
-      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [isOpen]);
+  useOutsidePointerDown(panelRef, closePanel, isOpen);
 
   if (!activeCategory) return null;
 
@@ -42,67 +31,23 @@ export const CatalogPanel = ({ categories }: CatalogPanelProps) => {
         onClick={() => setIsOpen((open) => !open)}
         className="h-[42px] gap-2 rounded-[10px] px-5 text-[14.5px]"
       >
-        <span className="font-symbols text-[20px]">apps</span>
+        <MaterialIcon name="apps" className="text-[20px]" />
         {HEADER_CATALOG_LABEL}
       </Button>
 
       {isOpen && (
         <div className="absolute left-0 top-[calc(100%+12px)] z-20 grid w-[1100px] grid-cols-[262px_1fr_268px] overflow-hidden rounded-[14px] border border-border-soft bg-background shadow-[0_30px_60px_-30px_rgba(17,28,45,0.45)]">
           <div className="flex flex-col gap-1.5 border-r border-border-soft bg-surface-soft p-3.5">
-            {categories.map((category) => {
-              const isActive = category.id === activeCategoryId;
-              const icon = CATALOG_CATEGORY_ICONS[category.slug] ?? CATALOG_CATEGORY_DEFAULT_ICON;
-              const hasSubs = category.subs.length > 0;
-
-              const itemClassName = `flex cursor-pointer items-center gap-2.5 rounded-[10px] border px-3 py-[11px] ${
-                isActive
-                  ? "border-accent-soft bg-accent-soft text-accent-dark"
-                  : "border-transparent text-foreground"
-              }`;
-
-              const content = (
-                <>
-                  <span
-                    className={`font-symbols text-[20px] ${isActive ? "text-accent" : "text-muted"}`}
-                  >
-                    {icon}
-                  </span>
-                  <span className={`flex-1 text-sm ${isActive ? "font-semibold" : "font-medium"}`}>
-                    {category.name}
-                  </span>
-                  {hasSubs && (
-                    <span
-                      className={`font-symbols text-[18px] ${isActive ? "text-accent" : "text-muted-light"}`}
-                    >
-                      chevron_right
-                    </span>
-                  )}
-                </>
-              );
-
-              if (!hasSubs) {
-                return (
-                  <Link
-                    key={category.id}
-                    href={`/catalog/${category.slug}`}
-                    onClick={() => setIsOpen(false)}
-                    className={itemClassName}
-                  >
-                    {content}
-                  </Link>
-                );
-              }
-
-              return (
-                <div
-                  key={category.id}
-                  onClick={() => setActiveCategoryId(category.id)}
-                  className={itemClassName}
-                >
-                  {content}
-                </div>
-              );
-            })}
+            {categories.map((category) => (
+              <CatalogCategoryItem
+                key={category.id}
+                variant="desktop"
+                category={category}
+                isActive={category.id === activeCategory.id}
+                onSelect={() => setActiveCategoryId(category.id)}
+                onNavigate={closePanel}
+              />
+            ))}
           </div>
 
           <div className="flex flex-col gap-3.5 px-6.5 py-5.5">
@@ -111,8 +56,8 @@ export const CatalogPanel = ({ categories }: CatalogPanelProps) => {
               {activeCategory.subs.map((sub) => (
                 <Link
                   key={sub.id}
-                  href={`/catalog/${sub.slug}`}
-                  onClick={() => setIsOpen(false)}
+                  href={buildCatalogCategoryHrefHelper(sub.slug)}
+                  onClick={closePanel}
                   className="block break-inside-avoid py-[7px] text-sm text-muted hover:text-accent"
                 >
                   {sub.name}
@@ -121,28 +66,7 @@ export const CatalogPanel = ({ categories }: CatalogPanelProps) => {
             </div>
           </div>
 
-          <div className="m-3.5 flex flex-col justify-center gap-3.5 rounded-xl bg-accent p-6.5 text-white">
-            <span className="self-start rounded-md bg-white/15 px-2.5 py-1 text-[11px] font-bold tracking-[.08em]">
-              {CATALOG_PANEL_PROMO.badge}
-            </span>
-            <div className="font-heading text-[23px] font-semibold leading-[1.15] tracking-tight">
-              {CATALOG_PANEL_PROMO.title}
-            </div>
-            <div className="text-[13.5px] leading-[1.5] text-accent-soft">
-              {CATALOG_PANEL_PROMO.description}
-            </div>
-            <div className="flex items-baseline gap-2.5">
-              <span className="font-heading text-[26px] font-semibold">
-                {CATALOG_PANEL_PROMO.price}
-              </span>
-              <span className="text-[13.5px] text-accent-soft/80 line-through">
-                {CATALOG_PANEL_PROMO.oldPrice}
-              </span>
-            </div>
-            <Button variant="primary-inverse" size="auto" className="h-11 rounded-[10px] text-sm">
-              {CATALOG_PANEL_PROMO.ctaLabel}
-            </Button>
-          </div>
+          <CatalogPanelPromo />
         </div>
       )}
     </div>

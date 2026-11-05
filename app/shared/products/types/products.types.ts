@@ -1,3 +1,4 @@
+import type { SearchParamsRecord } from "@/app/core/search-params/types/search-params.types";
 import type { SeoFields } from "@/app/shared/seo/types/seo.types";
 
 export type ProductImage = {
@@ -20,6 +21,11 @@ export type Product = {
   price: string;
   oldPrice: string | null;
   images: ProductImage[];
+  /**
+   * A variable product keeps `price` at zero and its photos here; empty for simple products.
+   * Optional on listings: responses cached before the API started sending it lack it.
+   */
+  variations?: ProductVariation[];
 };
 
 export type ProductVariation = {
@@ -55,6 +61,9 @@ export type ProductOffer = {
   available: boolean;
   images: ProductImage[];
 };
+
+/** What a product card or list row shows: the default variation's price and photos, if any. */
+export type ProductPreview = Pick<ProductOffer, "price" | "oldPrice" | "images">;
 
 export type CatalogFilter = {
   name: string;
@@ -114,7 +123,7 @@ export type ProductSearchListResponse = ProductListResponse & {
   categories: CatalogCategoryOption[];
 };
 
-export type CatalogProductsSearchParams = Record<string, string | string[] | undefined>;
+export type CatalogProductsSearchParams = SearchParamsRecord;
 
 /** One product URL of the sitemap; `updatedAt` arrives as an ISO string. */
 export type ProductSitemapEntry = {

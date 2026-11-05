@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import type { BreadcrumbProps } from "./types/breadcrumb.types";
 
 export const Breadcrumb = ({ items }: BreadcrumbProps) => {
@@ -19,7 +20,7 @@ export const Breadcrumb = ({ items }: BreadcrumbProps) => {
             ) : (
               <span className="font-medium text-foreground">{item.label}</span>
             )}
-            {!isLast && <span className="font-symbols text-[15px]">chevron_right</span>}
+            {!isLast && <MaterialIcon name="chevron_right" className="text-[15px]" />}
           </div>
         );
       })}

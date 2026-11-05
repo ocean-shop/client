@@ -4,9 +4,16 @@ export type BottomTabBarProps = {
   categories: CatalogCategoryTree[];
 };
 
-export type BottomTabBarItem = {
-  id: string;
+export type BottomTabBarItemId = "home" | "catalog" | "favorites" | "account" | "cart";
+
+export type BottomTabBarItemData = {
+  id: BottomTabBarItemId;
   icon: string;
   label: string;
-  active?: boolean;
+};
+
+export type BottomTabBarActiveItemsParams = {
+  pathname: string;
+  isCatalogOpen: boolean;
+  isCartOpen: boolean;
 };

@@ -1,9 +1,9 @@
+import { PRODUCT_UNAVAILABLE_LABEL } from "@/app/shared/products/constants/products.constants";
 import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-product-price";
 import { Button } from "@/app/ui/button/button";
 import {
   PRODUCT_VARIATIONS_FALLBACK_LABEL,
   PRODUCT_VARIATIONS_TITLE,
-  PRODUCT_VARIATIONS_UNAVAILABLE_LABEL,
 } from "./constants/product-variations.constants";
 import type { ProductVariationsProps } from "./types/product-variations.types";
 
@@ -37,7 +37,7 @@ export const ProductVariations = ({
               <span className="text-[12.5px] text-muted-light">
                 {variation.available
                   ? formatProductPriceHelper(variation.price)
-                  : PRODUCT_VARIATIONS_UNAVAILABLE_LABEL}
+                  : PRODUCT_UNAVAILABLE_LABEL}
               </span>
             </Button>
           );

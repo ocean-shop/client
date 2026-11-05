@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildCatalogCategoryHrefHelper } from "@/app/shared/catalog-categories/helpers/build-catalog-category-href";
 import type { CatalogCategory } from "@/app/shared/catalog-categories/types/catalog-categories.types";
 import { buildSeoMetadataHelper } from "@/app/shared/seo/helpers/build-seo-metadata";
 
@@ -6,7 +7,7 @@ import { buildSeoMetadataHelper } from "@/app/shared/seo/helpers/build-seo-metad
 export const buildCatalogCategoryMetadataHelper = (category: CatalogCategory): Metadata => {
   return buildSeoMetadataHelper({
     title: category.name,
-    path: `/catalog/${category.slug}`,
+    path: buildCatalogCategoryHrefHelper(category.slug),
     metaTitle: category.metaTitle,
     metaDescription: category.metaDescription,
     canonicalUrl: category.canonicalUrl,

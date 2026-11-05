@@ -4,6 +4,18 @@ import type { OrderPaymentMethod, OrderStatus } from "@/app/shared/orders/types/
 
 export type UserOrderPaymentStatus = "unpaid" | "paid";
 
+/** How a status reads wherever an order is shown. */
+export type UserOrderStatusMeta = {
+  label: string;
+  icon: string;
+};
+
+/** One step of the delivery trail; a cancelled order leaves it, so it has no step of its own. */
+export type UserOrderStepConfig = {
+  status: Exclude<OrderStatus, "cancelled">;
+  label: string;
+};
+
 /** One order line as the backend lists it; `product` is `null` once the product is deleted. */
 export type UserOrderItem = {
   orderId: string;

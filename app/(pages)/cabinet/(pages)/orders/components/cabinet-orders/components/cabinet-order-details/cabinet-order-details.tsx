@@ -1,5 +1,8 @@
 import { formatProductsCountHelper } from "@/app/shared/products/helpers/format-products-count";
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
+import { SurfaceCard } from "@/app/ui/surface-card/surface-card";
+import { ORDER_META_SEPARATOR, ORDER_TITLE_PREFIX } from "../../../../constants/orders.constants";
 import { CabinetOrderStatusBadge } from "../cabinet-order-status-badge/cabinet-order-status-badge";
 import { CabinetOrderInfoCard } from "./components/cabinet-order-info-card/cabinet-order-info-card";
 import { CabinetOrderLine } from "./components/cabinet-order-line/cabinet-order-line";
@@ -8,12 +11,10 @@ import { CabinetOrderSummary } from "./components/cabinet-order-summary/cabinet-
 import {
   CABINET_ORDER_DETAILS_BACK_LABEL,
   CABINET_ORDER_DETAILS_DATE_PREFIX,
-  CABINET_ORDER_DETAILS_META_SEPARATOR,
   CABINET_ORDER_DETAILS_PAYMENT_LABEL,
   CABINET_ORDER_DETAILS_RECIPIENT_FALLBACK,
   CABINET_ORDER_DETAILS_RECIPIENT_LABEL,
   CABINET_ORDER_DETAILS_SHIPPING_LABEL,
-  CABINET_ORDER_DETAILS_TITLE_PREFIX,
 } from "./constants/cabinet-order-details.constants";
 import type { CabinetOrderDetailsProps } from "./types/cabinet-order-details.types";
 
@@ -29,19 +30,19 @@ export const CabinetOrderDetails = ({ order, onBack, onRepeat }: CabinetOrderDet
         onClick={onBack}
         className="self-start !gap-1 text-[13.5px]"
       >
-        <span className="font-symbols text-lg">arrow_back</span>
+        <MaterialIcon name="arrow_back" className="text-lg" />
         {CABINET_ORDER_DETAILS_BACK_LABEL}
       </Button>
 
-      <section className="flex flex-col gap-[18px] rounded-2xl bg-background p-[18px] lg:gap-[22px] lg:p-6">
+      <SurfaceCard as="section" className="flex flex-col gap-[18px] lg:gap-[22px]">
         <div className="flex flex-wrap items-start gap-3 lg:flex-nowrap">
           <div className="flex min-w-0 flex-1 flex-col gap-1">
             <h1 className="font-heading text-lg font-semibold tracking-[-.02em] text-foreground lg:text-[21px]">
-              {CABINET_ORDER_DETAILS_TITLE_PREFIX} {order.number}
+              {ORDER_TITLE_PREFIX} {order.number}
             </h1>
             <span className="text-[13px] text-muted-light">
               {CABINET_ORDER_DETAILS_DATE_PREFIX} {order.placedAt}
-              {CABINET_ORDER_DETAILS_META_SEPARATOR}
+              {ORDER_META_SEPARATOR}
               {formatProductsCountHelper(order.quantity)}
             </span>
           </div>
@@ -49,13 +50,17 @@ export const CabinetOrderDetails = ({ order, onBack, onRepeat }: CabinetOrderDet
         </div>
 
         <CabinetOrderProgress steps={order.steps} />
-      </section>
+      </SurfaceCard>
 
-      <section className="flex flex-col rounded-2xl bg-background px-[18px] py-1.5 lg:px-6 lg:py-2">
+      <SurfaceCard
+        as="section"
+        padding="none"
+        className="flex flex-col px-[18px] py-1.5 lg:px-6 lg:py-2"
+      >
         {order.items.map((item, index) => (
           <CabinetOrderLine key={item.id} item={item} isLast={index === order.items.length - 1} />
         ))}
-      </section>
+      </SurfaceCard>
 
       <div className="grid gap-3 lg:grid-cols-3 lg:gap-4">
         <CabinetOrderInfoCard

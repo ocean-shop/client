@@ -21,6 +21,7 @@ export const BUTTON_SIZE_CLASSNAMES: Record<ButtonSize, string> = {
   sm: "h-10 rounded-[10px] px-3 text-sm",
   md: "h-[42px] rounded-[10px] px-3.5 text-sm",
   lg: "h-[50px] rounded-[10px] px-[26px] text-[15px]",
+  xl: "h-[52px] rounded-xl px-6 text-[15px]",
   icon: "h-10 w-10 rounded-[10px] p-0",
   auto: "",
 };

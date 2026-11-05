@@ -1,3 +1,5 @@
+import type { ApiActionResult } from "@/app/core/api/types/api.types";
+
 /**
  * `idle` until the ids are first asked for, `guest` when nobody is signed in, `ready` once the
  * signed-in user's favourites are known.
@@ -12,8 +14,7 @@ export type FavoritesState = {
 export type FavoritesListener = () => void;
 
 /** Result of adding or removing a favourite; a `401` means the user has to sign in first. */
-export type FavoriteProductActionResult = { ok: true } | { ok: false; status: number };
+export type FavoriteProductActionResult = ApiActionResult;
 
 /** `isFavorite` is where the heart ended up. */
-export type FavoriteToggleResult =
-  { ok: true; isFavorite: boolean } | { ok: false; status: number };
+export type FavoriteToggleResult = ApiActionResult<{ isFavorite: boolean }>;

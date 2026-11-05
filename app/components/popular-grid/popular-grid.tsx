@@ -1,12 +1,10 @@
-import Link from "next/link";
-import { ProductCard } from "../../ui/product-card/product-card";
-import { getCatalogCategories } from "../../shared/catalog-categories/api/get-catalog-categories";
-import { filterParentCategoriesHelper } from "../../shared/catalog-categories/helpers/filter-parent-categories";
-import { CATALOG_CATEGORIES_POPULAR_LIMIT } from "../../shared/catalog-categories/constants/catalog-categories.constants";
-import { getPopularProducts } from "../../shared/products/api/get-popular-products";
-import { mapProductToCardDataHelper } from "../../shared/products/helpers/map-product-to-card-data";
-import { ProductCardCartButton } from "../product-card-cart-button/product-card-cart-button";
-import { ProductFavoriteButton } from "../product-favorite-button/product-favorite-button";
+import { getCatalogCategories } from "@/app/shared/catalog-categories/api/get-catalog-categories";
+import { CATALOG_CATEGORIES_POPULAR_LIMIT } from "@/app/shared/catalog-categories/constants/catalog-categories.constants";
+import { filterParentCategoriesHelper } from "@/app/shared/catalog-categories/helpers/filter-parent-categories";
+import { getPopularProducts } from "@/app/shared/products/api/get-popular-products";
+import { mapProductToCardDataHelper } from "@/app/shared/products/helpers/map-product-to-card-data";
+import { ProductActionsCard } from "../product-actions-card/product-actions-card";
+import { PopularGridCategories } from "./components/popular-grid-categories/popular-grid-categories";
 import { POPULAR_GRID_TITLE } from "./constants/popular-grid.constants";
 
 export const PopularGrid = async () => {
@@ -15,7 +13,6 @@ export const PopularGrid = async () => {
     categories,
     CATALOG_CATEGORIES_POPULAR_LIMIT
   );
-  const popularProducts = products.map((product) => mapProductToCardDataHelper(product));
 
   return (
     <section className="bg-surface-soft">
@@ -25,33 +22,12 @@ export const PopularGrid = async () => {
             {POPULAR_GRID_TITLE}
           </h2>
 
-          <div className="flex flex-wrap items-center gap-5 text-sm">
-            {popularCategories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/catalog/${category.slug}`}
-                className="border-b-2 border-transparent pb-0.5 text-muted-light hover:text-accent"
-              >
-                {category.name}
-              </Link>
-            ))}
-          </div>
+          <PopularGridCategories categories={popularCategories} />
         </div>
 
         <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-4">
-          {popularProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              cta={<ProductCardCartButton productId={product.id} productName={product.name} />}
-              favorite={
-                <ProductFavoriteButton
-                  productId={product.id}
-                  productName={product.name}
-                  variant="card"
-                />
-              }
-            />
+          {products.map((product) => (
+            <ProductActionsCard key={product.id} product={mapProductToCardDataHelper(product)} />
           ))}
         </div>
       </div>

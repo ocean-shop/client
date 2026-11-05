@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
-import { Button } from "@/app/ui/button/button";
+import { useBodyScrollLock } from "@/app/core/hooks/use-body-scroll-lock";
+import { useEscapeKey } from "@/app/core/hooks/use-escape-key";
+import { ModalHeader } from "./components/modal-header/modal-header";
 import {
-  MODAL_CLOSE_KEY,
+  MODAL_BODY_CLASS_NAME,
   MODAL_DEFAULT_CLOSE_LABEL,
+  MODAL_OVERLAY_CLASS_NAME,
+  MODAL_OVERLAY_STATE_CLASS_NAMES,
   MODAL_PANEL_CLASS_NAME,
   MODAL_PANEL_STATE_CLASS_NAMES,
 } from "./constants/modal.constants";
@@ -20,32 +23,17 @@ export const Modal = ({
   footer,
   children,
 }: ModalProps) => {
-  useEffect(() => {
-    if (!isOpen) return;
+  const state = isOpen ? "open" : "closed";
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === MODAL_CLOSE_KEY) onClose();
-    };
-
-    // The page behind the overlay would otherwise scroll along with the modal body.
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+  useEscapeKey(onClose, isOpen);
+  useBodyScrollLock(isOpen);
 
   return (
     <>
       <div
         onClick={onClose}
         aria-hidden="true"
-        className={`fixed inset-0 z-40 bg-foreground/45 transition-opacity ${
-          isOpen ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
+        className={`${MODAL_OVERLAY_CLASS_NAME} ${MODAL_OVERLAY_STATE_CLASS_NAMES[state]}`}
       />
 
       <div
@@ -54,36 +42,15 @@ export const Modal = ({
         aria-label={title}
         aria-hidden={!isOpen}
         inert={!isOpen}
-        className={`${MODAL_PANEL_CLASS_NAME} ${
-          isOpen ? MODAL_PANEL_STATE_CLASS_NAMES.open : MODAL_PANEL_STATE_CLASS_NAMES.closed
-        }`}
+        className={`${MODAL_PANEL_CLASS_NAME} ${MODAL_PANEL_STATE_CLASS_NAMES[state]}`}
       >
         <div className="flex justify-center pt-2.5 lg:hidden">
           <span className="h-1 w-10 rounded-sm bg-footer-border" />
         </div>
 
-        <div className="flex items-center gap-3 border-b border-surface px-4.5 py-3.5 lg:px-6 lg:py-[22px]">
-          <div className="flex flex-1 items-baseline gap-2.5">
-            <span className="font-heading text-[19px] font-semibold tracking-[-.02em] text-foreground lg:text-[22px]">
-              {title}
-            </span>
-            {subtitle && <span className="text-[13.5px] text-muted-light">{subtitle}</span>}
-          </div>
+        <ModalHeader title={title} subtitle={subtitle} closeLabel={closeLabel} onClose={onClose} />
 
-          <Button
-            variant="unstyled"
-            size="auto"
-            onClick={onClose}
-            aria-label={closeLabel}
-            className="h-10 w-10 flex-none rounded-[11px] border border-footer-border bg-background text-foreground hover:bg-surface"
-          >
-            <span className="font-symbols text-[21px]">close</span>
-          </Button>
-        </div>
-
-        <div className="flex flex-1 flex-col overflow-y-auto px-4.5 py-1 [scrollbar-width:none] lg:px-6 lg:py-1.5">
-          {children}
-        </div>
+        <div className={MODAL_BODY_CLASS_NAME}>{children}</div>
 
         {footer}
       </div>

@@ -1,9 +1,9 @@
-export const CATALOG_FILTERS_PRICE_LABEL = "Ціна, ₴";
-export const CATALOG_FILTERS_PRICE_FROM_PLACEHOLDER = "від";
-export const CATALOG_FILTERS_PRICE_TO_PLACEHOLDER = "до";
-export const CATALOG_FILTERS_APPLY_LABEL = "Застосувати";
+import type { CatalogFilterVariant } from "../types/catalog-filters.types";
+
 export const CATALOG_FILTERS_RESET_LABEL = "Скинути фільтри";
-export const CATALOG_FILTERS_MORE_LABEL = "Показати ще";
-export const CATALOG_FILTERS_AVAILABILITY_LABEL = "Наявність";
-export const CATALOG_FILTERS_AVAILABLE_ONLY_LABEL = "Тільки в наявності";
-export const CATALOG_FILTERS_VISIBLE_OPTIONS_COUNT = 4;
+
+/** Checkbox rows are tap targets in the sheet, so they get a touch-sized height there. */
+export const CATALOG_FILTERS_ROW_CLASS_NAMES: Record<CatalogFilterVariant, string> = {
+  card: "",
+  sheet: "min-h-11",
+};

@@ -1,20 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { HEADER_CATALOG_LABEL } from "@/app/layouts/header/constants/header.constants";
+import { buildCatalogCategoryHrefHelper } from "@/app/shared/catalog-categories/helpers/build-catalog-category-href";
+import { useActiveCatalogCategory } from "@/app/shared/catalog-categories/hooks/use-active-catalog-category";
 import { Button } from "@/app/ui/button/button";
-import {
-  CATALOG_CATEGORY_DEFAULT_ICON,
-  CATALOG_CATEGORY_ICONS,
-} from "@/app/shared/catalog-categories/constants/catalog-categories.constants";
-import { HEADER_CATALOG_LABEL } from "../../../header/constants/header.constants";
+import { CatalogCategoryItem } from "@/app/ui/catalog-category-item/catalog-category-item";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
+import { MOBILE_CATALOG_PANEL_CLOSE_LABEL } from "./constants/mobile-catalog-panel.constants";
 import type { MobileCatalogPanelProps } from "./types/mobile-catalog-panel.types";
 
 export const MobileCatalogPanel = ({ categories, isOpen, onClose }: MobileCatalogPanelProps) => {
-  const [activeCategoryId, setActiveCategoryId] = useState(categories[0]?.id);
-
-  const activeCategory =
-    categories.find((category) => category.id === activeCategoryId) ?? categories[0];
+  const { activeCategory, setActiveCategoryId } = useActiveCatalogCategory(categories);
 
   if (!activeCategory) return null;
 
@@ -36,71 +33,25 @@ export const MobileCatalogPanel = ({ categories, isOpen, onClose }: MobileCatalo
           variant="unstyled"
           size="auto"
           onClick={onClose}
-          aria-label="Закрити каталог"
-          className="font-symbols text-2xl text-muted"
+          aria-label={MOBILE_CATALOG_PANEL_CLOSE_LABEL}
+          className="text-muted"
         >
-          close
+          <MaterialIcon name="close" className="text-2xl" />
         </Button>
       </div>
 
       <div className="grid min-h-0 flex-1 grid-cols-[150px_1fr] gap-3 p-3.5 pb-[100px]">
         <div className="flex flex-col gap-2 overflow-y-auto [scrollbar-width:none]">
-          {categories.map((category) => {
-            const isActive = category.id === activeCategoryId;
-            const icon = CATALOG_CATEGORY_ICONS[category.slug] ?? CATALOG_CATEGORY_DEFAULT_ICON;
-            const hasSubs = category.subs.length > 0;
-
-            const itemClassName = `flex cursor-pointer items-center gap-2.5 rounded-xl border px-2.5 py-3 ${
-              isActive
-                ? "border-accent-soft bg-accent-soft text-accent-dark"
-                : "border-transparent text-foreground"
-            }`;
-
-            const content = (
-              <>
-                <span
-                  className={`font-symbols text-[20px] ${isActive ? "text-accent" : "text-muted"}`}
-                >
-                  {icon}
-                </span>
-                <span
-                  className={`flex-1 text-[13px] leading-[1.25] ${isActive ? "font-semibold" : "font-medium"}`}
-                >
-                  {category.name}
-                </span>
-                {hasSubs && (
-                  <span
-                    className={`font-symbols text-[17px] ${isActive ? "text-accent" : "text-muted-light"}`}
-                  >
-                    chevron_right
-                  </span>
-                )}
-              </>
-            );
-
-            if (!hasSubs) {
-              return (
-                <Link
-                  key={category.id}
-                  href={`/catalog/${category.slug}`}
-                  onClick={onClose}
-                  className={itemClassName}
-                >
-                  {content}
-                </Link>
-              );
-            }
-
-            return (
-              <div
-                key={category.id}
-                onClick={() => setActiveCategoryId(category.id)}
-                className={itemClassName}
-              >
-                {content}
-              </div>
-            );
-          })}
+          {categories.map((category) => (
+            <CatalogCategoryItem
+              key={category.id}
+              variant="mobile"
+              category={category}
+              isActive={category.id === activeCategory.id}
+              onSelect={() => setActiveCategoryId(category.id)}
+              onNavigate={onClose}
+            />
+          ))}
         </div>
 
         <div className="flex flex-col gap-0.5 overflow-y-auto rounded-[14px] bg-background p-4 [scrollbar-width:none]">
@@ -110,7 +61,7 @@ export const MobileCatalogPanel = ({ categories, isOpen, onClose }: MobileCatalo
           {activeCategory.subs.map((sub) => (
             <Link
               key={sub.id}
-              href={`/catalog/${sub.slug}`}
+              href={buildCatalogCategoryHrefHelper(sub.slug)}
               onClick={onClose}
               className="block py-[9px] text-[13.5px] text-muted hover:text-accent"
             >

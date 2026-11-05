@@ -1,9 +1,9 @@
+import { HomeAboutFeatures } from "./components/home-about-features/home-about-features";
+import { HomeAboutStats } from "./components/home-about-stats/home-about-stats";
 import {
   HOME_ABOUT_DESCRIPTION,
   HOME_ABOUT_EYEBROW_LABEL,
-  HOME_ABOUT_FEATURES,
   HOME_ABOUT_PHOTO_CAPTION,
-  HOME_ABOUT_STATS,
   HOME_ABOUT_TITLE,
 } from "./constants/home-about.constants";
 
@@ -33,45 +33,10 @@ export const HomeAbout = () => {
             {HOME_ABOUT_DESCRIPTION}
           </p>
 
-          <dl className="grid grid-cols-3 gap-2 lg:col-start-1 lg:row-start-5 lg:max-w-[520px] lg:gap-3.5">
-            {HOME_ABOUT_STATS.map((stat) => (
-              <div
-                key={stat.label}
-                className="flex flex-col-reverse justify-end gap-[3px] rounded-xl bg-background px-2.5 py-3 lg:gap-1 lg:rounded-2xl lg:bg-surface-soft lg:px-5 lg:py-4"
-              >
-                <dt className="text-[11.5px] text-muted lg:text-[13px]">{stat.label}</dt>
-                <dd className="font-heading text-base font-semibold text-accent lg:text-[22px]">
-                  {stat.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <HomeAboutStats />
         </div>
 
-        <ul className="flex flex-col gap-2.5 lg:grid lg:grid-cols-3 lg:gap-3.5">
-          {HOME_ABOUT_FEATURES.map((feature) => (
-            <li
-              key={feature.title}
-              className="flex gap-3 rounded-[14px] bg-background p-3.5 lg:gap-4 lg:rounded-2xl lg:bg-surface-soft lg:p-5"
-            >
-              <span
-                aria-hidden
-                className="flex h-[38px] w-[38px] flex-none items-center justify-center rounded-[10px] bg-accent-soft font-symbols text-xl text-accent lg:h-11 lg:w-11 lg:rounded-xl lg:text-[22px]"
-              >
-                {feature.icon}
-              </span>
-
-              <div className="flex flex-col gap-[3px] lg:gap-1">
-                <span className="text-sm font-semibold text-foreground lg:text-[15px]">
-                  {feature.title}
-                </span>
-                <span className="text-[12.5px] leading-[1.5] text-muted lg:text-[13.5px]">
-                  {feature.text}
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <HomeAboutFeatures />
       </div>
     </section>
   );

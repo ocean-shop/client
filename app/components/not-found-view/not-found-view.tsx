@@ -1,7 +1,8 @@
-import Link from "next/link";
+import { ButtonLink } from "@/app/ui/button-link/button-link";
 import {
   NOT_FOUND_CODE,
   NOT_FOUND_LINK_HREF,
+  NOT_FOUND_LINK_ICON,
   NOT_FOUND_LINK_LABEL,
   NOT_FOUND_TEXT,
   NOT_FOUND_TITLE,
@@ -18,13 +19,14 @@ export const NotFoundView = () => {
           {NOT_FOUND_TITLE}
         </h1>
         <p className="text-pretty text-[14.5px] text-muted">{NOT_FOUND_TEXT}</p>
-        <Link
+        <ButtonLink
           href={NOT_FOUND_LINK_HREF}
-          className="mt-2 inline-flex h-[50px] items-center justify-center gap-2 rounded-[10px] bg-accent px-[26px] text-[15px] font-semibold text-white hover:bg-accent-dark"
+          size="lg"
+          trailingIcon={NOT_FOUND_LINK_ICON}
+          className="mt-2"
         >
           {NOT_FOUND_LINK_LABEL}
-          <span className="font-symbols text-[19px]">arrow_forward</span>
-        </Link>
+        </ButtonLink>
       </div>
     </div>
   );

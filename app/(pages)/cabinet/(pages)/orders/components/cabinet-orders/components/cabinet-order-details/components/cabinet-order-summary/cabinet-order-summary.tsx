@@ -1,5 +1,7 @@
 import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-product-price";
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
+import { SurfaceCard } from "@/app/ui/surface-card/surface-card";
 import {
   CABINET_ORDER_SUMMARY_DELIVERY_LABEL,
   CABINET_ORDER_SUMMARY_DISCOUNT_LABEL,
@@ -14,7 +16,7 @@ export const CabinetOrderSummary = ({ order, onRepeat }: CabinetOrderSummaryProp
   const { amounts } = order;
 
   return (
-    <section className="flex flex-col gap-2.5 rounded-2xl bg-background p-[18px] text-sm text-muted lg:p-6">
+    <SurfaceCard as="section" className="flex flex-col gap-2.5 text-sm text-muted">
       <div className="flex justify-between gap-3">
         <span>{CABINET_ORDER_SUMMARY_GOODS_LABEL(order.quantity)}</span>
         <span>{formatProductPriceHelper(amounts.subtotal)}</span>
@@ -47,10 +49,10 @@ export const CabinetOrderSummary = ({ order, onRepeat }: CabinetOrderSummaryProp
           onClick={onRepeat}
           className="h-[46px] rounded-[11px] px-[18px] text-sm !gap-[7px]"
         >
-          <span className="font-symbols text-lg">replay</span>
+          <MaterialIcon name="replay" className="text-lg" />
           {CABINET_ORDER_SUMMARY_REPEAT_LABEL}
         </Button>
       </div>
-    </section>
+    </SurfaceCard>
   );
 };

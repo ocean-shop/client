@@ -1,7 +1,9 @@
 import type { ProductCardData } from "@/app/ui/product-card/types/product-card.types";
+import { PRODUCT_DISCOUNT_BADGE_LABEL } from "../constants/products.constants";
 import { buildProductHrefHelper } from "./build-product-href";
 import { calculateProductDiscountPercentHelper } from "./calculate-product-discount-percent";
 import { formatProductPriceHelper } from "./format-product-price";
+import { resolveProductPreviewHelper } from "./resolve-product-preview";
 import type { Product } from "../types/products.types";
 
 const computeDiscountBadgeHelper = (
@@ -12,7 +14,7 @@ const computeDiscountBadgeHelper = (
 
   if (percentOff === undefined) return undefined;
 
-  return { label: `−${percentOff}%`, tone: "sale" };
+  return { label: PRODUCT_DISCOUNT_BADGE_LABEL(percentOff), tone: "sale" };
 };
 
 /** `categorySlug` is only known when the card comes from a catalog page; it feeds the breadcrumbs. */
@@ -20,14 +22,16 @@ export const mapProductToCardDataHelper = (
   product: Product,
   categorySlug?: string
 ): ProductCardData => {
+  const { price, oldPrice, images } = resolveProductPreviewHelper(product);
+
   return {
     id: product.id,
     href: buildProductHrefHelper(product.slug, categorySlug),
-    image: product.images[0]?.url ?? null,
-    imageAlt: product.images[0]?.alt || product.name,
+    image: images[0]?.url ?? null,
+    imageAlt: images[0]?.alt || product.name,
     name: product.name,
-    price: formatProductPriceHelper(product.price),
-    oldPrice: product.oldPrice ? formatProductPriceHelper(product.oldPrice) : undefined,
-    badge: computeDiscountBadgeHelper(product.price, product.oldPrice),
+    price: formatProductPriceHelper(price),
+    oldPrice: oldPrice ? formatProductPriceHelper(oldPrice) : undefined,
+    badge: computeDiscountBadgeHelper(price, oldPrice),
   };
 };

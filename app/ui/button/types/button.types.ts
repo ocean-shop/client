@@ -1,7 +1,7 @@
 export type ButtonVariant =
   "primary" | "primary-inverse" | "outline" | "soft" | "ghost" | "text" | "unstyled";
 
-export type ButtonSize = "sm" | "md" | "lg" | "icon" | "auto";
+export type ButtonSize = "sm" | "md" | "lg" | "xl" | "icon" | "auto";
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;

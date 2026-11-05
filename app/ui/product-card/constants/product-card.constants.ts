@@ -1,14 +1,4 @@
-import type {
-  ProductBadgeTone,
-  ProductCardSize,
-  ProductCardSizeStyles,
-} from "../types/product-card.types";
-
-export const PRODUCT_BADGE_TONE_STYLES: Record<ProductBadgeTone, string> = {
-  sale: "text-accent-dark",
-  new: "text-foreground",
-  bestseller: "text-accent",
-};
+import type { ProductCardSize, ProductCardSizeStyles } from "../types/product-card.types";
 
 /**
  * Matches the widest grid the card sits in: 1 column on mobile, 2 from md, 3–4 from lg (page caps at 1600px).

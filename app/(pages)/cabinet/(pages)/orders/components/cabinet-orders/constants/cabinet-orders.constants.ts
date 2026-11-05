@@ -14,8 +14,7 @@ export const CABINET_ORDERS_FILTERS: CabinetOrdersFilter[] = [
 
 export const CABINET_ORDERS_EMPTY_FILTER_LABEL = "Замовлень у цій категорії немає";
 export const CABINET_ORDERS_EMPTY_LABEL = "Ви ще нічого не замовляли";
-export const CABINET_ORDERS_EMPTY_LINK_LABEL = "Перейти до покупок";
-export const CABINET_ORDERS_EMPTY_LINK_HREF = "/";
+export const CABINET_ORDERS_EMPTY_CLASS_NAME = "gap-3 p-10";
 
 export const CABINET_ORDERS_REPEAT_TOAST_TITLE = "Додано в кошик";
 export const CABINET_ORDERS_REPEAT_TOAST_MESSAGE = (number: string, products: string) =>

@@ -2,6 +2,7 @@ import { useRouter } from "next/navigation";
 import { CHECKOUT_PAGE_PATH } from "@/app/shared/cart/constants/cart.constants";
 import { formatProductPriceHelper } from "@/app/shared/products/helpers/format-product-price";
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import {
   CART_MODAL_SUMMARY_CHECKOUT_LABEL,
   CART_MODAL_SUMMARY_CONTINUE_LABEL,
@@ -67,7 +68,7 @@ export const CartModalSummary = ({ totals, onClose }: CartModalSummaryProps) => 
           className="h-[52px] rounded-xl text-[15px] lg:flex-1"
         >
           {CART_MODAL_SUMMARY_CHECKOUT_LABEL}
-          <span className="font-symbols text-[19px]">arrow_forward</span>
+          <MaterialIcon name="arrow_forward" className="text-[19px]" />
         </Button>
       </div>
     </div>

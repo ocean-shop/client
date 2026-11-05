@@ -1,3 +1,4 @@
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import {
   CABINET_ORDER_STEP_LINE_CLASS_NAMES,
   CABINET_ORDER_STEPS,
@@ -15,11 +16,10 @@ export const CabinetOrderProgress = ({ steps }: CabinetOrderProgressProps) => {
         return (
           <li key={step.label} className="flex gap-3 lg:min-w-0 lg:flex-1 lg:flex-col lg:gap-2">
             <div className="flex w-6 flex-col items-center lg:w-auto lg:flex-row">
-              <span
-                className={`flex h-6 w-6 flex-none items-center justify-center rounded-full border-2 font-symbols text-[15px] text-white lg:h-[26px] lg:w-[26px] lg:text-base ${meta.markerClassName}`}
-              >
-                {meta.icon}
-              </span>
+              <MaterialIcon
+                name={meta.icon}
+                className={`flex h-6 w-6 flex-none items-center justify-center rounded-full border-2 text-[15px] text-white lg:h-[26px] lg:w-[26px] lg:text-base ${meta.markerClassName}`}
+              />
               {nextStep && (
                 <span
                   className={`min-h-[18px] w-0.5 flex-1 lg:mx-1.5 lg:h-0.5 lg:min-h-0 lg:w-auto ${

@@ -1,8 +1,7 @@
 export const PRODUCT_CART_ADD_LABEL = "Додати в кошик";
-export const PRODUCT_CART_UNAVAILABLE_LABEL = "Немає в наявності";
 export const PRODUCT_CART_ONE_CLICK_LABEL = "Купити в 1 клік";
-export const PRODUCT_CART_DECREASE_LABEL = "Зменшити кількість";
-export const PRODUCT_CART_INCREASE_LABEL = "Збільшити кількість";
+export const PRODUCT_CART_ONE_CLICK_ENABLED =
+  process.env.NEXT_PUBLIC_ONE_CLICK_PURCHASE_ENABLED !== "false";
 
 /** Checkout does not exist yet, so the one-click button says so instead of pretending to order. */
 export const PRODUCT_CART_ONE_CLICK_TOAST_TITLE = "Скоро";

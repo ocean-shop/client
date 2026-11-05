@@ -1,13 +1,7 @@
-import { MutationCache, QueryCache } from "@tanstack/react-query";
-import { handleApiError } from "../handle-api-error";
-import { QueryClientConfig } from "../types/query-provider.types";
+import type { DefaultOptions } from "@tanstack/react-query";
 
-export const QUERY_CLIENT_CONFIG: QueryClientConfig = {
-  queryCache: new QueryCache({ onError: handleApiError }),
-  mutationCache: new MutationCache({ onError: handleApiError }),
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000,
-    },
+export const QUERY_CLIENT_DEFAULT_OPTIONS: DefaultOptions = {
+  queries: {
+    staleTime: 60 * 1000,
   },
 };

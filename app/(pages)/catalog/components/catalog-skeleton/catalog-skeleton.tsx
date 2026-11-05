@@ -4,6 +4,7 @@ import {
   CATALOG_CONTENT_CLASS_NAME,
   CATALOG_PAGE_CLASS_NAME,
   CATALOG_SKELETON_PRODUCT_COUNT,
+  CATALOG_TOOLBAR_CLASS_NAME,
 } from "../../constants/catalog.constants";
 
 /** Stand-in for the whole catalog page while its products and filters are still on the server. */
@@ -12,7 +13,7 @@ export const CatalogSkeleton = () => {
     <div className={CATALOG_PAGE_CLASS_NAME}>
       <NavigationProgressReporter />
 
-      <div className="sticky top-[var(--mobile-header-height)] z-20 flex gap-2.5 border-t border-border-soft bg-background px-4.5 py-2.5 lg:hidden">
+      <div className={CATALOG_TOOLBAR_CLASS_NAME}>
         <div className="h-11 flex-1 animate-pulse rounded-xl bg-surface-strong" />
         <div className="h-11 flex-1 animate-pulse rounded-xl bg-surface-strong" />
       </div>

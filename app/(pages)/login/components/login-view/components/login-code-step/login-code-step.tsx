@@ -1,23 +1,16 @@
-import {
-  LOGIN_CODE_LENGTH,
-  LOGIN_IDENTIFIER_KIND_SENT_TO_LABELS,
-  LOGIN_IDENTIFIER_KIND_SHORT_LABELS,
-} from "@/app/(pages)/login/constants/login.constants";
-import { formatLoginTimerHelper } from "@/app/(pages)/login/helpers/format-login-timer";
+import { LOGIN_CODE_LENGTH } from "@/app/(pages)/login/constants/login.constants";
 import { Button } from "@/app/ui/button/button";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { LoginCodeCells } from "./components/login-code-cells/login-code-cells";
+import { LoginCodeResend } from "./components/login-code-resend/login-code-resend";
+import { LoginCodeSentNotice } from "./components/login-code-sent-notice/login-code-sent-notice";
+import { LoginCodeStatusMessage } from "./components/login-code-status-message/login-code-status-message";
 import {
   LOGIN_CODE_STEP_BACK_LABEL,
-  LOGIN_CODE_STEP_INVALID_DESCRIPTION,
-  LOGIN_CODE_STEP_INVALID_TITLE,
-  LOGIN_CODE_STEP_RESEND_LABEL,
-  LOGIN_CODE_STEP_RESENDING_LABEL,
-  LOGIN_CODE_STEP_RESEND_WAIT_LABEL,
-  LOGIN_CODE_STEP_SENT_LABEL,
+  LOGIN_CODE_STEP_KIND_LABELS,
   LOGIN_CODE_STEP_SUBMIT_LABEL,
   LOGIN_CODE_STEP_TITLE,
   LOGIN_CODE_STEP_VALIDITY,
-  LOGIN_CODE_STEP_VERIFIED_LABEL,
   LOGIN_CODE_STEP_VERIFYING_LABEL,
 } from "./constants/login-code-step.constants";
 import type { LoginCodeStepProps } from "./types/login-code-step.types";
@@ -49,22 +42,11 @@ export const LoginCodeStep = ({
         onClick={onBack}
         className="!gap-1 self-start text-[13.5px] hover:text-accent-dark"
       >
-        <span aria-hidden className="font-symbols text-[18px] font-normal">
-          arrow_back
-        </span>
-        {LOGIN_CODE_STEP_BACK_LABEL} {LOGIN_IDENTIFIER_KIND_SHORT_LABELS[identifierKind]}
+        <MaterialIcon name="arrow_back" className="text-[18px] font-normal" />
+        {LOGIN_CODE_STEP_BACK_LABEL} {LOGIN_CODE_STEP_KIND_LABELS[identifierKind]}
       </Button>
 
-      <div className="flex items-start gap-3 rounded-xl bg-accent-soft px-4 py-3.5">
-        <span aria-hidden className="font-symbols text-[22px] text-accent">
-          mark_email_read
-        </span>
-        <p className="min-w-0 break-words text-sm leading-normal text-accent-dark">
-          <b className="font-semibold">{LOGIN_CODE_STEP_SENT_LABEL}</b>{" "}
-          {LOGIN_IDENTIFIER_KIND_SENT_TO_LABELS[identifierKind]}{" "}
-          <b className="font-semibold">{identifier}</b>
-        </p>
-      </div>
+      <LoginCodeSentNotice identifier={identifier} identifierKind={identifierKind} />
 
       <div className="flex flex-col gap-2">
         <h1 className="font-heading text-xl font-semibold tracking-[-0.02em] text-foreground lg:text-[22px]">
@@ -75,60 +57,17 @@ export const LoginCodeStep = ({
 
       <LoginCodeCells code={code} status={status} onChange={onCodeChange} />
 
-      {status === "invalid" && (
-        <div
-          role="alert"
-          className="flex items-start gap-2 text-[13.5px] leading-[1.45] text-error-dark"
-        >
-          <span aria-hidden className="font-symbols text-[18px]">
-            error
-          </span>
-          <span>
-            <b className="font-semibold">{LOGIN_CODE_STEP_INVALID_TITLE}</b>{" "}
-            {LOGIN_CODE_STEP_INVALID_DESCRIPTION} {attemptsLeft}
-          </span>
-        </div>
-      )}
-
-      {status === "verified" && (
-        <span
-          role="status"
-          className="flex items-center gap-1.5 text-[13.5px] font-medium text-accent"
-        >
-          <span aria-hidden className="font-symbols text-[18px]">
-            check_circle
-          </span>
-          {LOGIN_CODE_STEP_VERIFIED_LABEL}
-        </span>
-      )}
+      <LoginCodeStatusMessage status={status} attemptsLeft={attemptsLeft} />
 
       <Button
         type="submit"
-        size="auto"
+        size="xl"
         disabled={code.length < LOGIN_CODE_LENGTH || status !== "idle" || isVerifying}
-        className="h-[52px] rounded-xl text-[15px]"
       >
         {isVerifying ? LOGIN_CODE_STEP_VERIFYING_LABEL : LOGIN_CODE_STEP_SUBMIT_LABEL}
       </Button>
 
-      <div className="flex justify-center text-[13.5px] text-muted">
-        {secondsLeft > 0 ? (
-          <span>
-            {LOGIN_CODE_STEP_RESEND_WAIT_LABEL}{" "}
-            <b className="font-semibold text-foreground">{formatLoginTimerHelper(secondsLeft)}</b>
-          </span>
-        ) : (
-          <Button
-            variant="text"
-            size="auto"
-            onClick={onResend}
-            disabled={isResending}
-            className="text-[13.5px] hover:text-accent-dark"
-          >
-            {isResending ? LOGIN_CODE_STEP_RESENDING_LABEL : LOGIN_CODE_STEP_RESEND_LABEL}
-          </Button>
-        )}
-      </div>
+      <LoginCodeResend secondsLeft={secondsLeft} isResending={isResending} onResend={onResend} />
     </form>
   );
 };

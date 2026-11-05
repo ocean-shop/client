@@ -1,7 +1,10 @@
 import {
   DELIVERY_ENABLED_CARRIERS,
   DELIVERY_POPULAR_CITIES,
+  UKRPOSHTA_POINT_TITLE,
 } from "@/app/shared/delivery/constants/delivery.constants";
+import type { DeliveryCarrier } from "@/app/shared/delivery/types/delivery.types";
+import { ORDERS_AUTOMATIC_PAYMENT_ENABLED } from "@/app/shared/orders/constants/orders.constants";
 import type { OrderPaymentMethod } from "@/app/shared/orders/types/orders.types";
 import type {
   CheckoutCarrierOption,
@@ -23,11 +26,14 @@ export const CHECKOUT_DEFAULT_DELIVERY: CheckoutDelivery = {
   carrier: "nova",
   method: "branch",
   point: null,
+  manualPoint: null,
   street: "",
   apartment: "",
 };
 
-export const CHECKOUT_DEFAULT_PAYMENT: CheckoutPaymentMethod = "wallet";
+export const CHECKOUT_DEFAULT_PAYMENT: CheckoutPaymentMethod = ORDERS_AUTOMATIC_PAYMENT_ENABLED
+  ? "wallet"
+  : "manual";
 
 /**
  * The shop's own delivery tariffs. Real carrier quotes need the sender's city and parcel size,
@@ -64,14 +70,27 @@ export const CHECKOUT_AVAILABLE_CARRIERS = CHECKOUT_CARRIERS.filter(
   ({ id }) => DELIVERY_ENABLED_CARRIERS[id]
 );
 
+const CHECKOUT_WALLET_PAYMENT_OPTION: CheckoutPaymentOption = {
+  id: "wallet",
+  label: "Apple Pay / Google Pay",
+  note: "Швидка оплата з телефону",
+  badge: "Pay",
+  badgeType: "text",
+};
+
+const CHECKOUT_MANUAL_PAYMENT_OPTION: CheckoutPaymentOption = {
+  id: "manual",
+  label: "Оплатити вручну",
+  note: "Переказ за реквізитами, які надішлемо на email",
+  badge: "account_balance",
+  badgeType: "icon",
+};
+
+/** The default payment goes first: wallet when automatic payments are on, manual otherwise. */
 export const CHECKOUT_PAYMENTS: CheckoutPaymentOption[] = [
-  {
-    id: "wallet",
-    label: "Apple Pay / Google Pay",
-    note: "Швидка оплата з телефону",
-    badge: "Pay",
-    badgeType: "text",
-  },
+  ...(ORDERS_AUTOMATIC_PAYMENT_ENABLED
+    ? [CHECKOUT_WALLET_PAYMENT_OPTION, CHECKOUT_MANUAL_PAYMENT_OPTION]
+    : [CHECKOUT_MANUAL_PAYMENT_OPTION, CHECKOUT_WALLET_PAYMENT_OPTION]),
   {
     id: "cod",
     label: "Накладений платіж",
@@ -81,6 +100,11 @@ export const CHECKOUT_PAYMENTS: CheckoutPaymentOption[] = [
   },
 ];
 
+/** Payments offered for new orders; past orders keep their payment's label from the full list. */
+export const CHECKOUT_AVAILABLE_PAYMENTS = CHECKOUT_PAYMENTS.filter(
+  ({ id }) => ORDERS_AUTOMATIC_PAYMENT_ENABLED || id !== "wallet"
+);
+
 export const CHECKOUT_COD_PAYMENT: CheckoutPaymentMethod = "cod";
 
 /** Order of the checks matches the order of the form, so the hint points at the first gap. */
@@ -89,6 +113,7 @@ export const CHECKOUT_VALIDATION_MESSAGES = {
   email: "Вкажіть коректний email.",
   phone: "Вкажіть мобільний номер у форматі +380 XX XXX XX XX.",
   point: "Оберіть відділення або поштомат.",
+  manualPoint: "Вкажіть населений пункт і номер відділення або поштомату.",
   street: "Вкажіть вулицю та номер будинку.",
 };
 
@@ -97,12 +122,14 @@ export const CHECKOUT_EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const CHECKOUT_PHONE_PATTERN = /^(?:\+?38)?0\d{9}$/;
 export const CHECKOUT_PHONE_SEPARATORS_PATTERN = /[\s()-]/g;
 export const CHECKOUT_NAME_MIN_WORDS = 2;
+export const CHECKOUT_NAME_WORD_SEPARATOR_PATTERN = /\s+/;
 
 export const CHECKOUT_SUCCESS_PAGE_PATH = "/checkout/success";
 export const CHECKOUT_PLACED_ORDER_STORAGE_KEY = "ocean-shop:placed-order";
 
-/** The backend takes cards and cash on delivery only; wallet payments are settled as card. */
+/** Wallet payments are settled as card; manual is a bank transfer by details sent in an email. */
 export const CHECKOUT_ORDER_PAYMENT_METHODS: Record<CheckoutPaymentMethod, OrderPaymentMethod> = {
+  manual: "manual",
   wallet: "card",
   cod: "cod",
 };
@@ -110,12 +137,24 @@ export const CHECKOUT_ORDER_PAYMENT_METHODS: Record<CheckoutPaymentMethod, Order
 /** The backend wants `+380XXXXXXXXX`; the form accepts the same number with or without `+38`. */
 export const CHECKOUT_ORDER_PHONE_PREFIX = "+380";
 export const CHECKOUT_ORDER_PHONE_DIGITS = 9;
+export const CHECKOUT_ORDER_PHONE_IGNORED_PATTERN = /\D/g;
 export const CHECKOUT_ORDER_NAME_MAX_LENGTH = 100;
 export const CHECKOUT_ORDER_EMAIL_MAX_LENGTH = 255;
 export const CHECKOUT_ORDER_SHIPPING_MAX_LENGTH = 255;
 export const CHECKOUT_ORDER_SHIPPING_SEPARATOR = ": ";
 export const CHECKOUT_DELIVERY_TITLE_SEPARATOR = " · ";
 export const CHECKOUT_DELIVERY_ADDRESS_SEPARATOR = ", ";
+/**
+ * Titles for a point typed in by hand, written the way the carrier's own list names it, so a saved
+ * address finds the real point again once the list loads.
+ */
+export const CHECKOUT_MANUAL_POINT_TITLES: Record<
+  DeliveryCarrier,
+  (methodLabel: string, pointNumber: string) => string
+> = {
+  nova: (methodLabel, pointNumber) => `${methodLabel} №${pointNumber}`,
+  ukr: (_methodLabel, pointNumber) => UKRPOSHTA_POINT_TITLE(pointNumber),
+};
 /** A branch's number, e.g. "1414" in "Поштомат №1414" or the index in "Відділення 79000". */
 export const CHECKOUT_DELIVERY_POINT_NUMBER_PATTERN = /\d+/;
 export const CHECKOUT_DELIVERY_DATE_FORMATTER = new Intl.DateTimeFormat("uk-UA", {
@@ -126,4 +165,5 @@ export const CHECKOUT_DELIVERY_DATE_FORMATTER = new Intl.DateTimeFormat("uk-UA",
 /** Orders without a number of their own are shown by the start of their id. */
 export const CHECKOUT_ORDER_SHORT_ID_LENGTH = 8;
 
-export const CHECKOUT_ORDER_ERROR_TOAST_TITLE = "Не вдалося оформити замовлення";
+export const CHECKOUT_ITEM_QUANTITY_LABEL = (quantity: number) => `${quantity} шт.`;
+export const CHECKOUT_ITEM_META_SEPARATOR = " · ";

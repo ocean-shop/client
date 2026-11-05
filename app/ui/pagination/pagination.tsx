@@ -1,7 +1,16 @@
 "use client";
 
 import { Button } from "@/app/ui/button/button";
-import { PAGINATION_VISIBLE_PAGES_COUNT } from "./constants/pagination.constants";
+import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
+import {
+  PAGINATION_NAV_BUTTON_CLASS_NAME,
+  PAGINATION_NEXT_LABEL,
+  PAGINATION_PAGE_CLASS_NAME,
+  PAGINATION_PAGE_STATE_CLASS_NAMES,
+  PAGINATION_PREVIOUS_LABEL,
+} from "./constants/pagination.constants";
+import { clampPaginationPageHelper } from "./helpers/clamp-pagination-page";
+import { getPaginationPagesHelper } from "./helpers/get-pagination-pages";
 import type { PaginationProps } from "./types/pagination.types";
 
 export const Pagination = ({
@@ -12,24 +21,14 @@ export const Pagination = ({
 }: PaginationProps) => {
   if (totalPages <= 1) return null;
 
-  const activePage = Math.min(Math.max(currentPage, 1), totalPages);
+  const activePage = clampPaginationPageHelper(currentPage, totalPages);
 
   const goToPage = (page: number) => {
-    const nextPage = Math.min(Math.max(page, 1), totalPages);
+    const nextPage = clampPaginationPageHelper(page, totalPages);
     if (nextPage === activePage) return;
 
     onPageChange(nextPage);
   };
-
-  const halfWindow = Math.floor(PAGINATION_VISIBLE_PAGES_COUNT / 2);
-  const windowStart = Math.min(
-    Math.max(activePage - halfWindow, 1),
-    Math.max(totalPages - PAGINATION_VISIBLE_PAGES_COUNT + 1, 1)
-  );
-  const pages = Array.from(
-    { length: Math.min(PAGINATION_VISIBLE_PAGES_COUNT, totalPages) },
-    (_, index) => windowStart + index
-  );
 
   return (
     <div
@@ -38,39 +37,42 @@ export const Pagination = ({
       <Button
         variant="unstyled"
         size="icon"
+        aria-label={PAGINATION_PREVIOUS_LABEL}
         onClick={() => goToPage(activePage - 1)}
         disabled={activePage === 1}
-        className="border border-footer-border bg-background text-muted-light"
+        className={`${PAGINATION_NAV_BUTTON_CLASS_NAME} text-muted-light`}
       >
-        <span className="font-symbols text-xl">chevron_left</span>
+        <MaterialIcon name="chevron_left" className="text-xl" />
       </Button>
 
-      {pages.map((page) => {
+      {getPaginationPagesHelper(activePage, totalPages).map((page) => {
         const isActive = page === activePage;
 
         return (
-          <div
+          <Button
             key={page}
+            variant="unstyled"
+            size="auto"
+            aria-current={isActive ? "page" : undefined}
             onClick={() => goToPage(page)}
-            className={`flex h-10 min-w-10 cursor-pointer items-center justify-center rounded-[10px] border px-3 text-sm ${
-              isActive
-                ? "border-accent bg-accent font-semibold text-white"
-                : "border-footer-border bg-background font-medium text-foreground"
+            className={`${PAGINATION_PAGE_CLASS_NAME} ${
+              PAGINATION_PAGE_STATE_CLASS_NAMES[isActive ? "active" : "default"]
             }`}
           >
             {page}
-          </div>
+          </Button>
         );
       })}
 
       <Button
         variant="unstyled"
         size="icon"
+        aria-label={PAGINATION_NEXT_LABEL}
         onClick={() => goToPage(activePage + 1)}
         disabled={activePage === totalPages}
-        className="border border-footer-border bg-background text-foreground"
+        className={`${PAGINATION_NAV_BUTTON_CLASS_NAME} text-foreground`}
       >
-        <span className="font-symbols text-xl">chevron_right</span>
+        <MaterialIcon name="chevron_right" className="text-xl" />
       </Button>
     </div>
   );

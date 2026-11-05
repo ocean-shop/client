@@ -5,3 +5,4 @@ export const NOT_FOUND_TEXT =
   "Можливо, товар більше не продається або посилання застаріло. Почніть з головної — там усі категорії.";
 export const NOT_FOUND_LINK_LABEL = "На головну";
 export const NOT_FOUND_LINK_HREF = "/";
+export const NOT_FOUND_LINK_ICON = "arrow_forward";

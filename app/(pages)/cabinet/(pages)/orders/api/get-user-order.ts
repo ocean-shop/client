@@ -1,6 +1,7 @@
-import { ApiError } from "@/app/core/api/api-fetch";
+import { readApiResponse } from "@/app/core/api/helpers/read-api-response";
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
-import { getUserOrderApiUrl, ORDER_NOT_FOUND_STATUSES } from "../constants/orders.constants";
+import { ORDER_NOT_FOUND_STATUSES } from "../constants/orders.constants";
+import { buildUserOrderApiUrlHelper } from "../helpers/build-user-order-api-url";
 import type { UserOrder } from "../types/orders.types";
 
 /**
@@ -8,10 +9,9 @@ import type { UserOrder } from "../types/orders.types";
  * Server-only, since it needs the access token cookie.
  */
 export const getUserOrder = async (orderId: string): Promise<UserOrder | null> => {
-  const response = await authFetch(getUserOrderApiUrl(orderId));
+  const response = await authFetch(buildUserOrderApiUrlHelper(orderId));
 
   if (ORDER_NOT_FOUND_STATUSES.includes(response.status)) return null;
-  if (!response.ok) throw new ApiError(response.status);
 
-  return response.json();
+  return readApiResponse<UserOrder>(response);
 };
