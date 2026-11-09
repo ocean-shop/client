@@ -20,13 +20,30 @@ export const SEO_DESCRIPTION_MAX_LENGTH = 160;
 
 export const SEO_DESCRIPTION_ELLIPSIS = "…";
 
+/** Headline of the link preview when the site itself (not a product or page) is shared. */
+export const SEO_SHARE_TITLE = "OCEAN MARKETPLACE";
+
+/** Served by `app/og-image/route.tsx`: the logo tile messengers show beside the shared link. */
+export const SEO_OG_IMAGE_PATH = "/og-image";
+
+/** Square, so messengers show it as a logo thumbnail rather than a wide banner. */
+export const SEO_OG_IMAGE_SIZE = { width: 512, height: 512 };
+
+export const SEO_OG_IMAGE = {
+  url: SEO_OG_IMAGE_PATH,
+  ...SEO_OG_IMAGE_SIZE,
+  type: "image/png",
+  alt: SITE_NAME,
+};
+
 /** The site-wide card; a page setting `openGraph` replaces it whole, so the home page spreads it. */
 export const SEO_DEFAULT_OPEN_GRAPH = {
   type: "website",
   siteName: SITE_NAME,
   locale: SEO_LOCALE,
-  title: SITE_NAME,
+  title: SEO_SHARE_TITLE,
   description: SITE_DESCRIPTION,
+  images: [SEO_OG_IMAGE],
 } satisfies Metadata["openGraph"];
 
 /** For pages behind a login or tied to one visitor: kept out of the index, links still followed. */

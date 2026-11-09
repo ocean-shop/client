@@ -9,6 +9,8 @@ import { ToastProvider } from "./core/providers/toast-provider/toast-provider";
 import { getCatalogCategoryTreeHelper } from "./shared/catalog-categories/helpers/get-catalog-category-tree";
 import {
   SEO_DEFAULT_OPEN_GRAPH,
+  SEO_OG_IMAGE_PATH,
+  SEO_SHARE_TITLE,
   SEO_TITLE_TEMPLATE,
   SITE_DESCRIPTION,
   SITE_NAME,
@@ -47,7 +49,12 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   openGraph: SEO_DEFAULT_OPEN_GRAPH,
-  twitter: { card: "summary", title: SITE_NAME, description: SITE_DESCRIPTION },
+  twitter: {
+    card: "summary",
+    title: SEO_SHARE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [SEO_OG_IMAGE_PATH],
+  },
 };
 
 const RootLayout = async ({ children }: LayoutProps<"/">) => {
