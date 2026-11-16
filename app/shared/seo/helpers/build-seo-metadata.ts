@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {
   SEO_DEFAULT_OPEN_GRAPH,
   SEO_NO_INDEX_METADATA,
+  SEO_OG_IMAGE_PATH,
   SEO_TITLE_SUFFIX,
 } from "../constants/seo.constants";
 import type { SeoMetadataInput } from "../types/seo.types";
@@ -25,6 +26,8 @@ export const buildSeoMetadataHelper = ({
   const resolvedDescription =
     metaDescription || (description ? truncateSeoDescriptionHelper(description) : undefined);
   const canonical = canonicalUrl || path;
+  // Pages without a picture of their own (info pages, empty products) share the logo tile.
+  const hasOwnImages = Boolean(images?.length);
 
   return {
     // Absolute, so the root layout's title template does not append the site name a second time.
@@ -37,13 +40,13 @@ export const buildSeoMetadataHelper = ({
       title: resolvedTitle,
       description: resolvedDescription,
       url: canonical,
-      images,
+      images: hasOwnImages ? images : SEO_DEFAULT_OPEN_GRAPH.images,
     },
     twitter: {
-      card: images?.length ? "summary_large_image" : "summary",
+      card: hasOwnImages ? "summary_large_image" : "summary",
       title: resolvedTitle,
       description: resolvedDescription,
-      images: images?.map((image) => image.url),
+      images: hasOwnImages ? images?.map((image) => image.url) : [SEO_OG_IMAGE_PATH],
     },
   };
 };
