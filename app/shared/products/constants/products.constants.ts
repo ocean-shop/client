@@ -31,6 +31,10 @@ export const PRODUCT_BY_ID_API_URL = (productId: string) =>
 export const PRODUCT_BY_SLUG_API_URL = (slug: string) =>
   `${process.env.API_BASE_URL}/catalog/products-client/by-slug/${encodeURIComponent(slug)}?${withShopId()}`;
 
+/** Active related products of an active product, in the order the shop arranged them. */
+export const RELATED_PRODUCTS_API_URL = (productId: string) =>
+  `${process.env.API_BASE_URL}/catalog/products-client/${encodeURIComponent(productId)}/related?${withShopId()}`;
+
 export const PRODUCT_SITEMAP_API_URL = `${process.env.API_BASE_URL}/catalog/products-client/sitemap?${withShopId()}`;
 
 /** Links from before slugs carried the product id; the product page redirects those. */
