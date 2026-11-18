@@ -4,11 +4,12 @@ import {
   FOOTER_BRAND_DESCRIPTION,
   FOOTER_COPYRIGHT,
   FOOTER_LINK_COLUMNS,
-  FOOTER_PAYMENT_METHODS,
+  FOOTER_PAYMENT_METHODS_LABELS,
   FOOTER_SUPPORT,
 } from "./constants/footer.constants";
+import type { FooterProps } from "./types/footer.types";
 
-export const Footer = () => {
+export const Footer = ({ features }: FooterProps) => {
   return (
     <footer className="hidden lg:block border-t border-footer-border bg-footer">
       <div className="mx-auto grid max-w-page grid-cols-[1.6fr_1fr_1fr_1fr] gap-10 px-10 py-11">
@@ -45,7 +46,11 @@ export const Footer = () => {
       <div className="border-t border-footer-border">
         <div className="mx-auto flex max-w-page items-center justify-between px-10 py-4 text-[12.5px] text-muted">
           <span>{FOOTER_COPYRIGHT}</span>
-          <span>{FOOTER_PAYMENT_METHODS.join(" · ")}</span>
+          <span>
+            {features.isAutomaticPaymentEnabled
+              ? FOOTER_PAYMENT_METHODS_LABELS.withWallets
+              : FOOTER_PAYMENT_METHODS_LABELS.cardsOnly}
+          </span>
         </div>
       </div>
     </footer>

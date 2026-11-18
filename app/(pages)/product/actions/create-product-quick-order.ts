@@ -2,8 +2,10 @@
 
 import { API_JSON_HEADERS, API_SHOP_ID } from "@/app/core/api/constants/api.constants";
 import { readApiActionFailure } from "@/app/core/api/helpers/read-api-action-failure";
+import { getShopSettings } from "@/app/shared/shop-settings/api/get-shop-settings";
 import { PRODUCT_QUICK_ORDER_API_URL } from "../constants/product-quick-order-api.constants";
 import {
+  PRODUCT_QUICK_ORDER_DISABLED_FAILURE,
   PRODUCT_QUICK_ORDER_INVALID_FAILURE,
   PRODUCT_QUICK_ORDER_PRODUCT_ID_PATTERN,
   PRODUCT_QUICK_ORDER_UNAVAILABLE_FAILURE,
@@ -25,6 +27,10 @@ export const createProductQuickOrderAction = async (
   input: ProductQuickOrderInput
 ): Promise<ProductQuickOrderResult> => {
   if (!input || typeof input !== "object") return PRODUCT_QUICK_ORDER_INVALID_FAILURE;
+
+  const { features } = await getShopSettings();
+
+  if (!features.isOneClickPurchaseEnabled) return PRODUCT_QUICK_ORDER_DISABLED_FAILURE;
 
   const normalized = buildProductQuickOrderInputHelper(input);
 

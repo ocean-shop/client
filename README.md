@@ -65,20 +65,33 @@ Open [http://localhost:3002](http://localhost:3002).
 
 Copy `.env.example` to `.env`. Never commit `.env`.
 
-| Variable                                 | Scope  | Description                                                  |
-| ---------------------------------------- | ------ | ------------------------------------------------------------ |
-| `API_BASE_URL`                           | Server | Base URL of the Ocean Shop backend API                       |
-| `SHOP_ID`                                | Server | ID of the shop every catalog, auth and order request uses    |
-| `SITE_URL`                               | Server | Public origin of the storefront, for canonical and OG URLs   |
-| `NOVA_POSHTA_API_KEY`                    | Server | Nova Poshta API key for city and warehouse lookup            |
-| `UKRPOSHTA_API_TOKEN`                    | Server | Ukrposhta API token for post office lookup                   |
-| `NEXT_PUBLIC_UKRPOSHTA_ENABLED`          | Public | `false` hides Ukrposhta in checkout and the address book     |
-| `NEXT_PUBLIC_PHONE_LOGIN_ENABLED`        | Public | `false` hides phone login (email only)                       |
-| `NEXT_PUBLIC_AUTOMATIC_PAYMENT_ENABLED`  | Public | `false` hides Apple Pay / Google Pay (cash on delivery only) |
-| `NEXT_PUBLIC_ONE_CLICK_PURCHASE_ENABLED` | Public | `false` hides the "Купити в 1 клік" button on product pages  |
+| Variable              | Scope  | Description                                                |
+| --------------------- | ------ | ---------------------------------------------------------- |
+| `API_BASE_URL`        | Server | Base URL of the Ocean Shop backend API                     |
+| `SHOP_ID`             | Server | ID of the shop every catalog, auth and order request uses  |
+| `SITE_URL`            | Server | Public origin of the storefront, for canonical and OG URLs |
+| `NOVA_POSHTA_API_KEY` | Server | Nova Poshta API key for city and warehouse lookup          |
+| `UKRPOSHTA_API_TOKEN` | Server | Ukrposhta API token for post office lookup                 |
 
 Server variables are never exposed to the browser; client code reaches the API through server
-actions. `NEXT_PUBLIC_*` flags are enabled unless set to `false`.
+actions.
+
+## Shop Settings
+
+Feature toggles and the color scheme are managed per shop in the admin and read from
+`GET /settings/shops-client/:shopId` (`app/shared/shop-settings`):
+
+| Setting               | Effect when off                                                   |
+| --------------------- | ----------------------------------------------------------------- |
+| `useUkrposhta`        | Hides Ukrposhta in checkout, the address book and delivery lookup |
+| `usePhoneLogin`       | Email-only login                                                  |
+| `useAutomaticPayment` | Hides Apple Pay / Google Pay                                      |
+| `useOneClickPurchase` | Hides the "Купити в 1 клік" button on product pages               |
+
+The root layout reads the settings through the Next data cache (revalidated every 5 minutes), so
+pages stay static and an admin change shows up within a few minutes. Colors are written as CSS
+variables onto `<html>` in the server HTML, so there is no flash of the default palette. If the
+request fails, every optional feature is off and the default palette is used.
 
 `npm run build` needs a reachable `API_BASE_URL` and a valid `SHOP_ID`, because pages are
 prerendered with live data.

@@ -1,12 +1,15 @@
-import { CHECKOUT_AVAILABLE_CARRIERS } from "@/app/(pages)/checkout/constants/checkout.constants";
+import { getCheckoutAvailableCarriersHelper } from "@/app/(pages)/checkout/helpers/get-checkout-available-carriers";
+import { useShopFeatures } from "@/app/shared/shop-settings/hooks/use-shop-features";
 import { RadioCard } from "@/app/ui/radio-card/radio-card";
 import { DELIVERY_CARRIERS_LABEL } from "./constants/delivery-carriers.constants";
 import type { DeliveryCarriersProps } from "./types/delivery-carriers.types";
 
 export const DeliveryCarriers = ({ selectedCarrier, onChange }: DeliveryCarriersProps) => {
+  const carriers = getCheckoutAvailableCarriersHelper(useShopFeatures());
+
   return (
     <div role="radiogroup" aria-label={DELIVERY_CARRIERS_LABEL} className="grid grid-cols-2 gap-3">
-      {CHECKOUT_AVAILABLE_CARRIERS.map((option) => (
+      {carriers.map((option) => (
         <RadioCard
           key={option.id}
           isSelected={option.id === selectedCarrier}

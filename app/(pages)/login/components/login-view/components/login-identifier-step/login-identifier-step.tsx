@@ -1,16 +1,18 @@
 import { getLoginIdentifierKindHelper } from "@/app/(pages)/login/helpers/get-login-identifier-kind";
+import { getLoginIdentifierModeHelper } from "@/app/(pages)/login/helpers/get-login-identifier-mode";
+import { useShopFeatures } from "@/app/shared/shop-settings/hooks/use-shop-features";
 import { Button } from "@/app/ui/button/button";
 import { FormField } from "@/app/ui/form-field/form-field";
 import { Input } from "@/app/ui/input/input";
 import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import {
-  LOGIN_IDENTIFIER_STEP_DEFAULT_ICON,
-  LOGIN_IDENTIFIER_STEP_DESCRIPTION,
+  LOGIN_IDENTIFIER_STEP_DEFAULT_ICONS,
+  LOGIN_IDENTIFIER_STEP_DESCRIPTIONS,
   LOGIN_IDENTIFIER_STEP_FIELD_CLASS_NAME,
   LOGIN_IDENTIFIER_STEP_FIELD_STATE_CLASS_NAMES,
   LOGIN_IDENTIFIER_STEP_ICONS,
-  LOGIN_IDENTIFIER_STEP_LABEL,
-  LOGIN_IDENTIFIER_STEP_PLACEHOLDER,
+  LOGIN_IDENTIFIER_STEP_LABELS,
+  LOGIN_IDENTIFIER_STEP_PLACEHOLDERS,
   LOGIN_IDENTIFIER_STEP_SUBMIT_LABEL,
   LOGIN_IDENTIFIER_STEP_SUBMITTING_LABEL,
   LOGIN_IDENTIFIER_STEP_TERMS,
@@ -25,8 +27,9 @@ export const LoginIdentifierStep = ({
   onChange,
   onSubmit,
 }: LoginIdentifierStepProps) => {
-  const kind = getLoginIdentifierKindHelper(value);
-  const icon = kind ? LOGIN_IDENTIFIER_STEP_ICONS[kind] : LOGIN_IDENTIFIER_STEP_DEFAULT_ICON;
+  const mode = getLoginIdentifierModeHelper(useShopFeatures());
+  const kind = getLoginIdentifierKindHelper(value, mode);
+  const icon = kind ? LOGIN_IDENTIFIER_STEP_ICONS[kind] : LOGIN_IDENTIFIER_STEP_DEFAULT_ICONS[mode];
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,11 +43,11 @@ export const LoginIdentifierStep = ({
           {LOGIN_IDENTIFIER_STEP_TITLE}
         </h1>
         <p className="text-[14.5px] leading-[1.55] text-pretty text-muted">
-          {LOGIN_IDENTIFIER_STEP_DESCRIPTION}
+          {LOGIN_IDENTIFIER_STEP_DESCRIPTIONS[mode]}
         </p>
       </div>
 
-      <FormField label={LOGIN_IDENTIFIER_STEP_LABEL} error={error}>
+      <FormField label={LOGIN_IDENTIFIER_STEP_LABELS[mode]} error={error}>
         <div
           className={`${LOGIN_IDENTIFIER_STEP_FIELD_CLASS_NAME} ${
             LOGIN_IDENTIFIER_STEP_FIELD_STATE_CLASS_NAMES[error ? "error" : "default"]
@@ -60,7 +63,7 @@ export const LoginIdentifierStep = ({
             autoFocus
             value={value}
             onChange={(event) => onChange(event.target.value)}
-            placeholder={LOGIN_IDENTIFIER_STEP_PLACEHOLDER}
+            placeholder={LOGIN_IDENTIFIER_STEP_PLACEHOLDERS[mode]}
             aria-invalid={Boolean(error)}
             className="h-full flex-1 text-[15px]"
           />

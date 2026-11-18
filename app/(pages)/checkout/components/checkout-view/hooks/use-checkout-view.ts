@@ -8,13 +8,14 @@ import { localStorageService } from "@/app/core/local-storage/local-storage.serv
 import { cartStore } from "@/app/shared/cart/cart-store";
 import { calculateCartTotalsHelper } from "@/app/shared/cart/helpers/calculate-cart-totals";
 import { useCartItems } from "@/app/shared/cart/hooks/use-cart-items";
+import { useShopFeatures } from "@/app/shared/shop-settings/hooks/use-shop-features";
 import {
-  CHECKOUT_DEFAULT_PAYMENT,
   CHECKOUT_PLACED_ORDER_STORAGE_KEY,
   CHECKOUT_SUCCESS_PAGE_PATH,
 } from "../../../constants/checkout.constants";
 import { buildCheckoutPlacedOrderHelper } from "../../../helpers/build-checkout-placed-order";
 import { calculateCheckoutTotalsHelper } from "../../../helpers/calculate-checkout-totals";
+import { getCheckoutAvailablePaymentsHelper } from "../../../helpers/get-checkout-available-payments";
 import { validateCheckoutFormHelper } from "../../../helpers/validate-checkout-form";
 import type {
   CheckoutContact,
@@ -31,9 +32,10 @@ export const useCheckoutView = (
   const router = useRouter();
   const isHydrated = useIsHydrated();
   const items = useCartItems();
+  const features = useShopFeatures();
   const [contact, setContact] = useState(initialContact);
   const [delivery, setDelivery] = useState(initialDelivery);
-  const [payment, setPayment] = useState(CHECKOUT_DEFAULT_PAYMENT);
+  const [payment, setPayment] = useState(() => getCheckoutAvailablePaymentsHelper(features)[0].id);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isPlacing, setIsPlacing] = useState(false);
   const [isPlaced, setIsPlaced] = useState(false);

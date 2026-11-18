@@ -1,4 +1,5 @@
-import { CHECKOUT_AVAILABLE_PAYMENTS } from "@/app/(pages)/checkout/constants/checkout.constants";
+import { getCheckoutAvailablePaymentsHelper } from "@/app/(pages)/checkout/helpers/get-checkout-available-payments";
+import { useShopFeatures } from "@/app/shared/shop-settings/hooks/use-shop-features";
 import { MaterialIcon } from "@/app/ui/material-icon/material-icon";
 import { RadioCard } from "@/app/ui/radio-card/radio-card";
 import { CheckoutSection } from "../checkout-section/checkout-section";
@@ -9,10 +10,12 @@ import {
 import type { CheckoutPaymentProps } from "./types/checkout-payment.types";
 
 export const CheckoutPayment = ({ payment, onChange }: CheckoutPaymentProps) => {
+  const payments = getCheckoutAvailablePaymentsHelper(useShopFeatures());
+
   return (
     <CheckoutSection step={CHECKOUT_PAYMENT_STEP} title={CHECKOUT_PAYMENT_TITLE}>
       <div role="radiogroup" aria-label={CHECKOUT_PAYMENT_TITLE} className="flex flex-col gap-2">
-        {CHECKOUT_AVAILABLE_PAYMENTS.map((option) => (
+        {payments.map((option) => (
           <RadioCard
             key={option.id}
             isSelected={option.id === payment}

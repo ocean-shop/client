@@ -1,10 +1,8 @@
 import {
-  DELIVERY_ENABLED_CARRIERS,
   DELIVERY_POPULAR_CITIES,
   UKRPOSHTA_POINT_TITLE,
 } from "@/app/shared/delivery/constants/delivery.constants";
 import type { DeliveryCarrier } from "@/app/shared/delivery/types/delivery.types";
-import { ORDERS_AUTOMATIC_PAYMENT_ENABLED } from "@/app/shared/orders/constants/orders.constants";
 import type { OrderPaymentMethod } from "@/app/shared/orders/types/orders.types";
 import type {
   CheckoutCarrierOption,
@@ -30,10 +28,6 @@ export const CHECKOUT_DEFAULT_DELIVERY: CheckoutDelivery = {
   street: "",
   apartment: "",
 };
-
-export const CHECKOUT_DEFAULT_PAYMENT: CheckoutPaymentMethod = ORDERS_AUTOMATIC_PAYMENT_ENABLED
-  ? "wallet"
-  : "manual";
 
 /**
  * The shop's own delivery tariffs. Real carrier quotes need the sender's city and parcel size,
@@ -65,32 +59,25 @@ export const CHECKOUT_CARRIERS: CheckoutCarrierOption[] = [
   },
 ];
 
-/** Carriers offered for new orders; past orders keep their carrier's label from the full list. */
-export const CHECKOUT_AVAILABLE_CARRIERS = CHECKOUT_CARRIERS.filter(
-  ({ id }) => DELIVERY_ENABLED_CARRIERS[id]
-);
-
-const CHECKOUT_WALLET_PAYMENT_OPTION: CheckoutPaymentOption = {
-  id: "wallet",
-  label: "Apple Pay / Google Pay",
-  note: "Швидка оплата з телефону",
-  badge: "Pay",
-  badgeType: "text",
-};
-
-const CHECKOUT_MANUAL_PAYMENT_OPTION: CheckoutPaymentOption = {
-  id: "manual",
-  label: "Оплатити вручну",
-  note: "Переказ за реквізитами, які надішлемо на email",
-  badge: "account_balance",
-  badgeType: "icon",
-};
-
-/** The default payment goes first: wallet when automatic payments are on, manual otherwise. */
+/**
+ * Every payment, for labelling past orders. The first one still offered is the default, so the
+ * wallet leads while automatic payments are on and manual transfer takes over when they are off.
+ */
 export const CHECKOUT_PAYMENTS: CheckoutPaymentOption[] = [
-  ...(ORDERS_AUTOMATIC_PAYMENT_ENABLED
-    ? [CHECKOUT_WALLET_PAYMENT_OPTION, CHECKOUT_MANUAL_PAYMENT_OPTION]
-    : [CHECKOUT_MANUAL_PAYMENT_OPTION, CHECKOUT_WALLET_PAYMENT_OPTION]),
+  {
+    id: "wallet",
+    label: "Apple Pay / Google Pay",
+    note: "Швидка оплата з телефону",
+    badge: "Pay",
+    badgeType: "text",
+  },
+  {
+    id: "manual",
+    label: "Оплатити вручну",
+    note: "Переказ за реквізитами, які надішлемо на email",
+    badge: "account_balance",
+    badgeType: "icon",
+  },
   {
     id: "cod",
     label: "Накладений платіж",
@@ -100,10 +87,8 @@ export const CHECKOUT_PAYMENTS: CheckoutPaymentOption[] = [
   },
 ];
 
-/** Payments offered for new orders; past orders keep their payment's label from the full list. */
-export const CHECKOUT_AVAILABLE_PAYMENTS = CHECKOUT_PAYMENTS.filter(
-  ({ id }) => ORDERS_AUTOMATIC_PAYMENT_ENABLED || id !== "wallet"
-);
+/** Paid through the automatic payment provider, so offered only while the shop has it on. */
+export const CHECKOUT_WALLET_PAYMENT: CheckoutPaymentMethod = "wallet";
 
 export const CHECKOUT_COD_PAYMENT: CheckoutPaymentMethod = "cod";
 

@@ -108,7 +108,16 @@ feature-or-component/
 - Fonts are self-hosted subsets loaded with `next/font/local` in `app/layout.tsx`; icons are
   Material Symbols ligatures rendered by `app/ui/material-icon`.
 
-## Feature Flags
+## Shop Settings (Feature Flags And Theme)
 
-Public toggles are `NEXT_PUBLIC_*_ENABLED` env vars read as `process.env.X !== "false"` (on by
-default) inside a `constants/` file, and documented in `.env.example`.
+- Feature toggles and the color scheme are per-shop settings from the API, not env vars.
+  `getShopSettings()` (`app/shared/shop-settings/api`) reads them through the Next data cache and
+  React `cache`, so it is cheap to call from any Server Component, page or server action.
+- The root layout writes the shop's colors as CSS variables onto `<html>` (only tokens that differ
+  from `globals.css`; keep `SHOP_SETTINGS_DEFAULT_COLOR_SCHEME` in sync with it) and passes the
+  flags to `ShopFeaturesProvider`.
+- Client components read flags with `useShopFeatures()`; server code uses `getShopSettings()`.
+  Never derive module-level constants from a flag: pass `ShopFeatures` into a helper instead.
+- The backend does not enforce the flags, so server actions re-check them
+  (`createOrderAction`, `createProductQuickOrderAction`, `requestClientOtpAction`,
+  `getDeliveryPointsAction`).

@@ -11,7 +11,7 @@
   server actions (`"use server"`), `proxy.ts`, route handlers. Never import them into a
   `"use client"` module.
 - Only non-sensitive values may use the `NEXT_PUBLIC_` prefix — it inlines them into the browser
-  bundle. Today these are only feature flags (`NEXT_PUBLIC_*_ENABLED`).
+  bundle. Today there are none; feature flags come from the API's shop settings.
 - When adding a new env var: add it to `.env.example` with a placeholder (not a real secret) and a
   comment, and tell the user if CI (`.github/workflows/ci.yml`) needs it as a repository variable.
 - `.env.example` currently contains a real-looking `NOVA_POSHTA_API_KEY` value; don't copy it

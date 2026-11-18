@@ -22,6 +22,13 @@ export const PRODUCT_QUICK_ORDER_INVALID_FAILURE: ApiActionMessageFailure = {
   message: "Перевірте ім’я та номер телефону.",
 };
 
+/** Returned by the action when the shop has switched "buy in one click" off. */
+export const PRODUCT_QUICK_ORDER_DISABLED_FAILURE: ApiActionMessageFailure = {
+  ok: false,
+  status: 403,
+  message: "Купівля в 1 клік зараз недоступна. Додайте товар у кошик.",
+};
+
 /** Returned by the action when the backend cannot be reached at all. */
 export const PRODUCT_QUICK_ORDER_UNAVAILABLE_FAILURE: ApiActionMessageFailure = {
   ok: false,

@@ -1,5 +1,6 @@
 "use server";
 
+import { getShopSettings } from "@/app/shared/shop-settings/api/get-shop-settings";
 import { getNovaPoshtaWarehouses } from "../api/get-nova-poshta-warehouses";
 import { getUkrposhtaPostOffices } from "../api/get-ukrposhta-post-offices";
 import {
@@ -22,7 +23,11 @@ export const getDeliveryPointsAction = async ({
 }: DeliveryPointsRequest): Promise<DeliveryPointsResult> => {
   const term = searchTerm.trim().slice(0, DELIVERY_SEARCH_TERM_MAX_LENGTH);
 
-  if (!isDeliveryCarrierEnabledHelper(carrier)) return { ok: true, points: DELIVERY_EMPTY_POINTS };
+  const { features } = await getShopSettings();
+
+  if (!isDeliveryCarrierEnabledHelper(carrier, features)) {
+    return { ok: true, points: DELIVERY_EMPTY_POINTS };
+  }
 
   try {
     const points =

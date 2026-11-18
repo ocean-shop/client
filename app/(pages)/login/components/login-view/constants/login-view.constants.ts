@@ -1,11 +1,12 @@
-import { LOGIN_PHONE_ENABLED } from "../../../constants/login.constants";
+import type { LoginIdentifierMode } from "../../../types/login.types";
 
 export const LOGIN_VIEW_CARD_CLASS_NAME =
   "flex w-full flex-col gap-5 rounded-[20px] bg-background px-5 py-6 lg:max-w-[440px] lg:gap-6 lg:p-9 lg:shadow-[0_20px_50px_-36px_color-mix(in_srgb,var(--color-foreground)_35%,transparent)]";
 
-export const LOGIN_IDENTIFIER_ERROR = LOGIN_PHONE_ENABLED
-  ? "Вкажіть коректний email або номер у форматі +380 XX XXX XX XX."
-  : "Вкажіть коректний email.";
+export const LOGIN_IDENTIFIER_ERRORS: Record<LoginIdentifierMode, string> = {
+  emailOrPhone: "Вкажіть коректний email або номер у форматі +380 XX XXX XX XX.",
+  email: "Вкажіть коректний email.",
+};
 
 /** Mirrors the backend, which blocks the code after five wrong attempts. */
 export const LOGIN_CODE_MAX_ATTEMPTS = 5;
