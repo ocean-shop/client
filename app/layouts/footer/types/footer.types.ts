@@ -1,3 +1,9 @@
+import type { ShopFeatures } from "@/app/shared/shop-settings/types/shop-settings.types";
+
+export type FooterProps = {
+  features: ShopFeatures;
+};
+
 export type FooterLink = {
   label: string;
   href: string;

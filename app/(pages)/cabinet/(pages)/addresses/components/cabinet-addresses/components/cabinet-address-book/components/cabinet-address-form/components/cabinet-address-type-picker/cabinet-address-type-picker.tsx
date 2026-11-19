@@ -1,7 +1,9 @@
+import { isDeliveryCarrierEnabledHelper } from "@/app/shared/delivery/helpers/is-delivery-carrier-enabled";
+import { useShopFeatures } from "@/app/shared/shop-settings/hooks/use-shop-features";
 import { CabinetAddressTypeOption } from "./components/cabinet-address-type-option/cabinet-address-type-option";
 import {
-  CABINET_ADDRESS_TYPE_PICKER_AVAILABLE_TYPES,
   CABINET_ADDRESS_TYPE_PICKER_LABEL,
+  CABINET_ADDRESS_TYPE_PICKER_TYPES,
 } from "./constants/cabinet-address-type-picker.constants";
 import type { CabinetAddressTypePickerProps } from "./types/cabinet-address-type-picker.types";
 
@@ -12,6 +14,11 @@ export const CabinetAddressTypePicker = ({
   onChange,
   disabled,
 }: CabinetAddressTypePickerProps) => {
+  const features = useShopFeatures();
+  const types = CABINET_ADDRESS_TYPE_PICKER_TYPES.filter((option) =>
+    isDeliveryCarrierEnabledHelper(option.carrier, features)
+  );
+
   return (
     <div className="flex flex-col gap-2">
       <span className="text-[13px] font-medium text-muted">
@@ -20,13 +27,9 @@ export const CabinetAddressTypePicker = ({
       <div
         role="radiogroup"
         aria-label={CABINET_ADDRESS_TYPE_PICKER_LABEL}
-        className={`grid grid-cols-2 gap-2 ${
-          CABINET_ADDRESS_TYPE_PICKER_AVAILABLE_TYPES.length % 2
-            ? "lg:grid-cols-3"
-            : "lg:grid-cols-4"
-        }`}
+        className={`grid grid-cols-2 gap-2 ${types.length % 2 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}
       >
-        {CABINET_ADDRESS_TYPE_PICKER_AVAILABLE_TYPES.map((option) => (
+        {types.map((option) => (
           <CabinetAddressTypeOption
             key={`${option.carrier}-${option.method}`}
             option={option}

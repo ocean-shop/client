@@ -1,8 +1,9 @@
+import type { CreateOrderResult, OrderPaymentMethod } from "../types/orders.types";
+
 export const ORDERS_CLIENT_API_URL = `${process.env.API_BASE_URL}/orders-client`;
 
-/**
- * Whether Apple Pay / Google Pay are offered. Public, so client forms see the same value as the
- * server; stays on unless the flag is explicitly "false".
- */
-export const ORDERS_AUTOMATIC_PAYMENT_ENABLED =
-  process.env.NEXT_PUBLIC_AUTOMATIC_PAYMENT_ENABLED !== "false";
+/** Apple Pay / Google Pay settle as card, which is open only while automatic payments are on. */
+export const ORDERS_AUTOMATIC_PAYMENT_METHOD: OrderPaymentMethod = "card";
+
+/** A malformed order, or one asking for a payment or carrier the shop has switched off. */
+export const ORDERS_INVALID_INPUT_FAILURE: CreateOrderResult = { ok: false, status: 400 };

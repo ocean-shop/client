@@ -3,10 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { favoritesStore } from "@/app/shared/favorites/favorites-store";
+import { useShopFeatures } from "@/app/shared/shop-settings/hooks/use-shop-features";
 import { getLoginIdentifierKindHelper } from "../../../helpers/get-login-identifier-kind";
+import { getLoginIdentifierModeHelper } from "../../../helpers/get-login-identifier-mode";
 import { normalizeLoginIdentifierHelper } from "../../../helpers/normalize-login-identifier";
 import type { LoginIdentifierKind, LoginStep } from "../../../types/login.types";
-import { LOGIN_IDENTIFIER_ERROR } from "../constants/login-view.constants";
+import { LOGIN_IDENTIFIER_ERRORS } from "../constants/login-view.constants";
 import { requestLoginOtpHelper } from "../helpers/request-login-otp";
 import { useLoginCode } from "./use-login-code";
 import { useLoginResendCountdown } from "./use-login-resend-countdown";
@@ -14,6 +16,7 @@ import { useLoginResendCountdown } from "./use-login-resend-countdown";
 /** Walks the visitor from the email or phone to the one-time code and on to `redirectTo`. */
 export const useLoginView = (redirectTo: string) => {
   const router = useRouter();
+  const identifierMode = getLoginIdentifierModeHelper(useShopFeatures());
   const [step, setStep] = useState<LoginStep>("identifier");
   const [identifier, setIdentifier] = useState("");
   const [identifierKind, setIdentifierKind] = useState<LoginIdentifierKind>("email");
@@ -49,10 +52,10 @@ export const useLoginView = (redirectTo: string) => {
   const handleIdentifierSubmit = async () => {
     if (isRequesting) return;
 
-    const kind = getLoginIdentifierKindHelper(identifier);
+    const kind = getLoginIdentifierKindHelper(identifier, identifierMode);
 
     if (!kind) {
-      setIdentifierError(LOGIN_IDENTIFIER_ERROR);
+      setIdentifierError(LOGIN_IDENTIFIER_ERRORS[identifierMode]);
       return;
     }
 

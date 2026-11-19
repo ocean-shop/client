@@ -59,10 +59,6 @@ export const SEO_ROBOTS_DISALLOWED_PATHS = ["/cabinet", "/checkout", "/login", "
 
 export const SEO_SITEMAP_PATH = "/sitemap.xml";
 
-/** The manifest cannot read CSS variables, so these mirror `--background` and `--accent`. */
-export const SEO_MANIFEST_BACKGROUND_COLOR = "#ffffff";
-export const SEO_MANIFEST_THEME_COLOR = "#00685f";
-
 export const SEO_CURRENCY = "UAH";
 
 export const SCHEMA_ORG_CONTEXT = "https://schema.org";

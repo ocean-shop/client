@@ -5,6 +5,7 @@ import { Footer } from "./layouts/footer/footer";
 import { Header } from "./layouts/header/header";
 import { LazyCartModal } from "./layouts/lazy-cart-modal/lazy-cart-modal";
 import { QueryProvider } from "./core/providers/query-provider/query-provider";
+import { ShopFeaturesProvider } from "./core/providers/shop-features-provider/shop-features-provider";
 import { ToastProvider } from "./core/providers/toast-provider/toast-provider";
 import { getCatalogCategoryTreeHelper } from "./shared/catalog-categories/helpers/get-catalog-category-tree";
 import {
@@ -17,6 +18,8 @@ import {
   SITE_URL,
 } from "./shared/seo/constants/seo.constants";
 import { buildSiteJsonLdHelper } from "./shared/seo/helpers/build-site-json-ld";
+import { getShopSettings } from "./shared/shop-settings/api/get-shop-settings";
+import { buildShopThemeStyleHelper } from "./shared/shop-settings/helpers/build-shop-theme-style";
 import { JsonLd } from "./ui/json-ld/json-ld";
 import "./globals.css";
 
@@ -58,25 +61,32 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = async ({ children }: LayoutProps<"/">) => {
-  const categoryTree = await getCatalogCategoryTreeHelper();
+  // Both reads come from the Next data cache, so fetching them side by side adds no wait.
+  const [categoryTree, shopSettings] = await Promise.all([
+    getCatalogCategoryTreeHelper(),
+    getShopSettings(),
+  ]);
 
   return (
     <html
       lang="uk"
       className={`${inter.variable} ${unbounded.variable} ${materialSymbolsOutlined.variable} h-full antialiased`}
+      style={buildShopThemeStyleHelper(shopSettings.colorScheme)}
     >
       <body className="min-h-full flex flex-col pb-[78px] lg:pb-0">
         <JsonLd data={buildSiteJsonLdHelper()} />
-        <ToastProvider>
-          <QueryProvider>
-            <Header />
-            {/* Grows to fill short pages so the footer stays at the bottom of the viewport. */}
-            <main className="flex flex-1 flex-col">{children}</main>
-            <Footer />
-            <BottomTabBar categories={categoryTree} />
-            <LazyCartModal />
-          </QueryProvider>
-        </ToastProvider>
+        <ShopFeaturesProvider features={shopSettings.features}>
+          <ToastProvider>
+            <QueryProvider>
+              <Header />
+              {/* Grows to fill short pages so the footer stays at the bottom of the viewport. */}
+              <main className="flex flex-1 flex-col">{children}</main>
+              <Footer features={shopSettings.features} />
+              <BottomTabBar categories={categoryTree} />
+              <LazyCartModal />
+            </QueryProvider>
+          </ToastProvider>
+        </ShopFeaturesProvider>
       </body>
     </html>
   );

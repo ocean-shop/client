@@ -1,4 +1,3 @@
-import { ORDERS_AUTOMATIC_PAYMENT_ENABLED } from "@/app/shared/orders/constants/orders.constants";
 import { SUPPORT_EMAIL, SUPPORT_PHONE } from "@/app/shared/support/constants/support.constants";
 import type { FooterLinkColumn, FooterSupportInfo } from "../types/footer.types";
 
@@ -32,10 +31,16 @@ export const FOOTER_SUPPORT: FooterSupportInfo = {
   hours: "Щодня, 24/7",
 };
 
-export const FOOTER_PAYMENT_METHODS = [
-  "VISA",
-  "Mastercard",
-  ...(ORDERS_AUTOMATIC_PAYMENT_ENABLED ? ["Apple Pay", "Google Pay"] : []),
-];
+const FOOTER_CARD_PAYMENT_METHODS = ["VISA", "Mastercard"];
+const FOOTER_WALLET_PAYMENT_METHODS = ["Apple Pay", "Google Pay"];
+const FOOTER_PAYMENT_METHODS_SEPARATOR = " · ";
+
+/** Apple Pay / Google Pay are listed only while the shop has automatic payments on. */
+export const FOOTER_PAYMENT_METHODS_LABELS = {
+  withWallets: [...FOOTER_CARD_PAYMENT_METHODS, ...FOOTER_WALLET_PAYMENT_METHODS].join(
+    FOOTER_PAYMENT_METHODS_SEPARATOR
+  ),
+  cardsOnly: FOOTER_CARD_PAYMENT_METHODS.join(FOOTER_PAYMENT_METHODS_SEPARATOR),
+};
 
 export const FOOTER_COPYRIGHT = "© 2026 Ocean Shop. Всі права захищені.";

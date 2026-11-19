@@ -2,7 +2,9 @@
 
 import { API_JSON_HEADERS, API_SHOP_ID } from "@/app/core/api/constants/api.constants";
 import { getAuthUser } from "@/app/shared/auth/helpers/get-auth-user";
-import { ORDERS_CLIENT_API_URL } from "../constants/orders.constants";
+import { getShopSettings } from "@/app/shared/shop-settings/api/get-shop-settings";
+import { ORDERS_CLIENT_API_URL, ORDERS_INVALID_INPUT_FAILURE } from "../constants/orders.constants";
+import { isOrderInputEnabledHelper } from "../helpers/is-order-input-enabled";
 import type {
   CreateOrderInput,
   CreateOrderRequest,
@@ -11,10 +13,16 @@ import type {
 
 /**
  * Places the order. Runs as an action because `API_BASE_URL` and `SHOP_ID` are server-only. A
- * signed-in buyer's order is tied to them, so it shows up in their cabinet.
+ * signed-in buyer's order is tied to them, so it shows up in their cabinet. A payment or carrier
+ * the shop has switched off is refused with a 400.
  */
 export const createOrderAction = async (input: CreateOrderInput): Promise<CreateOrderResult> => {
-  const user = await getAuthUser();
+  const [user, { features }] = await Promise.all([getAuthUser(), getShopSettings()]);
+
+  if (!input || typeof input !== "object" || !isOrderInputEnabledHelper(input, features)) {
+    return ORDERS_INVALID_INPUT_FAILURE;
+  }
+
   const body: CreateOrderRequest = {
     ...input,
     shopId: API_SHOP_ID,

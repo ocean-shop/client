@@ -1,4 +1,3 @@
-import { ORDERS_AUTOMATIC_PAYMENT_ENABLED } from "@/app/shared/orders/constants/orders.constants";
 import type { InfoFeatureItem } from "../../components/info-feature-list/types/info-feature-list.types";
 import type { DeliveryPaymentMethod } from "../components/delivery-payments/types/delivery-payments.types";
 
@@ -48,21 +47,20 @@ export const DELIVERY_METHODS: InfoFeatureItem[] = [
 
 export const DELIVERY_PAYMENTS_TITLE = "Оплата";
 
+/** Listed only while the shop has automatic payments on. */
+export const DELIVERY_WALLET_PAYMENT_METHOD: DeliveryPaymentMethod = {
+  icon: "contactless",
+  title: "Apple Pay та Google Pay",
+  text: "Оплата в один дотик без введення даних картки.",
+};
+
 export const DELIVERY_PAYMENT_METHODS: DeliveryPaymentMethod[] = [
   {
     icon: "credit_card",
     title: "Банківська картка",
     text: "Visa, Mastercard онлайн. Кошти списуються після підтвердження замовлення.",
   },
-  ...(ORDERS_AUTOMATIC_PAYMENT_ENABLED
-    ? [
-        {
-          icon: "contactless",
-          title: "Apple Pay та Google Pay",
-          text: "Оплата в один дотик без введення даних картки.",
-        },
-      ]
-    : []),
+  DELIVERY_WALLET_PAYMENT_METHOD,
   {
     icon: "payments",
     title: "Накладений платіж",

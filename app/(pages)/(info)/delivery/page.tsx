@@ -1,3 +1,4 @@
+import { getShopSettings } from "@/app/shared/shop-settings/api/get-shop-settings";
 import { InfoCard } from "../components/info-card/info-card";
 import { InfoFeatureList } from "../components/info-feature-list/info-feature-list";
 import { InfoNote } from "../components/info-note/info-note";
@@ -10,14 +11,16 @@ import {
   DELIVERY_METHODS,
   DELIVERY_METHODS_TITLE,
   DELIVERY_NOTE,
-  DELIVERY_PAYMENT_METHODS,
   DELIVERY_PAYMENTS_TITLE,
   DELIVERY_TITLE,
 } from "./constants/delivery.constants";
+import { getDeliveryPaymentMethodsHelper } from "./helpers/get-delivery-payment-methods";
 
 export const metadata = buildInfoMetadataHelper(INFO_DELIVERY_PATH, DELIVERY_TITLE, DELIVERY_LEAD);
 
-const DeliveryPage = () => {
+const DeliveryPage = async () => {
+  const { features } = await getShopSettings();
+
   return (
     <>
       <InfoPageHeader title={DELIVERY_TITLE} lead={DELIVERY_LEAD} />
@@ -27,7 +30,7 @@ const DeliveryPage = () => {
       </InfoCard>
 
       <InfoCard title={DELIVERY_PAYMENTS_TITLE}>
-        <DeliveryPayments methods={DELIVERY_PAYMENT_METHODS} />
+        <DeliveryPayments methods={getDeliveryPaymentMethodsHelper(features)} />
       </InfoCard>
 
       <InfoNote text={DELIVERY_NOTE} />

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
+import { Suspense } from "react";
 import { getFirstSearchParamValue } from "@/app/core/search-params/helpers/get-first-search-param-value";
 import { PRODUCT_CATEGORY_SEARCH_PARAM } from "@/app/shared/products/constants/products.constants";
 import { buildProductHrefHelper } from "@/app/shared/products/helpers/build-product-href";
 import { buildBreadcrumbJsonLdHelper } from "@/app/shared/seo/helpers/build-breadcrumb-json-ld";
 import { JsonLd } from "@/app/ui/json-ld/json-ld";
+import { ProductRelated } from "../components/product-related/product-related";
 import { ProductView } from "../components/product-view/product-view";
 import { buildProductBreadcrumbItemsHelper } from "../helpers/build-product-breadcrumb-items";
 import { buildProductJsonLdHelper } from "../helpers/build-product-json-ld";
@@ -42,6 +44,10 @@ const ProductPage = async ({ params, searchParams }: PageProps<"/product/[slug]"
       <JsonLd data={buildProductJsonLdHelper(product)} />
       <JsonLd data={buildBreadcrumbJsonLdHelper(breadcrumbItems)} />
       <ProductView product={product} breadcrumbItems={breadcrumbItems} />
+      {/* Streams in after the product itself, so related products never hold up the main content. */}
+      <Suspense>
+        <ProductRelated productId={product.id} />
+      </Suspense>
     </div>
   );
 };

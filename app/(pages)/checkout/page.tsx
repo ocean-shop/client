@@ -3,6 +3,7 @@ import { getUserShippings } from "@/app/(pages)/cabinet/(pages)/addresses/api/ge
 import { getUserProfile } from "@/app/(pages)/cabinet/(pages)/profile/api/get-user-profile";
 import { getAuthUser } from "@/app/shared/auth/helpers/get-auth-user";
 import { SEO_NO_INDEX_METADATA } from "@/app/shared/seo/constants/seo.constants";
+import { getShopSettings } from "@/app/shared/shop-settings/api/get-shop-settings";
 import { CheckoutView } from "./components/checkout-view/checkout-view";
 import {
   CHECKOUT_DEFAULT_DELIVERY,
@@ -15,14 +16,14 @@ import { resolveCheckoutDeliveryHelper } from "./helpers/resolve-checkout-delive
 export const metadata: Metadata = { ...SEO_NO_INDEX_METADATA, title: CHECKOUT_METADATA_TITLE };
 
 const CheckoutPage = async () => {
-  const user = await getAuthUser();
+  const [user, { features }] = await Promise.all([getAuthUser(), getShopSettings()]);
   // Prefilling is a convenience, so a failed lookup leaves the form blank instead of breaking it.
   const [profile, delivery] = user
     ? await Promise.all([
         getUserProfile(user.id).catch(() => null),
         getUserShippings(user.id)
           .catch(() => [])
-          .then(resolveCheckoutDeliveryHelper),
+          .then((shippings) => resolveCheckoutDeliveryHelper(shippings, features)),
       ])
     : [null, CHECKOUT_DEFAULT_DELIVERY];
 

@@ -1,8 +1,6 @@
 import { ImageResponse } from "next/og";
-import {
-  SEO_MANIFEST_THEME_COLOR,
-  SEO_OG_IMAGE_SIZE,
-} from "@/app/shared/seo/constants/seo.constants";
+import { SEO_OG_IMAGE_SIZE } from "@/app/shared/seo/constants/seo.constants";
+import { getShopSettings } from "@/app/shared/shop-settings/api/get-shop-settings";
 import {
   OG_IMAGE_ICON_COLOR,
   OG_IMAGE_ICON_SCALE,
@@ -10,10 +8,12 @@ import {
   OG_IMAGE_WAVES_ICON_PATH,
 } from "./constants/og-image.constants";
 
-// Nothing here depends on the request, so the PNG is rendered once at build time.
-export const dynamic = "force-static";
+// Rendered at build time and re-rendered in the background when the shop's accent color can have
+// changed; matches `API_DEFAULT_REVALIDATE_SECONDS`, but segment config must be a literal.
+export const revalidate = 300;
 
-export const GET = () => {
+export const GET = async () => {
+  const { colorScheme } = await getShopSettings();
   const iconSize = SEO_OG_IMAGE_SIZE.width * OG_IMAGE_ICON_SCALE;
 
   return new ImageResponse(
@@ -24,7 +24,7 @@ export const GET = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: SEO_MANIFEST_THEME_COLOR,
+        background: colorScheme.accent,
       }}
     >
       <svg width={iconSize} height={iconSize} viewBox={OG_IMAGE_ICON_VIEW_BOX}>

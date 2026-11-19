@@ -1,3 +1,5 @@
+import type { RequestClientOtpResult } from "../types/auth.types";
+
 export const AUTH_LOGIN_PAGE_PATH = "/login";
 export const AUTH_HOME_PAGE_PATH = "/";
 export const AUTH_CABINET_PAGE_PATH = "/cabinet";
@@ -31,3 +33,9 @@ export const AUTH_COOKIE_OPTIONS = {
  * still carry the old cookies do not rotate it a second time and get rejected.
  */
 export const AUTH_REFRESH_REUSE_MS = 10_000;
+
+/** Every email has one and no phone number does, which is enough to tell the two logins apart. */
+export const AUTH_EMAIL_LOGIN_MARKER = "@";
+
+/** Returned when a phone login is requested while the shop has phone login switched off. */
+export const AUTH_PHONE_LOGIN_DISABLED_FAILURE: RequestClientOtpResult = { ok: false, status: 400 };

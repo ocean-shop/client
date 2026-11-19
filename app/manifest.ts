@@ -1,12 +1,11 @@
 import type { MetadataRoute } from "next";
-import {
-  SEO_MANIFEST_BACKGROUND_COLOR,
-  SEO_MANIFEST_THEME_COLOR,
-  SITE_DESCRIPTION,
-  SITE_NAME,
-} from "./shared/seo/constants/seo.constants";
+import { SITE_DESCRIPTION, SITE_NAME } from "./shared/seo/constants/seo.constants";
+import { getShopSettings } from "./shared/shop-settings/api/get-shop-settings";
 
-const manifest = (): MetadataRoute.Manifest => {
+// The manifest cannot read CSS variables, so it takes the shop's colors straight from the settings.
+const manifest = async (): Promise<MetadataRoute.Manifest> => {
+  const { colorScheme } = await getShopSettings();
+
   return {
     name: SITE_NAME,
     short_name: SITE_NAME,
@@ -14,8 +13,8 @@ const manifest = (): MetadataRoute.Manifest => {
     lang: "uk",
     start_url: "/",
     display: "standalone",
-    background_color: SEO_MANIFEST_BACKGROUND_COLOR,
-    theme_color: SEO_MANIFEST_THEME_COLOR,
+    background_color: colorScheme.background,
+    theme_color: colorScheme.accent,
     icons: [{ src: "/favicon.ico", sizes: "any", type: "image/x-icon" }],
   };
 };

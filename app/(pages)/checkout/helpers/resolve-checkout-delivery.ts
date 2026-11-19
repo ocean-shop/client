@@ -1,5 +1,6 @@
 import { toUserShippingViewHelper } from "@/app/(pages)/cabinet/(pages)/addresses/helpers/to-user-shipping-view";
 import type { UserShipping } from "@/app/(pages)/cabinet/(pages)/addresses/types/addresses.types";
+import type { ShopFeatures } from "@/app/shared/shop-settings/types/shop-settings.types";
 import {
   CHECKOUT_DEFAULT_DELIVERY,
   CHECKOUT_DELIVERY_ADDRESS_SEPARATOR,
@@ -17,9 +18,10 @@ import { getCheckoutPreferredShippingHelper } from "./get-checkout-preferred-shi
  * by name. Whatever cannot be found is left for the user to pick, as for a guest.
  */
 export const resolveCheckoutDeliveryHelper = async (
-  shippings: UserShipping[]
+  shippings: UserShipping[],
+  features: ShopFeatures
 ): Promise<CheckoutDelivery> => {
-  const shipping = getCheckoutPreferredShippingHelper(shippings);
+  const shipping = getCheckoutPreferredShippingHelper(shippings, features);
 
   if (!shipping) return CHECKOUT_DEFAULT_DELIVERY;
 
