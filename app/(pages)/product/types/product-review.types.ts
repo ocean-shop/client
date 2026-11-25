@@ -54,3 +54,9 @@ export type ProductReviewField = "rating" | "name" | "advantages" | "drawbacks" 
 export type ProductReviewErrors = Partial<Record<ProductReviewField, string | null>>;
 
 export type ProductReviewResult = ApiActionMessageResult;
+
+/** The visitor opening the review form; `firstName` is `null` when the profile has no name. */
+export type ProductReviewAuthor = {
+  isSignedIn: boolean;
+  firstName: string | null;
+};

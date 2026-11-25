@@ -5,6 +5,7 @@ import { readApiActionFailure } from "@/app/core/api/helpers/read-api-action-fai
 import { authFetch } from "@/app/shared/auth/helpers/auth-fetch";
 import { getAuthUser } from "@/app/shared/auth/helpers/get-auth-user";
 import { PRODUCT_ID_PATTERN } from "@/app/shared/products/constants/products.constants";
+import { getProductReviewAuthorName } from "../api/get-product-review-author-name";
 import { PRODUCT_REVIEW_CREATE_API_URL } from "../constants/product-review-api.constants";
 import {
   PRODUCT_REVIEW_INVALID_FAILURE,
@@ -22,7 +23,7 @@ import type {
 /**
  * Sends the signed-in user's review of a product; it shows up once a moderator approves it.
  * The author comes from the session and "approved purchase" from their orders on the backend,
- * never from the input. Re-validates the input; never throws — failures come back as
+ * never from the input; the signature is the profile's first name when it has one. Re-validates the input; never throws — failures come back as
  * `{ ok: false }`, with status 401 for a guest.
  */
 export const createProductReviewAction = async (
@@ -34,7 +35,9 @@ export const createProductReviewAction = async (
 
   if (!user) return PRODUCT_REVIEW_UNAUTHORIZED_FAILURE;
 
-  const normalized = buildProductReviewInputHelper(input);
+  // A profile name signs the review, whatever the client sent; the form hides the field then.
+  const authorName = await getProductReviewAuthorName(user.id);
+  const normalized = buildProductReviewInputHelper({ ...input, name: authorName ?? input.name });
 
   if (
     !PRODUCT_ID_PATTERN.test(normalized.productId) ||

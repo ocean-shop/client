@@ -68,6 +68,14 @@
   }
 }
 
+/* Tailwind 4 resets buttons to the default cursor; show they are clickable. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

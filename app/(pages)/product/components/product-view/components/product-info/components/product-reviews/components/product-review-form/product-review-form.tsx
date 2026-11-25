@@ -34,8 +34,17 @@ import {
 import { useProductReviewForm } from "./hooks/use-product-review-form";
 import type { ProductReviewFormProps } from "./types/product-review-form.types";
 
-/** New review of the product: a rating, the author's name, pros and cons, and a comment. */
-export const ProductReviewForm = ({ product, offer, onCancel, onSent }: ProductReviewFormProps) => {
+/**
+ * New review of the product: a rating, the author's name (unless the profile already has one),
+ * pros and cons, and a comment.
+ */
+export const ProductReviewForm = ({
+  product,
+  offer,
+  authorName,
+  onCancel,
+  onSent,
+}: ProductReviewFormProps) => {
   const {
     rating,
     commentLength,
@@ -88,12 +97,16 @@ export const ProductReviewForm = ({ product, offer, onCancel, onSent }: ProductR
           onChange={changeRating}
         />
 
-        <FormInput
-          {...PRODUCT_REVIEW_FORM_NAME_FIELD}
-          error={errors.name}
-          disabled={isSending}
-          onChange={() => clearError("name")}
-        />
+        {authorName ? (
+          <input type="hidden" name={PRODUCT_REVIEW_FORM_NAME_FIELD.name} value={authorName} />
+        ) : (
+          <FormInput
+            {...PRODUCT_REVIEW_FORM_NAME_FIELD}
+            error={errors.name}
+            disabled={isSending}
+            onChange={() => clearError("name")}
+          />
+        )}
 
         <div className="grid gap-4 lg:grid-cols-2 lg:gap-3">
           {PRODUCT_REVIEW_FORM_DETAIL_FIELDS.map((field) => (

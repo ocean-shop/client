@@ -17,8 +17,16 @@ import type { ProductReviewsProps } from "./types/product-reviews.types";
  * shopper, the form for a new review and its thank-you once sent.
  */
 export const ProductReviews = ({ product, offer, initialReviews }: ProductReviewsProps) => {
-  const { view, titleRef, isCheckingSession, openForm, showForm, showList, showSuccess } =
-    useProductReviewsView();
+  const {
+    view,
+    titleRef,
+    authorName,
+    isCheckingSession,
+    openForm,
+    showForm,
+    showList,
+    showSuccess,
+  } = useProductReviewsView();
 
   return (
     <SurfaceCard as="section" padding="none" className={PRODUCT_REVIEWS_CARD_CLASS_NAME}>
@@ -39,6 +47,7 @@ export const ProductReviews = ({ product, offer, initialReviews }: ProductReview
         <ProductReviewForm
           product={product}
           offer={offer}
+          authorName={authorName}
           onCancel={showList}
           onSent={showSuccess}
         />

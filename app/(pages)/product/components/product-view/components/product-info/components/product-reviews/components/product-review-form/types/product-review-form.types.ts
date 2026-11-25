@@ -4,6 +4,8 @@ import type { ProductDetails, ProductOffer } from "@/app/shared/products/types/p
 export type ProductReviewFormProps = {
   product: ProductDetails;
   offer: ProductOffer;
+  /** First name from the shopper's profile; when set, it signs the review and the name field is hidden. */
+  authorName: string | null;
   onCancel: () => void;
   /** Called once the backend accepted the review for moderation. */
   onSent: () => void;
