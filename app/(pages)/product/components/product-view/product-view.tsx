@@ -12,7 +12,7 @@ import type { ProductViewProps } from "./types/product-view.types";
  * Client boundary for the whole product body: the selected variation drives the gallery and the
  * price side by side, so both have to read the same piece of state.
  */
-export const ProductView = ({ product, breadcrumbItems }: ProductViewProps) => {
+export const ProductView = ({ product, breadcrumbItems, reviews }: ProductViewProps) => {
   const [selectedVariationId, setSelectedVariationId] = useState<string>();
 
   const offer = resolveProductOfferHelper(product, selectedVariationId);
@@ -34,6 +34,7 @@ export const ProductView = ({ product, breadcrumbItems }: ProductViewProps) => {
         offer={offer}
         discountPercent={discountPercent}
         breadcrumbItems={breadcrumbItems}
+        reviews={reviews}
         onSelectVariation={setSelectedVariationId}
       />
     </div>

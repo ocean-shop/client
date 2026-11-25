@@ -6,6 +6,7 @@ import { PRODUCT_CATEGORY_SEARCH_PARAM } from "@/app/shared/products/constants/p
 import { buildProductHrefHelper } from "@/app/shared/products/helpers/build-product-href";
 import { buildBreadcrumbJsonLdHelper } from "@/app/shared/seo/helpers/build-breadcrumb-json-ld";
 import { JsonLd } from "@/app/ui/json-ld/json-ld";
+import { getProductReviews } from "../api/get-product-reviews";
 import { ProductRelated } from "../components/product-related/product-related";
 import { ProductView } from "../components/product-view/product-view";
 import { buildProductBreadcrumbItemsHelper } from "../helpers/build-product-breadcrumb-items";
@@ -37,13 +38,16 @@ const ProductPage = async ({ params, searchParams }: PageProps<"/product/[slug]"
   // Links from before slugs carry the product id; they move to the slug address for good.
   if (product.slug !== slug) permanentRedirect(buildProductHrefHelper(product.slug, categorySlug));
 
-  const breadcrumbItems = await buildProductBreadcrumbItemsHelper(product.name, categorySlug);
+  const [breadcrumbItems, reviews] = await Promise.all([
+    buildProductBreadcrumbItemsHelper(product.name, categorySlug),
+    getProductReviews(product.id),
+  ]);
 
   return (
     <div className={PRODUCT_PAGE_CLASS_NAME}>
       <JsonLd data={buildProductJsonLdHelper(product)} />
       <JsonLd data={buildBreadcrumbJsonLdHelper(breadcrumbItems)} />
-      <ProductView product={product} breadcrumbItems={breadcrumbItems} />
+      <ProductView product={product} breadcrumbItems={breadcrumbItems} reviews={reviews} />
       {/* Streams in after the product itself, so related products never hold up the main content. */}
       <Suspense>
         <ProductRelated productId={product.id} />

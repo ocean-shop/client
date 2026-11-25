@@ -41,5 +41,4 @@ export const CONTACTS_FORM_CONTACT_PATTERN = /^(?:(?:\+380|380|0)\d{9}|[^\s@]+@[
 export const CONTACTS_FORM_PHONE_SEPARATORS_PATTERN = /[\s()-]/g;
 
 /** Matches the `outline` variant of the shared input. */
-export const CONTACTS_FORM_TEXTAREA_CLASS_NAME =
-  "h-[110px] w-full min-w-0 resize-none rounded-[11px] border border-footer-border bg-background px-3.5 py-3 text-[14.5px] text-foreground outline-none transition-shadow placeholder:text-muted-light focus:border-accent focus:ring-[3px] focus:ring-accent/12";
+export const CONTACTS_FORM_TEXTAREA_CLASS_NAME = "h-[110px] resize-none";

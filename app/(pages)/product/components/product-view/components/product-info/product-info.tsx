@@ -3,6 +3,7 @@ import { ProductDelivery } from "./components/product-delivery/product-delivery"
 import { ProductDescription } from "./components/product-description/product-description";
 import { ProductHeading } from "./components/product-heading/product-heading";
 import { ProductPrice } from "./components/product-price/product-price";
+import { ProductReviews } from "./components/product-reviews/product-reviews";
 import { ProductTags } from "./components/product-tags/product-tags";
 import { ProductVariations } from "./components/product-variations/product-variations";
 import type { ProductInfoProps } from "./types/product-info.types";
@@ -12,6 +13,7 @@ export const ProductInfo = ({
   offer,
   discountPercent,
   breadcrumbItems,
+  reviews,
   onSelectVariation,
 }: ProductInfoProps) => {
   return (
@@ -33,6 +35,8 @@ export const ProductInfo = ({
       <ProductDelivery />
 
       {product.description && <ProductDescription description={product.description} />}
+
+      <ProductReviews product={product} offer={offer} initialReviews={reviews} />
 
       {product.tags.length > 0 && <ProductTags tags={product.tags} />}
     </div>

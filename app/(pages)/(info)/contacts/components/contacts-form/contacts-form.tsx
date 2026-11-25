@@ -4,6 +4,7 @@ import { Button } from "@/app/ui/button/button";
 import { FORM_FIELD_INVALID_CLASS_NAME } from "@/app/ui/form-field/constants/form-field.constants";
 import { FormField } from "@/app/ui/form-field/form-field";
 import { Input } from "@/app/ui/input/input";
+import { Textarea } from "@/app/ui/textarea/textarea";
 import {
   CONTACTS_FORM_INPUT_FIELDS,
   CONTACTS_FORM_MESSAGE_LABEL,
@@ -40,7 +41,7 @@ export const ContactsForm = () => {
           error={errors.message}
           className="col-span-2"
         >
-          <textarea
+          <Textarea
             name="message"
             placeholder={CONTACTS_FORM_MESSAGE_PLACEHOLDER}
             maxLength={CONTACTS_FORM_MESSAGE_MAX_LENGTH}
